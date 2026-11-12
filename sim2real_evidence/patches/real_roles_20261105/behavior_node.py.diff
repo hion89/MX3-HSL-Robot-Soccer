@@ -1,0 +1,111 @@
+--- before
++++ after
+@@ -15,7 +15,7 @@
+ 
+ import rclpy
+ from rclpy.node import Node
+-from rcl_interfaces.msg import Parameter, ParameterType, ParameterValue
++from rcl_interfaces.msg import Parameter, ParameterType, ParameterValue, SetParametersResult
+ from rcl_interfaces.srv import SetParameters
+ from geometry_msgs.msg import PoseArray, Twist
+ from std_msgs.msg import Bool, Float32, String
+@@ -41,6 +41,9 @@
+         self.field = Field.for_profile(str(P("field_profile", "s_field")))
+         self.kick_node = str(P("kick_node", "actor_onnx_walkkick_v1_node"))
+         self.default_state = str(P("default_game_state", "initial")).upper()
++        self.assigned_role = str(P("assigned_role", "auto")).lower()
++        if self.assigned_role not in ("auto", "attacker", "defender", "goalkeeper"):
++            raise ValueError("Invalid assigned_role")
+         self.opp_kickoff_wait = float(P("opponent_kickoff_wait", 10.0))
+         self.set_play_distance = float(P("opponent_set_play_distance", 1.2))
+         self.ball_lost_time = float(P("team_ball_lost_time", 3.0))
+@@ -114,6 +117,8 @@
+         # 계속 실행한다 (Jazzy 에서 확인: 회전 중 페널티 → 30 s 내내 회전). SET 중 이동 반칙·페널티 중 이동을 막는다.
+         self.stop_via_teleop = bool(P("stop_via_teleop_topic", True))
+         self.pub_stop = self.create_publisher(Twist, "cmd_vel_teleop", 10)
++        self.pub_game_lock = (self.create_publisher(Bool, "/game_stop_lock", 10)
++                              if bool(P("publish_game_stop_lock", False)) else None)
+         self.pub_yaw = self.create_publisher(Float32, "/neck/yaw_deg", 10)
+         self.pub_pitch = self.create_publisher(Float32, "/neck/pitch_deg", 10)
+         # 목 속도 (MX-64 Profile Velocity). neck_control 은 첫 목 상태를 낼 때 자기 기본값(실기 10 rpm)을 한 번 써 넣으므로,
+@@ -126,9 +131,33 @@
+         self.pub_state = self.create_publisher(StrategyState, "/hsl/strategy_state", 10)
+         self.pub_dbg = self.create_publisher(String, "/hsl/behavior_debug", 10)
+         self.kick_cli = self.create_client(SetParameters, f"/{self.kick_node}/set_parameters")
++        self.add_on_set_parameters_callback(self._on_parameters)
+         self.create_timer(1.0 / rate, self._cycle)
+         self.get_logger().info(f"behavior: player {self.player} (GK={self.gk}), field {self.field.length}x"
+                                f"{self.field.width}, kick node /{self.kick_node}")
++
++    def _on_parameters(self, params):
++        for p in params:
++            if p.name == "assigned_role":
++                if str(p.value).lower() not in ("auto", "attacker", "defender", "goalkeeper"):
++                    return SetParametersResult(successful=False, reason="Invalid assigned_role")
++                if self.kick_phase in ("arming", "kicking"):
++                    return SetParametersResult(successful=False, reason="Stop the current kick before changing role")
++            if p.name == "default_game_state" and str(p.value).upper() not in STATE_NAMES.values():
++                return SetParametersResult(successful=False, reason="Invalid default_game_state")
++        for p in params:
++            if p.name == "assigned_role":
++                self.assigned_role = str(p.value).lower()
++                self.active_player, self.my_role = 0, S.ROLE_NONE
++                self.play.reset()
++                self.walk.reset()
++                self.get_logger().info(f"지정 역할 → {self.assigned_role}")
++            elif p.name == "default_game_state":
++                self.default_state = str(p.value).upper()
++                if self.default_state != "PLAYING":
++                    self.kick_phase = None
++                    self.play.reset()
++        return SetParametersResult(successful=True)
+ 
+     # ── 콜백 ──
+     def _on_gc(self, m):
+@@ -361,6 +390,8 @@
+         t.linear.x, t.linear.y, t.angular.z = float(cmd[0]), float(cmd[1]), float(cmd[2])
+         self.pub_cmd.publish(t)
+         must_stop = fallen or penalized or state in (0, 2, 4)
++        if self.pub_game_lock is not None:
++            self.pub_game_lock.publish(Bool(data=must_stop))
+         if self.stop_via_teleop and must_stop and not fallen:
+             self.pub_stop.publish(Twist())
+         self.pub_yaw.publish(Float32(data=float(head[0])))
+@@ -380,7 +411,9 @@
+         if now - self.dbg_t > 0.2:
+             self.dbg_t = now
+             self.pub_dbg.publish(String(data=json.dumps(dict(
+-                player=self.player, state=STATE_NAMES.get(state, state), role=S.ROLE_NAMES.get(self.my_role),
++                player=self.player, state=STATE_NAMES.get(state, state),
++                role=(S.ROLE_NAMES.get(self.my_role) if self.assigned_role == "auto" else self.assigned_role),
++                assigned_role=self.assigned_role,
+                 active=self.active_player, skill=self.skill, kick=self.kick_phase, kicks=self.kicks,
+                 pose=[round(me_pose.x, 2), round(me_pose.y, 2), round(math.degrees(me_pose.th))],
+                 ball=None if ball_field is None else [round(ball_field[0], 2), round(ball_field[1], 2)],
+@@ -391,8 +424,13 @@
+         if ball_field is None:
+             # 아무도 공을 모름 → 탐색 (B-Human SearchForBall: 돌기 → 흩어진 탐색 자리로)
+             self.active_player = 0
+-            self.my_role = S.ROLE_GOALKEEPER if self.player == self.gk else self.my_role
+-            sp = S.search_pose(self.player, f, self.gk)
++            role_gk = self.player if self.assigned_role == "goalkeeper" else self.gk
++            self.my_role = S.ROLE_GOALKEEPER if self.player == role_gk else self.my_role
++            self.my_role = {"attacker": S.ROLE_FORWARD, "defender": S.ROLE_DEFENDER,
++                            "goalkeeper": S.ROLE_GOALKEEPER}.get(self.assigned_role, self.my_role)
++            sp = (S.defender_pose((0.0, 0.0), f) if self.assigned_role == "defender"
++                  else S.search_pose(self.player, f, role_gk))
++            sp.x, sp.y = f.clip_inside(sp.x, sp.y, 0.3)
+             lx, ly = me_pose.to_local(sp.x, sp.y)
+             self.skill = f"search_{self.search.phase}"
+             turn_dir = 1.0 if self.player % 2 else -1.0
+@@ -405,7 +443,9 @@
+         opp_kickoff = (not we_kick and self.playing_since is not None and
+                        now - self.playing_since < self.opp_kickoff_wait and not ball_moved and set_play == 0)
+         opp_set_play = set_play != 0 and not we_kick
+-        d = S.decide_playing(me, mates, ball_field, f, self.active_player, self.roles, self.gk)
++        d = S.decide_assigned_role(self.assigned_role, me, ball_field, f)
++        if d is None:
++            d = S.decide_playing(me, mates, ball_field, f, self.active_player, self.roles, self.gk)
+         if d.active_player != self.active_player:
+             self.get_logger().info(f"공 담당: {self.active_player} → {d.active_player}")
+             self.play.reset()

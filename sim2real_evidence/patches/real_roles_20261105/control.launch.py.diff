@@ -1,0 +1,49 @@
+--- before
++++ after
+@@ -163,6 +163,9 @@
+     robot = _resolve_robot_name(LaunchConfiguration("robot").perform(context))
+     node_output = LaunchConfiguration("node_output").perform(context)
+     walk_actor_path = LaunchConfiguration("walk_actor_path").perform(context)
++    kick_actor_path = LaunchConfiguration("kick_actor_path").perform(context)
++    onnx_provider = LaunchConfiguration("onnx_provider").perform(context)
++    stop_delay_s = float(LaunchConfiguration("stop_delay_s").perform(context))
+     policy_variant = LaunchConfiguration("policy_variant").perform(context)
+     gait_mode = LaunchConfiguration("gait_mode").perform(context)
+     gait_freq = float(LaunchConfiguration("gait_freq").perform(context))
+@@ -233,6 +236,7 @@
+         #   틀리면 에러 없이 조용히 오동작하므로 모델 교체 시 반드시 확인.
+         "policy_variant": policy_variant,
+         "actor_path": walk_actor_path,
++        "onnx_provider": onnx_provider,
+ 
+         # ── 학습 cfg 와 일치시켜야 하는 값 (velocity_v0_2_env_cfg.py) ──
+         "policy_rate_hz": 50.0,
+@@ -247,7 +251,7 @@
+         # 자동 전환된다. march(제자리 계속걷기)/stop(강제 정지)은 벤치
+         # 테스트용이며, 상위 제어 노드(전략 FSM)와 충돌할 수 있다.
+         "gait_mode": gait_mode,
+-        "stop_delay_s": 1.0,
++        "stop_delay_s": stop_delay_s,
+ 
+         # ── hold ──
+         "startup_hold_seconds": 1.0,
+@@ -314,6 +318,8 @@
+     #    (vision_servo.yaml 의 push_ball_pos_to_kicker / kick_node_name).
+     #    조이패드 단독 테스트에서는 push 가 없으므로 아래 기본값이 그대로 쓰인다.
+     kick_params = {
++        "actor_path": kick_actor_path,
++        "onnx_provider": onnx_provider,
+         "ball_source": "param",
+         "ball_pos_b_x": kick_ball_x,
+         "ball_pos_b_y": 0.0,
+@@ -435,6 +441,10 @@
+                               description="정책 변형. ONNX 관측 차원과 반드시 일치 "
+                                           "(v0_1|v0_2|v1|v1s). v0_2 와 v1s 는 240 으로 "
+                                           "차원이 같아 자동 판별 불가"),
++        DeclareLaunchArgument("kick_actor_path",
++                              default_value=os.path.join(pol_models, "walkkick_v1_policy.onnx")),
++        DeclareLaunchArgument("onnx_provider", default_value="auto"),
++        DeclareLaunchArgument("stop_delay_s", default_value="1.0"),
+         DeclareLaunchArgument("gait_mode", default_value="auto",
+                               description="보행 모드. auto=속도에 따라 자동 보행/정지"
+                                           "(경기 기본), march=제자리 계속걷기, "

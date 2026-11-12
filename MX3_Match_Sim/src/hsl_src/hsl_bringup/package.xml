@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<package format="3">
+  <name>hsl_bringup</name>
+  <version>0.1.0</version>
+  <description>HSL 스택 실행 — mx3_src 하위 계층(하드웨어·보행/킥 러너·목·GC) + hsl 상위 계층(월드모델·팀통신·행동)</description>
+  <maintainer email="gntjr2@gmail.com">bami001</maintainer>
+  <license>BSD-3-Clause</license>
+  <buildtool_depend>ament_cmake</buildtool_depend>
+  <exec_depend>humanoid_bringup</exec_depend>
+  <exec_depend>humanoid_perception</exec_depend>
+  <exec_depend>humanoid_serial_bridge</exec_depend>
+  <exec_depend>humanoid_game_controller</exec_depend>
+  <exec_depend>twist_mux</exec_depend>
+  <exec_depend>hsl_world_model</exec_depend>
+  <exec_depend>hsl_team_comm</exec_depend>
+  <exec_depend>hsl_behavior</exec_depend>
+  <export><build_type>ament_cmake</build_type></export>
+</package>

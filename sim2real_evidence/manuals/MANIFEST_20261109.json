@@ -1,0 +1,10 @@
+{
+  "files": {
+    "ROBOT_OPERATION_MANUAL_KO_20261109.md": "8cc9e5767df4dc043ca39dbb205a39e1ebe651c3c24393c509fd95779e7b1f9d",
+    "BHUMAN_PORT_AUDIT_KO_20261109.md": "a2ddd68e1bc4a7c34dba7bc07f54f5a264fb0561a678ce0f8b62501225f18cc7",
+    "ROBOT_FLEET_TEMPLATE_20261109.csv": "40a4a5285868abf0fd6a35560761fdfc8861748ef47df3e52dd61af5e81adf1e",
+    "BHUMAN_OFFICIAL_REVIEW_20261109.json": "21e564a1712e5259d5355e7baf7ee1e1dea8f88a2537ca009e56bb18deb15de7"
+  },
+  "bash_blocks_checked": 17,
+  "runtime_source_changed": false
+}

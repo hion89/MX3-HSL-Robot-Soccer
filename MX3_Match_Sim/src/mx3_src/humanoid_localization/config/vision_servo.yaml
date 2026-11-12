@@ -1,0 +1,257 @@
+# =============================================================================
+#  vision_servo.yaml  —  visual_servo_kick_node(Phase 3: 비전 서보 + 킥) 설정
+#
+#  vision_servo.launch.py 가 이 파일을 읽어 적용한다.
+#  여기 값을 고치고 노드만 재시작하면 반영된다(빌드 불필요 — config 는 symlink 설치).
+#  단, config 디렉터리 'install' 동작 특성상 처음 추가 시엔 colcon build 1회 필요.
+#
+#  ※ goal_source / auto_start / continuous_mode / target_goal_x/y 는 런치 인자로
+#    덮어쓸 수 있다(예: auto_start:=true). 인자를 안 주면 아래 값을 쓴다.
+# =============================================================================
+visual_servo_kick_node:
+  ros__parameters:
+
+    # ── 속도 한계 (너무 빠르면 *_max 를 낮춘다) ──────────────────────
+    # ★전진/횡이동이 빠르다고 느끼면 여기부터 조절.
+    # ── 하한(*_min) — 축마다 데드밴드가 다르다 (실측) ────────────────────
+    #   전진/후진 : 0.20  ← 이 아래는 명령을 보내도 로봇이 안 움직인다
+    #   횡이동     : 0.10
+    #   회전       : 0.25 [rad/s]
+    #  ★ 2026-08-18: march 모드면 전진 데드밴드도 사라질 것으로 보고 0.10 으로
+    #    내렸다가 되돌렸다. 실기 결과 → 전진만 죽고(제자리걸음) 횡이동은 살아
+    #    '옆으로만 도는' 증상이 났다. march 는 보행 위상을 유지할 뿐 전진
+    #    데드밴드를 없애주지는 않는다. 축별 값이 다르다는 점을 기억할 것.
+    vx_min: 0.20      # 전진 최소[m/s] ★실측 데드밴드. 내리지 말 것
+    vx_max: 0.30      # 전진 최대[m/s]
+    vy_min: 0.20      # 횡이동 최소[m/s] (데드밴드)
+    vy_max: 0.30      # 횡이동 최대[m/s] ← 횡이동 너무 빠르면 이걸 낮춤(예 0.20)
+    wz_min: 0.25      # 회전 최소[rad/s] (데드밴드)
+    wz_max: 1.50      # 회전 최대[rad/s]
+
+    # ── 후진 속도(ALIGN 에서 공이 스위트스폿보다 가까울 때 물러남) ──────
+    #  [옛 실측 — gait_mode='auto' 기준]
+    #    보행정책은 후진 0 ~ -0.20 을 데드존으로 갖고 -0.20 ~ -0.30 만 추종했다.
+    #    그래서 vx_back_min 을 데드존 경계 위로 올려야 실제로 물러났다.
+    #  [지금 — march 전제]
+    #    위상이 항상 도므로 작은 후진도 추종될 것으로 보고 0.10 으로 낮춘다.
+    #    ★ 미검증이다 ★ 뒤로 안 물러나면 아래 절차로 실측해 되돌릴 것:
+    #      ros2 topic pub --once /cmd_vel_behavior geometry_msgs/msg/Twist \
+    #         "{linear: {x: -0.10}}"   # 안 움직이면 -0.12, -0.15 ... 로 증가
+    #      '처음 움직이는 값' 바로 위로 설정:
+    #      ros2 param set /visual_servo_kick_node vx_back_min 0.20
+    vx_back_min: 0.20  # 최소 후진속도[m/s] ★실측 데드밴드(0~-0.20 안 움직임)
+    vx_back_max: 0.30  # 최대 후진속도[m/s] (이 위로는 너무 빨라 오버슈트)
+
+    # ── gait-keeper: vy(횡스텝)를 듣게 하는 최소 보행 vx ────────────────
+    # 보행정책은 vy 단독(제자리 횡이동) 불가 — vx 가 이 값 이상으로 걷고 있어야
+    # vy 가 듣는다. vx_min(0.20)과 별개의 '더 낮은 보행 엔진 임계'(실측 0.10).
+    # 공이 대각선이라 측면 정렬만 남은 순간 vx 에 이 값을 깔아 멈춤을 방지한다.
+    # gait-keeper 용 최소 전진. gait_keeper_enable=false 면 쓰이지 않는다.
+    #   march 모드가 위상을 유지하므로 억지 전진이 필요 없어졌다.
+    vx_gait_min: 0.10  # (gait_keeper_enable=true 일 때만 사용)
+
+    # ── 복합 제어 게인 (작을수록 부드럽게 가속) ─────────────────────
+    k_fwd: 1.5        # 전진 ← 공 전방오차 (구 0.8 — 실측 오차범위에서
+                      #   상한에 못 닿아 늘 하한에 붙어 있었다)
+    k_lat: 1.0        # 횡이동 ← 측면오차 (구 0.5)
+    k_face: 2.5       # 회전 ← 골대 방위오차 (구 1.3)
+    k_center: 1.5     # (GETBEHIND) 회전 ← 공 방위(시야 중앙 유지)
+
+    # ── 킥 스위트스폿 / 게이트 ───────────────────────────────────────
+    target_ball_x: 0.275     # 킥 시 공까지 전방거리[m]
+                             #   kick_pos_tol_x=0.075 과 짝 → 허용 bx 0.20~0.35
+                             #   ★ 킥 정책 학습 분포(직선거리 0.20~0.50) 안 ★
+                             #   ★ 불변식 0.275+0.075=0.35 < r_min_m(0.45) ★
+                             #   ★ walkkick_v1 학습 분포 0.20~0.50 m 안이어야 한다 ★
+                             #     kick_pos_tol_x=0.05 이므로 트리거 시점 거리는
+                             #     0.25~0.35 로 수렴 → 분포 한가운데.
+                             #     0.20 이하로 내리면 하한 경계에 붙어 게이트가
+                             #     거부할 수 있다(strict_ood_gate=true 기준).
+    target_ball_y: 0.0       # 측면 오프셋[m] — 0 대칭
+                             #   구 0.04 는 잔차킥 유산이다. 정해진 발로
+                             #   정면만 찰 수 있어 공을 그 발 앞에 놓아야
+                             #   했다. 지금은 양발 인사이드 + 방위 ±90 이라
+                             #   치우칠 이유가 없다.
+    # ── 킥 게이트 허용오차 (2026-08-18 대폭 완화) ─────────────────────────
+    #  [왜 완화했나]
+    #    예전 잔차킥은 CSV 레퍼런스 재생이라 '정면'만 찰 수 있었다. 로봇 몸이
+    #    곧 조준 장치여서 이 노드가 6deg 수준까지 정밀 정렬해야 했다.
+    #    walkkick_v1 은 ball_pos_b(거리 0.2~0.5m, 방위 +-60deg)와
+    #    target_dir_b(+-60deg)를 관측으로 받아 스스로 조준한다.
+    #    push_kick_direction=true 로 골대 방위를 넘겨주므로 로봇이 골대를
+    #    정면으로 볼 필요가 없다 → 정렬 시간 단축, ALIGN 교착 감소.
+    #  [왜 정책 한계(+-60deg)까지 열지 않았나]
+    #    분포 안이어도 가장자리 정확도는 중앙보다 떨어질 가능성이 크다.
+    #    절반만 쓰고 실기 결과를 보며 조이거나 넓힌다.
+    kick_pos_tol_x: 0.075    # 전방 허용오차[m] → 밴드 0.20~0.35
+                             #   먼 거리에서 차는 것을 막으려 0.08→0.075 +
+                             #   target 0.30→0.275 로 밴드를 통째로 당겼다.
+    kick_pos_tol_y: 0.10     # (참고용) 측면 게이트는 align_bearing_tol_deg 로 대체됨
+    kick_yaw_tol_deg: 60.0   # 골대 방위 허용오차[deg]
+                             #   2026-08-19: 킥 정책을 ±90° 로 재학습해 여유가
+                             #   생겨 30→60 확대. 정렬 시간이 크게 줄어든다.
+                             #   ★ 킥 러너의 gate_target_angle_max_deg(90) 보다
+                             #     작아야 한다 — 서보가 통과시킨 값을 정책이
+                             #     다시 거르면 트리거가 조용히 씹힌다.
+    bx_min: 0.15             # 공을 이보다 더 끌어당기지 않음(학습범위 하한)
+
+    # ── ALIGN ↔ GETBEHIND ───────────────────────────────────────────
+    behind_tol_deg: 45.0     # GETBEHIND→ALIGN. 히스테리시스 15deg 유지
+    behind_exit_deg: 60.0    # ALIGN→GETBEHIND. 골대가 뒤쪽일 때만 발동
+    # ★ '커밋 반경' — 이름과 달리 상태 전이 게이트이기도 하다 ★
+    #   ALIGN→GETBEHIND 조건에 (r_b > r_min) 이 들어간다. 공이 이 반경 안으로
+    #   들어오면 정렬이 틀어져도 GETBEHIND 로 가지 않고 ALIGN 으로 끝까지 간다.
+    #   ★ 불변식 : target_ball_x + kick_pos_tol_x  <  r_min_m ★
+    #     (0.30 + 0.08 = 0.38  <  0.45)
+    #     ALIGN 수렴 밴드가 이 반경을 '관통'하면 비전 거리 노이즈(+-0.02m)로
+    #     전이 게이트가 깜빡여 ALIGN <-> GETBEHIND 를 왕복한다. 두 상태는 회전
+    #     목표가 서로 달라(골대 vs 공) 명령이 매 프레임 뒤집혀 수렴하지 못한다.
+    #     target_ball_x 나 kick_pos_tol_x 를 키우면 여기도 함께 키울 것.
+    # ── GETBEHIND 궤도 반경 (2026-08-18 r_min_m 에서 분리) ───────────────
+    #  GETBEHIND 는 공을 시야 중앙에 두고(wz) 옆으로 이동해(vy) 공 뒤로
+    #  돌아간다. 전진(vx)은 이 반경 안으로 들어오면 멈추므로, 결과적으로
+    #  공 중심 orbit_r_m 반경의 '궤도 운동'이 된다.
+    #  ★ 예전에는 r_min_m 이 이 역할까지 겸했다 ★ 그래서 커밋 반경을 키우면
+    #    (0.45) 궤도도 같이 멀어져 '너무 멀리서 돈다'는 문제가 생겼다.
+    #  [값 잡는 법] target_ball_x(0.30) 보다 약간 크게. 궤도→ALIGN 전환 시
+    #    전진으로 스위트스폿에 들어가 후진(데드존 존재)을 피할 수 있다.
+    #    0.25 미만은 궤도 중 공을 밀 위험이 커진다(기동 시 경고).
+    orbit_r_m: 0.32
+
+    # ── GETBEHIND 접근 방식 (2026-08-18 추가) ────────────────────────────
+    #   'orbit'  : 기존. 고정 반경 원운동으로 공 뒤까지 돌아간다.
+    #              공 보호에는 안전하나 호가 길어 '옆으로만 돈다'는 느낌.
+    #   'direct' : 공 뒤 standoff 지점을 base 프레임에서 직접 계산해 대각선
+    #              으로 질러간다(ball_follow 와 같은 발상, 단 map 좌표가
+    #              아니라 상대 측정값만 써서 오도메트리 드리프트에 면역).
+    #              orbit_r_m 안쪽으로 파고드는 반경 성분만 잘라내므로,
+    #              잘못된 쪽에 있을 때만 자동으로 돌아간다.
+    #   라이브 전환: ros2 param set /visual_servo_kick_node getbehind_mode orbit
+    getbehind_mode: 'direct'
+    approach_standoff_m: 0.32   # direct 모드에서 노릴 '공 뒤' 거리[m]
+    k_approach: 1.2             # direct 모드 접근 게인(크면 빠르나 오버슈트↑)
+
+    # ── 킥 접근 자세 (2026-08-19 추가) ───────────────────────────────────
+    #  'straight'      : 로봇-공-골대 일직선 + 골대 정면 (기존)
+    #  'perpendicular' : 공 정면 + 골대 옆 80도. 인사이드 킥으로 꺾어 찬다.
+    #     이점 1) 정렬 목표가 ±2개 → 가까운 쪽 선택 → 최악 회전 180→90도
+    #     이점 2) 몸통을 비틀지 않아 낙상 안정도가 높다
+    #     ※ 양발 인사이드 킥 학습이 전제. 한 발만 쓰면 한쪽만 유효.
+    align_kick_mode: 'perpendicular'
+    perp_target_deg: 80.0     # 정책 게이트가 ±90 이라 경계를 피해 80
+    perp_gate_min_deg: 70.0
+    perp_gate_max_deg: 88.0   # 90 에 붙이면 노이즈로 정책이 거부한다
+    # 측면 정렬 게이트 — 공 방위 허용오차[deg]. 0 대칭.
+    #   구 kick_pos_tol_y(직교 띠, -0.06~+0.14 로 치우침)를 대체한다.
+    align_bearing_tol_deg: 15.0
+
+
+    # ── 진단용 CSV 로그 (2026-08-18 추가) ────────────────────────────────
+    #  제어 주기마다 한 줄. '왜 그 명령이 나왔는지'를 통째로 남긴다.
+    #  [핵심 컬럼]
+    #    vx_raw/vy_raw/wz_raw : floor(데드밴드) 적용 '전' 명령
+    #      → raw 가 작으면 게인 문제, raw 는 큰데 최종이 0 이면 데드밴드/게이팅 문제
+    #    gate_x/gate_y/gate_yaw : 킥 게이트 세 조건 각각의 통과 여부(0/1)
+    #      → 어느 조건이 마지막까지 안 맞아 트리거가 안 나는지 바로 보인다
+    #    walking : vy 가 실제로 적용됐는지(0이면 vy 명령이 버려진 것)
+    #  튜닝이 끝나면 false 로 되돌릴 것(파일이 계속 쌓인다).
+    enable_csv_log: true
+    csv_log_dir: '~/servo_logs'
+
+    r_min_m: 0.45            # 이보다 가까우면 GETBEHIND 전진 정지(공 보호)
+    search_wz: 0.6           # SEARCH 제자리 회전[rad/s] (데드밴드 이상)
+
+    # ── 골대 방위 소스 ──────────────────────────────────────────────
+    goal_source: 'auto'      # 'auto' / 'vision' / 'localization'
+    target_goal_x: 4.5       # localization 폴백 상대(공격) 골대 중심 x[m].
+                             #   S-Field 골 라인 = half_length = 9.0/2 = 4.5 (연습장 땐 1.95였음).
+                             #   ★팀 상대 좌표(우리 골=-x, 상대 골=+x 고정). 재진입 시드가
+                             #   우리 골을 늘 -x 로 심으므로 하프타임에도 +4.5 그대로 — 뒤집지 말 것.
+                             #   골포스트가 보이면 vision 으로 조준, 안 보일 때만 이 좌표 사용.
+                             #   (9x6 은 골이 멀어 안 보이는 구간이 많으니 이 폴백값이 중요.)
+    target_goal_y: 0.0
+    min_goalposts: 2         # vision 골대방위에 필요한 최소 골포스트 수
+
+    # ── 킥 연동 ─────────────────────────────────────────────────────
+    push_ball_pos_to_kicker: true                 # 트리거 직전 실측 공위치를 킥노드에 set
+    # 킥 방향(골대 방위 phi_g)도 함께 push 할지.
+    #   true  : 킥 정책이 +-60deg 안에서 스스로 조준 → 이 노드는 kick_yaw_tol_deg
+    #           를 크게 열 수 있다(30deg). 잔차킥 시절의 6deg 정밀 정렬 불필요.
+    #   false : 예전 동작(정면 킥). 그때는 kick_yaw_tol_deg 를 6deg 로 되돌릴 것.
+    push_kick_direction: true
+    # 실측 공위치를 SetParameters 로 밀어넣을 대상 노드.
+    #   2026-08-18: 구 잔차킥 러너가 삭제되어 walkkick_v1 노드로 교체.
+    #   ★ 이 이름이 틀리면 /{name}/set_parameters 서비스를 못 찾아 push 가
+    #     조용히 실패하고, 킥 노드는 launch 기본 공위치로 차게 된다.
+    kick_node_name: 'actor_onnx_walkkick_v1_node'
+    kick_arm_delay_s: 0.15
+    # /kick_done 대기 타임아웃. 안 오면 DONE 으로 강제 전이한다.
+    #   ★ 순서 불변식 — 이 값이 walking 러너의 킥 양보 워치독보다 커야 한다 ★
+    #     walking 워치독 = kick_duration(3.0) + kick_yield_margin(1.0) = 4.0 s
+    #     여기(5.0)가 더 크므로 walking 이 먼저 복귀하며 복구용 /kick_done 을
+    #     쏘고, 그 신호로 이 노드와 FSM 이 함께 정상화된다.
+    #     반대로 이 값이 더 작으면 서보만 DONE 으로 빠지는데 /kick_done 은
+    #     발행되지 않아, FSM 의 ALIGN_KICK 하드 래치가 풀리지 않고 교착된다.
+    #   ※ kick_duration 을 늘리면 walking 워치독도 자동으로 따라 늘어난다.
+    #     그때는 이 값도 함께 올려 불변식을 지킬 것.
+    kick_wait_timeout_s: 5.0
+
+    # ── 동작 모드 ───────────────────────────────────────────────────
+    # ── gait 모드 제어 (2026-08-18 추가) ─────────────────────────────────
+    #  서보 구간에만 보행 러너를 'march'(제자리 걷기)로 바꾼다.
+    #  auto 모드는 명령 노름이 작으면 위상을 멈춰, ALIGN 막바지(vx=0, wz~0,
+    #  vy 만 남음)에 보행이 죽고 교착됐다. march 는 위상이 항상 돌아 전진
+    #  없이도 횡이동이 듣는다 → 억지 전진(gait_keeper)이 불필요해진다.
+    #  ★ DONE/disable/종료 시 자동으로 'auto' 로 원복한다. 원복이 빠지면
+    #    로봇이 계속 제자리걸음을 한다.
+    #  ※ 조이패드도 /gait_mode 를 발행하므로, 조이패드 운용 중에는 false.
+    gait_mode_control: true
+    gait_mode_active: 'march'
+    gait_mode_idle: 'auto'
+    # 원본 동작은 이 보정이 '항상' 켜져 있었다. march 모드가 실제로
+    # 걸리는지 미확인이므로 보험으로 true 를 유지한다. march 가 잘 걸리면
+    # vx=0·wz=0 조합 자체가 드물어져 이 보정은 거의 발동하지 않는다.
+    gait_keeper_enable: false   # march 모드로 횡이동이 되므로 억지 전진 불필요
+
+    auto_start: false        # true=시작 즉시(단독 테스트) / false=enable 대기(통합)
+    continuous_mode: false   # true=킥 후 자동 재탐색 반복
+    # DONE → SEARCH 재진입 대기[s] (continuous_mode 일 때만 의미).
+    #   예전에는 1.0 초가 코드에 하드코딩되어 있었다. 그 1초 동안 cmd_vel=0 을
+    #   내보내면서 gait_mode 까지 'auto' 로 되돌려 보행 위상이 멈췄고, 그래서
+    #   킥 직후 '한 번 멈췄다 가는' 끊김이 생겼다.
+    #   0.0 = 대기 없이 즉시 재탐색. continuous 일 때는 march 도 유지된다.
+    done_hold_s: 0.0
+
+    # ── 킥 쿨다운 (2026-08-20 추가) ──────────────────────────────────────
+    #  /kick_done 후 이 시간 동안 KICK_ARM 진입을 막는다(정렬은 계속).
+    #  [왜] 킥 직후 공은 굴러가 사라지지만 ball_timeout_s(1.0s) 동안은
+    #    '마지막으로 본 위치'가 유효하게 남는다. 그 옛 위치로 재정렬해
+    #    조건을 만족시키면 공이 없는데도 한 번 더 차버린다.
+    #    (보행 러너의 1.0초 hold 를 없애면서 드러난 증상)
+    #  ★ 불변식 : kick_cooldown_s > ball_timeout_s ★
+    #    쿨다운이 끝나기 전에 LOST 판정이 나야 오발사가 확실히 막힌다.
+    #    현재 1.5 > 1.0 이므로 성립.
+    #  ※ FSM 과 충돌하지 않는다. strategy_fsm 의 post_kick_settle_s(3.0)가
+    #    더 길어, FSM 운용 시에는 이 값이 실질적으로 영향을 주지 않는다.
+    #    이 쿨다운은 '발사를 막기만' 할 뿐 강제 발사시키지 않는다.
+    kick_cooldown_s: 1.5
+
+    # ── 타이밍 / 신선도 ─────────────────────────────────────────────
+    control_rate_hz: 20.0
+    ball_timeout_s: 1.0      # 공 검출 이보다 오래되면 분실(LOST) 처리.
+                             # ★strategy 의 ball_lost_timeout_s(1.0)와 일치시킴 —
+                             #   둘이 동시에 1.0s 에 반응해 0.5~1.0s '데드 구간' 제거.
+                             #   (visual_servo LOST 보고 = strategy 소유권 박탈 동타이밍)
+    goal_timeout_s: 0.8
+
+    # ── 토픽 / 프레임 (보통 안 건드림) ──────────────────────────────
+    detections_topic: '/perception/detections_3d'
+    cmd_vel_topic: 'cmd_vel_behavior'
+    kick_trigger_topic: '/kick_trigger'
+    kick_done_topic: '/kick_done'
+    state_topic: '/visual_servo/state'
+    marker_topic: '/visual_servo/markers'
+    base_frame: 'base_link'
+    map_frame: 'map'
+    ball_class: 'ball'
+    goal_class: 'goalpost'

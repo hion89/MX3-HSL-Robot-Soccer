@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<package format="3">
+  <name>humanoid_sim</name>
+  <version>0.1.0</version>
+  <description>MuJoCo 하드웨어 대체 브리지 + 시뮬 경기 런치 (mx3_src 스택용)</description>
+  <maintainer email="gntjr2@gmail.com">bami001</maintainer>
+  <license>Proprietary</license>
+  <exec_depend>rclpy</exec_depend>
+  <exec_depend>humanoid_bringup</exec_depend>
+  <exec_depend>humanoid_behavior_interfaces</exec_depend>
+  <exec_depend>humanoid_localization</exec_depend>
+  <exec_depend>vision_msgs</exec_depend>
+  <exec_depend>hsl_interfaces</exec_depend>
+  <exec_depend>tf2_ros</exec_depend>
+  <exec_depend>std_srvs</exec_depend>
+  <exec_depend>python3-pil</exec_depend>
+  <export>
+    <build_type>ament_python</build_type>
+  </export>
+</package>

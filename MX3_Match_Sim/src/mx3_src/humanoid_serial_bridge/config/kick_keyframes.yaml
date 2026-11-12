@@ -1,0 +1,424 @@
+# kick_keyframes_v13_video_reconstructed.yaml
+#
+# Right-foot kick reconstructed from the reference video's compact motion:
+# left-foot load, low knee drive, fast strike, short follow-through, quick fold.
+# This sequence was authored independently of the earlier staged kick scripts.
+#
+# Joint targets are radians. rpm is Dynamixel Profile Velocity.
+# hold_sec is the delay before the next target is sent.
+
+right_kick_sequence:
+  - name: video_entry
+    rpm: 18.0
+    hold_sec: 0.46
+    joints:
+      r_pelvis_pitch_joint: 0.60
+      r_pelvis_roll_joint: 0.0
+      r_pelvis_yaw_joint: 0.0
+      r_knee_pitch_joint: 1.08
+      r_ankle_pitch_joint: 0.52
+      r_ankle_roll_joint: 0.0
+      l_pelvis_pitch_joint: -0.60
+      l_pelvis_roll_joint: 0.02
+      l_pelvis_yaw_joint: 0.0
+      l_knee_pitch_joint: -1.08
+      l_ankle_pitch_joint: -0.52
+      l_ankle_roll_joint: -0.03
+      r_shoulder_pitch_joint: 0.16
+      r_shoulder_roll_joint: 0.0
+      r_elbow_pitch_joint: 2.90
+      l_shoulder_pitch_joint: -0.16
+      l_shoulder_roll_joint: 0.0
+      l_elbow_pitch_joint: -2.90
+
+  - name: video_load_left
+    rpm: 26.0
+    hold_sec: 0.22
+    joints:
+      r_pelvis_pitch_joint: 0.70
+      r_pelvis_roll_joint: 0.05
+      r_pelvis_yaw_joint: 0.0
+      r_knee_pitch_joint: 1.00
+      r_ankle_pitch_joint: 0.46
+      r_ankle_roll_joint: -0.10
+      l_pelvis_pitch_joint: -0.62
+      l_pelvis_roll_joint: 0.22
+      l_pelvis_yaw_joint: 0.0
+      l_knee_pitch_joint: -1.00
+      l_ankle_pitch_joint: -0.30
+      l_ankle_roll_joint: -0.30
+      r_shoulder_pitch_joint: 0.22
+      r_shoulder_roll_joint: 0.10
+      r_elbow_pitch_joint: 2.90
+      l_shoulder_pitch_joint: -0.08
+      l_shoulder_roll_joint: -0.10
+      l_elbow_pitch_joint: -2.90
+
+  - name: video_knee_drive_low
+    rpm: 35.0
+    hold_sec: 0.08
+    joints:
+      r_pelvis_pitch_joint: 0.84
+      r_pelvis_roll_joint: 0.16
+      r_pelvis_yaw_joint: 0.0
+      r_knee_pitch_joint: 1.52
+      r_ankle_pitch_joint: 0.64
+      r_ankle_roll_joint: -0.15
+      l_pelvis_pitch_joint: -0.66
+      l_pelvis_roll_joint: 0.24
+      l_pelvis_yaw_joint: 0.0
+      l_knee_pitch_joint: -0.94
+      l_ankle_pitch_joint: -0.28
+      l_ankle_roll_joint: -0.32
+      r_shoulder_pitch_joint: 0.18
+      r_shoulder_roll_joint: 0.08
+      r_elbow_pitch_joint: 2.90
+      l_shoulder_pitch_joint: 0.0
+      l_shoulder_roll_joint: -0.08
+      l_elbow_pitch_joint: -2.90
+
+  - name: video_strike
+    rpm: 44.0
+    hold_sec: 0.2
+    joints:
+      r_pelvis_pitch_joint: 1.4
+      r_pelvis_roll_joint: 0.10
+      r_pelvis_yaw_joint: 0.0
+      r_knee_pitch_joint: 0.38
+      r_ankle_pitch_joint: -0.87
+      r_ankle_roll_joint: -0.14
+      l_pelvis_pitch_joint: -0.52
+      l_pelvis_roll_joint: 0.23
+      l_pelvis_yaw_joint: 0.0
+      l_knee_pitch_joint: -0.82
+      l_ankle_pitch_joint: -0.27
+      l_ankle_roll_joint: -0.32
+      r_shoulder_pitch_joint: 0.10
+      r_shoulder_roll_joint: 0.05
+      r_elbow_pitch_joint: 2.90
+      l_shoulder_pitch_joint: 0.12
+      l_shoulder_roll_joint: -0.05
+      l_elbow_pitch_joint: -2.90
+
+  - name: video_short_follow
+    rpm: 44.0
+    hold_sec: 0.1
+    joints:
+      r_pelvis_pitch_joint: 1.45
+      r_pelvis_roll_joint: 0.11
+      r_pelvis_yaw_joint: 0.0
+      r_knee_pitch_joint: 0.54
+      r_ankle_pitch_joint: -0.87
+      r_ankle_roll_joint: -0.14
+      l_pelvis_pitch_joint: -0.52
+      l_pelvis_roll_joint: 0.22
+      l_pelvis_yaw_joint: 0.0
+      l_knee_pitch_joint: -0.82
+      l_ankle_pitch_joint: -0.27
+      l_ankle_roll_joint: -0.32
+      r_shoulder_pitch_joint: 0.06
+      r_shoulder_roll_joint: 0.04
+      r_elbow_pitch_joint: 2.90
+      l_shoulder_pitch_joint: 0.16
+      l_shoulder_roll_joint: -0.04
+      l_elbow_pitch_joint: -2.90
+
+  - name: video_fold
+    rpm: 38.0
+    hold_sec: 0.1
+    joints:
+      r_pelvis_pitch_joint: 1.10
+      r_pelvis_roll_joint: 0.16
+      r_pelvis_yaw_joint: 0.0
+      r_knee_pitch_joint: 1.30
+      r_ankle_pitch_joint: 0.26
+      r_ankle_roll_joint: -0.17
+      l_pelvis_pitch_joint: -0.53
+      l_pelvis_roll_joint: 0.22
+      l_pelvis_yaw_joint: 0.0
+      l_knee_pitch_joint: -0.84
+      l_ankle_pitch_joint: -0.28
+      l_ankle_roll_joint: -0.32
+      r_shoulder_pitch_joint: 0.08
+      r_shoulder_roll_joint: 0.04
+      r_elbow_pitch_joint: 2.90
+      l_shoulder_pitch_joint: 0.10
+      l_shoulder_roll_joint: -0.04
+      l_elbow_pitch_joint: -2.90
+
+  - name: video_return_low
+    rpm: 35.0
+    hold_sec: 0.15
+    joints:
+      r_pelvis_pitch_joint: 0.92
+      r_pelvis_roll_joint: 0.11
+      r_pelvis_yaw_joint: 0.0
+      r_knee_pitch_joint: 1.40
+      r_ankle_pitch_joint: 0.55
+      r_ankle_roll_joint: -0.14
+      l_pelvis_pitch_joint: -0.54
+      l_pelvis_roll_joint: 0.22
+      l_pelvis_yaw_joint: 0.0
+      l_knee_pitch_joint: -0.88
+      l_ankle_pitch_joint: -0.30
+      l_ankle_roll_joint: -0.29
+      r_shoulder_pitch_joint: 0.08
+      r_shoulder_roll_joint: 0.02
+      r_elbow_pitch_joint: 2.90
+      l_shoulder_pitch_joint: 0.0
+      l_shoulder_roll_joint: -0.02
+      l_elbow_pitch_joint: -2.90
+
+  - name: video_soft_plant
+    rpm: 30.0
+    hold_sec: 0.2
+    joints:
+      r_pelvis_pitch_joint: 0.76
+      r_pelvis_roll_joint: 0.06
+      r_pelvis_yaw_joint: 0.0
+      r_knee_pitch_joint: 1.24
+      r_ankle_pitch_joint: 0.57
+      r_ankle_roll_joint: -0.08
+      l_pelvis_pitch_joint: -0.55
+      l_pelvis_roll_joint: 0.14
+      l_pelvis_yaw_joint: 0.0
+      l_knee_pitch_joint: -0.92
+      l_ankle_pitch_joint: -0.38
+      l_ankle_roll_joint: -0.19
+      r_shoulder_pitch_joint: 0.08
+      r_shoulder_roll_joint: 0.01
+      r_elbow_pitch_joint: 2.90
+      l_shoulder_pitch_joint: -0.04
+      l_shoulder_roll_joint: -0.01
+      l_elbow_pitch_joint: -2.90
+
+  - name: video_exit
+    rpm: 20.0
+    hold_sec: 0.48
+    joints:
+      r_pelvis_pitch_joint: 0.54
+      r_pelvis_roll_joint: 0.0
+      r_pelvis_yaw_joint: 0.0
+      r_knee_pitch_joint: 0.99
+      r_ankle_pitch_joint: 0.48
+      r_ankle_roll_joint: 0.0
+      l_pelvis_pitch_joint: -0.54
+      l_pelvis_roll_joint: 0.02
+      l_pelvis_yaw_joint: 0.0
+      l_knee_pitch_joint: -0.99
+      l_ankle_pitch_joint: -0.48
+      l_ankle_roll_joint: -0.03
+      r_shoulder_pitch_joint: 0.08
+      r_shoulder_roll_joint: 0.0
+      r_elbow_pitch_joint: 2.90
+      l_shoulder_pitch_joint: -0.08
+      l_shoulder_roll_joint: 0.0
+      l_elbow_pitch_joint: -2.90
+
+left_kick_sequence:
+  - name: video_entry
+    rpm: 18.0
+    hold_sec: 0.46
+    joints:
+      l_pelvis_pitch_joint: -0.60
+      l_pelvis_roll_joint: 0.0
+      l_pelvis_yaw_joint: 0.0
+      l_knee_pitch_joint: -1.08
+      l_ankle_pitch_joint: -0.52
+      l_ankle_roll_joint: 0.0
+      r_pelvis_pitch_joint: 0.60
+      r_pelvis_roll_joint: -0.02
+      r_pelvis_yaw_joint: 0.0
+      r_knee_pitch_joint: 1.08
+      r_ankle_pitch_joint: 0.52
+      r_ankle_roll_joint: 0.03
+      l_shoulder_pitch_joint: -0.16
+      l_shoulder_roll_joint: 0.0
+      l_elbow_pitch_joint: -2.90
+      r_shoulder_pitch_joint: 0.16
+      r_shoulder_roll_joint: 0.0
+      r_elbow_pitch_joint: 2.90
+
+  - name: video_load_right
+    rpm: 26.0
+    hold_sec: 0.22
+    joints:
+      l_pelvis_pitch_joint: -0.70
+      l_pelvis_roll_joint: -0.05
+      l_pelvis_yaw_joint: 0.0
+      l_knee_pitch_joint: -1.00
+      l_ankle_pitch_joint: -0.46
+      l_ankle_roll_joint: 0.10
+      r_pelvis_pitch_joint: 0.62
+      r_pelvis_roll_joint: -0.22
+      r_pelvis_yaw_joint: 0.0
+      r_knee_pitch_joint: 1.00
+      r_ankle_pitch_joint: 0.30
+      r_ankle_roll_joint: 0.30
+      l_shoulder_pitch_joint: -0.22
+      l_shoulder_roll_joint: -0.10
+      l_elbow_pitch_joint: -2.90
+      r_shoulder_pitch_joint: 0.08
+      r_shoulder_roll_joint: 0.10
+      r_elbow_pitch_joint: 2.90
+
+  - name: video_knee_drive_low
+    rpm: 35.0
+    hold_sec: 0.08
+    joints:
+      l_pelvis_pitch_joint: -0.84
+      l_pelvis_roll_joint: -0.16
+      l_pelvis_yaw_joint: 0.0
+      l_knee_pitch_joint: -1.52
+      l_ankle_pitch_joint: -0.64
+      l_ankle_roll_joint: 0.15
+      r_pelvis_pitch_joint: 0.66
+      r_pelvis_roll_joint: -0.24
+      r_pelvis_yaw_joint: 0.0
+      r_knee_pitch_joint: 0.94
+      r_ankle_pitch_joint: 0.28
+      r_ankle_roll_joint: 0.32
+      l_shoulder_pitch_joint: -0.18
+      l_shoulder_roll_joint: -0.08
+      l_elbow_pitch_joint: -2.90
+      r_shoulder_pitch_joint: 0.0
+      r_shoulder_roll_joint: 0.08
+      r_elbow_pitch_joint: 2.90
+
+  - name: video_strike
+    rpm: 44.0
+    hold_sec: 0.2
+    joints:
+      l_pelvis_pitch_joint: -1.40
+      l_pelvis_roll_joint: -0.10
+      l_pelvis_yaw_joint: 0.0
+      l_knee_pitch_joint: -0.38
+      l_ankle_pitch_joint: 0.87
+      l_ankle_roll_joint: 0.14
+      r_pelvis_pitch_joint: 0.52
+      r_pelvis_roll_joint: -0.23
+      r_pelvis_yaw_joint: 0.0
+      r_knee_pitch_joint: 0.82
+      r_ankle_pitch_joint: 0.27
+      r_ankle_roll_joint: 0.32
+      l_shoulder_pitch_joint: -0.10
+      l_shoulder_roll_joint: -0.05
+      l_elbow_pitch_joint: -2.90
+      r_shoulder_pitch_joint: -0.12
+      r_shoulder_roll_joint: 0.05
+      r_elbow_pitch_joint: 2.90
+
+  - name: video_short_follow
+    rpm: 44.0
+    hold_sec: 0.1
+    joints:
+      l_pelvis_pitch_joint: -1.45
+      l_pelvis_roll_joint: -0.11
+      l_pelvis_yaw_joint: 0.0
+      l_knee_pitch_joint: -0.54
+      l_ankle_pitch_joint: 0.87
+      l_ankle_roll_joint: 0.14
+      r_pelvis_pitch_joint: 0.52
+      r_pelvis_roll_joint: -0.22
+      r_pelvis_yaw_joint: 0.0
+      r_knee_pitch_joint: 0.82
+      r_ankle_pitch_joint: 0.27
+      r_ankle_roll_joint: 0.32
+      l_shoulder_pitch_joint: -0.06
+      l_shoulder_roll_joint: -0.04
+      l_elbow_pitch_joint: -2.90
+      r_shoulder_pitch_joint: -0.16
+      r_shoulder_roll_joint: 0.04
+      r_elbow_pitch_joint: 2.90
+
+  - name: video_fold
+    rpm: 38.0
+    hold_sec: 0.1
+    joints:
+      l_pelvis_pitch_joint: -1.10
+      l_pelvis_roll_joint: -0.16
+      l_pelvis_yaw_joint: 0.0
+      l_knee_pitch_joint: -1.30
+      l_ankle_pitch_joint: -0.26
+      l_ankle_roll_joint: 0.17
+      r_pelvis_pitch_joint: 0.53
+      r_pelvis_roll_joint: -0.22
+      r_pelvis_yaw_joint: 0.0
+      r_knee_pitch_joint: 0.84
+      r_ankle_pitch_joint: 0.28
+      r_ankle_roll_joint: 0.32
+      l_shoulder_pitch_joint: -0.08
+      l_shoulder_roll_joint: -0.04
+      l_elbow_pitch_joint: -2.90
+      r_shoulder_pitch_joint: -0.10
+      r_shoulder_roll_joint: 0.04
+      r_elbow_pitch_joint: 2.90
+
+  - name: video_return_low
+    rpm: 35.0
+    hold_sec: 0.15
+    joints:
+      l_pelvis_pitch_joint: -0.92
+      l_pelvis_roll_joint: -0.11
+      l_pelvis_yaw_joint: 0.0
+      l_knee_pitch_joint: -1.40
+      l_ankle_pitch_joint: -0.55
+      l_ankle_roll_joint: 0.14
+      r_pelvis_pitch_joint: 0.54
+      r_pelvis_roll_joint: -0.22
+      r_pelvis_yaw_joint: 0.0
+      r_knee_pitch_joint: 0.88
+      r_ankle_pitch_joint: 0.30
+      r_ankle_roll_joint: 0.29
+      l_shoulder_pitch_joint: -0.08
+      l_shoulder_roll_joint: -0.02
+      l_elbow_pitch_joint: -2.90
+      r_shoulder_pitch_joint: 0.0
+      r_shoulder_roll_joint: 0.02
+      r_elbow_pitch_joint: 2.90
+
+  - name: video_soft_plant
+    rpm: 30.0
+    hold_sec: 0.2
+    joints:
+      l_pelvis_pitch_joint: -0.76
+      l_pelvis_roll_joint: -0.06
+      l_pelvis_yaw_joint: 0.0
+      l_knee_pitch_joint: -1.24
+      l_ankle_pitch_joint: -0.57
+      l_ankle_roll_joint: 0.08
+      r_pelvis_pitch_joint: 0.55
+      r_pelvis_roll_joint: -0.14
+      r_pelvis_yaw_joint: 0.0
+      r_knee_pitch_joint: 0.92
+      r_ankle_pitch_joint: 0.38
+      r_ankle_roll_joint: 0.19
+      l_shoulder_pitch_joint: -0.08
+      l_shoulder_roll_joint: -0.01
+      l_elbow_pitch_joint: -2.90
+      r_shoulder_pitch_joint: 0.04
+      r_shoulder_roll_joint: 0.01
+      r_elbow_pitch_joint: 2.90
+
+  - name: video_exit
+    rpm: 20.0
+    hold_sec: 0.48
+    joints:
+      l_pelvis_pitch_joint: -0.54
+      l_pelvis_roll_joint: 0.0
+      l_pelvis_yaw_joint: 0.0
+      l_knee_pitch_joint: -0.99
+      l_ankle_pitch_joint: -0.48
+      l_ankle_roll_joint: 0.0
+      r_pelvis_pitch_joint: 0.54
+      r_pelvis_roll_joint: -0.02
+      r_pelvis_yaw_joint: 0.0
+      r_knee_pitch_joint: 0.99
+      r_ankle_pitch_joint: 0.48
+      r_ankle_roll_joint: 0.03
+      l_shoulder_pitch_joint: -0.08
+      l_shoulder_roll_joint: 0.0
+      l_elbow_pitch_joint: -2.90
+      r_shoulder_pitch_joint: 0.08
+      r_shoulder_roll_joint: 0.0
+      r_elbow_pitch_joint: 2.90

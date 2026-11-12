@@ -1,0 +1,9 @@
+{
+  "original_sha256": "477dcff62aa2572b12d7cad58dc71c4a1628871d0c8695a869450ffc5bdf52aa",
+  "patched_sha256": "f01d1cccbcbaa3fce71513e27ceb3b7bb4ecb654807fdbdc69e03c3a46234396",
+  "target": "src/mx3_src/humanoid_policy_runner/humanoid_policy_runner/actor_onnx_walking_runner.py",
+  "timeout_seconds": 0.5,
+  "model_or_gains_changed": false,
+  "runtime_test_domain": 77,
+  "runtime_test_status": "PENDING"
+}

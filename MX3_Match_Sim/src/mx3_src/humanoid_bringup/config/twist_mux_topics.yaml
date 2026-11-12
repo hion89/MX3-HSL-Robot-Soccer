@@ -1,0 +1,64 @@
+# ==========================================================================
+# twist_mux_topics.yaml
+# --------------------------------------------------------------------------
+# 여러 명령 소스(teleop / Nav2 / behavior FSM)가 보내는 cmd_vel 을
+# 우선순위로 다중화(mux)해 하나의 출력으로 합치는 설정.
+#
+# [흐름]
+#   각 소스 → (각자의 입력 토픽) → twist_mux → /cmd_vel_raw → lateral_correction → /cmd_vel → actor
+#
+# [동작 규칙]
+#   - priority 가 높은 토픽이 메시지를 보내는 동안 낮은 토픽은 무시된다.
+#   - 어떤 토픽이 timeout(초) 동안 메시지를 안 보내면, 그 토픽은 "비활성"으로
+#     간주되어 다음 우선순위 토픽이 출력을 가져간다.
+#   - 즉 "높은 우선순위 소스가 말하는 동안에는 그쪽, 조용해지면 아래로 양보".
+#
+# [실행 시 파라미터로 출력 토픽을 /cmd_vel_raw 로 remap 한다 — launch 파일 참조]
+# ==========================================================================
+
+twist_mux:
+  ros__parameters:
+
+    # ── 입력 토픽 목록 ──
+    topics:
+
+      # behavior FSM 이 직접 내는 보행 명령(기본 자율 동작).
+      # 경기 중 대부분의 시간 동안 이 소스가 cmd 를 만든다.
+      behavior:
+        topic:    cmd_vel_behavior
+        timeout:  0.5      # FSM 이 0.5s 이상 침묵하면 정지(0속도)로 양보
+        priority: 10
+
+      # Nav2(RPP)가 내는 경로 추종 명령(예: 공 접근 주행).
+      # behavior FSM 이 "지금은 Nav2 로 주행" 상태일 때 cmd_vel_nav 로 흐른다.
+      # behavior 와 같은 계열이므로 우선순위를 약간 높여 주행 중 우선권을 준다.
+      navigation:
+        topic:    cmd_vel_nav
+        timeout:  0.5
+        priority: 20
+
+      # 키보드 텔레옵(수동/디버깅용). 사람이 개입하면 즉시 모든 자율 명령을
+      # 덮어쓰도록 가장 높은 우선순위를 준다. 테스트 중 안전 개입 용도.
+      teleop:
+        topic:    cmd_vel_teleop
+        timeout:  0.3      # 사람이 키를 떼면 빠르게 자율로 복귀
+        priority: 100
+
+    # ── 락(lock) 목록 ──
+    # std_msgs/Bool 토픽이 True 가 되면, 그 priority 이하의 모든 입력 토픽을
+    # 강제로 막아(=0 속도) 로봇을 멈춘다. RoboCup 의 GameController 상태와
+    # 연동하기 좋다: Penalized / Finished / Initial 등에서 즉시 정지.
+    locks:
+
+      # 경기 정지/페널티 락. behavior·navigation 보다 높고 teleop 보다 낮게 두면,
+      # 자율 명령은 전부 막되 사람이 텔레옵으로 로봇을 빼낼 수는 있게 된다.
+      game_stop:
+        topic:    game_stop_lock
+        timeout:  0.0      # 0.0 = 주기적 publish 불필요(상태 바뀔 때만 보냄)
+        priority: 50
+
+      # (선택) 비상 정지 — 모든 것을 막는 최상위 락.
+      estop:
+        topic:    estop_lock
+        timeout:  0.0
+        priority: 255

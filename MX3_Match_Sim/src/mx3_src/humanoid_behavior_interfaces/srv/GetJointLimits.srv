@@ -1,0 +1,12 @@
+# 모든 등록된 조인트의 EEPROM 기반 위치 한계값을 한 번에 반환.
+# pose_slider_gui 가 시작 시 슬라이더 범위를 모터 실제 한계에 맞추기 위해 사용.
+#
+# joint_names, lower_limits_rad, upper_limits_rad 는 같은 길이의 병렬 배열.
+# i 번째 원소가 한 세트.
+# 읽기 실패한 모터는 결과에서 제외됨 (응답 message 에 어느 모터가 실패했는지 기록).
+---
+bool success
+string message
+string[] joint_names
+float64[] lower_limits_rad
+float64[] upper_limits_rad

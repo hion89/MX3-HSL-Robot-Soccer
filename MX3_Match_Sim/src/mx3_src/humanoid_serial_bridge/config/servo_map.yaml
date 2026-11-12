@@ -1,0 +1,191 @@
+#servo_map.yaml
+
+joint_map:
+  # ---------------- Legs (Left) ----------------
+  l_pelvis_pitch_joint :  11
+  l_pelvis_roll_joint  :  9
+  l_pelvis_yaw_joint   :  7
+  l_knee_pitch_joint   :  5
+  l_ankle_pitch_joint  :  3
+  l_ankle_roll_joint   :  1
+  
+  # ---------------- Legs (Right) ----------------
+  r_pelvis_pitch_joint :  12
+  r_pelvis_roll_joint  :  10
+  r_pelvis_yaw_joint   :  8
+  r_knee_pitch_joint   :  6
+  r_ankle_pitch_joint  :  4
+  r_ankle_roll_joint   :  2
+  
+  # ---------------- Arms (Left) ----------------
+  l_shoulder_pitch_joint : 13
+  l_shoulder_roll_joint  : 15
+  l_elbow_pitch_joint    : 17
+
+  # ---------------- Arms (Right) ----------------
+  r_shoulder_pitch_joint : 14
+  r_shoulder_roll_joint  : 16
+  r_elbow_pitch_joint    : 18
+
+  # ---------------- Neck ----------------
+  # 2026-08 이관: AX-18A(Protocol 1.0, STM32 MCU 버스) → MX-64(Protocol 2.0, U2D2 버스)
+  #
+  # [단위가 전부 바뀐다]
+  #   AX-18A : 1024 tick / 300°, center=512, 속도 0.111 rpm/unit
+  #   MX-64  : 4096 tick / 360°, center=2048, 속도 0.229 rpm/LSB  ← XM540 과 동일
+  #   → 아래 limits 의 rad_per_tick / center_tick / rpm_per_tick 을 몸통과
+  #     그대로 공유해도 된다. 목만 따로 계수를 둘 필요가 없다.
+  #
+  # [모터에 미리 넣어둬야 하는 EEPROM 값] (khuber_dxl_setup.py 또는 Wizard)
+  #   - ID           : 19 / 20   (MX-64 공장 기본 ID 는 1 이다. 버스에 붙이기
+  #                               전에 반드시 단독으로 바꿀 것. 안 그러면
+  #                               l_ankle_roll_joint(ID 1) 와 충돌한다)
+  #   - Baudrate     : 3,000,000 (몸통과 동일해야 같은 버스에서 통신됨)
+  #   - Return Delay Time(addr 9) : 0
+  #       기본값 250 = 500us. 목 2개면 SyncRead 사이클에 1ms 가 그냥 붙는다.
+  #   - Operating Mode(addr 11)   : 3 (Position Control)
+  #   - Min/Max Position Limit    : 목 기구 가동범위로 하드 제한
+  #       neck_control_node 의 deg clamp 는 소프트 방어선이고, 이게 최종 방어선.
+  neck_yaw_joint   : 19
+  neck_pitch_joint : 20
+
+
+limits:
+  rad_per_tick: 0.0015339807878856412
+  rpm_per_tick: 0.229
+  center_tick: 2048
+  position_min: 0
+  position_max: 4095
+
+  # === Profile Velocity 일괄 쓰기 제외 관절 ===
+  # set_profile_velocity_all() 은 등록된 모든 모터에 같은 속도를 SyncWrite 한다.
+  # robot_init / standup / kick 이 마무리에 45rpm(=270°/s)을 쓰는데, 목이 그
+  # 속도로 돌면 카메라(ZED 2i)가 흔들려 인식이 통째로 무너진다.
+  # → 여기에 적은 관절은 일괄 쓰기에서 빠지고,
+  #   set_profile_velocity_joints() 로만 개별 지정된다.
+  #   (목 속도는 neck_control_node 가 /u2d2/set_joint_profile_velocity 로 관리)
+  profile_velocity_exclude:
+    - neck_yaw_joint
+    - neck_pitch_joint
+
+
+  # === 모터 제어용 방향(실제 제어부에서 곱하는 방향) ===
+  direction_control:
+    l_pelvis_pitch_joint :  1
+    l_pelvis_roll_joint  :  1
+    l_pelvis_yaw_joint   :  1
+    l_knee_pitch_joint   :  1
+    l_ankle_pitch_joint  :  1
+    l_ankle_roll_joint   :  1
+
+    r_pelvis_pitch_joint :  1
+    r_pelvis_roll_joint  :  1
+    r_pelvis_yaw_joint   :  1
+    r_knee_pitch_joint   :  1
+    r_ankle_pitch_joint  :  1
+    r_ankle_roll_joint   :  1
+
+    l_shoulder_pitch_joint : 1
+    l_shoulder_roll_joint  : 1
+    l_elbow_pitch_joint    : 1
+
+    r_shoulder_pitch_joint : 1
+    r_shoulder_roll_joint  : 1
+    r_elbow_pitch_joint    : 1
+
+    # 목 — 실물 검증 전 임시값(+1).
+    # 여기 부호는 "URDF 관절 rad ↔ 모터 tick" 방향만 담당한다.
+    # "API deg(+ = 왼쪽/위) ↔ URDF rad" 변환 부호는 neck_control_node 의
+    # yaw_sign / pitch_sign 파라미터가 따로 담당하므로 헷갈리지 말 것.
+    # 검증 절차는 파일 하단 주석 참조.
+    neck_yaw_joint   : 1
+    neck_pitch_joint : -1
+
+  # ✅ serial_bridge_node.py 호환용 (limits.get('direction', {}) 로 읽는 경우)
+  direction:
+    l_pelvis_pitch_joint :  1
+    l_pelvis_roll_joint  :  1
+    l_pelvis_yaw_joint   :  1
+    l_knee_pitch_joint   :  1
+    l_ankle_pitch_joint  :  1
+    l_ankle_roll_joint   :  1
+
+    r_pelvis_pitch_joint :  1
+    r_pelvis_roll_joint  :  1
+    r_pelvis_yaw_joint   :  1
+    r_knee_pitch_joint   :  1
+    r_ankle_pitch_joint  :  1
+    r_ankle_roll_joint   :  1
+
+    l_shoulder_pitch_joint : 1
+    l_shoulder_roll_joint  : 1
+    l_elbow_pitch_joint    : 1
+
+    r_shoulder_pitch_joint : 1
+    r_shoulder_roll_joint  : 1
+    r_elbow_pitch_joint    : 1
+
+    neck_yaw_joint   : 1
+    neck_pitch_joint : -1
+
+  # === 모터위치를 알려주는 엔코더의 부호 ===
+  
+  direction_display:
+    l_pelvis_pitch_joint :  1
+    l_pelvis_roll_joint  :  1
+    l_pelvis_yaw_joint   :  1
+    l_knee_pitch_joint   :  1
+    l_ankle_pitch_joint  :  1
+    l_ankle_roll_joint   :  1
+
+    r_pelvis_pitch_joint :  1
+    r_pelvis_roll_joint  :  1
+    r_pelvis_yaw_joint   :  1
+    r_knee_pitch_joint   :  1
+    r_ankle_pitch_joint  :  1
+    r_ankle_roll_joint   :  1
+
+    l_shoulder_pitch_joint : 1
+    l_shoulder_roll_joint  : 1
+    l_elbow_pitch_joint    : 1
+
+    r_shoulder_pitch_joint : 1
+    r_shoulder_roll_joint  : 1
+    r_elbow_pitch_joint    : 1
+
+    neck_yaw_joint   : 1
+    neck_pitch_joint : -1
+
+# ============================================================================
+# [목 부호/영점 검증 절차] — 처음 한 번은 반드시 손으로 확인할 것
+#
+#  0) 준비: 목만 토크 오프
+#       ros2 service call /u2d2/torque_enable_joints \
+#         humanoid_behavior_interfaces/srv/TorqueEnableJoints \
+#         "{joint_names: ['neck_yaw_joint','neck_pitch_joint'], enable: false}"
+#
+#  1) direction_display (피드백 부호) 확인
+#       ros2 topic echo /neck/yaw_deg_state
+#       ros2 topic echo /neck/pitch_deg_state
+#     손으로 목을 "왼쪽"으로 돌렸을 때  yaw_deg_state 가 +  로 커져야 한다.
+#     손으로 목을 "아래"로  내렸을 때  pitch_deg_state 가 -  로 작아져야 한다.
+#     반대면 해당 관절의 direction_display 를 -1 로 바꾼다.
+#     (동시에 RViz 에서 카메라 TF 가 실제와 같은 방향으로 도는지도 확인)
+#
+#  2) 영점(정면/수평) 확인
+#     기구적으로 정면·수평일 때 두 state 가 0 근처여야 한다.
+#     조립상 어긋나면 모터 Homing Offset(addr 20) 으로 맞추거나,
+#     neck_control_node 의 yaw_offset_deg / pitch_offset_deg 로 보정한다.
+#
+#  3) direction_control (명령 부호) 확인 — 토크 ON 후
+#       ros2 topic pub --once /neck/yaw_deg std_msgs/Float32 "{data: 20.0}"
+#     목이 "왼쪽"으로 20° 가야 한다. 오른쪽으로 가면 direction_control 을 -1 로.
+#     ★ 반드시 좁은 각도(±20°)부터 시작할 것. 부호가 반대인데 큰 값을 주면
+#       기구 hard-stop 에 그대로 박는다.
+#
+# [부호가 두 군데로 나뉜 이유]
+#   direction_* (이 파일)          : URDF 관절 rad  ↔  모터 tick   (기구 장착 방향)
+#   yaw_sign/pitch_sign (노드 param): API deg        ↔  URDF 관절 rad (규약 변환)
+#   기존 AX-18A 시절 neck_state_parser_node 의 규약을 그대로 유지하기 위해
+#   pitch_sign 기본값은 -1.0 이다 (URDF neck_pitch_joint = -radians(pitch_deg)).
+# ============================================================================

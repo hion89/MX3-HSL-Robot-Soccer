@@ -1,0 +1,97 @@
+# =============================================================================
+#  ekf.yaml  —  robot_localization ekf_filter_node 설정
+#
+#  [역할] walk_odometry 의 /odom(부드럽지만 드리프트) 과
+#         비전의 /localization/vision_pose(절대지만 떨림/간헐) 를 융합해
+#         지도 기준 위치를 추정하고 map→odom TF 를 발행한다.
+#
+#  [입력 정책 — 이중적분 방지]
+#   - /odom        : "속도만"(vx, vy, vyaw) 사용. 위치/자세는 비전이 잡는다.
+#   - /vision_pose : "절대 위치/자세"(x, y, yaw) 사용. 떨림은 공분산으로 EKF 가 흡수.
+#
+#  [프레임/TF] world_frame=map + odom0 입력 → EKF 가 map→odom TF 를 발행.
+#   odom→base_link 는 walk_odometry, base_link→camera 는 robot_state_publisher 담당.
+#   (Phase 2 의 static map→odom 항등 TF 는 끈다 — 주인이 EKF 로 바뀜)
+#
+#  ★ ROS2 파라미터 파서 주의: 리스트(시퀀스)의 원소 타입은 전부 같아야 한다.
+#    process_noise_covariance 는 0 을 0.0 으로 써서 전부 float 로 통일해야 파싱된다.
+#    (정수 0 과 실수 0.02 를 섞으면 "Sequence should be of same type" 에러)
+#
+#  최상위 키는 노드 이름('ekf_filter_node')과 일치해야 한다.
+# =============================================================================
+ekf_filter_node:
+  ros__parameters:
+    # 추정/발행 주파수. 비전·odom 보다 빠르게 돌려 부드럽게 보간한다.
+    frequency: 30.0
+
+    # 2D 로봇 — z, roll, pitch 및 그 속도를 0 으로 강제(평면 가정).
+    # 보행 흔들림(roll/pitch)이 위치추정에 새 들어오지 않게 한다.
+    two_d_mode: true
+
+    # TF 발행: world_frame=map 이므로 map→odom 을 발행한다.
+    publish_tf: true
+    transform_time_offset: 0.0
+    transform_timeout: 0.0
+
+    # --- 프레임 이름 ---
+    map_frame: map
+    odom_frame: odom
+    base_link_frame: base_link
+    world_frame: map          # ★ map → EKF 가 map→odom 발행
+
+    # =========================================================================
+    #  입력 1) /odom (walk_odometry) — 속도만 사용
+    #  15-bool 순서: [x,y,z, roll,pitch,yaw, vx,vy,vz, vroll,vpitch,vyaw, ax,ay,az]
+    #  → vx, vy, vyaw 만 true. 위치/자세는 비전 담당.
+    # =========================================================================
+    odom0: /odom
+    odom0_config: [false, false, false,
+                   false, false, false,
+                   true,  true,  false,
+                   false, false, true,
+                   false, false, false]
+    odom0_differential: false
+    odom0_relative: false
+    odom0_queue_size: 10
+
+    # =========================================================================
+    #  입력 2) /localization/vision_pose — 절대 위치/자세 사용 (x, y, yaw)
+    # =========================================================================
+    pose0: /localization/vision_pose
+    pose0_config: [true,  true,  false,
+                   false, false, true,
+                   false, false, false,
+                   false, false, false,
+                   false, false, false]
+    pose0_differential: false
+    pose0_relative: false
+    pose0_queue_size: 10
+
+    # 이상치 거부(Mahalanobis 거리 임계) — 보행 중 비전이 크게 튀는 프레임을 거부해
+    # EKF 가 그 튐을 따라가지 않고 odom 으로 이어가게 한다(위치 상실 방지).
+    # 값↓ = 더 엄격(많이 거부), 값↑ = 느슨.
+    #   · 그래도 위치를 잃으면 3~4 로 낮춘다.
+    #   · 너무 자주 거부돼 드리프트하면 10+ 로 올린다.
+    pose0_rejection_threshold: 6.0
+
+    # --- 안정화 ---
+    reset_on_time_jump: true
+    smooth_lagged_data: false
+
+    # 프로세스 노이즈 공분산(Q) 15x15 대각. 값↑ = 모델 덜 믿고 측정에 빨리 반응.
+    # ★ 모든 원소가 float(0.0). 정수 0 을 쓰면 파서가 거부한다.
+    process_noise_covariance: [0.02, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+                               0.0, 0.02, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+                               0.0, 0.0, 0.01, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+                               0.0, 0.0, 0.0, 0.01, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+                               0.0, 0.0, 0.0, 0.0, 0.01, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+                               0.0, 0.0, 0.0, 0.0, 0.0, 0.02, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+                               0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.03, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+                               0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.03, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+                               0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.01, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+                               0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.01, 0.0, 0.0, 0.0, 0.0, 0.0,
+                               0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.01, 0.0, 0.0, 0.0, 0.0,
+                               0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.03, 0.0, 0.0, 0.0,
+                               0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.01, 0.0, 0.0,
+                               0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.01, 0.0,
+                               0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.01]

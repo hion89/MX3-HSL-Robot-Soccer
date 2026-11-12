@@ -1,0 +1,221 @@
+# ==========================================================================
+# robot_params.yaml  (humanoid_bringup/config)
+# --------------------------------------------------------------------------
+# 로봇별 하드웨어 quirk / 튜닝 값. 여러 런치 파일이 "공통 규칙"으로 읽는다.
+#
+#   병합 규칙 : common  <  <robot> 섹션   (로봇 섹션이 common 을 override)
+#   섹션 선택 : robot 인자. 비면 hostname 앞부분 (robo04-desktop → robo04)
+#
+# ★ 여기 적는다고 다 적용되는 게 아니다 ★
+#   각 런치는 자기가 아는 키만 골라서 노드에 넘긴다. 특히 control.launch.py 는
+#   화이트리스트(ACTOR_ROBOT_KEYS / CORRECTION_KEYS)로 거른다. 목록에 없는 키를
+#   적으면 조용히 버려지고, 기동 로그에 아래처럼 찍힌다:
+#       [robot_params] actor 미전달 키(...): [...]
+#   → 새 키를 추가할 때는 반드시 소비처 런치의 화이트리스트도 같이 고칠 것.
+#
+# ==========================================================================
+# [연결 지도] 이 파일에서 실제로 읽히는 키는 아래가 전부다 (2026-08-24 정리)
+# --------------------------------------------------------------------------
+#   키                          소비 런치                        → 노드
+#   ------------------------    ----------------------------     --------------
+#   team_number                 game_controller / team_comm      게임컨트롤러·팀통신
+#   player_number               game_controller / team_comm /
+#                               strategy / role_assigner         전략 FSM 등
+#   grav_offset_x/y/z           control.launch.py                actor_onnx_walking_node
+#   pelvis_pitch_offset         control.launch.py                actor_onnx_walking_node
+#   vy_trim / vx_activation     control.launch.py                lateral_drift_correction_node
+#   scale_with_vx / vx_ref      control.launch.py                lateral_drift_correction_node
+#   vx_trim, vx_trim_max_cmd,
+#   vx_trim_clamp,
+#   vx_trim_gait_modes,
+#   vx_trim_require_lock        control.launch.py                lateral_drift_correction_node
+#   wz_trim, wz_trim_limit,
+#   wz_trim_min_cmd,
+#   wz_out_limit,
+#   wz_trim_scale_with_vx       control.launch.py                lateral_drift_correction_node
+#   imu_mount_roll_deg          dynamixel_system.launch.py       imu_parser_node
+#   imu_mount_pitch_deg         dynamixel_system.launch.py       imu_parser_node
+#
+#   ※ 재진입 시드 오프셋은 이 파일이 아니라
+#     humanoid_localization/config/reentry_positions.yaml 에 있다.
+#     (vision_localization.launch.py 의 "robot_params.yaml reentry.<robot>"
+#      주석은 옛 경로를 가리키는 오래된 문구다)
+#
+# ==========================================================================
+# [세 가지 자세 트림의 차이] 섞어 쓰면 원인 추적이 불가능해진다
+# --------------------------------------------------------------------------
+#   imu_mount_roll/pitch_deg : IMU 장착 각도 오차. '측정 자체'를 회전시킨다.
+#                              정책·낙상판정(fall_manager)·EKF 전부에 영향.
+#                              khuber_imu_calib 로 측정한 값만 넣을 것.
+#   grav_offset_x/y/z        : 정책이 보는 projected_gravity 를 속인다(폐루프).
+#                              actor 노드 관측에만 영향. 낙상판정과 무관.
+#   pelvis_pitch_offset      : 정책 출력 뒤에 관절값을 더한다(개루프).
+#                              기구적 편차가 확실할 때만 마지막 수단으로.
+#
+#   ★ grav_offset_x 부호 ★  (코드로 검증한 규약 — 러너 주석은 틀렸다)
+#     러너는 g_obs = g_true - grav_offset 으로 뺀다. 정자세 g=(0,0,-1) 이고
+#     앞으로 숙이면 g.x > 0 이므로:
+#       grav_offset_x 음수 → 정책이 "더 앞으로 숙었다"고 인지 → 뒤로 세움
+#                          → 로봇은 실제로 뒤로 쏠린다
+#       grav_offset_x 양수 → 반대. 뒤로 쏠리는 증상은 양수로 잡는다
+#     환산: 0.0175 ≈ 1도.  실측 근거(robo02, v0_2, cmd_vx 0.25, P800 D500):
+#       0.0    딱딱 +3.90도  잔디 +5.34도   (+ = 앞으로 숙음)
+#       -0.1   딱딱 -1.85도  잔디 +0.42도   (딱딱에서 뒤로 과보정)
+#     ⚠ actor_onnx_walking_runner.py 의 인라인 주석(497행/1199행 부근)은
+#       부호가 반대로 적혀 있다. 코드와 위 실측표가 맞다.
+#
+# ==========================================================================
+# [튜닝 후 값 고정 방법]
+#   1) control_teleop / control_joypad 로 띄우고 라이브 튜닝
+#        ros2 param set /actor_onnx_walking_node grav_offset_x 0.02
+#        ros2 param set /lateral_drift_correction_node vy_trim -0.05
+#   2) 좋은 값이 나오면 해당 로봇 섹션에 적고 colcon build --symlink-install
+# ==========================================================================
+
+# ── 모든 로봇 공통 기본값 ──
+common:
+  # 팀 번호. 명시하지 않으면 런치 기본값 35 가 쓰이지만, 숨은 기본값에
+  # 의존하지 않도록 여기 적어 둔다(값은 기존 동작과 동일).
+  team_number: 35
+
+  # ── 가상 중력 오프셋 (actor 노드 관측 트림) ──
+  #   부호 규약과 실측 근거는 위 헤더 참조. 0.0175 ≈ 1도.
+  #   -x = 뒤로 쏠림 / +x = 앞으로 숙임 방향으로 실제 자세가 움직인다.
+  grav_offset_x: -0.0
+  #   +y = 정책이 "왼쪽으로 기울었다"고 인지 → 오른쪽으로 보정
+  grav_offset_y: 0.0
+  #   grav_offset_z 는 노드에 파라미터가 남아 있지만(기본 0.0) 중력벡터의
+  #   크기만 바꾸는 값이라 자세 트림으로는 의미가 없어 여기서 뺐다.
+
+  # ── 골반 pitch 기구 트림 (actor 노드 출력단) ──
+  #   개루프라 정책이 되돌리지 못한다. grav_offset 으로 안 잡히는
+  #   기구적 편차가 확실할 때만 쓸 것. 좌우 관절축이 미러링이라
+  #   부호는 실기에서 확인해야 한다.
+  # pelvis_pitch_offset: 0.0
+
+  # ── 횡 drift 보정 (lateral_drift_correction_node) ──
+  #   vy_out = vy_user + vy_trim   (단, vx >= vx_activation 일 때만)
+  #   로봇이 왼쪽(+y)으로 밀리면 vy_trim 을 음수로 준다.
+  #   ★ vy_trim 을 지우면 안 된다 ★ 키가 없으면 control.launch.py 의
+  #     CORRECTION_DEFAULTS(-0.1)로 되돌아가 동작이 바뀐다.
+  vy_trim: 0.0
+  #   정지 상태에서 vy_trim 을 더하면 제자리에서 옆으로 기어가므로,
+  #   이 전진속도 이상일 때만 적용한다.
+  vx_activation: 0.05
+  #   true 면 vy_trim 을 전진속도에 비례시킨다(vy_trim * vx / vx_ref).
+  scale_with_vx: false
+  #   위 비례식의 기준속도. vy_trim 을 측정했을 때의 전진속도를 적는다.
+  vx_ref: 0.3
+
+  # ── 제자리 후진 drift 보정 (lateral_drift_correction_node, 2026-08-24 추가) ──
+  #   제자리걸음에서 뒤로 밀릴 때만 쓰는 보정이다.
+  #     vx_out = vx_user + vx_trim   (아래 조건을 전부 통과할 때만)
+  #       · 정지락(game_stop_lock / estop_lock)이 안 걸려 있고
+  #       · gait_mode 가 vx_trim_gait_modes 안에 있고 (기본 march 만)
+  #       · 입력 명령 노름이 vx_trim_max_cmd 이하(= 사실상 0)이고
+  #       · 보정 후 출력 노름을 vx_trim_clamp 로 클램프
+  #
+  #   ★ 이건 증상 보정이지 원인 수정이 아니다 ★
+  #     제자리 후진의 근본 원인은 보통 자세(pitch)나 학습 default 자세
+  #     불일치다. grav_offset_x / imu_mount_pitch_deg / leg_init_q 를 먼저
+  #     확인하고, 남는 잔여 drift 만 여기서 메울 것.
+  #
+  #   ★ vx_trim_clamp 는 0.1 미만을 유지할 것 ★
+  #     러너가 norm(vx,vy,wz) < standing_threshold(0.1) 를 "정지" 로 본다.
+  #     이 경계를 넘기면 auto 모드에서 로봇이 영영 멈추지 않는다.
+  #
+  #   기본값 0.0 = 완전 비활성. 튜닝은 라이브로 하고, 값이 정해지면
+  #   로봇 섹션에 적는다(로봇마다 다를 가능성이 높다):
+  #     ros2 param set /lateral_drift_correction_node vx_trim 0.03
+  vx_trim: 0.0
+  # vx_trim_max_cmd: 0.02          # "제자리" 로 볼 입력 명령 노름 상한
+  # vx_trim_clamp: 0.09            # 출력 명령 노름 상한 (< 0.1 필수)
+  # vx_trim_gait_modes: ["march"]  # ["march","auto"] 로 넓힐 수 있음
+  # vx_trim_require_lock: false    # ★ 경기 스택에서는 true 권장 ★
+
+  # ── yaw drift 보정 (lateral_drift_correction_node, 2026-08-28 추가) ──
+  #   전진 중 heading 이 한쪽으로 계속 누적될 때 쓰는 보정이다.
+  #     wz_out = wz_user + wz_trim   (아래 조건을 전부 통과할 때만)
+  #       · vx >= vx_activation (전진 중)
+  #       · 입력 명령 노름 >= wz_trim_min_cmd (사실상 정지가 아님)
+  #       · 보정 후 |wz| 를 wz_out_limit 로 클램프
+  #
+  #   부호: 로봇이 왼쪽(+z, 반시계)으로 휘면 wz_trim 을 음수로 준다.
+  #
+  #   ★ 값 잡는 법 ★
+  #     측정한 drift[deg/s] → rad/s 로 바꾸고 실측 스케일 0.7 로 나눈다.
+  #       예) 4.2 deg/s = 0.0733 rad/s → 0.0733 / 0.7 ≈ 0.105
+  #     부호를 뒤집어 넣고 ±0.02 씩 조정한다. 라이브 튜닝:
+  #       ros2 param set /lateral_drift_correction_node wz_trim -0.105
+  #
+  #   ★ wz_trim_min_cmd 는 0.1 이상을 유지할 것 ★
+  #     러너가 norm(vx,vy,wz) < standing_threshold(0.1) 를 "정지" 로 본다.
+  #     이 값이 0.1 미만이면 사실상 정지 상태에 회전 바이어스가 더해져
+  #     로봇이 제자리에서 돌기 시작한다.
+  #
+  #   ★ 이건 증상 보정이지 원인 수정이 아니다 ★
+  #     yaw drift 의 근본 원인은 보통 좌우 다리 비대칭(관절 영점 오프셋,
+  #     혼 조립 톱니 어긋남, 링크 길이 차)이다. 진단 순서:
+  #       1) march 제자리걸음 30초 — 제자리에서도 도는가?
+  #       2) 로봇을 180도 돌려 반복 — 로봇 기준인가 필드 기준(바닥 경사)인가?
+  #       3) 다른 기체도 같은 방향인가? — 같으면 정책, 다르면 기체
+  #
+  #   기본값 0.0 = 완전 비활성. 기체마다 다를 가능성이 높으므로 값이
+  #   정해지면 common 이 아니라 해당 로봇 섹션에 적는다.
+  wz_trim: 0.0
+  # wz_trim_limit: 0.20            # |wz_trim| 안전 한도 (오타 방지)
+  # wz_trim_min_cmd: 0.12          # 적용할 입력 명령 노름 하한 (> 0.1 필수)
+  # wz_out_limit: 1.5              # 보정 후 |wz| 상한 (학습 분포 유지)
+  # wz_trim_scale_with_vx: false   # true 면 vx 에 비례 (보통 불필요)
+  #                                #   락 토픽 미수신 시 보정을 적용하지 않음
+
+# ── 로봇별 override (hostname 앞부분 = 섹션 이름) ──
+#   여기에 적을 수 있는 것은 위 '연결 지도' 의 키뿐이다.
+#   imu_mount_* 는 로봇마다 반드시 다르므로 khuber_imu_calib 로 측정해 채운다:
+#       ros2 run humanoid_utils khuber_imu_calib     # 수평 스탠드에서 1회
+robo01:
+  player_number: 1
+  # imu_mount_roll_deg: 0.0
+  # imu_mount_pitch_deg: 0.0
+
+robo02:
+  player_number: 2
+  
+  wz_trim: 0.0
+  grav_offset_x: -0.1
+  imu_mount_roll_deg: 0.0
+  imu_mount_pitch_deg: -0.18
+
+robo03:
+  player_number: 3
+  vy_trim: -0.1
+  # imu_mount_roll_deg: 0.0
+  # imu_mount_pitch_deg: 0.0
+
+robo04:
+  player_number: 4
+  vy_trim: 0.024
+  # imu_mount_roll_deg: 0.0
+  # imu_mount_pitch_deg: 0.0
+
+# ==========================================================================
+# [2026-08-24 제거된 키 — 기록용]
+# --------------------------------------------------------------------------
+# 아래 키들은 구 actor_onnx_walk_residual_kick_runner 시절 것이다. 현재
+# walking 러너는 declare 하지 않고 control.launch.py 화이트리스트도 막고
+# 있어서, 이 파일에 남겨둬도 100% 버려진다. 값만 기록으로 남기고 지웠다.
+#
+#   common : cmd_vx 0.30 / resume_hold_seconds 0.0 / kick_cutoff_s 1.0 /
+#            walk_resume_hold_seconds 0.0 / kick_grav_offset_x,y,z 0.0
+#   robo02 : resume_hold_seconds 0.5
+#   robo03 : resume_hold_seconds 0.3 / kick_grav_offset_x 0.1 / kick_cutoff_s 0.72
+#   robo04 : resume_hold_seconds 0.5 / kick_grav_offset_x 0.12 / kick_cutoff_s 0.7
+#
+# ⚠ cmd_vx 는 이름은 같지만 walking 러너에서 의미가 정반대다("/cmd_vel 수신 전
+#   초기 속도명령"). 화이트리스트를 풀어 0.30 을 넘기면 기동 직후 아무도
+#   명령하지 않았는데 0.3 m/s 로 전진한다. 킥 러너를 되살리더라도 이 키만은
+#   그대로 복사하지 말 것.
+#
+# 킥 러너 복귀 시 튜닝 값이 필요하면 git 이력에서 이 파일을 꺼내 보면 된다.
+# 필요 없어지면 이 주석 블록째로 지워도 무방하다.
+# ==========================================================================

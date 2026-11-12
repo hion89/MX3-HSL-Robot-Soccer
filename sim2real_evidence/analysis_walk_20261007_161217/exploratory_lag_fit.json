@@ -1,0 +1,62 @@
+{
+  "l_knee_pitch_joint": {
+    "fit_window_s": [
+      0.2,
+      1.9
+    ],
+    "zero_lag_rmse_rad": 0.0535058854773861,
+    "best_grid_lag_ms": 60.0,
+    "best_rmse_rad": 0.03137285823087122,
+    "label": "exploratory trajectory shift, not isolated transport delay"
+  },
+  "r_knee_pitch_joint": {
+    "fit_window_s": [
+      0.2,
+      1.9
+    ],
+    "zero_lag_rmse_rad": 0.06895755469134254,
+    "best_grid_lag_ms": 95.0,
+    "best_rmse_rad": 0.03657356028635695,
+    "label": "exploratory trajectory shift, not isolated transport delay"
+  },
+  "l_ankle_pitch_joint": {
+    "fit_window_s": [
+      0.2,
+      1.9
+    ],
+    "zero_lag_rmse_rad": 0.046958871606190465,
+    "best_grid_lag_ms": 55.0,
+    "best_rmse_rad": 0.034082699682456925,
+    "label": "exploratory trajectory shift, not isolated transport delay"
+  },
+  "r_ankle_pitch_joint": {
+    "fit_window_s": [
+      0.2,
+      1.9
+    ],
+    "zero_lag_rmse_rad": 0.03236845078109778,
+    "best_grid_lag_ms": 55.0,
+    "best_rmse_rad": 0.021787693536770684,
+    "label": "exploratory trajectory shift, not isolated transport delay"
+  },
+  "l_pelvis_pitch_joint": {
+    "fit_window_s": [
+      0.2,
+      1.9
+    ],
+    "zero_lag_rmse_rad": 0.04236290843415609,
+    "best_grid_lag_ms": 80.0,
+    "best_rmse_rad": 0.02533568575799119,
+    "label": "exploratory trajectory shift, not isolated transport delay"
+  },
+  "r_pelvis_pitch_joint": {
+    "fit_window_s": [
+      0.2,
+      1.9
+    ],
+    "zero_lag_rmse_rad": 0.038817300315781775,
+    "best_grid_lag_ms": 80.0,
+    "best_rmse_rad": 0.01672969302417937,
+    "label": "exploratory trajectory shift, not isolated transport delay"
+  }
+}

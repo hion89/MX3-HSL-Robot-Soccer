@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<package format="3">
+  <name>hsl_team_comm</name>
+  <version>0.1.0</version>
+  <description>HSL 팀 통신 — UDP 브로드캐스트로 pose·공·역할·도달시간 공유 (B-Human TeamMessageHandler 대응)</description>
+  <maintainer email="gntjr2@gmail.com">bami001</maintainer>
+  <license>BSD-3-Clause</license>
+  <exec_depend>rclpy</exec_depend>
+  <exec_depend>std_msgs</exec_depend>
+  <exec_depend>hsl_interfaces</exec_depend>
+  <exec_depend>humanoid_behavior_interfaces</exec_depend>
+  <export><build_type>ament_python</build_type></export>
+</package>

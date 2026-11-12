@@ -1,0 +1,152 @@
+source /opt/ros/humble/setup.bash
+source /home/robo04/sim2real_ws/install/setup.bash
+
+python3 /home/robo04/incoming/check_mux_stop_20261105.py
+)
+LOG_DIR=/home/robo04/sim2real_ws/runtime_logs/mux_stop_20261105_165302_9jch4uam
+Isolated domain 77; no hardware/policy nodes started.
+{"name": "discovery", "seconds": 2.5, "output_count": 0, "late_output_count": 0, "late_zero_count": 0, "late_forward_count": 0, "cache_before": [0.0, 0.0, 0.0], "cache_after": [0.0, 0.0, 0.0]}
+{"name": "behavior_forward", "seconds": 1.2, "output_count": 23, "late_output_count": 17, "late_zero_count": 0, "late_forward_count": 17, "cache_before": [0.0, 0.0, 0.0], "cache_after": [0.2, 0.0, 0.0]}
+{"name": "behavior_timeout", "seconds": 1.3, "output_count": 0, "late_output_count": 0, "late_zero_count": 0, "late_forward_count": 0, "cache_before": [0.2, 0.0, 0.0], "cache_after": [0.2, 0.0, 0.0]}
+{"name": "resume_forward", "seconds": 1.0, "output_count": 19, "late_output_count": 13, "late_zero_count": 0, "late_forward_count": 13, "cache_before": [0.2, 0.0, 0.0], "cache_after": [0.2, 0.0, 0.0]}
+{"name": "game_stop_lock", "seconds": 1.2, "output_count": 0, "late_output_count": 0, "late_zero_count": 0, "late_forward_count": 0, "cache_before": [0.2, 0.0, 0.0], "cache_after": [0.2, 0.0, 0.0]}
+{"name": "explicit_zero_via_teleop", "seconds": 1.2, "output_count": 23, "late_output_count": 17, "late_zero_count": 17, "late_forward_count": 0, "cache_before": [0.2, 0.0, 0.0], "cache_after": [0.0, 0.0, 0.0]}
+{
+  "status": "COMMAND_TIMEOUT_GUARD_REQUIRED",
+  "failure": null,
+  "domain": 77,
+  "config": "/home/robo04/sim2real_ws/install/humanoid_bringup/share/humanoid_bringup/config/twist_mux_topics.yaml",
+  "config_sha256": "b097e24fe5335c39a87940d3328a0d121fad6f9151d1aa2407ee6510a1607643",
+  "behavior_timeout_seconds": 0.5,
+  "priorities": {
+    "behavior": 10,
+    "teleop": 100,
+    "game_stop": 50
+  },
+  "findings": {
+    "timeout_emitted_zero": false,
+    "timeout_cached_vx": 0.2,
+    "game_lock_emitted_zero": false,
+    "game_lock_cached_vx": 0.2,
+    "explicit_zero_stopped_cache": true,
+    "cache_interpretation": "Source cb_cmd_vel replay only; neural walking policy not started"
+  },
+  "phases": [
+    {
+      "name": "discovery",
+      "seconds": 2.5,
+      "output_count": 0,
+      "late_output_count": 0,
+      "late_zero_count": 0,
+      "late_forward_count": 0,
+      "cache_before": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "cache_after": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "name": "behavior_forward",
+      "seconds": 1.2,
+      "output_count": 23,
+      "late_output_count": 17,
+      "late_zero_count": 0,
+      "late_forward_count": 17,
+      "cache_before": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "cache_after": [
+        0.2,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "name": "behavior_timeout",
+      "seconds": 1.3,
+      "output_count": 0,
+      "late_output_count": 0,
+      "late_zero_count": 0,
+      "late_forward_count": 0,
+      "cache_before": [
+        0.2,
+        0.0,
+        0.0
+      ],
+      "cache_after": [
+        0.2,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "name": "resume_forward",
+      "seconds": 1.0,
+      "output_count": 19,
+      "late_output_count": 13,
+      "late_zero_count": 0,
+      "late_forward_count": 13,
+      "cache_before": [
+        0.2,
+        0.0,
+        0.0
+      ],
+      "cache_after": [
+        0.2,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "name": "game_stop_lock",
+      "seconds": 1.2,
+      "output_count": 0,
+      "late_output_count": 0,
+      "late_zero_count": 0,
+      "late_forward_count": 0,
+      "cache_before": [
+        0.2,
+        0.0,
+        0.0
+      ],
+      "cache_after": [
+        0.2,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "name": "explicit_zero_via_teleop",
+      "seconds": 1.2,
+      "output_count": 23,
+      "late_output_count": 17,
+      "late_zero_count": 17,
+      "late_forward_count": 0,
+      "cache_before": [
+        0.2,
+        0.0,
+        0.0
+      ],
+      "cache_after": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    }
+  ],
+  "log_directory": "/home/robo04/sim2real_ws/runtime_logs/mux_stop_20261105_165302_9jch4uam"
+}
+--- mux log (last 12 lines) ---
+[INFO] [1793865182.691185524] [twist_mux]: Topic handler 'topics.behavior' subscribed to topic 'cmd_vel_behavior': timeout = 0.500000s , priority = 10.
+[INFO] [1793865182.692553246] [twist_mux]: Topic handler 'topics.navigation' subscribed to topic 'cmd_vel_nav': timeout = 0.500000s , priority = 20.
+[INFO] [1793865182.692964170] [twist_mux]: Topic handler 'topics.teleop' subscribed to topic 'cmd_vel_teleop': timeout = 0.300000s , priority = 100.
+[INFO] [1793865182.693312597] [twist_mux]: Topic handler 'locks.estop' subscribed to topic 'estop_lock': timeout = None , priority = 255.
+[INFO] [1793865182.693714561] [twist_mux]: Topic handler 'locks.game_stop' subscribed to topic 'game_stop_lock': timeout = None , priority = 50.
+[INFO] [1793865191.074721407] [rclcpp]: signal_handler(SIGINT/SIGTERM)

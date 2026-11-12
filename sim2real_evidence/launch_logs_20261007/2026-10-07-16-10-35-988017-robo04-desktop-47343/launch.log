@@ -1,0 +1,5 @@
+1791357035.9896665 [INFO] [launch]: All log files can be found below /home/robo04/.ros/log/2026-10-07-16-10-35-988017-robo04-desktop-47343
+1791357035.9899144 [INFO] [launch]: Default logging verbosity is set to INFO
+1791357036.0654788 [INFO] [xm540_dual_policy-1]: process started with pid [47344]
+1791357123.7677052 [WARNING] [launch]: user interrupted with ctrl-c (SIGINT)
+1791357124.5181899 [ERROR] [xm540_dual_policy-1]: process has died [pid 47344, exit code 1, cmd '/home/robo04/sim2real_ws/install/humanoid_policy_runner/lib/humanoid_policy_runner/xm540_dual_policy --ros-args -r __node:=xm540_dual_policy --params-file /tmp/launch_params_xsmqn0ik'].

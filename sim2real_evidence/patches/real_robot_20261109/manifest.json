@@ -1,0 +1,55 @@
+{
+  "files": [
+    {
+      "path": "src/hsl_src/hsl_behavior/hsl_behavior/strategy.py",
+      "payload": "strategy.py",
+      "before_sha256": "788da6ed023db82ebb8f6df7a8a87199ab2359133abc3c0ba2ba41c958e4b123",
+      "after_sha256": "7dde565701d992251cdb1958cd26977919914665ac7661dfafa3d700d8de969d"
+    },
+    {
+      "path": "src/hsl_src/hsl_behavior/hsl_behavior/behavior_node.py",
+      "payload": "behavior_node.py",
+      "before_sha256": "6a4c2a677bed142f0f71268c74958879b8d67fcfe27966295006e2f5e363c631",
+      "after_sha256": "6ff3190385f7bcd63a6243745bfd041a87d129ab862823cb8a5af241d7f2ad9e"
+    },
+    {
+      "path": "src/mx3_src/humanoid_bringup/launch/control.launch.py",
+      "payload": "control.launch.py",
+      "before_sha256": "73ac0664ff06b506d98a22099551b9b63c847c5384bc5c46a8d2135297f4e465",
+      "after_sha256": "2c577cad2f64a4b804ab7e7128f74f8ca9557e7b73d711cfae728e8c7a826fc8"
+    },
+    {
+      "path": "src/mx3_src/humanoid_policy_runner/humanoid_policy_runner/actor_onnx_walkkick_v1_runner.py",
+      "payload": "actor_onnx_walkkick_v1_runner.py",
+      "before_sha256": "1bc48054b86735dc6af09b49b525ad416779ef46d12baf2b7e9110366e1c86d9",
+      "after_sha256": "74f0c1d068e1ee1ca6b64c414face0233b83f1c74461a77134b04bf5d7057651"
+    },
+    {
+      "path": "src/mx3_src/humanoid_policy_runner/humanoid_policy_runner/actor_onnx_walking_runner.py",
+      "payload": "actor_onnx_walking_runner.py",
+      "before_sha256": "477dcff62aa2572b12d7cad58dc71c4a1628871d0c8695a869450ffc5bdf52aa",
+      "after_sha256": "f01d1cccbcbaa3fce71513e27ceb3b7bb4ecb654807fdbdc69e03c3a46234396"
+    },
+    {
+      "path": "src/hsl_src/hsl_bringup/launch/real_role_trial.launch.py",
+      "payload": "real_role_trial.launch.py",
+      "before_sha256": null,
+      "after_sha256": "d346bdaac38df4d29fb31c3a37b272080b3ead92238c1b60603ac10777ca51fb"
+    },
+    {
+      "path": "src/hsl_src/hsl_bringup/launch/real_base.launch.py",
+      "payload": "real_base.launch.py",
+      "before_sha256": null,
+      "after_sha256": "c9d1034bcf91d662297615aed347e48d376fdc0e88adca7da6b1790c08604dfe"
+    }
+  ],
+  "robot_packages": [
+    "humanoid_policy_runner",
+    "humanoid_bringup",
+    "hsl_behavior",
+    "hsl_bringup"
+  ],
+  "model_weights_changed": false,
+  "deployment_mode": "Unified base launch; separate real motion/role launch; one robo04",
+  "robot_runtime_status": "PENDING"
+}

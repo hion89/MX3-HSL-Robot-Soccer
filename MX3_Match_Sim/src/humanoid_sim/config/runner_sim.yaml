@@ -1,0 +1,10 @@
+# 시뮬에서만 러너 파라미터 덮기 (sim_robot.launch.py 가 control.launch.py include 범위에만 건다).
+# 보행 러너 CSV 로그 (~/policy_logs) 끔 — 판마다 8 대가 쓰여 이틀에 7.6 GB 쌓였다 (2026-11-02). 실기는 그대로 켜짐.
+# enable_csv_log 은 control.launch.py 의 노드 dict 값이고, launch 는 그 dict 를 '/**' 키 파일로 이 파일 뒤에 붙인다.
+# rcl 은 노드 이름 항목을 처음 나온 순서대로 적용하므로 (뒤가 이김, Jazzy 실측) 빈 '/**' 를 먼저 세우고 뒤에서 덮는다.
+# 순서를 바꾸지 말 것. control.launch.py 노드는 dict 만 받아 '/**' 가 앞에 와도 다른 값은 안 바뀐다.
+/**:
+  ros__parameters: {}
+/**/actor_onnx_walking_node:
+  ros__parameters:
+    enable_csv_log: false

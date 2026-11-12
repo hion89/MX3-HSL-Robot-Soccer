@@ -1,0 +1,13 @@
+string command
+string leg
+float32 final_rpm
+float32 pos_tolerance_rad
+int32 settle_count
+float32 timeout_sec
+---
+bool success
+string message
+string active_leg
+string current_phase
+int32 phase_index
+int32 total_phases

@@ -1,0 +1,107 @@
+--- original/ball_tracker_node.cpp
++++ patched/ball_tracker_node.cpp
+@@ -10,8 +10,10 @@
+ // 출력: /hsl/ball (BallEstimate), /hsl/team_ball (TeamBall)
+ #include <Eigen/Dense>
+ #include <algorithm>
++#include <cstdint>
+ #include <deque>
+ #include <memory>
++#include <string>
+ 
+ #include "geometry_msgs/msg/pose_array.hpp"
+ #include "geometry_msgs/msg/transform_stamped.hpp"
+@@ -32,7 +34,9 @@
+ class BallTracker : public rclcpp::Node
+ {
+ public:
+-  BallTracker() : Node("hsl_ball_tracker"), tf_buf_(get_clock()), tf_listener_(tf_buf_)
++  // Keep TF subscriptions on this node and its executor. All TF lookups below
++  // are non-blocking, so no separate listener node or thread is required.
++  BallTracker() : Node("hsl_ball_tracker"), tf_buf_(get_clock()), tf_listener_(tf_buf_, this, false)
+   {
+     friction_ = declare_parameter<double>("ball_friction", 0.5);              // 등감속 [m/s²]
+     process_pos_ = declare_parameter<double>("process_noise_pos", 0.02);       // [m/√s]
+@@ -64,13 +68,20 @@
+     obstacle_pub_ = create_publisher<geometry_msgs::msg::PoseArray>("/hsl/obstacles", 10);
+     team_ball_pub_ = create_publisher<hsl_interfaces::msg::TeamBall>("/hsl/team_ball", 10);
+     det_sub_ = create_subscription<vision_msgs::msg::Detection3DArray>("/perception/detections_3d", 10,
+-      [this](vision_msgs::msg::Detection3DArray::SharedPtr m) { pending_.push_back(m); if(pending_.size() > 5) pending_.pop_front(); });
++      [this](vision_msgs::msg::Detection3DArray::SharedPtr m) {
++        ++detections_received_;
++        pending_.push_back(m);
++        if(pending_.size() > 5) pending_.pop_front();
++      });
+     team_sub_ = create_subscription<hsl_interfaces::msg::TeamState>("/hsl/team_state", 10,
+       [this](hsl_interfaces::msg::TeamState::SharedPtr m) { team_ = m; });
+     state_sub_ = create_subscription<std_msgs::msg::String>("/robot_state", 10,
+       [this](std_msgs::msg::String::SharedPtr m) { robot_state_ = m->data; });
+     timer_ = create_wall_timer(std::chrono::duration<double>(1.0 / rate), std::bind(&BallTracker::cycle, this));
+     last_cycle_ = now();
++    RCLCPP_INFO(get_logger(),
++      "TF_CONFIG listener=parent-node topics=/tf,/tf_static odom='%s' base='%s' camera='%s'",
++      odom_frame_.c_str(), base_frame_.c_str(), camera_frame_.c_str());
+   }
+ 
+ private:
+@@ -104,10 +115,34 @@
+     while(!pending_.empty()) {
+       const auto msg = pending_.front();
+       const rclcpp::Time st(msg->header.stamp);
+-      if(!tf_buf_.canTransform(odom_frame_, msg->header.frame_id, st) ||
+-         !tf_buf_.canTransform(base_frame_, msg->header.frame_id, st)) {
++      std::string odom_error, base_error;
++      const auto no_wait = rclcpp::Duration::from_seconds(0.0);
++      const bool have_odom = tf_buf_.canTransform(
++        odom_frame_, msg->header.frame_id, st, no_wait, &odom_error);
++      const bool have_base = tf_buf_.canTransform(
++        base_frame_, msg->header.frame_id, st, no_wait, &base_error);
++      if(!have_odom || !have_base) {
++        const rclcpp::Time latest(0, 0, get_clock()->get_clock_type());
++        std::string latest_error;
++        const bool have_latest_odom = tf_buf_.canTransform(
++          odom_frame_, msg->header.frame_id, latest, no_wait, &latest_error);
++        const bool have_latest_base = tf_buf_.canTransform(
++          base_frame_, msg->header.frame_id, latest, no_wait, &latest_error);
++        RCLCPP_WARN_THROTTLE(get_logger(), *get_clock(), 3000,
++          "TF_WAIT source='%s' age=%.3fs detections=%llu tf_publishers=%zu static_publishers=%zu "
++          "latest_odom=%s latest_base=%s odom_error=[%s] base_error=[%s] cached_frames=[%s]",
++          msg->header.frame_id.c_str(), (now() - st).seconds(),
++          static_cast<unsigned long long>(detections_received_),
++          count_publishers("/tf"), count_publishers("/tf_static"),
++          have_latest_odom ? "yes" : "no", have_latest_base ? "yes" : "no",
++          odom_error.c_str(), base_error.c_str(), tf_buf_.allFramesAsString().c_str());
+         if((now() - st).seconds() > 0.25) { pending_.pop_front(); continue; }   // 포기
+         return;
++      }
++      if(!tf_ready_logged_) {
++        RCLCPP_INFO(get_logger(), "TF_READY source='%s' targets='%s','%s' at detection timestamp",
++          msg->header.frame_id.c_str(), odom_frame_.c_str(), base_frame_.c_str());
++        tf_ready_logged_ = true;
+       }
+       pending_.pop_front();
+       onDetections(msg);
+@@ -156,7 +191,13 @@
+     const Eigen::Matrix2d R = Rr * Eigen::Vector2d(sr * sr, st * st).asDiagonal() * Rr.transpose();
+ 
+     const rclcpp::Time stamp = msg->header.stamp;
+-    if(!initialized_) { init(z, R, stamp); return; }
++    if(!initialized_) {
++      init(z, R, stamp);
++      RCLCPP_INFO(get_logger(),
++        "BALL_INITIALIZED base=(%.3f,%.3f,%.3f)m camera=(%.3f,%.3f,%.3f)m score=%.3f",
++        pb.x(), pb.y(), pb.z(), pc.x(), pc.y(), pc.z(), best_score);
++      return;
++    }
+     Eigen::Matrix<double, 2, 4> H = Eigen::Matrix<double, 2, 4>::Zero();
+     H(0, 0) = H(1, 1) = 1.0;
+     const Eigen::Vector2d innov = z - x_.head<2>();
+@@ -318,6 +359,8 @@
+   int max_outliers_;
+   std::string camera_frame_, map_frame_, odom_frame_, base_frame_, robot_state_;
+   bool initialized_ = false;
++  bool tf_ready_logged_ = false;
++  std::uint64_t detections_received_ = 0;
+   int outliers_ = 0;
+   Vec4 x_ = Vec4::Zero();
+   Mat4 P_ = Mat4::Identity();

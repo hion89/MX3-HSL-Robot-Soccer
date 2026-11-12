@@ -1,0 +1,512 @@
+Panels:
+- Class: rviz_common/Displays
+  Help Height: 70
+  Name: Displays
+  Property Tree Widget:
+    Expanded:
+    - /VisionDebug1
+    Splitter Ratio: 0.5
+  Tree Height: 185
+- Class: rviz_common/Views
+  Expanded:
+  - /Current View1
+  Name: Views
+  Splitter Ratio: 0.5
+Visualization Manager:
+  Class: ''
+  Displays:
+  - Alpha: 0.5
+    Cell Size: 0.5
+    Class: rviz_default_plugins/Grid
+    Color: 160; 160; 160
+    Enabled: true
+    Line Style:
+      Line Width: 0.029999999329447746
+      Value: Lines
+    Name: Grid
+    Normal Cell Count: 0
+    Offset:
+      X: 0
+      Y: 0
+      Z: 0
+    Plane: XY
+    Plane Cell Count: 12
+    Reference Frame: <Fixed Frame>
+    Value: true
+  - Class: rviz_default_plugins/TF
+    Enabled: true
+    Frame Timeout: 15
+    Frames:
+      All Enabled: true
+      base_link:
+        Value: true
+      camera_color_frame:
+        Value: true
+      camera_color_optical_frame:
+        Value: true
+      camera_depth_frame:
+        Value: true
+      camera_depth_optical_frame:
+        Value: true
+      camera_link:
+        Value: true
+      l_ankle_pitch_link:
+        Value: true
+      l_ankle_roll_link:
+        Value: true
+      l_elbow_pitch_link:
+        Value: true
+      l_knee_pitch_link:
+        Value: true
+      l_pelvis_pitch_link:
+        Value: true
+      l_pelvis_roll_link:
+        Value: true
+      l_pelvis_yaw_link:
+        Value: true
+      l_shoulder_pitch_link:
+        Value: true
+      l_shoulder_roll_link:
+        Value: true
+      map:
+        Value: true
+      neck_pitch_link:
+        Value: true
+      neck_yaw_link:
+        Value: true
+      odom:
+        Value: true
+      r_ankle_pitch_link:
+        Value: true
+      r_ankle_roll_link:
+        Value: true
+      r_elbow_pitch_link:
+        Value: true
+      r_knee_pitch_link:
+        Value: true
+      r_pelvis_pitch_link:
+        Value: true
+      r_pelvis_roll_link:
+        Value: true
+      r_pelvis_yaw_link:
+        Value: true
+      r_shoulder_pitch_link:
+        Value: true
+      r_shoulder_roll_link:
+        Value: true
+    Marker Scale: 0.4000000059604645
+    Name: TF
+    Show Arrows: true
+    Show Axes: true
+    Show Names: true
+    Tree:
+      map:
+        odom:
+          base_link:
+            l_pelvis_pitch_link:
+              l_pelvis_roll_link:
+                l_pelvis_yaw_link:
+                  l_knee_pitch_link:
+                    l_ankle_pitch_link:
+                      l_ankle_roll_link: {}
+            l_shoulder_pitch_link:
+              l_shoulder_roll_link:
+                l_elbow_pitch_link: {}
+            neck_yaw_link:
+              neck_pitch_link:
+                camera_link:
+                  camera_color_frame:
+                    camera_color_optical_frame: {}
+                  camera_depth_frame:
+                    camera_depth_optical_frame: {}
+            r_pelvis_pitch_link:
+              r_pelvis_roll_link:
+                r_pelvis_yaw_link:
+                  r_knee_pitch_link:
+                    r_ankle_pitch_link:
+                      r_ankle_roll_link: {}
+            r_shoulder_pitch_link:
+              r_shoulder_roll_link:
+                r_elbow_pitch_link: {}
+    Update Interval: 0
+    Value: true
+  - Alpha: 1
+    Class: rviz_default_plugins/RobotModel
+    Collision Enabled: false
+    Description File: ''
+    Description Source: Topic
+    Description Topic:
+      Depth: 5
+      Durability Policy: Transient Local
+      History Policy: Keep Last
+      Reliability Policy: Reliable
+      Value: /robot_description
+    Enabled: true
+    Links:
+      All Links Enabled: true
+      Expand Joint Details: false
+      Expand Link Details: false
+      Expand Tree: false
+      Link Tree Style: Links in Alphabetic Order
+      base_link:
+        Alpha: 1
+        Show Axes: false
+        Show Trail: false
+        Value: true
+      camera_link:
+        Alpha: 1
+        Show Axes: false
+        Show Trail: false
+      l_ankle_pitch_link:
+        Alpha: 1
+        Show Axes: false
+        Show Trail: false
+        Value: true
+      l_ankle_roll_link:
+        Alpha: 1
+        Show Axes: false
+        Show Trail: false
+        Value: true
+      l_elbow_pitch_link:
+        Alpha: 1
+        Show Axes: false
+        Show Trail: false
+        Value: true
+      l_knee_pitch_link:
+        Alpha: 1
+        Show Axes: false
+        Show Trail: false
+        Value: true
+      l_pelvis_pitch_link:
+        Alpha: 1
+        Show Axes: false
+        Show Trail: false
+        Value: true
+      l_pelvis_roll_link:
+        Alpha: 1
+        Show Axes: false
+        Show Trail: false
+        Value: true
+      l_pelvis_yaw_link:
+        Alpha: 1
+        Show Axes: false
+        Show Trail: false
+        Value: true
+      l_shoulder_pitch_link:
+        Alpha: 1
+        Show Axes: false
+        Show Trail: false
+        Value: true
+      l_shoulder_roll_link:
+        Alpha: 1
+        Show Axes: false
+        Show Trail: false
+        Value: true
+      neck_pitch_link:
+        Alpha: 1
+        Show Axes: false
+        Show Trail: false
+        Value: true
+      neck_yaw_link:
+        Alpha: 1
+        Show Axes: false
+        Show Trail: false
+        Value: true
+      r_ankle_pitch_link:
+        Alpha: 1
+        Show Axes: false
+        Show Trail: false
+        Value: true
+      r_ankle_roll_link:
+        Alpha: 1
+        Show Axes: false
+        Show Trail: false
+        Value: true
+      r_elbow_pitch_link:
+        Alpha: 1
+        Show Axes: false
+        Show Trail: false
+        Value: true
+      r_knee_pitch_link:
+        Alpha: 1
+        Show Axes: false
+        Show Trail: false
+        Value: true
+      r_pelvis_pitch_link:
+        Alpha: 1
+        Show Axes: false
+        Show Trail: false
+        Value: true
+      r_pelvis_roll_link:
+        Alpha: 1
+        Show Axes: false
+        Show Trail: false
+        Value: true
+      r_pelvis_yaw_link:
+        Alpha: 1
+        Show Axes: false
+        Show Trail: false
+        Value: true
+      r_shoulder_pitch_link:
+        Alpha: 1
+        Show Axes: false
+        Show Trail: false
+        Value: true
+      r_shoulder_roll_link:
+        Alpha: 1
+        Show Axes: false
+        Show Trail: false
+        Value: true
+    Mass Properties:
+      Inertia: false
+      Mass: false
+    Name: RobotModel
+    TF Prefix: ''
+    Update Interval: 0
+    Value: true
+    Visual Enabled: true
+  - Class: rviz_default_plugins/MarkerArray
+    Enabled: true
+    Name: FieldLines
+    Namespaces:
+      field_lines: true
+      goals: true
+      turf: true
+    Topic:
+      Depth: 5
+      Durability Policy: Transient Local
+      History Policy: Keep Last
+      Reliability Policy: Reliable
+      Value: /field_markers
+    Value: true
+  - Class: rviz_default_plugins/MarkerArray
+    Enabled: true
+    Name: VisionDebug
+    Namespaces:
+      det_score: true
+      landmarks: true
+      matched: true
+      observed: true
+      residual: true
+      robot: true
+    Topic:
+      Depth: 5
+      Durability Policy: Transient Local
+      History Policy: Keep Last
+      Reliability Policy: Reliable
+      Value: /localization/vision_debug
+    Value: true
+  - Alpha: 1
+    Axes Length: 0.30000001192092896
+    Axes Radius: 0.019999999552965164
+    Class: rviz_default_plugins/PoseWithCovariance
+    Color: 255; 25; 0
+    Covariance:
+      Orientation:
+        Alpha: 0.5
+        Color: 255; 255; 127
+        Color Style: Unique
+        Frame: Local
+        Offset: 1
+        Scale: 1
+        Value: true
+      Position:
+        Alpha: 0.30000001192092896
+        Color: 204; 51; 204
+        Scale: 1
+        Value: true
+      Value: false
+    Enabled: true
+    Head Length: 0.30000001192092896
+    Head Radius: 0.10000000149011612
+    Name: VisionPose
+    Shaft Length: 1
+    Shaft Radius: 0.05000000074505806
+    Shape: Axes
+    Topic:
+      Depth: 5
+      Durability Policy: Volatile
+      Filter size: 10
+      History Policy: Keep Last
+      Reliability Policy: Reliable
+      Value: /localization/vision_pose
+    Value: true
+  - Angle Tolerance: 0.009999999776482582
+    Class: rviz_default_plugins/Odometry
+    Covariance:
+      Orientation:
+        Alpha: 0.5
+        Color: 255; 255; 127
+        Color Style: Unique
+        Frame: Local
+        Offset: 1
+        Scale: 1
+        Value: true
+      Position:
+        Alpha: 0.30000001192092896
+        Color: 204; 51; 204
+        Scale: 1
+        Value: true
+      Value: false
+    Enabled: true
+    Keep: 1
+    Name: EKF Filtered
+    Position Tolerance: 0.009999999776482582
+    Shape:
+      Alpha: 1
+      Axes Length: 1
+      Axes Radius: 0.10000000149011612
+      Color: 255; 25; 0
+      Head Length: 0.30000001192092896
+      Head Radius: 0.10000000149011612
+      Shaft Length: 1
+      Shaft Radius: 0.05000000074505806
+      Value: Arrow
+    Topic:
+      Depth: 10
+      Durability Policy: Volatile
+      Filter size: 10
+      History Policy: Keep Last
+      Reliability Policy: Reliable
+      Value: /odometry/filtered
+    Value: true
+  - Alpha: 1
+    Buffer Length: 1
+    Class: rviz_default_plugins/Path
+    Color: 25; 255; 255
+    Enabled: true
+    Head Diameter: 0.30000001192092896
+    Head Length: 0.20000000298023224
+    Length: 0.30000001192092896
+    Line Style: Lines
+    Line Width: 0.029999999329447746
+    Name: Nav2 Path
+    Offset:
+      X: 0
+      Y: 0
+      Z: 0
+    Pose Color: 255; 85; 255
+    Pose Style: None
+    Radius: 0.029999999329447746
+    Shaft Diameter: 0.10000000149011612
+    Shaft Length: 0.10000000149011612
+    Topic:
+      Depth: 5
+      Durability Policy: Volatile
+      Filter size: 10
+      History Policy: Keep Last
+      Reliability Policy: Reliable
+      Value: /plan
+    Value: true
+  - Alpha: 1
+    Axes Length: 1
+    Axes Radius: 0.10000000149011612
+    Class: rviz_default_plugins/Pose
+    Color: 255; 25; 255
+    Enabled: true
+    Head Length: 0.15000000596046448
+    Head Radius: 0.07000000029802322
+    Name: Goal Pose
+    Shaft Length: 0.4000000059604645
+    Shaft Radius: 0.029999999329447746
+    Shape: Arrow
+    Topic:
+      Depth: 5
+      Durability Policy: Volatile
+      Filter size: 10
+      History Policy: Keep Last
+      Reliability Policy: Reliable
+      Value: /pose_goal
+    Value: true
+  - Class: rviz_default_plugins/Marker
+    Enabled: true
+    Name: Marker
+    Namespaces:
+      ball: true
+    Topic:
+      Depth: 5
+      Durability Policy: Volatile
+      Filter size: 10
+      History Policy: Keep Last
+      Reliability Policy: Reliable
+      Value: /ball/marker
+    Value: true
+  - Class: rviz_default_plugins/MarkerArray
+    Enabled: true
+    Name: SIM 정답 (초록=로봇, 흰공=공)
+    Namespaces: {}
+    Topic:
+      Depth: 5
+      Durability Policy: Volatile
+      History Policy: Keep Last
+      Reliability Policy: Reliable
+      Value: /sim/gt/markers
+    Value: true
+  Enabled: true
+  Global Options:
+    Background Color: 48; 48; 48
+    Fixed Frame: map
+    Frame Rate: 30
+  Name: root
+  Tools:
+  - Class: rviz_default_plugins/MoveCamera
+  - Class: rviz_default_plugins/SetInitialPose
+    Covariance x: 0.25
+    Covariance y: 0.25
+    Covariance yaw: 0.06853891909122467
+    Topic:
+      Depth: 5
+      Durability Policy: Volatile
+      History Policy: Keep Last
+      Reliability Policy: Reliable
+      Value: /initialpose
+  - Class: rviz_default_plugins/SetGoal
+    Topic:
+      Depth: 5
+      Durability Policy: Volatile
+      History Policy: Keep Last
+      Reliability Policy: Reliable
+      Value: /pose_goal
+  - Class: rviz_default_plugins/Measure
+    Line color: 128; 128; 0
+  Transformation:
+    Current:
+      Class: rviz_default_plugins/TF
+  Value: true
+  Views:
+    Current:
+      Class: rviz_default_plugins/Orbit
+      Distance: 5.913599967956543
+      Enable Stereo Rendering:
+        Stereo Eye Separation: 0.05999999865889549
+        Stereo Focal Distance: 1
+        Swap Stereo Eyes: false
+        Value: false
+      Focal Point:
+        X: 0
+        Y: 0
+        Z: 0
+      Focal Shape Fixed Size: true
+      Focal Shape Size: 0.05000000074505806
+      Invert Z Axis: false
+      Name: Current View
+      Near Clip Distance: 0.009999999776482582
+      Pitch: 1.2000000476837158
+      Target Frame: <Fixed Frame>
+      Value: Orbit (rviz_default_plugins)
+      Yaw: 3.140000104904175
+    Saved: null
+Window Geometry:
+  Detections:
+    collapsed: false
+  Displays:
+    collapsed: false
+  Height: 800
+  Hide Left Dock: false
+  Hide Right Dock: false
+  QMainWindow State: 000000ff00000000fd00000001000000000000019b000002cafc0200000003fb000000140044006500740065006300740069006f006e0073010000003b000000bb0000002800fffffffb000000100044006900730070006c00610079007301000000fc0000013a000000c700fffffffb0000000a00560069006500770073010000023c000000c9000000a000ffffff0000030f000002ca00000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
+  Views:
+    collapsed: false
+  Width: 1200
+  X: 190
+  Y: 56

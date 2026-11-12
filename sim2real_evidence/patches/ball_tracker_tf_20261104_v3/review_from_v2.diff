@@ -1,0 +1,24 @@
+--- v2
++++ v3
+@@ -34,9 +34,9 @@
+ class BallTracker : public rclcpp::Node
+ {
+ public:
+-  // Keep TF subscriptions on this node and its executor. All TF lookups below
+-  // are non-blocking, so no separate listener node or thread is required.
+-  BallTracker() : Node("hsl_ball_tracker"), tf_buf_(get_clock()), tf_listener_(tf_buf_, this, false)
++  // Bind TF subscriptions to this node and run their dedicated executor.
++  // Humble Buffer checks for this thread even for zero-timeout ROS-time calls.
++  BallTracker() : Node("hsl_ball_tracker"), tf_buf_(get_clock()), tf_listener_(tf_buf_, this, true)
+   {
+     friction_ = declare_parameter<double>("ball_friction", 0.5);              // 등감속 [m/s²]
+     process_pos_ = declare_parameter<double>("process_noise_pos", 0.02);       // [m/√s]
+@@ -80,7 +80,7 @@
+     timer_ = create_wall_timer(std::chrono::duration<double>(1.0 / rate), std::bind(&BallTracker::cycle, this));
+     last_cycle_ = now();
+     RCLCPP_INFO(get_logger(),
+-      "TF_CONFIG listener=parent-node topics=/tf,/tf_static odom='%s' base='%s' camera='%s'",
++      "TF_CONFIG listener=parent-node-dedicated topics=/tf,/tf_static odom='%s' base='%s' camera='%s'",
+       odom_frame_.c_str(), base_frame_.c_str(), camera_frame_.c_str());
+   }
+ 

@@ -1,0 +1,8 @@
+# 빈 필드 맵 (장애물 없음, 전부 free). 맵 중심이 map 원점(0,0)에 오도록 origin 설정.
+image: empty_field.pgm
+mode: trinary
+resolution: 0.05
+origin: [-3.0, -2.0, 0.0]   # 좌하단 좌표 = (-W/2, -H/2). 중심이 (0,0)
+negate: 0
+occupied_thresh: 0.65
+free_thresh: 0.25

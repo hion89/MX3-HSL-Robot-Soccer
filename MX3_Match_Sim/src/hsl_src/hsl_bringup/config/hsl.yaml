@@ -1,0 +1,45 @@
+# hsl 상위 계층 노드 파라미터 (기본값은 각 노드 코드에 있음 — 여기엔 바꾼 것만, 근거와 함께)
+hsl_leg_odometry:
+  ros__parameters:
+    sole_offset: [0.057, 0.0, -0.04]   # 발목 롤 링크 → 발바닥 중심 (MX3 발 메시 기준)
+    stance_hysteresis: 0.004
+    imu_topic: /imu/data
+
+hsl_self_localizer:
+  ros__parameters:
+    number_of_samples: 12               # B-Human 과 같음
+    # 회전 노이즈: B-Human 값은 NAO 다리 오도메트리 기준 (회전이 부정확). 우리는 heading 을 IMU 에서 받아
+    # 훨씬 정확하므로 줄인다 — 안 줄이면 가설들의 방향이 퍼져 랜드마크 오연결로 방향이 끌려간다.
+    odometry_deviation: [0.2, 0.2, 0.05]          # x, y 비율 / 회전 비율 (B-Human 0.3)
+    odometry_rotation_deviation: [0.2, 0.2]       # 이동 1 m 당 회전 σ [rad] (B-Human 1.57)
+    moved_dist_weight_rotation_noise: 0.05        # 가설별 회전 흩뿌림 [rad/m] (B-Human 0.3)
+    moved_angle_weight_rotation_noise: 0.05       # (B-Human 0.25)
+    update_rate: 30.0
+    max_percept_distance: 4.5           # 실기 경험: 4 m 검출도 나오지만 σ ~50 cm (range_noise 로 약하게 반영)
+
+hsl_ball_tracker:
+  ros__parameters:
+    ball_friction: 0.5                  # 시뮬 공 (평균 3 m 굴림) 기준 대략값
+    camera_max_depth: 4.3
+
+hsl_team_comm:
+  ros__parameters:
+    send_rate_hz: 2.0                   # HSL 2026 팀당 게임당 12,000 개: 4 대 × 2 Hz × 20 분 ≈ 9,600
+    teammate_timeout: 2.0
+    event_send: true                    # 공 담당·넘어짐 플래그 변화, 공 도달 시간 1 s 넘게 변화 → 즉시 송신
+    event_ttb_delta: 1.0
+    event_rate_hz: 0.25                 # 즉시 송신 토큰 버킷 (평균 ≤ 2.25 Hz → 4 대 20 분 10,800 개)
+    event_burst: 3.0
+
+hsl_behavior:
+  ros__parameters:
+    default_game_state: initial         # GC 없으면 정지 (실기 안전)
+    vx_max: 0.40
+    vy_max: 0.25
+    wz_max: 1.0
+    min_cmd_norm: 0.12                  # 보행 러너 standing_threshold 0.1 + 여유
+    kick_dist_min: 0.25                 # 킥 정책 학습 분포 0.2~0.5 m 안쪽
+    kick_dist_max: 0.45
+    kick_bearing_max_deg: 55.0          # 학습 ±90° 안쪽
+    kick_target_max_deg: 35.0           # 학습 ±90° 안쪽, 정확도 위해 좁게
+    neck_speed_rpm: 15.0                # 목 MX-64 Profile Velocity (90°/s, 시뮬과 같게). 0 = 안 건드림

@@ -1,0 +1,29 @@
+[INFO] [1793863316.936370070] [hsl_walk_shadow]: ONNX available providers: ['TensorrtExecutionProvider', 'CUDAExecutionProvider', 'CPUExecutionProvider']
+[INFO] [1793863316.957645692] [hsl_walk_shadow]: ONNX loaded: /home/robo04/sim2real_ws/src/hsl_src/hsl_bringup/models/walk_v0_6_13500.onnx
+[INFO] [1793863316.958289324] [hsl_walk_shadow]: ONNX provider: CPUExecutionProvider
+[INFO] [1793863316.958838292] [hsl_walk_shadow]:   input:  obs [1, 240]
+[INFO] [1793863316.959368476] [hsl_walk_shadow]:   output: actions [1, 12]
+[INFO] [1793863316.961040087] [hsl_walk_shadow]: Loaded default_joint_pos from robot_init_behavior.
+[INFO] [1793863316.962084804] [hsl_walk_shadow]: CSV logging: /home/robo04/sim2real_ws/runtime_logs/walk_shadow_20261105_162155_qeh2uxxq/v0_2_log_20261105_162156.csv (131 columns)
+[INFO] [1793863316.963279933] [hsl_walk_shadow]: gravity_source = derive
+[INFO] [1793863316.991629390] [hsl_walk_shadow]: variant=v0_2 policy_rate_hz=50.0 (event-driven) frame=48 obs_dim=240
+[INFO] [1793863316.992291231] [hsl_walk_shadow]: gait: freq=2.0Hz scale=2.0 stop_rate=2.0 mode=auto (최대 정지 시간 0.250s)
+[INFO] [1793863316.992831079] [hsl_walk_shadow]: action_scale=0.25
+[INFO] [1793863320.032232818] [hsl_walk_shadow]: [rate] actual=32.6Hz declared=50.0Hz policy_dt=20.0ms
+[INFO] [1793863320.032830750] [hsl_walk_shadow]: tick=100 STOPPED phase=0.000 f=0.00 a0=+1.022 qt0=+0.876 infer=0.28ms
+[INFO] [1793863322.112632004] [hsl_walk_shadow]: [rate] actual=38.8Hz declared=50.0Hz policy_dt=20.0ms
+[INFO] [1793863322.113309429] [hsl_walk_shadow]: tick=200 STOPPED phase=0.000 f=0.00 a0=+1.025 qt0=+0.876 infer=0.31ms
+[INFO] [1793863324.219238029] [hsl_walk_shadow]: [rate] actual=41.3Hz declared=50.0Hz policy_dt=20.0ms
+[INFO] [1793863324.219945760] [hsl_walk_shadow]: tick=300 STOPPED phase=0.000 f=0.00 a0=+1.024 qt0=+0.876 infer=0.27ms
+[INFO] [1793863326.292470422] [hsl_walk_shadow]: [rate] actual=42.9Hz declared=50.0Hz policy_dt=20.0ms
+[INFO] [1793863326.293260559] [hsl_walk_shadow]: tick=400 STOPPED phase=0.000 f=0.00 a0=+1.023 qt0=+0.876 infer=0.29ms
+[INFO] [1793863328.372527818] [hsl_walk_shadow]: [rate] actual=43.8Hz declared=50.0Hz policy_dt=20.0ms
+[INFO] [1793863328.373183833] [hsl_walk_shadow]: tick=500 STOPPED phase=0.000 f=0.00 a0=+1.021 qt0=+0.875 infer=0.46ms
+[INFO] [1793863330.452125731] [hsl_walk_shadow]: [rate] actual=44.5Hz declared=50.0Hz policy_dt=20.0ms
+[INFO] [1793863330.452749327] [hsl_walk_shadow]: tick=600 STOPPED phase=0.000 f=0.00 a0=+1.023 qt0=+0.876 infer=0.27ms
+[INFO] [1793863332.532305104] [hsl_walk_shadow]: [rate] actual=45.0Hz declared=50.0Hz policy_dt=20.0ms
+[INFO] [1793863332.532899002] [hsl_walk_shadow]: tick=700 STOPPED phase=0.000 f=0.00 a0=+1.024 qt0=+0.876 infer=0.28ms
+[INFO] [1793863334.612873386] [hsl_walk_shadow]: [rate] actual=45.3Hz declared=50.0Hz policy_dt=20.0ms
+[INFO] [1793863334.613544953] [hsl_walk_shadow]: tick=800 STOPPED phase=0.000 f=0.00 a0=+1.022 qt0=+0.875 infer=0.30ms
+[INFO] [1793863335.862355072] [hsl_walk_shadow]: CSV closed: 859 rows
+Failed to publish log message to rosout: publisher's context is invalid, at ./src/rcl/publisher.c:389

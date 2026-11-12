@@ -1,0 +1,49 @@
+diff --git a/rsl_rl/algorithms/ppo.py b/rsl_rl/algorithms/ppo.py
+index 1479c06..7f53cd5 100644
+--- a/rsl_rl/algorithms/ppo.py
++++ b/rsl_rl/algorithms/ppo.py
+@@ -304,11 +304,20 @@ class PPO:
+                 value_clipped = target_values_batch + (value_batch - target_values_batch).clamp(
+                     -self.clip_param, self.clip_param
+                 )
+-                value_losses = (value_batch - returns_batch).pow(2)
+-                value_losses_clipped = (value_clipped - returns_batch).pow(2)
++                # ===== Huber Loss 적용 =====
++                huber_delta = 2.0
++                value_losses = torch.nn.functional.huber_loss(
++                    value_batch, returns_batch, reduction='none', delta=huber_delta
++                )
++                value_losses_clipped = torch.nn.functional.huber_loss(
++                    value_clipped, returns_batch, reduction='none', delta=huber_delta
++                )
++                # ============================
+                 value_loss = torch.max(value_losses, value_losses_clipped).mean()
+             else:
+-                value_loss = (returns_batch - value_batch).pow(2).mean()
++                value_loss = torch.nn.functional.huber_loss(
++                    value_batch, returns_batch, delta=10.0
++                )
+ 
+             loss = surrogate_loss + self.value_loss_coef * value_loss - self.entropy_coef * entropy_batch.mean()
+ 
+@@ -374,7 +383,19 @@ class PPO:
+ 
+             # Apply the gradients for PPO
+             nn.utils.clip_grad_norm_(self.policy.parameters(), self.max_grad_norm)
+-            self.optimizer.step()
++            # NaN gradient 감지 → step 스킵 (Adam moment 오염 방지)
++            _has_nan = False
++            for _p in self.policy.parameters():
++                if _p.grad is not None and not torch.isfinite(_p.grad).all():
++                    _has_nan = True
++                    break
++            if not _has_nan:
++                self.optimizer.step()
++            # noise_std 안전장치
++            if hasattr(self.policy, 'log_std'):
++                self.policy.log_std.data = torch.nan_to_num(self.policy.log_std.data, nan=0.0)
++                self.policy.log_std.data.clamp_(min=-5.0, max=1.0)
++
+             # Apply the gradients for RND
+             if self.rnd_optimizer:
+                 self.rnd_optimizer.step()

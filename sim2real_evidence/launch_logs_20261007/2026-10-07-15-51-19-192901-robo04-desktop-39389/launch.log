@@ -1,0 +1,15 @@
+1791355879.1946588 [INFO] [launch]: All log files can be found below /home/robo04/.ros/log/2026-10-07-15-51-19-192901-robo04-desktop-39389
+1791355879.1949189 [INFO] [launch]: Default logging verbosity is set to INFO
+1791355879.3277552 [INFO] [mcu_bridge_node-1]: process started with pid [39390]
+1791355879.3284276 [INFO] [imu_parser_node-2]: process started with pid [39392]
+1791355879.3287780 [INFO] [dip_status_node-3]: process started with pid [39394]
+1791355879.3293197 [INFO] [button_input_node-4]: process started with pid [39396]
+1791355879.3296714 [INFO] [body_motor_controller_node-5]: process started with pid [39398]
+1791355879.3300064 [INFO] [led_control_node-6]: process started with pid [39400]
+1791356549.5557127 [WARNING] [launch]: user interrupted with ctrl-c (SIGINT)
+1791356549.7198102 [INFO] [dip_status_node-3]: process has finished cleanly [pid 39394]
+1791356549.7209492 [INFO] [button_input_node-4]: process has finished cleanly [pid 39396]
+1791356549.7332144 [INFO] [led_control_node-6]: process has finished cleanly [pid 39400]
+1791356549.7382026 [INFO] [mcu_bridge_node-1]: process has finished cleanly [pid 39390]
+1791356549.7614036 [INFO] [imu_parser_node-2]: process has finished cleanly [pid 39392]
+1791356549.7782209 [INFO] [body_motor_controller_node-5]: process has finished cleanly [pid 39398]

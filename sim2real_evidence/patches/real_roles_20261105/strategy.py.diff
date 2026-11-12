@@ -1,0 +1,45 @@
+--- before
++++ after
+@@ -84,7 +84,9 @@
+     bx, by = ball
+     gx, gy = -f.hl, 0.0
+     d = math.hypot(bx - gx, by - gy)
+-    along = clamp(0.45 * d, 1.5, max(1.5, d - 1.2))
++    scale = min(1.0, f.length / 9.0)
++    goal_clearance, ball_clearance = 1.5 * scale, 1.2 * scale
++    along = clamp(0.45 * d, goal_clearance, max(goal_clearance, d - ball_clearance))
+     ux, uy = (bx - gx) / max(d, 1e-6), (by - gy) / max(d, 1e-6)
+     x, y = gx + ux * along, gy + uy * along
+     x = min(x, 0.5)
+@@ -170,7 +172,7 @@
+     active = choose_active(agents, ball_xy, f, current_active, gk_number)
+     d = Decision(active_player=active, active=(active == me.number), tactic="dynamic")
+     if d.active:
+-        d.role = ROLE_GOALKEEPER if me.number == gk_number else current_roles.get(me.number, ROLE_FORWARD)
++        d.role = ROLE_GOALKEEPER if me.number == gk_number else (current_roles.get(me.number) or ROLE_FORWARD)
+         return d
+     if me.number == gk_number:
+         d.role, d.target = ROLE_GOALKEEPER, goalkeeper_pose(ball_xy, f)
+@@ -186,6 +188,22 @@
+     return d
+ 
+ 
++def decide_assigned_role(assigned_role, me, ball_xy, f: Field):
++    """Explicit role assignment for a single real robot; reuse the team skills/poses."""
++    if assigned_role == "attacker":
++        return Decision(role=ROLE_FORWARD, active=True, active_player=me.number, tactic="play_ball")
++    if assigned_role == "defender":
++        return Decision(role=ROLE_DEFENDER, target=defender_pose(ball_xy, f), tactic="defend")
++    if assigned_role == "goalkeeper":
++        active = f.in_own_penalty_area(ball_xy[0], ball_xy[1], 0.3)
++        return Decision(role=ROLE_GOALKEEPER, active=active,
++                        active_player=me.number if active else 0,
++                        target=goalkeeper_pose(ball_xy, f), tactic="goalkeeper")
++    if assigned_role != "auto":
++        raise ValueError("assigned_role must be auto, attacker, defender or goalkeeper")
++    return None
++
++
+ def decide_ready(me, mates, f: Field, we_kick, current_roles, gk_number=1):
+     if me.number == gk_number:
+         return Decision(role=ROLE_GOALKEEPER, target=Pose(-f.hl + 0.5, 0.0, 0.0), tactic="kickoff")

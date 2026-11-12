@@ -1,0 +1,107 @@
+# =============================================================================
+#  vision_localization.yaml  —  field_landmark_localizer_node 파라미터
+#  최상위 키는 노드 이름('field_landmark_localizer_node')과 일치해야 한다.
+# =============================================================================
+field_landmark_localizer_node:
+  ros__parameters:
+    # --- 경기장 프로파일: 연습장 / 대회 전환은 이 한 줄로 끝 ---
+    #     "practice"    = 연습장 3.9 x 2.6 (현재)
+    #     "competition" = 대회 규격 9 x 6 (나중)
+    field_profile: "practice"
+
+    # --- 토픽 / 프레임 ---
+    detections_topic: "/perception/detections_3d"
+    pose_topic: "/localization/vision_pose"
+    initialpose_topic: "/initialpose"
+    map_frame: "map"
+    base_frame: "base_link"
+
+    # --- 검출 클래스 이름(문자열) → 랜드마크 class_id(정수) 매핑 ---
+    #     yolo_detector_3d_node.class_names 인덱스와 동일:
+    #       1:goalpost 5:X-Intersection 6:T-Intersection 7:L-Intersection
+    det_class_names: ["goalpost", "X-Intersection", "T-Intersection", "L-Intersection"]
+    det_class_ids:   [1, 5, 6, 7]
+
+    # --- 실제로 앵커로 쓸 랜드마크 클래스 ---
+    #     골대 높이 편향이 의심되면 [5, 6, 7] 로 goalpost(1) 제외 가능.
+    landmark_classes: [1, 5, 6, 7]
+
+    # --- 검출 필터 ---
+    min_score: 0.40          # 신뢰도 하한
+    min_valid_z_m: 0.05      # 깊이 무효(Z<=0) 검출 제거
+    max_range_m: 8.0         # 이 거리 초과 관측 제외. 대회 9x6(대각 10.8m) 시작값.
+    #   ※ 연습장(대각 4.7m)에선 5.0 이었음. 9x6 은 자기 진영에서 먼 쪽 랜드마크가
+    #     5m 를 훌쩍 넘으므로 넓혔다. 단 D405+YOLO 실검출 신뢰거리 한계가 있으니,
+    #     먼 오검출이 섞여 res 가 나빠지면 6~7 로 낮추고, 관측이 자주 모자라면 9~10 로.
+    # 추정 품질 게이트: 매칭 관측의 평균 재투영 잔차[m] 가 이보다 크면 발행/시드갱신
+    # 건너뜀(틀린 추정 차단, EKF 는 odom coast). RViz "res=..." 숫자 보고 튜닝.
+    # 잘 맞으면 0.05~0.15m → 0.25 시작, 더 엄격히 하려면 0.15, 너무 자주 버리면 0.35.
+    max_residual_m: 0.25
+
+    # --- solver 파라미터 ---
+    #     게이트를 좁히면 수렴 basin 이 넓어지지만 실제 노이즈 허용폭은 줄어든다.
+    min_observations: 2
+    max_iterations: 6
+    range_gate_m: 1.5
+    bearing_gate_rad: 0.9
+    sigma_range_m: 0.25
+    sigma_bearing_rad: 0.20
+    # 거리 의존 range 가중치: 먼 마커의 "거리" 측정을 덜 신뢰(σ 팽창, 방위는 유지).
+    # falloff[m]에서 σ 2배(가중치 1/4). 0=끔. 작을수록 먼 마커를 강하게 깎음.
+    # 연습장(대각 ~4.7m) 기준 2.0 이었음. 9x6 은 전반적으로 마커가 더 멀어
+    # (자기 진영에서 센터/상대 진영이 5~8m) 먼 마커를 덜 깎아야 관측이 유지된다 → 4.0.
+    # 먼 게 여전히 흔들리면 3.0, 너무 무시하면 5.0 으로.
+    range_sigma_falloff_m: 4.0
+    max_step_xy_m: 0.30
+    max_step_yaw_rad: 0.25
+
+    # --- 발행 pose 공분산 / 발행 게이트 ---
+    #  ★ EKF 가중치 손잡이: 값이 클수록 vision 을 "덜 믿어" odom(속도)이 움직임을
+    #     끌고 가고, vision 은 절대 위치를 천천히 조금씩만 당긴다(튐 흡수).
+    #     0.05(강함) → 0.30(약함)으로 상향. 그래도 vision 이 화면을 흔들면 0.5~0.8 로,
+    #     반대로 위치가 odom 드리프트로 서서히 밀리면 다시 낮춘다.
+    pose_sigma_xy: 0.30        # 위치 표준편차[m] (↑ = vision 약하게, odom 우세)
+    pose_sigma_yaw: 0.30       # 방위 표준편차[rad] (↑ = vision 약하게)
+    # Temporarily trust vision more after standup recovery or kick completion.
+    vision_recovery_boost_sec: 4.0
+    vision_recovery_pose_sigma_xy: 0.08
+    vision_recovery_pose_sigma_yaw: 0.06
+    vision_recovery_boost_on_robot_recovery: true
+    vision_recovery_boost_on_kick_done: true
+    robot_state_topic: /robot_state
+    kick_done_topic: /kick_done
+    min_trust_matches: 3       # 이 수 이상이면 기본 공분산, 미만이면 팽창
+    min_publish_matches: 3     # 이 수 미만이면 측정 미발행(EKF 가 odom 으로 coast)
+
+    # --- 시드 전략 ---
+    #     use_tf_seed=true: 정상 시 map→base_link(EKF 결과)를 시드로 사용.
+    #     EKF 가 아직 없으면 조용히 직전 발행 pose 로 폴백한다(standalone 검증 OK).
+    use_tf_seed: true
+    # 부트스트랩 초기 pose(첫 프레임 시드). /initialpose 가 오면 덮어쓴다.
+    # standalone 검증 시 로봇을 둔 실제 위치로 맞춰 두면 좋다.
+    initial_x: 0.0
+    initial_y: 0.0
+    initial_yaw: 0.0
+
+    # --- 회전속도 게이트 ---
+    #   회전 중엔 비전 yaw 가 튀어(블러/매칭급변/틸트/필드대칭) 컨트롤러가 좌우 진동 → 무한반복.
+    #   단, 이족보행은 직진 중에도 매 스텝 좌우로 흔들려 순간 yaw rate 가 출렁임 → 순간값으로 보면 오작동.
+    #   → 저역필터(EMA)로 평활화: 부호 교번하는 보행 흔들림은 상쇄, 같은 부호로 지속되는 회전만 검출.
+    #   평활화된 |yaw rate| 가 임계 초과면 비전을 멈추고 회전을 직접 측정하는 odom 에 맡긴다.
+    odom_topic: /odom                  # 회전속도(twist.angular.z) 소스
+    max_yaw_rate_for_vision: 0.45      # [rad/s] 평활화 yaw rate 임계. 직진에도 꺼지면 ↑(0.55), 회전 검출 둔하면 ↓(0.35)
+    yaw_rate_filter_tau_sec: 0.8       # 저역필터 시간상수[s]. 직진 출렁임이 새면 ↑(1.2), 회전 반응 느리면 ↓(0.5)
+    vision_resume_settle_sec: 0.4      # 회전 멈춘 뒤 비전 재개까지 대기[s]. 멈춰도 튀면 ↑(0.6~0.8)
+
+# =============================================================================
+#  relocalize_button_node 파라미터 (SW1 + 실행버튼 → /initialpose 재진입 시드)
+#  최상위 키는 노드 이름('relocalize_button_node')과 일치해야 한다.
+#  ※ field_profile 과 x_inset_m 은 launch 가 덮어쓰므로 여기 적어도 무시된다
+#    (field_profile=launch 인자, x_inset_m=reentry_positions.yaml 로봇별).
+#    그 외 파라미터(outside_margin_m 등)는 여기서 조정한다.
+# =============================================================================
+relocalize_button_node:
+  ros__parameters:
+    # 사이드라인에서 바깥으로 나가는 여유[m]. y = ±(half_width + outside_margin_m).
+    #   0.4=기본, 0.2=라인에 더 붙임, 0.0=라인 위, 음수=필드 안쪽
+    outside_margin_m: 0.2

@@ -1,0 +1,85 @@
+robo04@robo04-desktop:~$ (
+set -e
+cd /home/robo04/incoming
+
+sha256sum -c ball_tracker_tf_fix_20261104_v2.tar.gz.sha256
+tar -xzf ball_tracker_tf_fix_20261104_v2.tar.gz
+
+bash ball_tracker_tf_20261104/apply_and_build.sh
+)
+ball_tracker_tf_fix_20261104_v2.tar.gz: OK
+{
+  "target": "/home/robo04/sim2real_ws/src/hsl_src/hsl_world_model/src/ball_tracker_node.cpp",
+  "before_sha256": "0487c09b44dd8e32b150808640ec32c4a83555f891c581d476738f2714999e1e",
+  "patched_sha256": "0349808f7c3789dc634dbf9c6512c86d5569119c4a581dd7e0cf1f881680ea55",
+  "backup": "/home/robo04/sim2real_ws/patch_backups/ball_tracker_tf_20261104T081157Z_a663177k",
+  "status": "APPLIED_SOURCE_ONLY"
+}
+Starting >>> hsl_world_model
+[ 33%] Built target leg_odometry
+[ 66%] Built target self_localizer
+[ 83%] Building CXX object CMakeFiles/ball_tracker.dir/src/ball_tracker_node.cpp.o
+[100%] Linking CXX executable ball_tracker
+[100%] Built target ball_tracker
+-- Install configuration: ""
+-- Execute custom install script
+-- Up-to-date symlink: /home/robo04/sim2real_ws/install/hsl_world_model/lib/hsl_world_model/leg_odometry
+-- Up-to-date symlink: /home/robo04/sim2real_ws/install/hsl_world_model/lib/hsl_world_model/self_localizer
+-- Up-to-date symlink: /home/robo04/sim2real_ws/install/hsl_world_model/lib/hsl_world_model/ball_tracker
+-- Up-to-date symlink: /home/robo04/sim2real_ws/install/hsl_world_model/share/hsl_world_model/urdf/XM_robot04.urdf
+-- Up-to-date symlink: /home/robo04/sim2real_ws/install/hsl_world_model/share/ament_index/resource_index/package_run_dependencies/hsl_world_model
+-- Up-to-date symlink: /home/robo04/sim2real_ws/install/hsl_world_model/share/ament_index/resource_index/parent_prefix_path/hsl_world_model
+-- Up-to-date symlink: /home/robo04/sim2real_ws/install/hsl_world_model/share/hsl_world_model/environment/ament_prefix_path.sh
+-- Up-to-date symlink: /home/robo04/sim2real_ws/install/hsl_world_model/share/hsl_world_model/environment/ament_prefix_path.dsv
+-- Up-to-date symlink: /home/robo04/sim2real_ws/install/hsl_world_model/share/hsl_world_model/environment/path.sh
+-- Up-to-date symlink: /home/robo04/sim2real_ws/install/hsl_world_model/share/hsl_world_model/environment/path.dsv
+-- Up-to-date symlink: /home/robo04/sim2real_ws/install/hsl_world_model/share/hsl_world_model/local_setup.bash
+-- Up-to-date symlink: /home/robo04/sim2real_ws/install/hsl_world_model/share/hsl_world_model/local_setup.sh
+-- Up-to-date symlink: /home/robo04/sim2real_ws/install/hsl_world_model/share/hsl_world_model/local_setup.zsh
+-- Up-to-date symlink: /home/robo04/sim2real_ws/install/hsl_world_model/share/hsl_world_model/local_setup.dsv
+-- Symlinking: /home/robo04/sim2real_ws/install/hsl_world_model/share/hsl_world_model/package.dsv
+-- Up-to-date symlink: /home/robo04/sim2real_ws/install/hsl_world_model/share/ament_index/resource_index/packages/hsl_world_model
+-- Up-to-date symlink: /home/robo04/sim2real_ws/install/hsl_world_model/share/hsl_world_model/cmake/hsl_world_modelConfig.cmake
+-- Up-to-date symlink: /home/robo04/sim2real_ws/install/hsl_world_model/share/hsl_world_model/cmake/hsl_world_modelConfig-version.cmake
+-- Up-to-date symlink: /home/robo04/sim2real_ws/install/hsl_world_model/share/hsl_world_model/package.xml
+Finished <<< hsl_world_model [55.6s]
+
+Summary: 1 package finished [56.3s]
+PASS: future timestamp was not replaced by latest TF
+--- C++ test log (last 30 lines) ---
+[ERROR] [1793779986.474409607] [tf2_buffer]: Do not call canTransform or lookupTransform with a timeout unless you are using another thread for populating data. Without a dedicated thread it will always timeout.  If you have a separate thread servicing tf messages, call setUsingDedicatedThread(true) on your Buffer instance.
+[ERROR] [1793779986.474422920] [tf2_buffer]: Do not call canTransform or lookupTransform with a timeout unless you are using another thread for populating data. Without a dedicated thread it will always timeout.  If you have a separate thread servicing tf messages, call setUsingDedicatedThread(true) on your Buffer instance.
+[ERROR] [1793779986.474431817] [tf2_buffer]: Do not call canTransform or lookupTransform with a timeout unless you are using another thread for populating data. Without a dedicated thread it will always timeout.  If you have a separate thread servicing tf messages, call setUsingDedicatedThread(true) on your Buffer instance.
+[ERROR] [1793779986.474485199] [tf2_buffer]: Do not call canTransform or lookupTransform with a timeout unless you are using another thread for populating data. Without a dedicated thread it will always timeout.  If you have a separate thread servicing tf messages, call setUsingDedicatedThread(true) on your Buffer instance.
+[ERROR] [1793779986.474495888] [tf2_buffer]: Do not call canTransform or lookupTransform with a timeout unless you are using another thread for populating data. Without a dedicated thread it will always timeout.  If you have a separate thread servicing tf messages, call setUsingDedicatedThread(true) on your Buffer instance.
+[ERROR] [1793779986.494280318] [tf2_buffer]: Do not call canTransform or lookupTransform with a timeout unless you are using another thread for populating data. Without a dedicated thread it will always timeout.  If you have a separate thread servicing tf messages, call setUsingDedicatedThread(true) on your Buffer instance.
+[ERROR] [1793779986.494385449] [tf2_buffer]: Do not call canTransform or lookupTransform with a timeout unless you are using another thread for populating data. Without a dedicated thread it will always timeout.  If you have a separate thread servicing tf messages, call setUsingDedicatedThread(true) on your Buffer instance.
+[ERROR] [1793779986.494399211] [tf2_buffer]: Do not call canTransform or lookupTransform with a timeout unless you are using another thread for populating data. Without a dedicated thread it will always timeout.  If you have a separate thread servicing tf messages, call setUsingDedicatedThread(true) on your Buffer instance.
+[ERROR] [1793779986.494408908] [tf2_buffer]: Do not call canTransform or lookupTransform with a timeout unless you are using another thread for populating data. Without a dedicated thread it will always timeout.  If you have a separate thread servicing tf messages, call setUsingDedicatedThread(true) on your Buffer instance.
+[ERROR] [1793779986.514309607] [tf2_buffer]: Do not call canTransform or lookupTransform with a timeout unless you are using another thread for populating data. Without a dedicated thread it will always timeout.  If you have a separate thread servicing tf messages, call setUsingDedicatedThread(true) on your Buffer instance.
+[ERROR] [1793779986.514402352] [tf2_buffer]: Do not call canTransform or lookupTransform with a timeout unless you are using another thread for populating data. Without a dedicated thread it will always timeout.  If you have a separate thread servicing tf messages, call setUsingDedicatedThread(true) on your Buffer instance.
+[ERROR] [1793779986.514416946] [tf2_buffer]: Do not call canTransform or lookupTransform with a timeout unless you are using another thread for populating data. Without a dedicated thread it will always timeout.  If you have a separate thread servicing tf messages, call setUsingDedicatedThread(true) on your Buffer instance.
+[ERROR] [1793779986.514425459] [tf2_buffer]: Do not call canTransform or lookupTransform with a timeout unless you are using another thread for populating data. Without a dedicated thread it will always timeout.  If you have a separate thread servicing tf messages, call setUsingDedicatedThread(true) on your Buffer instance.
+[ERROR] [1793779986.534301963] [tf2_buffer]: Do not call canTransform or lookupTransform with a timeout unless you are using another thread for populating data. Without a dedicated thread it will always timeout.  If you have a separate thread servicing tf messages, call setUsingDedicatedThread(true) on your Buffer instance.
+[ERROR] [1793779986.534397109] [tf2_buffer]: Do not call canTransform or lookupTransform with a timeout unless you are using another thread for populating data. Without a dedicated thread it will always timeout.  If you have a separate thread servicing tf messages, call setUsingDedicatedThread(true) on your Buffer instance.
+[ERROR] [1793779986.534409302] [tf2_buffer]: Do not call canTransform or lookupTransform with a timeout unless you are using another thread for populating data. Without a dedicated thread it will always timeout.  If you have a separate thread servicing tf messages, call setUsingDedicatedThread(true) on your Buffer instance.
+[ERROR] [1793779986.534467868] [tf2_buffer]: Do not call canTransform or lookupTransform with a timeout unless you are using another thread for populating data. Without a dedicated thread it will always timeout.  If you have a separate thread servicing tf messages, call setUsingDedicatedThread(true) on your Buffer instance.
+[ERROR] [1793779986.534484254] [tf2_buffer]: Do not call canTransform or lookupTransform with a timeout unless you are using another thread for populating data. Without a dedicated thread it will always timeout.  If you have a separate thread servicing tf messages, call setUsingDedicatedThread(true) on your Buffer instance.
+[ERROR] [1793779986.534492831] [tf2_buffer]: Do not call canTransform or lookupTransform with a timeout unless you are using another thread for populating data. Without a dedicated thread it will always timeout.  If you have a separate thread servicing tf messages, call setUsingDedicatedThread(true) on your Buffer instance.
+[ERROR] [1793779986.534501248] [tf2_buffer]: Do not call canTransform or lookupTransform with a timeout unless you are using another thread for populating data. Without a dedicated thread it will always timeout.  If you have a separate thread servicing tf messages, call setUsingDedicatedThread(true) on your Buffer instance.
+[ERROR] [1793779986.534509088] [tf2_buffer]: Do not call canTransform or lookupTransform with a timeout unless you are using another thread for populating data. Without a dedicated thread it will always timeout.  If you have a separate thread servicing tf messages, call setUsingDedicatedThread(true) on your Buffer instance.
+[ERROR] [1793779986.554305168] [tf2_buffer]: Do not call canTransform or lookupTransform with a timeout unless you are using another thread for populating data. Without a dedicated thread it will always timeout.  If you have a separate thread servicing tf messages, call setUsingDedicatedThread(true) on your Buffer instance.
+[ERROR] [1793779986.554400410] [tf2_buffer]: Do not call canTransform or lookupTransform with a timeout unless you are using another thread for populating data. Without a dedicated thread it will always timeout.  If you have a separate thread servicing tf messages, call setUsingDedicatedThread(true) on your Buffer instance.
+[ERROR] [1793779986.554414652] [tf2_buffer]: Do not call canTransform or lookupTransform with a timeout unless you are using another thread for populating data. Without a dedicated thread it will always timeout.  If you have a separate thread servicing tf messages, call setUsingDedicatedThread(true) on your Buffer instance.
+[ERROR] [1793779986.554424189] [tf2_buffer]: Do not call canTransform or lookupTransform with a timeout unless you are using another thread for populating data. Without a dedicated thread it will always timeout.  If you have a separate thread servicing tf messages, call setUsingDedicatedThread(true) on your Buffer instance.
+[ERROR] [1793779986.574351482] [tf2_buffer]: Do not call canTransform or lookupTransform with a timeout unless you are using another thread for populating data. Without a dedicated thread it will always timeout.  If you have a separate thread servicing tf messages, call setUsingDedicatedThread(true) on your Buffer instance.
+[ERROR] [1793779986.574448228] [tf2_buffer]: Do not call canTransform or lookupTransform with a timeout unless you are using another thread for populating data. Without a dedicated thread it will always timeout.  If you have a separate thread servicing tf messages, call setUsingDedicatedThread(true) on your Buffer instance.
+[ERROR] [1793779986.574461573] [tf2_buffer]: Do not call canTransform or lookupTransform with a timeout unless you are using another thread for populating data. Without a dedicated thread it will always timeout.  If you have a separate thread servicing tf messages, call setUsingDedicatedThread(true) on your Buffer instance.
+[ERROR] [1793779986.574515563] [tf2_buffer]: Do not call canTransform or lookupTransform with a timeout unless you are using another thread for populating data. Without a dedicated thread it will always timeout.  If you have a separate thread servicing tf messages, call setUsingDedicatedThread(true) on your Buffer instance.
+[INFO] [1793779986.575206067] [rclcpp]: signal_handler(SIGINT/SIGTERM)
+Traceback (most recent call last):
+  File "/home/robo04/incoming/ball_tracker_tf_20261104/test_tf_transport.py", line 144, in <module>
+    main()
+  File "/home/robo04/incoming/ball_tracker_tf_20261104/test_tf_transport.py", line 111, in main
+    raise RuntimeError('Late-joined static TF did not produce a valid ball')
+RuntimeError: Late-joined static TF did not produce a valid ball

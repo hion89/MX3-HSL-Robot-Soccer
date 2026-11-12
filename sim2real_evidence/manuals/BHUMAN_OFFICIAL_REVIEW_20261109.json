@@ -1,0 +1,56 @@
+{
+  "review_date": "2026-11-09",
+  "repository": "https://github.com/bhuman/BHumanCodeRelease",
+  "comparison_commit": "2e3374ba896da8288607f9a1881b876642fe18b8",
+  "method": "GitHub connector GET of official files at fixed commit; local source and selected previously preserved UKF sources inspected. No remote repository writes.",
+  "scope": "Algorithm/function correspondence, not proof of original port author history or complete behavioral equivalence.",
+  "files": [
+    {
+      "path": "Src/Modules/BehaviorControl/StrategyBehaviorControl/Behavior.cpp",
+      "url": "https://github.com/bhuman/BHumanCodeRelease/blob/2e3374ba896da8288607f9a1881b876642fe18b8/Src/Modules/BehaviorControl/StrategyBehaviorControl/Behavior.cpp",
+      "fetched": true,
+      "characters": 60219
+    },
+    {
+      "path": "Src/Modules/BehaviorControl/StrategyBehaviorControl/ActiveRoles/PlayBall.cpp",
+      "url": "https://github.com/bhuman/BHumanCodeRelease/blob/2e3374ba896da8288607f9a1881b876642fe18b8/Src/Modules/BehaviorControl/StrategyBehaviorControl/ActiveRoles/PlayBall.cpp",
+      "fetched": true,
+      "characters": 12351
+    },
+    {
+      "path": "Src/Modules/BehaviorControl/SkillBehaviorControl/Skills/Ball/GoToBallAndKick.cpp",
+      "url": "https://github.com/bhuman/BHumanCodeRelease/blob/2e3374ba896da8288607f9a1881b876642fe18b8/Src/Modules/BehaviorControl/SkillBehaviorControl/Skills/Ball/GoToBallAndKick.cpp",
+      "fetched": true,
+      "characters": 8518
+    },
+    {
+      "path": "Src/Modules/Modeling/SelfLocator/SelfLocator.cpp",
+      "url": "https://github.com/bhuman/BHumanCodeRelease/blob/2e3374ba896da8288607f9a1881b876642fe18b8/Src/Modules/Modeling/SelfLocator/SelfLocator.cpp",
+      "fetched": true,
+      "characters": 34153
+    },
+    {
+      "path": "Src/Modules/Modeling/TeamBallModelProvider/TeamBallModelProvider.cpp",
+      "url": "https://github.com/bhuman/BHumanCodeRelease/blob/2e3374ba896da8288607f9a1881b876642fe18b8/Src/Modules/Modeling/TeamBallModelProvider/TeamBallModelProvider.cpp",
+      "fetched": true,
+      "characters": 13422
+    },
+    {
+      "path": "Src/Modules/Communication/TeamMessageHandler/TeamMessageHandler.cpp",
+      "url": "https://github.com/bhuman/BHumanCodeRelease/blob/2e3374ba896da8288607f9a1881b876642fe18b8/Src/Modules/Communication/TeamMessageHandler/TeamMessageHandler.cpp",
+      "fetched": true,
+      "characters": 30216
+    },
+    {
+      "path": "Config/Behavior/Tactics/t112.cfg",
+      "url": "https://github.com/bhuman/BHumanCodeRelease/blob/2e3374ba896da8288607f9a1881b876642fe18b8/Config/Behavior/Tactics/t112.cfg",
+      "fetched": true,
+      "characters": 686
+    }
+  ],
+  "existing_provenance": "../bhuman_official_2026/PROVENANCE.json",
+  "docs": [
+    "ROBOT_OPERATION_MANUAL_KO_20261109.md",
+    "BHUMAN_PORT_AUDIT_KO_20261109.md"
+  ]
+}

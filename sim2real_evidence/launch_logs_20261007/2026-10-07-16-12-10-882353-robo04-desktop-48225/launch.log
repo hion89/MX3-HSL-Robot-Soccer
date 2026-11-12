@@ -1,0 +1,8 @@
+1791357130.8839900 [INFO] [launch]: All log files can be found below /home/robo04/.ros/log/2026-10-07-16-12-10-882353-robo04-desktop-48225
+1791357130.8843718 [INFO] [launch]: Default logging verbosity is set to INFO
+1791357130.9944520 [INFO] [mcu_bridge_node-1]: process started with pid [48226]
+1791357130.9951162 [INFO] [imu_parser_node-2]: process started with pid [48228]
+1791357130.9954379 [INFO] [dip_status_node-3]: process started with pid [48230]
+1791357130.9957776 [INFO] [button_input_node-4]: process started with pid [48232]
+1791357130.9960382 [INFO] [body_motor_controller_node-5]: process started with pid [48234]
+1791357130.9962952 [INFO] [led_control_node-6]: process started with pid [48236]

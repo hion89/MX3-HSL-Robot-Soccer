@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>humanoid_localization</name>
+  <version>0.0.1</version>
+  <description>KHUBER 위치추정 패키지: 보행 오도메트리, 마커 localization 등</description>
+  <maintainer email="you@example.com">하푸스</maintainer>
+  <license>MIT</license>
+
+  <!-- 빌드 타입: 순수 파이썬 패키지 -->
+  <buildtool_depend>ament_python</buildtool_depend>
+
+  <!-- 런타임 의존성: 노드가 import 하는 ROS 패키지들 -->
+  <exec_depend>rclpy</exec_depend>
+  <exec_depend>nav_msgs</exec_depend>        <!-- Odometry -->
+  <exec_depend>sensor_msgs</exec_depend>     <!-- Imu -->
+  <exec_depend>geometry_msgs</exec_depend>   <!-- Twist, Quaternion, TransformStamped, PoseStamped -->
+  <exec_depend>tf2_ros</exec_depend>         <!-- TransformBroadcaster, lookup_transform -->
+  <exec_depend>tf2_geometry_msgs</exec_depend>  <!-- PointStamped TF 변환 등록 -->
+  <exec_depend>vision_msgs</exec_depend>         <!-- Detection3DArray -->
+  <exec_depend>humanoid_behavior_interfaces</exec_depend> <!-- Kick srv -->
+  <exec_depend>visualization_msgs</exec_depend>
+  <exec_depend>std_msgs</exec_depend>
+  <exec_depend>std_srvs</exec_depend>            <!-- SetBool (~/enable) -->
+  <exec_depend>humanoid_utils</exec_depend>      <!-- cmd_shaping 공유 floor 모듈 -->
+  <!-- ball_follow_nav_node 추가 의존성 -->
+  <exec_depend>nav2_msgs</exec_depend>       <!-- NavigateToPose 액션 -->
+  <exec_depend>action_msgs</exec_depend>     <!-- GoalStatus -->
+  <exec_depend>rcl_interfaces</exec_depend>  <!-- SetParametersResult -->
+  <!-- Nav2 스택 -->
+  <exec_depend>nav2_map_server</exec_depend>
+  <exec_depend>nav2_planner</exec_depend>
+  <exec_depend>nav2_controller</exec_depend>
+  <exec_depend>nav2_behaviors</exec_depend>
+  <exec_depend>nav2_bt_navigator</exec_depend>
+  <exec_depend>nav2_lifecycle_manager</exec_depend>
+  <exec_depend>nav2_regulated_pure_pursuit_controller</exec_depend>
+
+  <!-- 테스트용 (pkg create 기본) -->
+  <test_depend>ament_copyright</test_depend>
+  <test_depend>ament_flake8</test_depend>
+  <test_depend>ament_pep257</test_depend>
+  <test_depend>python3-pytest</test_depend>
+
+  <export>
+    <build_type>ament_python</build_type>
+  </export>
+</package>

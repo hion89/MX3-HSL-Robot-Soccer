@@ -1,0 +1,4 @@
+1791356167.1937604 [INFO] [launch]: All log files can be found below /home/robo04/.ros/log/2026-10-07-15-56-07-192004-robo04-desktop-41523
+1791356167.1940188 [INFO] [launch]: Default logging verbosity is set to INFO
+1791356167.2731192 [INFO] [xm540_dual_policy-1]: process started with pid [41524]
+1791356171.7270918 [ERROR] [xm540_dual_policy-1]: process has died [pid 41524, exit code 1, cmd '/home/robo04/sim2real_ws/install/humanoid_policy_runner/lib/humanoid_policy_runner/xm540_dual_policy --ros-args -r __node:=xm540_dual_policy --params-file /tmp/launch_params_kjt3ad6t'].

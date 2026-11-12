@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>humanoid_perception</name>
+  <version>0.0.1</version>
+  <description>
+    Vision/perception nodes for KHUBER humanoid.
+    Includes YOLOv8 (TensorRT) object detector for RoboCup field elements.
+  </description>
+  <maintainer email="robo03@todo.todo">robo03</maintainer>
+  <license>TODO</license>
+
+  <buildtool_depend>ament_python</buildtool_depend>
+
+  <exec_depend>rclpy</exec_depend>
+  <exec_depend>sensor_msgs</exec_depend>
+  <exec_depend>vision_msgs</exec_depend>
+  <exec_depend>cv_bridge</exec_depend>
+  <exec_depend>image_transport</exec_depend>
+  <exec_depend>realsense2_camera</exec_depend>
+
+  <!-- ball_map_projector_node 가 사용하는 메시지/TF 변환 의존성 -->
+  <!-- geometry_msgs: PointStamped (공 map 좌표 출력) -->
+  <exec_depend>geometry_msgs</exec_depend>
+  <!-- visualization_msgs: Marker (RViz 공 마커) -->
+  <exec_depend>visualization_msgs</exec_depend>
+  <!-- tf2_geometry_msgs: PointStamped 에 대한 do_transform_point 등록 -->
+  <exec_depend>tf2_geometry_msgs</exec_depend>
+
+  <!-- TF / URDF 관련 -->
+  <!-- robot_state_publisher: URDF + /joint_states 로 모든 link 의 TF 발행 -->
+  <exec_depend>robot_state_publisher</exec_depend>
+  <!-- joint_state_publisher_gui: 실로봇 joint_states 없이 슬라이더로 관절 조작 (TF 점검용) -->
+  <exec_depend>joint_state_publisher_gui</exec_depend>
+  <!-- joint_state_publisher: gui 없이 joint_states 기본값 발행이 필요한 경우 -->
+  <exec_depend>joint_state_publisher</exec_depend>
+  <!-- tf2 디버깅 도구 (view_frames, tf2_echo) — 선택적이지만 편의상 추가 -->
+  <exec_depend>tf2_ros</exec_depend>
+  <exec_depend>tf2_tools</exec_depend>
+
+  <test_depend>ament_copyright</test_depend>
+  <test_depend>ament_flake8</test_depend>
+  <test_depend>ament_pep257</test_depend>
+  <test_depend>python3-pytest</test_depend>
+
+  <export>
+    <build_type>ament_python</build_type>
+  </export>
+</package>

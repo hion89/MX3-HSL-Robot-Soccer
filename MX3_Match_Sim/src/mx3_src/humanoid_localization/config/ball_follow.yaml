@@ -1,0 +1,80 @@
+# ==========================================================================
+#  ball_follow.yaml
+#  ball_follow_nav_node 파라미터 (Phase 2: /pose_goal 발행으로 공 근처까지 접근).
+#  튜닝은 이 파일을 고치고 노드 재시작. 라이브 튜닝도 일부 가능:
+#    ros2 param set /ball_follow_nav_node arrived_distance_m 0.45
+#
+#  ※라이브(ros2 param set) 반영되는 항목: align_to_goal / target_goal_x /
+#    target_goal_y / standoff_m / resend_threshold_m / ball_lost_timeout_s /
+#    arrived_distance_m / update_period_s.
+#  ※토픽 이름·프레임·enable 서비스·auto_start 는 시작 시 1회만 적용(라이브 변경 X)
+#    — 바꾸려면 이 파일 수정 후 노드 재시작.
+# ==========================================================================
+
+ball_follow_nav_node:
+  ros__parameters:
+
+    # ── 입력 토픽/프레임 (시작 시 1회 적용) ──────────────────────────────
+    ball_point_topic: "/ball/map_point"   # ball_map_projector_node 가 발행하는 공 map 좌표
+    map_frame:        "map"               # 도착/방향 판정 기준 전역 프레임
+    base_frame:       "base_link"         # 로봇 현재 pose 조회용 프레임(map→base_link TF 필요)
+
+    # ── pose controller 연동 (Nav2 대체, 시작 시 1회 적용) ───────────────
+    # standoff 목적지 P 를 PoseStamped 로 이 토픽에 발행 → pose_goal_controller 가 추종.
+    pose_goal_topic:  "/pose_goal"
+    # pose controller 상태 토픽(ARRIVED/BLOCKED 핸드오프 판정 보조).
+    pose_state_topic: "/pose_goal/state"
+    # ★핸드오프 핵심: ball_follow 가 pose controller 의 enable 을 소유한다.
+    #   Phase2 끌 때 이 서비스로 pose controller 를 꺼서 cmd_vel_nav(우선순위20)를 비워야
+    #   visual_servo(cmd_vel_behavior, 우선순위10)가 구동된다.
+    pose_ctrl_enable_srv: "/pose_goal_controller_node/enable"
+
+    # ── 정렬 모드 ────────────────────────────────────────────────────────
+    # true  : 골대–공–로봇 일직선 정렬(공 뒤에서 골대를 보게)  ★기본
+    #         → 도착 판정 기준이 '목적지 P 까지' 거리.
+    # false : 레거시(로봇→공 직선상에서 공 앞 standoff)
+    #         → 도착 판정 기준이 '공 까지' 거리.
+    align_to_goal: true
+
+    # ── 공격 골대 중심(map 프레임) ───────────────────────────────────────
+    # 모드 B(align_to_goal=true)에서 골대–공 정렬선을 정의한다.
+    # ★좌표계는 팀 상대(우리 골=-x, 상대 골=+x 고정). 재진입 시드가 우리 골을 늘
+    #   -x 로 심으므로 하프타임에도 상대 골=+x 유지 → 이 값은 사이드 배정에 따라
+    #   뒤집지 않는다(뒤집으면 공을 우리 골 방향으로 차게 됨). 다른 필드 프로파일
+    #   대응용 override 로만 둔다(연습장은 1.95).
+    target_goal_x: 4.5           # 상대 골대 중심 x[m]. S-Field 골라인=4.5(연습장 1.95).
+                                 #   공→골 라인 위에 standoff 지점을 잡으므로 vision_servo 와
+                                 #   같은 값(4.5)이어야 접근→정렬→킥이 한 방향으로 정렬된다.
+                                 #   ★팀 상대 좌표라 상대 골=+x 고정 — 사이드 배정에 따라 뒤집지 말 것.
+    target_goal_y: 0.0
+
+    # ── 접근/도착 기하 ───────────────────────────────────────────────────
+    # 공에서 몇 m 떨어진 곳에서 멈출지(목적지 P 의 위치).
+    #   · 모드 B: 골대 반대쪽(공 뒤)으로 standoff_m 만큼 → Phase3 킥 정렬 공간 확보.
+    #   · 모드 A: 로봇 쪽(공 앞)으로 standoff_m 만큼 못 미쳐 멈춤.
+    standoff_m: 0.45
+    # 로봇이 도착 기준점에 이 거리[m] 이내로 들어오면 접근 완료 → status='ARRIVED'
+    # (상위 전략이 visual_servo 로 핸드오프). 기준점은 정렬 모드에 따라 P(모드B)/공(모드A).
+    #   · 작게 → 공에 더 바짝 붙어 핸드오프(정밀하나 데드존/장애물에 막히기 쉬움).
+    #   · 크게 → 멀찍이 핸드오프(여유 있으나 visual_servo 가 더 많이 이동).
+    arrived_distance_m: 0.55
+
+    # ── 타이밍/재발행 ────────────────────────────────────────────────────
+    # goal 재계산·발행 주기[s]. "1초에 한 번이면 충분"의 그 주기.
+    update_period_s: 1.0
+    # 직전 전송 goal 에서 목적지가 이 거리[m] 이상 움직였을 때만 /pose_goal 재발행
+    # (공 좌표 떨림으로 인한 replan 끊김·스팸 방지).
+    resend_threshold_m: 0.15
+    # 공 수신이 이 시간[s] 끊기면 분실(LOST) 판정 → pose controller OFF(정지).
+    ball_lost_timeout_s: 1.0
+
+    # ── 출력 토픽 (RViz 디버그 마커 포함, 시작 시 1회 적용) ───────────────
+    status_topic:       "/ball_follow/status"        # IDLE/FOLLOWING/ARRIVED/LOST
+    goal_marker_topic:  "/ball_follow/goal_marker"    # 목적지 P 화살표 마커(RViz 검증용)
+    align_marker_topic: "/ball_follow/align_markers"  # 골대–공–P 정렬선 마커(RViz 검증용)
+
+    # ── enable 게이트 (시작 시 1회 적용) ─────────────────────────────────
+    # true  : 노드가 떠 있는 동안 항상 공을 추종(레거시 단독 동작/디버그용).
+    # false : 상위 오케스트레이터(전략 FSM)가 ~/enable 서비스로 켤 때만 추종. ★기본
+    #         step3 통합: owner 로봇만 Phase2 를 켜고, 나머지/비-PLAYING 구간엔 끈다.
+    auto_start: false

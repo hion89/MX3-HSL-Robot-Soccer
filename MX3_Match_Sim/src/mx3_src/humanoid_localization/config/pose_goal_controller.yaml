@@ -1,0 +1,64 @@
+# ==========================================================================
+#  pose_goal_controller.yaml
+#  pose_goal_controller_node 파라미터. 튜닝은 이 파일을 고치고 노드 재시작.
+#  라이브 튜닝도 가능: ros2 param set /pose_goal_controller_node k_rho 1.0
+# ==========================================================================
+
+pose_goal_controller_node:
+  ros__parameters:
+
+    # ── 토픽/프레임 ──
+    goal_topic:     "/pose_goal"
+    cmd_vel_topic:  "cmd_vel_nav"        # twist_mux navigation 슬롯(priority 20)
+    obstacle_topic: "/obstacle/avoid_hint"
+    state_topic:    "/pose_goal/state"
+    marker_topic:   "/pose_goal/markers"
+    base_frame:     "base_link"
+
+    # ── 명령 범위(정책 학습/실측 데드존; visual_servo 와 동일값) ──
+    vx_min: 0.20
+    vx_max: 0.30
+    vy_min: 0.10
+    vy_max: 0.20
+    wz_min: 0.25
+    wz_max: 1.50
+
+    # ── 제어 게인 ──
+    k_rho:       0.8     # 전진 ← 거리
+    k_lat:       1.2     # 횡이동 ← 측면 방위오차
+    k_face:      1.5     # 회전 ← 목표점 방위(코 고정)
+    k_yaw_final: 1.5     # 회전 ← 최종 heading 오차(SETTLE)
+    straight_lateral_deadband_m: 0.08  # 직진 경로 좌우 흔들림 억제용 무시 폭[m]
+
+    # ── 임계/도착 ──
+    arrive_pos_tol:     0.15    # 위치 도착 허용[m] (래치 진입)
+    arrive_yaw_tol_deg: 12.0    # 방위 도착 허용[deg] (래치 진입)
+    # ── 도착 래치(터미널) — 도착하면 새 목표 전까지 정지 유지 ──
+    goal_update_pos_tol:   0.15  # 새 목표가 이 이상 떨어져야 재출발[m]
+    goal_update_yaw_tol_deg: 20.0  # 또는 방위가 이 이상 달라야[deg]
+    settle_exit_tol:    0.30    # 정착영역 이탈 임계[m] (목표 위 alpha 노이즈 차단)
+    require_goal_yaw:   true    # 최종 heading 맞춤. yaw 노이즈 심하면 false 권장
+    turn_in_place_deg:  60.0    # |방위| 이상이면 제자리 회전 먼저
+    control_rate_hz:    20.0
+    goal_timeout_s:     0.0     # 0=만료 없음(마지막 goal 유지)
+    auto_start:         false   # true=켜자마자 동작
+    auto_enable_on_goal: true   # goal 수신 시 자동 enable
+    hold_on_arrive:     true    # 도착 시 0 유지
+
+    # ── 장애물 회피 ──
+    avoid_enable:       true
+    obstacle_timeout_s: 0.5     # 힌트 끊기면 장애물 없음으로 폴백
+    react_dist:         0.9     # 이 거리부터 감속·비킴 시작[m]
+    stop_dist:          0.35    # 이 거리면 전진 0[m]
+    avoid_gain:         1.0     # 힌트 방향 → vy 변환 게인
+    creep_min_dist:     0.5     # 막힘 시 게이트 살리기(여유>이면 creep, 아니면 회전)
+    # ── 목표 막힘 → 도착 간주(교착 방지) ──
+    block_timeout_s:    2.5     # 목표 근처에서 막혀 이 시간 갇히면 도착 간주(0=비활성)
+    block_near_dist:    0.5     # 이 거리 안에서 막힐 때만 포기(중간 장애물은 계속 우회)[m]
+
+    # ── 명령 슬루(가속도 제한) — 정지→보행 급출발 낙상 방지 ──
+    slew_enable:        true
+    accel_lin:          0.1     # 전·횡 가속 한계[m/s^2] (작을수록 천천히 출발)
+    decel_lin:          0.4     # 전·횡 감속 한계[m/s^2]
+    accel_ang:          1.0     # 회전 가속 한계[rad/s^2]
+    decel_ang:          2.0     # 회전 감속 한계[rad/s^2]

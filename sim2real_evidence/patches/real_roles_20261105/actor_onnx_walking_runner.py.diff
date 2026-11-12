@@ -1,0 +1,91 @@
+--- before
++++ after
+@@ -402,6 +402,9 @@
+         self.declare_parameter("cmd_vx", 0.0)
+         self.declare_parameter("cmd_vy", 0.0)
+         self.declare_parameter("cmd_wz", 0.0)
++        # twist_mux may become silent on input expiry or a stop lock.
++        # A cached velocity must not outlive the command stream.
++        self.declare_parameter("cmd_vel_timeout_s", 0.5)
+ 
+         self.declare_parameter("action_scale", 0.25)
+         self.declare_parameter("clip_actions", 10.0)
+@@ -571,6 +574,11 @@
+             float(self.get_parameter("cmd_wz").value),
+         ], dtype=np.float32)
+ 
++        self.cmd_vel_timeout_s = float(self.get_parameter("cmd_vel_timeout_s").value)
++        if not math.isfinite(self.cmd_vel_timeout_s) or self.cmd_vel_timeout_s <= 0.0:
++            raise ValueError("cmd_vel_timeout_s must be finite and positive")
++        self._last_cmd_vel_monotonic: Optional[float] = None
++
+         self.action_scale = float(self.get_parameter("action_scale").value)
+         self.clip_actions = float(self.get_parameter("clip_actions").value)
+         self.base_ang_vel_scale = float(self.get_parameter("base_ang_vel_scale").value)
+@@ -864,6 +872,9 @@
+             f"stop_rate={self.gait_stop_rate} mode={self.gait_mode} "
+             f"(최대 정지 시간 {0.5 / max(1e-6, self.gait_stop_rate):.3f}s)")
+         self.get_logger().info(f"action_scale={self.action_scale}")
++        self.get_logger().info(
++            f"CMD_WATCHDOG timeout={self.cmd_vel_timeout_s:.3f}s clock=monotonic "
++            "expired=zero_velocity_and_frequency")
+         if np.any(self.grav_offset != 0.0):
+             deg = np.degrees(np.arcsin(np.clip(self.grav_offset[:2], -1.0, 1.0)))
+             self.get_logger().info(
+@@ -886,6 +897,12 @@
+                 self.gait_mode = str(p.value).lower()
+             elif p.name == "stop_delay_s":
+                 self.stop_delay_s = float(p.value)
++            elif p.name == "cmd_vel_timeout_s":
++                value = float(p.value)
++                if not math.isfinite(value) or value <= 0.0:
++                    return SetParametersResult(
++                        successful=False, reason="cmd_vel_timeout_s must be finite and positive")
++                self.cmd_vel_timeout_s = value
+             elif p.name == "standing_threshold":
+                 self.standing_threshold = float(p.value)
+             elif p.name == "action_scale":
+@@ -993,9 +1010,20 @@
+         self.last_gravity = msg
+ 
+     def cb_cmd_vel(self, msg: Twist):
+-        self.cmd[0] = float(msg.linear.x)
+-        self.cmd[1] = float(msg.linear.y)
+-        self.cmd[2] = float(msg.angular.z)
++        values = (float(msg.linear.x), float(msg.linear.y), float(msg.angular.z))
++        if not all(math.isfinite(value) for value in values):
++            self.cmd.fill(0.0)
++            self._last_cmd_vel_monotonic = None
++            return
++        self.cmd[:] = values
++        self._last_cmd_vel_monotonic = time.monotonic()
++
++    def effective_cmd_vel(self):
++        stamp = self._last_cmd_vel_monotonic
++        fresh = stamp is not None and 0.0 <= time.monotonic() - stamp <= self.cmd_vel_timeout_s
++        if not fresh:
++            self.cmd.fill(0.0)
++        return self.cmd.copy(), fresh
+ 
+     def cb_gait_mode(self, msg: String):
+         if self.variant in ("v0_1", "v1"):
+@@ -1332,13 +1360,17 @@
+ 
+         # ── 속도 명령 ──
+         # hold 동안 학습(generated_commands_with_reset_hold)과 동일하게 0.
+-        vel_cmd = np.zeros(3, dtype=np.float32) if in_hold else self.cmd.copy()
++        latest_cmd, command_fresh = self.effective_cmd_vel()
++        vel_cmd = np.zeros(3, dtype=np.float32) if in_hold else latest_cmd
+ 
+         # ── 보행 위상 갱신 ──
+         # ★ 프레임을 만들기 "전" 에 갱신해야 학습과 타이밍이 맞는다 ★
+         # 학습에서는 CommandManager 가 ObservationManager 보다 먼저 돌기
+         # 때문이다. 순서를 바꾸면 위상이 한 스텝 뒤처진다.
+-        freq = self.resolve_gait_frequency(vel_cmd, in_hold)
++        # Expiry also bypasses auto/march/walk's walking frequency. Keep running
++        # the policy at zero command so the gait can settle instead of freezing
++        # the last moving joint target.
++        freq = self.resolve_gait_frequency(vel_cmd, in_hold) if command_fresh else 0.0
+         self.gait.update(self.policy_dt, freq)
+ 
+         current_frame = self.one_frame(vel_cmd)

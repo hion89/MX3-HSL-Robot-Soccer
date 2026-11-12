@@ -1,0 +1,106 @@
+joint_ids_map: [3, 8, 12, 15, 17, 19, 0, 5, 10, 14, 16, 18, 4, 9, 13, 1, 6, 11]
+joint_sdk_names: [r_pelvis_pitch_joint, r_pelvis_roll_joint, r_pelvis_yaw_joint, r_knee_pitch_joint,
+  r_ankle_pitch_joint, r_ankle_roll_joint, l_pelvis_pitch_joint, l_pelvis_roll_joint,
+  l_pelvis_yaw_joint, l_knee_pitch_joint, l_ankle_pitch_joint, l_ankle_roll_joint,
+  r_shoulder_pitch_joint, r_shoulder_roll_joint, r_elbow_pitch_joint, l_shoulder_pitch_joint,
+  l_shoulder_roll_joint, l_elbow_pitch_joint]
+step_dt: 0.02
+stiffness: [50.0, 50.0, 50.0, 50.0, 50.0, 50.0, 50.0, 50.0, 50.0, 50.0, 50.0, 50.0,
+  50.0, 50.0, 50.0, 50.0, 50.0, 50.0]
+damping: [2.5, 2.5, 2.5, 2.5, 2.5, 2.5, 2.5, 2.5, 2.5, 2.5, 2.5, 2.5, 2.5, 2.5, 2.5,
+  2.5, 2.5, 2.5]
+default_joint_pos: [0.62, 0.0, 0.0, 1.2, 0.62, 0.0, -0.62, 0.0, 0.0, -1.2, -0.62,
+  0.0, -0.3, 0.0, 1.0, 0.3, 0.0, -1.0]
+commands: {}
+actions:
+  JointPositionAction:
+    clip: null
+    joint_names: [r_pelvis_pitch_joint, r_pelvis_roll_joint, r_pelvis_yaw_joint, r_knee_pitch_joint,
+      r_ankle_pitch_joint, r_ankle_roll_joint, l_pelvis_pitch_joint, l_pelvis_roll_joint,
+      l_pelvis_yaw_joint, l_knee_pitch_joint, l_ankle_pitch_joint, l_ankle_roll_joint,
+      r_shoulder_pitch_joint, r_shoulder_roll_joint, r_elbow_pitch_joint, l_shoulder_pitch_joint,
+      l_shoulder_roll_joint, l_elbow_pitch_joint]
+    scale: [0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25,
+      0.25, 0.25, 0.25, 0.25, 0.25, 0.25]
+    offset: [0.62, 0.0, 0.0, 1.2, 0.62, 0.0, -0.62, 0.0, 0.0, -1.2, -0.62, 0.0, -0.3,
+      0.0, 1.0, 0.3, 0.0, -1.0]
+    target_limits:
+      r_pelvis_pitch_joint: !!python/tuple [-1.5708, 1.5708]
+      r_pelvis_roll_joint: !!python/tuple [-0.4363, 1.3963]
+      r_pelvis_yaw_joint: !!python/tuple [-1.5708, 1.5708]
+      r_knee_pitch_joint: !!python/tuple [0.0, 2.4435]
+      r_ankle_pitch_joint: !!python/tuple [-0.8727, 1.8326]
+      r_ankle_roll_joint: !!python/tuple [-0.5236, 0.5236]
+      l_pelvis_pitch_joint: !!python/tuple [-1.5708, 1.5708]
+      l_pelvis_roll_joint: !!python/tuple [-1.3963, 0.4363]
+      l_pelvis_yaw_joint: !!python/tuple [-1.5708, 1.5708]
+      l_knee_pitch_joint: !!python/tuple [-2.4435, 0.0]
+      l_ankle_pitch_joint: !!python/tuple [-1.8326, 0.8727]
+      l_ankle_roll_joint: !!python/tuple [-0.5236, 0.5236]
+      r_shoulder_pitch_joint: !!python/tuple [-2.618, 2.618]
+      r_shoulder_roll_joint: !!python/tuple [-0.2618, 2.8798]
+      r_elbow_pitch_joint: !!python/tuple [0.0, 2.9671]
+      l_shoulder_pitch_joint: !!python/tuple [-2.618, 2.618]
+      l_shoulder_roll_joint: !!python/tuple [-2.8798, 0.2618]
+      l_elbow_pitch_joint: !!python/tuple [-2.9671, 0.0]
+    action_delay_range: !!python/tuple [1, 2]
+    joint_ids: [3, 8, 12, 15, 17, 19, 0, 5, 10, 14, 16, 18, 4, 9, 13, 1, 6, 11]
+observations:
+  base_ang_vel:
+    params: {}
+    clip: null
+    scale: [0.2, 0.2, 0.2]
+    history_length: 5
+  projected_gravity:
+    params: {}
+    clip: null
+    scale: [1.0, 1.0, 1.0]
+    history_length: 5
+  joint_pos_rel:
+    params:
+      asset_cfg:
+        name: robot
+        joint_names: [r_pelvis_pitch_joint, r_pelvis_roll_joint, r_pelvis_yaw_joint,
+          r_knee_pitch_joint, r_ankle_pitch_joint, r_ankle_roll_joint, l_pelvis_pitch_joint,
+          l_pelvis_roll_joint, l_pelvis_yaw_joint, l_knee_pitch_joint, l_ankle_pitch_joint,
+          l_ankle_roll_joint, r_shoulder_pitch_joint, r_shoulder_roll_joint, r_elbow_pitch_joint,
+          l_shoulder_pitch_joint, l_shoulder_roll_joint, l_elbow_pitch_joint]
+        joint_ids: [3, 8, 12, 15, 17, 19, 0, 5, 10, 14, 16, 18, 4, 9, 13, 1, 6, 11]
+        fixed_tendon_names: null
+        fixed_tendon_ids: !!python/object/apply:builtins.slice [null, null, null]
+        body_names: null
+        body_ids: !!python/object/apply:builtins.slice [null, null, null]
+        object_collection_names: null
+        object_collection_ids: !!python/object/apply:builtins.slice [null, null, null]
+        preserve_order: true
+    clip: null
+    scale: [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0,
+      1.0, 1.0, 1.0, 1.0]
+    history_length: 5
+  joint_vel_rel:
+    params:
+      asset_cfg:
+        name: robot
+        joint_names: [r_pelvis_pitch_joint, r_pelvis_roll_joint, r_pelvis_yaw_joint,
+          r_knee_pitch_joint, r_ankle_pitch_joint, r_ankle_roll_joint, l_pelvis_pitch_joint,
+          l_pelvis_roll_joint, l_pelvis_yaw_joint, l_knee_pitch_joint, l_ankle_pitch_joint,
+          l_ankle_roll_joint, r_shoulder_pitch_joint, r_shoulder_roll_joint, r_elbow_pitch_joint,
+          l_shoulder_pitch_joint, l_shoulder_roll_joint, l_elbow_pitch_joint]
+        joint_ids: [3, 8, 12, 15, 17, 19, 0, 5, 10, 14, 16, 18, 4, 9, 13, 1, 6, 11]
+        fixed_tendon_names: null
+        fixed_tendon_ids: !!python/object/apply:builtins.slice [null, null, null]
+        body_names: null
+        body_ids: !!python/object/apply:builtins.slice [null, null, null]
+        object_collection_names: null
+        object_collection_ids: !!python/object/apply:builtins.slice [null, null, null]
+        preserve_order: true
+    clip: null
+    scale: [0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05,
+      0.05, 0.05, 0.05, 0.05, 0.05, 0.05]
+    history_length: 5
+  last_action:
+    params: {}
+    clip: null
+    scale: [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0,
+      1.0, 1.0, 1.0, 1.0]
+    history_length: 5

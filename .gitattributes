@@ -1,0 +1,3 @@
+# Preserve exact source and payload bytes: deployment manifests compare SHA256.
+# Shell scripts are stored with LF; do not let checkout convert them to CRLF.
+* -text

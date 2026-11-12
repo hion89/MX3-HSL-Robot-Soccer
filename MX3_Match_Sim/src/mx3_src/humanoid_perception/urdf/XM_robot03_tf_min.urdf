@@ -1,0 +1,97 @@
+<?xml version="1.0" ?>
+<!-- ==========================================================================
+  XM_robot03_tf_min.urdf  —  "TF 전용 최소 URDF"
+
+  목적
+    robot_state_publisher 가 /tf 로 내보내는 변환을, 프로젝트에서 실제로
+    조회(lookup)되는 체인 하나로만 줄이기 위한 경량 URDF.
+
+  배경 (왜 이 파일이 필요한가)
+    원본 XM_robot03_output.urdf 에는 joint 가 21개(양다리 12 + 양팔 6 +
+    목 2 + 카메라 고정 1) 들어있고, robot_state_publisher 는 /joint_states 가
+    들어올 때마다 이 트리 전체(revolute 20개)를 /tf 에 재방송한다.
+    그런데 코드 전체를 조사한 결과, 어떤 노드도 팔/다리 link 프레임을
+    lookup 하지 않는다. 실제로 조회되는 프레임은 다음 4개뿐이다:
+        map, odom, base_link, camera_color_optical_frame
+    그리고 camera_color_optical_frame 자세를 얻기 위한 유일한 운동학 체인은
+        base_link → neck_yaw_link → neck_pitch_link → camera_link
+                  → (RealSense 가 발행) → camera_color_optical_frame
+    이므로, 팔/다리 18개 joint 의 TF 는 9개 listener 노드가 매번
+    역직렬화·버퍼삽입만 하고 소비는 0인 순수 낭비였다.
+
+  이 파일이 담는 것 (꼭 필요한 최소)
+    link  : base_link, neck_yaw_link, neck_pitch_link, camera_link  (4개)
+    joint : neck_yaw_joint(revolute), neck_pitch_joint(revolute),
+            camera_mount_joint(fixed)                                (3개)
+
+  효과
+    /tf 한 메시지가 싣는 변환: ~20개 → 2개(목 2축만 dynamic).
+    고정 변환(camera_mount_joint)은 RSP 가 /tf_static 으로 1회만 latch.
+    → 9개 listener 노드의 /tf 인제스트 CPU 가 일제히 하락.
+
+  중요 — 정확성 보장
+    아래 3개 joint 의 origin(xyz/rpy)·axis·limit 은 원본 URDF 에서
+    "글자 그대로" 복사한 값이다. 따라서 base_link→camera_link 변환은
+    원본과 비트 단위로 동일하다. 카메라 자세 계산 결과가 바뀌지 않는다.
+    neck_yaw_joint / neck_pitch_joint 이름도 원본과 동일하므로
+    neck_state_parser_node 가 발행하는 /joint_states 가 그대로 적용된다.
+
+  link 를 "이름만" 비워둔 이유
+    robot_state_publisher 는 TF 발행에 link 의 visual/collision/inertial 이
+    필요 없다(joint 의 origin/axis 만 사용). mesh(STL) 의존도 끊어
+    이식성을 높이려고 visual 류를 모두 제거했다. RViz 에서 3D 로봇 모델을
+    보고 싶을 때만 원본 URDF 를 (가급적 모니터링 PC 에서) 쓰면 된다.
+
+  로봇명(name)은 원본과 동일하게 "XM_robot03" 으로 둔다.
+  (TF 프레임 이름은 link 이름에서 나오므로 robot name 은 영향 없음)
+========================================================================== -->
+<robot name="XM_robot03">
+
+  <!-- ======================= link 정의 (이름만) ======================= -->
+  <!-- 트리 루트. odom→base_link 는 walk_odometry 가, map→odom 은
+       로컬라이제이션 스택이 별도로 발행한다(여기서 다루지 않음). -->
+  <link name="base_link" />
+
+  <!-- 목 yaw(좌우 회전) 이후 프레임 -->
+  <link name="neck_yaw_link" />
+
+  <!-- 목 pitch(상하 끄덕임) 이후 프레임 -->
+  <link name="neck_pitch_link" />
+
+  <!-- 카메라 본체 프레임. 이 아래 camera_color_optical_frame 은
+       realsense2_camera 가 자동 발행하여 체인이 완성된다. -->
+  <link name="camera_link" />
+
+  <!-- ======================= joint 정의 ======================= -->
+  <!-- [revolute] base_link → neck_yaw_link
+       목 좌우 회전축(z). 값은 /joint_states 의 neck_yaw_joint 에서 옴.
+       origin/axis/limit 은 원본 XM_robot03_output.urdf 에서 그대로 복사. -->
+  <joint name="neck_yaw_joint" type="revolute">
+    <origin xyz="0.0485 0.00059264 0.091889" rpy="0 0 0" />
+    <parent link="base_link" />
+    <child link="neck_yaw_link" />
+    <axis xyz="0 0 1" />
+    <limit lower="-1.39626340159546" upper="1.39626340159546" effort="6" velocity="4.5" />
+  </joint>
+
+  <!-- [revolute] neck_yaw_link → neck_pitch_link
+       목 상하 끄덕임축(y). 값은 /joint_states 의 neck_pitch_joint 에서 옴.
+       origin/axis/limit 은 원본에서 그대로 복사. -->
+  <joint name="neck_pitch_joint" type="revolute">
+    <origin xyz="-0.013831 0.00125 0.063" rpy="0 0 0" />
+    <parent link="neck_yaw_link" />
+    <child link="neck_pitch_link" />
+    <axis xyz="0 1 0" />
+    <limit lower="-0.785398163397448" upper="0" effort="6" velocity="4.5" />
+  </joint>
+
+  <!-- [fixed] neck_pitch_link → camera_link
+       카메라 마운트(고정). fixed 라서 RSP 가 /tf_static 으로 1회만 발행한다.
+       origin 은 원본에서 그대로 복사. -->
+  <joint name="camera_mount_joint" type="fixed">
+    <origin xyz="0.045 0 0.020" rpy="0 0 0" />
+    <parent link="neck_pitch_link" />
+    <child link="camera_link" />
+  </joint>
+
+</robot>

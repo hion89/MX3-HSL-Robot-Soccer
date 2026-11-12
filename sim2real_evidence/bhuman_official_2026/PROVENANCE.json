@@ -1,0 +1,28 @@
+{
+  "repository": "https://github.com/bhuman/BHumanCodeRelease",
+  "commit": "2e3374ba896da8288607f9a1881b876642fe18b8",
+  "release": "2026",
+  "scope": "Selected official source for comparison with the local ROS 2 port, not the full repository",
+  "files": [
+    {
+      "path": "License.md",
+      "github_blob_sha": "cd8c81ddb87fbc42e77768dda33df71f223167c0",
+      "url": "https://github.com/bhuman/BHumanCodeRelease/blob/2e3374ba896da8288607f9a1881b876642fe18b8/License.md"
+    },
+    {
+      "path": "Src/Tools/Modeling/UKFPose2D.cpp",
+      "github_blob_sha": "fce0cc762c52012dce3fc13f2c65f5c84990804f",
+      "url": "https://github.com/bhuman/BHumanCodeRelease/blob/2e3374ba896da8288607f9a1881b876642fe18b8/Src/Tools/Modeling/UKFPose2D.cpp"
+    },
+    {
+      "path": "Src/Tools/Modeling/UKFPose2D.h",
+      "github_blob_sha": "98aed41627e15759558ce209281f3accf1e5136a",
+      "url": "https://github.com/bhuman/BHumanCodeRelease/blob/2e3374ba896da8288607f9a1881b876642fe18b8/Src/Tools/Modeling/UKFPose2D.h"
+    },
+    {
+      "path": "Src/Modules/Modeling/SelfLocator/UKFRobotPoseHypothesis.cpp",
+      "github_blob_sha": "55632ebe171052c62f4f7a1d74137efcd8aa6d13",
+      "url": "https://github.com/bhuman/BHumanCodeRelease/blob/2e3374ba896da8288607f9a1881b876642fe18b8/Src/Modules/Modeling/SelfLocator/UKFRobotPoseHypothesis.cpp"
+    }
+  ]
+}

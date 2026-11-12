@@ -1,0 +1,258 @@
+{
+  "checkpoint_sha256": "9ac0d65d4c27e8d95c05f3e350ec39b0b322c21f345ca30bab26ad1a9dcdd1b8",
+  "training_env_sha256": "584b76b7bb1263f16c16c86eb26ea5d41473121c03edc3f1ac55e2fc95895219",
+  "agent_sha256": "7629f0beace8cb795d73b82dc9dd2cbfc4e4f1f631e57697288fa27773afc09e",
+  "checks": {
+    "checkpoint_hash": true,
+    "step_dt": true,
+    "action_scale": true,
+    "default_offset": true,
+    "action_clip": true,
+    "term_order": true,
+    "history": true,
+    "term_scales": true,
+    "term_clips": true,
+    "gait_period": true,
+    "activation": true,
+    "normalization_disabled": true,
+    "explicit_default_positions": true,
+    "command_limits": false
+  },
+  "saved_command_limits": [
+    [
+      -0.15,
+      0.35
+    ],
+    [
+      -0.1,
+      0.1
+    ],
+    [
+      -0.15,
+      0.15
+    ]
+  ],
+  "local_contract_command_limits": [
+    [
+      -0.3,
+      0.7
+    ],
+    [
+      -0.2,
+      0.2
+    ],
+    [
+      -0.3,
+      0.3
+    ]
+  ],
+  "saved_actuators": {
+    "pelvis_pitch": {
+      "class_type": "isaaclab.actuators.actuator_pd:ImplicitActuator",
+      "joint_names_expr": [
+        "r_pelvis_pitch_joint",
+        "l_pelvis_pitch_joint"
+      ],
+      "effort_limit": null,
+      "velocity_limit": null,
+      "effort_limit_sim": 5.0,
+      "velocity_limit_sim": 4.5,
+      "stiffness": 50.0,
+      "damping": 2.5,
+      "armature": 0.05,
+      "friction": 1.1,
+      "dynamic_friction": null,
+      "viscous_friction": null
+    },
+    "pelvis_roll": {
+      "class_type": "isaaclab.actuators.actuator_pd:ImplicitActuator",
+      "joint_names_expr": [
+        "r_pelvis_roll_joint",
+        "l_pelvis_roll_joint"
+      ],
+      "effort_limit": null,
+      "velocity_limit": null,
+      "effort_limit_sim": 5.0,
+      "velocity_limit_sim": 4.5,
+      "stiffness": 50.0,
+      "damping": 2.5,
+      "armature": 0.05,
+      "friction": 1.1,
+      "dynamic_friction": null,
+      "viscous_friction": null
+    },
+    "pelvis_yaw": {
+      "class_type": "isaaclab.actuators.actuator_pd:ImplicitActuator",
+      "joint_names_expr": [
+        "r_pelvis_yaw_joint",
+        "l_pelvis_yaw_joint"
+      ],
+      "effort_limit": null,
+      "velocity_limit": null,
+      "effort_limit_sim": 5.0,
+      "velocity_limit_sim": 4.5,
+      "stiffness": 50.0,
+      "damping": 2.5,
+      "armature": 0.05,
+      "friction": 1.1,
+      "dynamic_friction": null,
+      "viscous_friction": null
+    },
+    "knee_pitch": {
+      "class_type": "isaaclab.actuators.actuator_pd:ImplicitActuator",
+      "joint_names_expr": [
+        "r_knee_pitch_joint",
+        "l_knee_pitch_joint"
+      ],
+      "effort_limit": null,
+      "velocity_limit": null,
+      "effort_limit_sim": 5.0,
+      "velocity_limit_sim": 4.5,
+      "stiffness": 50.0,
+      "damping": 2.5,
+      "armature": 0.05,
+      "friction": 1.1,
+      "dynamic_friction": null,
+      "viscous_friction": null
+    },
+    "ankle_pitch": {
+      "class_type": "isaaclab.actuators.actuator_pd:ImplicitActuator",
+      "joint_names_expr": [
+        "r_ankle_pitch_joint",
+        "l_ankle_pitch_joint"
+      ],
+      "effort_limit": null,
+      "velocity_limit": null,
+      "effort_limit_sim": 5.0,
+      "velocity_limit_sim": 4.5,
+      "stiffness": 50.0,
+      "damping": 2.5,
+      "armature": 0.05,
+      "friction": 1.1,
+      "dynamic_friction": null,
+      "viscous_friction": null
+    },
+    "ankle_roll": {
+      "class_type": "isaaclab.actuators.actuator_pd:ImplicitActuator",
+      "joint_names_expr": [
+        "r_ankle_roll_joint",
+        "l_ankle_roll_joint"
+      ],
+      "effort_limit": null,
+      "velocity_limit": null,
+      "effort_limit_sim": 5.0,
+      "velocity_limit_sim": 4.5,
+      "stiffness": 50.0,
+      "damping": 2.5,
+      "armature": 0.05,
+      "friction": 1.1,
+      "dynamic_friction": null,
+      "viscous_friction": null
+    },
+    "arms": {
+      "class_type": "isaaclab.actuators.actuator_pd:ImplicitActuator",
+      "joint_names_expr": [
+        "r_shoulder_pitch_joint",
+        "r_shoulder_roll_joint",
+        "r_elbow_pitch_joint",
+        "l_shoulder_pitch_joint",
+        "l_shoulder_roll_joint",
+        "l_elbow_pitch_joint"
+      ],
+      "effort_limit": null,
+      "velocity_limit": null,
+      "effort_limit_sim": 5.0,
+      "velocity_limit_sim": 4.5,
+      "stiffness": 0.0,
+      "damping": 50.0,
+      "armature": 0.05,
+      "friction": 1.1,
+      "dynamic_friction": null,
+      "viscous_friction": null
+    },
+    "neck": {
+      "class_type": "isaaclab.actuators.actuator_pd:ImplicitActuator",
+      "joint_names_expr": [
+        "neck_yaw_joint",
+        "neck_pitch_joint"
+      ],
+      "effort_limit": null,
+      "velocity_limit": null,
+      "effort_limit_sim": 5.0,
+      "velocity_limit_sim": 4.5,
+      "stiffness": 0.0,
+      "damping": 50.0,
+      "armature": 0.05,
+      "friction": 1.1,
+      "dynamic_friction": null,
+      "viscous_friction": null
+    }
+  },
+  "saved_joint_init": {
+    "r_pelvis_pitch_joint": 0.62,
+    "r_knee_pitch_joint": 1.2,
+    "r_ankle_pitch_joint": 0.62,
+    "l_pelvis_pitch_joint": -0.62,
+    "l_knee_pitch_joint": -1.2,
+    "l_ankle_pitch_joint": -0.62,
+    "r_elbow_pitch_joint": 2.967,
+    "l_elbow_pitch_joint": -2.967,
+    "neck_yaw_joint": 0.0,
+    "neck_pitch_joint": 0.0
+  },
+  "saved_standing_fraction": 0.1,
+  "saved_reward_weights": {
+    "track_lin_vel_xy": 1.2,
+    "track_ang_vel_z": 0.5,
+    "alive": 0.15,
+    "base_linear_velocity": -2.0,
+    "base_angular_velocity": -0.05,
+    "joint_vel": -0.001,
+    "joint_acc": -2.5e-07,
+    "action_rate": -0.05,
+    "dof_pos_limits": -5.0,
+    "energy": -2e-05,
+    "joint_deviation_upper": -0.1,
+    "joint_deviation_legs": -1.0,
+    "flat_orientation_l2": -5.0,
+    "base_height": -10.0,
+    "gait": 0.5,
+    "feet_slide": -0.2,
+    "feet_clearance": 1.0,
+    "undesired_contacts": -1.0
+  },
+  "saved_event_names": [
+    "physics_material",
+    "reset_base",
+    "reset_robot_joints",
+    "push_robot"
+  ],
+  "saved_action": {
+    "class_type": "isaaclab.envs.mdp.actions.joint_actions:JointPositionAction",
+    "asset_name": "robot",
+    "debug_vis": false,
+    "clip": null,
+    "joint_names": [
+      ".*"
+    ],
+    "scale": 0.2,
+    "offset": 0.0,
+    "preserve_order": false,
+    "use_default_offset": true
+  },
+  "saved_observation_terms": [
+    "base_ang_vel",
+    "projected_gravity",
+    "velocity_commands",
+    "joint_pos_rel",
+    "joint_vel_rel",
+    "last_action",
+    "gait_phase"
+  ],
+  "limitations": [
+    "Joint order and unlisted initial joint positions require the original resolved USD/articulation, not only YAML.",
+    "Saved gait function name and period do not recover historical function code.",
+    "The robot source/deployed JSON command limits must be independently read to confirm they equal the local contract.",
+    "Config P/D values in simulation and Dynamixel register values do not share physical units."
+  ]
+}

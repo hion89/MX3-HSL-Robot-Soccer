@@ -1,0 +1,90 @@
+{
+  "XM_Walking_Policy": {
+    "python_files": 45,
+    "python310_syntax_errors": [],
+    "snapshots": [
+      "training\\velocity_v0_6_env_cfg_at_training.py"
+    ],
+    "checkpoint_files": [
+      {
+        "path": "policy\\model_13500.pt",
+        "bytes": 7036159
+      },
+      {
+        "path": "policy\\policy.pt",
+        "bytes": 1168786
+      }
+    ],
+    "stability_rewards": {}
+  },
+  "XM_Kick_Policy": {
+    "python_files": 62,
+    "python310_syntax_errors": [],
+    "snapshots": [
+      "training\\walk_kick_v1_5_env_at_training.py"
+    ],
+    "checkpoint_files": [
+      {
+        "path": "policy\\model_22300.pt",
+        "bytes": 7404607
+      },
+      {
+        "path": "policy\\policy.pt",
+        "bytes": 1218578
+      }
+    ],
+    "stability_rewards": {
+      "capture_point": {
+        "weight": "1.0",
+        "func": "unitree_rl_lab.tasks.locomotion.mdp.kick_stability_mdp:capture_point_margin_reward",
+        "params": {
+          "std": "0.1",
+          "post_kick_window_s": "1.0",
+          "boost": "3.0",
+          "force_threshold": "1.0"
+        }
+      },
+      "support_slip": {
+        "weight": "-0.5",
+        "func": "unitree_rl_lab.tasks.locomotion.mdp.kick_stability_mdp:support_foot_slip_penalty",
+        "params": {
+          "force_threshold": "1.0"
+        }
+      },
+      "base_yaw_rate_limit": {
+        "weight": "-0.5",
+        "func": "unitree_rl_lab.tasks.locomotion.mdp.kick_handoff_mdp:base_yaw_rate_over_limit",
+        "params": {
+          "limit": "4.0"
+        }
+      },
+      "fall_after_kick": {
+        "weight": "-300.0",
+        "func": "unitree_rl_lab.tasks.locomotion.mdp.kick_handoff_mdp:fall_after_kick",
+        "params": {
+          "window_s": "2.0",
+          "limit_angle": "0.6",
+          "minimum_height": "0.28"
+        }
+      }
+    }
+  },
+  "XM_Getup_Policy": {
+    "python_files": 44,
+    "python310_syntax_errors": [],
+    "snapshots": [
+      "training\\getup_v1_2_env_cfg_at_training.py"
+    ],
+    "checkpoint_files": [
+      {
+        "path": "policy\\model_53400.pt",
+        "bytes": 8489599
+      },
+      {
+        "path": "policy\\policy.pt",
+        "bytes": 1294866
+      }
+    ],
+    "stability_rewards": {}
+  }
+}

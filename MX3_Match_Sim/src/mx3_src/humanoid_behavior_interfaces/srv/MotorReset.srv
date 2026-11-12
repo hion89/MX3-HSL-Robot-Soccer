@@ -1,0 +1,12 @@
+# 요청: 비어있어도 됨 (전체 모터 스캔)
+# reboot_all: true면 에러 없는 모터도 전부 리부트
+bool reboot_all
+---
+bool success
+string message
+# 에러가 발견된 모터 ID 목록
+int32[] error_ids
+# 각 모터의 에러 코드 (error_ids와 1:1 대응)
+int32[] error_codes
+# 리부트된 모터 ID 목록
+int32[] rebooted_ids

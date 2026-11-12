@@ -1,0 +1,174 @@
+robo04@robo04-desktop:~$ (
+set -e
+cd /home/robo04/incoming
+
+sha256sum -c ball_tracker_tf_fix_20261104_v3.tar.gz.sha256
+tar -xzf ball_tracker_tf_fix_20261104_v3.tar.gz
+
+bash ball_tracker_tf_20261104_v3/apply_and_build.sh
+)
+ball_tracker_tf_fix_20261104_v3.tar.gz: OK
+{
+  "target": "/home/robo04/sim2real_ws/src/hsl_src/hsl_world_model/src/ball_tracker_node.cpp",
+  "before_sha256": "0349808f7c3789dc634dbf9c6512c86d5569119c4a581dd7e0cf1f881680ea55",
+  "patched_sha256": "24f90fcc09275786e982a64daf998c813f802df1e030ae2d2943b59e1a1ba545",
+  "backup": "/home/robo04/sim2real_ws/patch_backups/ball_tracker_tf_20261104T082253Z_x7f2a5n0",
+  "status": "APPLIED_SOURCE_ONLY"
+}
+Starting >>> hsl_world_model
+[ 33%] Built target leg_odometry
+[ 66%] Built target self_localizer
+Consolidate compiler generated dependencies of target ball_tracker
+[ 83%] Building CXX object CMakeFiles/ball_tracker.dir/src/ball_tracker_node.cpp.o
+[100%] Linking CXX executable ball_tracker
+[100%] Built target ball_tracker
+-- Install configuration: ""
+-- Execute custom install script
+-- Up-to-date symlink: /home/robo04/sim2real_ws/install/hsl_world_model/lib/hsl_world_model/leg_odometry
+-- Up-to-date symlink: /home/robo04/sim2real_ws/install/hsl_world_model/lib/hsl_world_model/self_localizer
+-- Up-to-date symlink: /home/robo04/sim2real_ws/install/hsl_world_model/lib/hsl_world_model/ball_tracker
+-- Up-to-date symlink: /home/robo04/sim2real_ws/install/hsl_world_model/share/hsl_world_model/urdf/XM_robot04.urdf
+-- Up-to-date symlink: /home/robo04/sim2real_ws/install/hsl_world_model/share/ament_index/resource_index/package_run_dependencies/hsl_world_model
+-- Up-to-date symlink: /home/robo04/sim2real_ws/install/hsl_world_model/share/ament_index/resource_index/parent_prefix_path/hsl_world_model
+-- Up-to-date symlink: /home/robo04/sim2real_ws/install/hsl_world_model/share/hsl_world_model/environment/ament_prefix_path.sh
+-- Up-to-date symlink: /home/robo04/sim2real_ws/install/hsl_world_model/share/hsl_world_model/environment/ament_prefix_path.dsv
+-- Up-to-date symlink: /home/robo04/sim2real_ws/install/hsl_world_model/share/hsl_world_model/environment/path.sh
+-- Up-to-date symlink: /home/robo04/sim2real_ws/install/hsl_world_model/share/hsl_world_model/environment/path.dsv
+-- Up-to-date symlink: /home/robo04/sim2real_ws/install/hsl_world_model/share/hsl_world_model/local_setup.bash
+-- Up-to-date symlink: /home/robo04/sim2real_ws/install/hsl_world_model/share/hsl_world_model/local_setup.sh
+-- Up-to-date symlink: /home/robo04/sim2real_ws/install/hsl_world_model/share/hsl_world_model/local_setup.zsh
+-- Up-to-date symlink: /home/robo04/sim2real_ws/install/hsl_world_model/share/hsl_world_model/local_setup.dsv
+-- Symlinking: /home/robo04/sim2real_ws/install/hsl_world_model/share/hsl_world_model/package.dsv
+-- Up-to-date symlink: /home/robo04/sim2real_ws/install/hsl_world_model/share/ament_index/resource_index/packages/hsl_world_model
+-- Up-to-date symlink: /home/robo04/sim2real_ws/install/hsl_world_model/share/hsl_world_model/cmake/hsl_world_modelConfig.cmake
+-- Up-to-date symlink: /home/robo04/sim2real_ws/install/hsl_world_model/share/hsl_world_model/cmake/hsl_world_modelConfig-version.cmake
+-- Up-to-date symlink: /home/robo04/sim2real_ws/install/hsl_world_model/share/hsl_world_model/package.xml
+Finished <<< hsl_world_model [57.4s]
+
+Summary: 1 package finished [58.0s]
+PASS: future timestamp rejected while latest TF was available
+PASS: static TF published before node start was received
+PASS: base ball position = 1.100000023841858 0.0
+--- C++ test log (last 30 lines) ---
+[INFO] [1793780632.977868406] [hsl_ball_tracker]: TF_CONFIG listener=parent-node-dedicated topics=/tf,/tf_static odom='odom' base='base_link' camera='camera_color_optical_frame'
+[WARN] [1793780632.998164768] [hsl_ball_tracker]: TF_WAIT source='camera_color_optical_frame' age=-59.996s detections=1 tf_publishers=1 static_publishers=1 latest_odom=yes latest_base=yes odom_error=[Lookup would require extrapolation at time 1793780692.993730, but only time 1793780632.982895 is in the buffer, when looking up transform from frame [camera_color_optical_frame] to frame [odom]. canTransform returned after 8.3941e-05 timeout was 0.] base_error=[. canTransform returned after 6.624e-06 timeout was 0.] cached_frames=[Frame base_link exists with parent odom.
+Frame odom exists with parent map.
+Frame camera_color_optical_frame exists with parent base_link.
+]
+[WARN] [1793780635.998231131] [hsl_ball_tracker]: TF_WAIT source='camera_color_optical_frame' age=-59.757s detections=57 tf_publishers=1 static_publishers=1 latest_odom=yes latest_base=yes odom_error=[Lookup would require extrapolation into the future.  Requested time 1793780695.755065 but the latest data is at time 1793780635.975567, when looking up transform from frame [camera_color_optical_frame] to frame [odom]. canTransform returned after 4.2466e-05 timeout was 0.] base_error=[. canTransform returned after 4.8e-06 timeout was 0.] cached_frames=[Frame base_link exists with parent odom.
+Frame odom exists with parent map.
+Frame camera_color_optical_frame exists with parent base_link.
+]
+[WARN] [1793780638.998366271] [hsl_ball_tracker]: TF_WAIT source='camera_color_optical_frame' age=-59.736s detections=113 tf_publishers=1 static_publishers=1 latest_odom=yes latest_base=yes odom_error=[Lookup would require extrapolation into the future.  Requested time 1793780698.734409 but the latest data is at time 1793780638.984147, when looking up transform from frame [camera_color_optical_frame] to frame [odom]. canTransform returned after 3.8338e-05 timeout was 0.] base_error=[. canTransform returned after 4.48e-06 timeout was 0.] cached_frames=[Frame base_link exists with parent odom.
+Frame odom exists with parent map.
+Frame camera_color_optical_frame exists with parent base_link.
+]
+[INFO] [1793780641.158425846] [hsl_ball_tracker]: TF_READY source='camera_color_optical_frame' targets='odom','base_link' at detection timestamp
+[INFO] [1793780641.158668994] [hsl_ball_tracker]: BALL_INITIALIZED base=(1.100,0.000,0.500)m camera=(0.000,0.000,1.000)m score=0.950
+[INFO] [1793780646.939584039] [rclcpp]: signal_handler(SIGINT/SIGTERM)
+ISOLATED_TF_TEST_PASSED (domain 77; no motor commands)
+
+Starting the reviewed ball tracker in robot domain 42.
+[INFO] [1793780647.592861921] [hsl_ball_tracker]: TF_CONFIG listener=parent-node-dedicated topics=/tf,/tf_static odom='odom' base='base_link' camera='camera_color_optical_frame'
+[WARN] [1793780648.113131330] [hsl_ball_tracker]: TF_WAIT source='camera_color_optical_frame' age=0.165s detections=4 tf_publishers=0 static_publishers=0 latest_odom=no latest_base=no odom_error=[Invalid frame ID "odom" passed to canTransform argument target_frame - frame does not exist. canTransform returned after 2.2721e-05 timeout was 0.] base_error=[Invalid frame ID "base_link" passed to canTransform argument target_frame - frame does not exist. canTransform returned after 1.344e-06 timeout was 0.] cached_frames=[]
+[INFO] [1793780650.433128713] [hsl_ball_tracker]: TF_READY source='camera_color_optical_frame' targets='odom','base_link' at detection timestamp
+[INFO] [1793780650.433304466] [hsl_ball_tracker]: BALL_INITIALIZED base=(1.080,-0.011,-0.307)m camera=(0.002,-0.001,1.098)m score=0.905
+[WARN] [1793780651.453267652] [hsl_ball_tracker]: TF_WAIT source='camera_color_optical_frame' age=0.038s detections=104 tf_publishers=2 static_publishers=2 latest_odom=yes latest_base=yes odom_error=[Lookup would require extrapolation into the future.  Requested time 1793780651.415374 but the latest data is at time 1793780651.407639, when looking up transform from frame [camera_color_optical_frame] to frame [odom]. canTransform returned after 3.501e-05 timeout was 0.] base_error=[Lookup would require extrapolation into the future.  Requested time 1793780651.415374 but the latest data is at time 1793780651.407639, when looking up transform from frame [camera_color_optical_frame] to frame [base_link]. canTransform returned after 6.241e-06 timeout was 0.] cached_frames=[Frame camera_color_frame exists with parent camera_link.
+Frame camera_link exists with parent neck_pitch_link.
+Frame camera_color_optical_frame exists with parent camera_color_frame.
+Frame camera_depth_frame exists with parent camera_link.
+Frame camera_depth_optical_frame exists with parent camera_depth_frame.
+Frame base_link exists with parent odom.
+Frame neck_pitch_link exists with parent neck_yaw_link.
+Frame neck_yaw_link exists with parent base_link.
+]
+[WARN] [1793780654.453401037] [hsl_ball_tracker]: TF_WAIT source='camera_color_optical_frame' age=0.037s detections=194 tf_publishers=2 static_publishers=2 latest_odom=yes latest_base=yes odom_error=[Lookup would require extrapolation into the future.  Requested time 1793780654.416112 but the latest data is at time 1793780654.407681, when looking up transform from frame [camera_color_optical_frame] to frame [odom]. canTransform returned after 3.453e-05 timeout was 0.] base_error=[Lookup would require extrapolation into the future.  Requested time 1793780654.416112 but the latest data is at time 1793780654.407681, when looking up transform from frame [camera_color_optical_frame] to frame [base_link]. canTransform returned after 6.689e-06 timeout was 0.] cached_frames=[Frame camera_color_frame exists with parent camera_link.
+Frame camera_link exists with parent neck_pitch_link.
+Frame camera_color_optical_frame exists with parent camera_color_frame.
+Frame camera_depth_frame exists with parent camera_link.
+Frame camera_depth_optical_frame exists with parent camera_depth_frame.
+Frame base_link exists with parent odom.
+Frame neck_pitch_link exists with parent neck_yaw_link.
+Frame neck_yaw_link exists with parent base_link.
+]
+[WARN] [1793780657.453556171] [hsl_ball_tracker]: TF_WAIT source='camera_color_optical_frame' age=0.037s detections=284 tf_publishers=2 static_publishers=2 latest_odom=yes latest_base=yes odom_error=[Lookup would require extrapolation into the future.  Requested time 1793780657.416871 but the latest data is at time 1793780657.407691, when looking up transform from frame [camera_color_optical_frame] to frame [odom]. canTransform returned after 3.9298e-05 timeout was 0.] base_error=[Lookup would require extrapolation into the future.  Requested time 1793780657.416871 but the latest data is at time 1793780657.407691, when looking up transform from frame [camera_color_optical_frame] to frame [base_link]. canTransform returned after 6.368e-06 timeout was 0.] cached_frames=[Frame camera_color_frame exists with parent camera_link.
+Frame camera_link exists with parent neck_pitch_link.
+Frame camera_color_optical_frame exists with parent camera_color_frame.
+Frame camera_depth_frame exists with parent camera_link.
+Frame camera_depth_optical_frame exists with parent camera_depth_frame.
+Frame base_link exists with parent odom.
+Frame neck_pitch_link exists with parent neck_yaw_link.
+Frame neck_yaw_link exists with parent base_link.
+]
+[WARN] [1793780660.453739006] [hsl_ball_tracker]: TF_WAIT source='camera_color_optical_frame' age=0.036s detections=372 tf_publishers=2 static_publishers=2 latest_odom=yes latest_base=yes odom_error=[Lookup would require extrapolation into the future.  Requested time 1793780660.417614 but the latest data is at time 1793780660.407663, when looking up transform from frame [camera_color_optical_frame] to frame [odom]. canTransform returned after 3.4594e-05 timeout was 0.] base_error=[Lookup would require extrapolation into the future.  Requested time 1793780660.417614 but the latest data is at time 1793780660.407663, when looking up transform from frame [camera_color_optical_frame] to frame [base_link]. canTransform returned after 6.657e-06 timeout was 0.] cached_frames=[Frame camera_color_frame exists with parent camera_link.
+Frame camera_link exists with parent neck_pitch_link.
+Frame camera_color_optical_frame exists with parent camera_color_frame.
+Frame camera_depth_frame exists with parent camera_link.
+Frame camera_depth_optical_frame exists with parent camera_depth_frame.
+Frame base_link exists with parent odom.
+Frame neck_pitch_link exists with parent neck_yaw_link.
+Frame neck_yaw_link exists with parent base_link.
+]
+[WARN] [1793780664.473965096] [hsl_ball_tracker]: TF_WAIT source='camera_color_optical_frame' age=0.055s detections=492 tf_publishers=2 static_publishers=2 latest_odom=yes latest_base=yes odom_error=[Lookup would require extrapolation into the future.  Requested time 1793780664.418639 but the latest data is at time 1793780664.407609, when looking up transform from frame [camera_color_optical_frame] to frame [odom]. canTransform returned after 4.3298e-05 timeout was 0.] base_error=[Lookup would require extrapolation into the future.  Requested time 1793780664.418639 but the latest data is at time 1793780664.407609, when looking up transform from frame [camera_color_optical_frame] to frame [base_link]. canTransform returned after 6.624e-06 timeout was 0.] cached_frames=[Frame camera_color_frame exists with parent camera_link.
+Frame camera_link exists with parent neck_pitch_link.
+Frame camera_color_optical_frame exists with parent camera_color_frame.
+Frame camera_depth_frame exists with parent camera_link.
+Frame camera_depth_optical_frame exists with parent camera_depth_frame.
+Frame base_link exists with parent odom.
+Frame neck_pitch_link exists with parent neck_yaw_link.
+Frame neck_yaw_link exists with parent base_link.
+]
+[WARN] [1793780669.974226136] [hsl_ball_tracker]: TF_WAIT source='camera_color_optical_frame' age=0.054s detections=657 tf_publishers=2 static_publishers=2 latest_odom=yes latest_base=yes odom_error=[Lookup would require extrapolation into the future.  Requested time 1793780669.920007 but the latest data is at time 1793780669.907633, when looking up transform from frame [camera_color_optical_frame] to frame [odom]. canTransform returned after 4.3746e-05 timeout was 0.] base_error=[Lookup would require extrapolation into the future.  Requested time 1793780669.920007 but the latest data is at time 1793780669.907633, when looking up transform from frame [camera_color_optical_frame] to frame [base_link]. canTransform returned after 6.4e-06 timeout was 0.] cached_frames=[Frame camera_color_frame exists with parent camera_link.
+Frame camera_link exists with parent neck_pitch_link.
+Frame camera_color_optical_frame exists with parent camera_color_frame.
+Frame camera_depth_frame exists with parent camera_link.
+Frame camera_depth_optical_frame exists with parent camera_depth_frame.
+Frame base_link exists with parent odom.
+Frame neck_pitch_link exists with parent neck_yaw_link.
+Frame neck_yaw_link exists with parent base_link.
+]
+[WARN] [1793780672.974365077] [hsl_ball_tracker]: TF_WAIT source='camera_color_optical_frame' age=0.054s detections=745 tf_publishers=2 static_publishers=2 latest_odom=yes latest_base=yes odom_error=[Lookup would require extrapolation into the future.  Requested time 1793780672.920737 but the latest data is at time 1793780672.907701, when looking up transform from frame [camera_color_optical_frame] to frame [odom]. canTransform returned after 4.2306e-05 timeout was 0.] base_error=[Lookup would require extrapolation into the future.  Requested time 1793780672.920737 but the latest data is at time 1793780672.907701, when looking up transform from frame [camera_color_optical_frame] to frame [base_link]. canTransform returned after 6.561e-06 timeout was 0.] cached_frames=[Frame camera_color_frame exists with parent camera_link.
+Frame camera_link exists with parent neck_pitch_link.
+Frame camera_color_optical_frame exists with parent camera_color_frame.
+Frame camera_depth_frame exists with parent camera_link.
+Frame camera_depth_optical_frame exists with parent camera_depth_frame.
+Frame base_link exists with parent odom.
+Frame neck_pitch_link exists with parent neck_yaw_link.
+Frame neck_yaw_link exists with parent base_link.
+]
+[WARN] [1793780675.974516980] [hsl_ball_tracker]: TF_WAIT source='camera_color_optical_frame' age=0.053s detections=835 tf_publishers=2 static_publishers=2 latest_odom=yes latest_base=yes odom_error=[Lookup would require extrapolation into the future.  Requested time 1793780675.921467 but the latest data is at time 1793780675.907730, when looking up transform from frame [camera_color_optical_frame] to frame [odom]. canTransform returned after 4.1794e-05 timeout was 0.] base_error=[Lookup would require extrapolation into the future.  Requested time 1793780675.921467 but the latest data is at time 1793780675.907730, when looking up transform from frame [camera_color_optical_frame] to frame [base_link]. canTransform returned after 6.177e-06 timeout was 0.] cached_frames=[Frame camera_color_frame exists with parent camera_link.
+Frame camera_link exists with parent neck_pitch_link.
+Frame camera_color_optical_frame exists with parent camera_color_frame.
+Frame camera_depth_frame exists with parent camera_link.
+Frame camera_depth_optical_frame exists with parent camera_depth_frame.
+Frame base_link exists with parent odom.
+Frame neck_pitch_link exists with parent neck_yaw_link.
+Frame neck_yaw_link exists with parent base_link.
+]
+[WARN] [1793780678.974648947] [hsl_ball_tracker]: TF_WAIT source='camera_color_optical_frame' age=0.052s detections=925 tf_publishers=2 static_publishers=2 latest_odom=yes latest_base=yes odom_error=[Lookup would require extrapolation into the future.  Requested time 1793780678.922228 but the latest data is at time 1793780678.907746, when looking up transform from frame [camera_color_optical_frame] to frame [odom]. canTransform returned after 4.2082e-05 timeout was 0.] base_error=[Lookup would require extrapolation into the future.  Requested time 1793780678.922228 but the latest data is at time 1793780678.907746, when looking up transform from frame [camera_color_optical_frame] to frame [base_link]. canTransform returned after 6.624e-06 timeout was 0.] cached_frames=[Frame camera_color_frame exists with parent camera_link.
+Frame camera_link exists with parent neck_pitch_link.
+Frame camera_color_optical_frame exists with parent camera_color_frame.
+Frame camera_depth_frame exists with parent camera_link.
+Frame camera_depth_optical_frame exists with parent camera_depth_frame.
+Frame base_link exists with parent odom.
+Frame neck_pitch_link exists with parent neck_yaw_link.
+Frame neck_yaw_link exists with parent base_link.
+]
+[WARN] [1793780682.474815021] [hsl_ball_tracker]: TF_WAIT source='camera_color_optical_frame' age=0.052s detections=1029 tf_publishers=2 static_publishers=2 latest_odom=yes latest_base=yes odom_error=[Lookup would require extrapolation into the future.  Requested time 1793780682.423102 but the latest data is at time 1793780682.407603, when looking up transform from frame [camera_color_optical_frame] to frame [odom]. canTransform returned after 4.029e-05 timeout was 0.] base_error=[Lookup would require extrapolation into the future.  Requested time 1793780682.423102 but the latest data is at time 1793780682.407603, when looking up transform from frame [camera_color_optical_frame] to frame [base_link]. canTransform returned after 6.305e-06 timeout was 0.] cached_frames=[Frame camera_color_frame exists with parent camera_link.
+Frame camera_link exists with parent neck_pitch_link.
+Frame camera_color_optical_frame exists with parent camera_color_frame.
+Frame camera_depth_frame exists with parent camera_link.
+Frame camera_depth_optical_frame exists with parent camera_depth_frame.
+Frame base_link exists with parent odom.
+Frame neck_pitch_link exists with parent neck_yaw_link.
+Frame neck_yaw_link exists with parent base_link.
+]
+[WARN] [1793780685.475076035] [hsl_ball_tracker]: TF_WAIT source='camera_color_optical_frame' age=0.051s detections=1114 tf_publishers=2 static_publishers=2 latest_odom=yes latest_base=yes odom_error=[Lookup would require extrapolation into the future.  Requested time 1793780685.423846 but the latest data is at time 1793780685.407603, when looking up transform from frame [camera_color_optical_frame] to frame [odom]. canTransform returned after 4.6178e-05 timeout was 0.] base_error=[Lookup would require extrapolation into the future.  Requested time 1793780685.423846 but the latest data is at time 1793780685.407603, when looking up transform from frame [camera_color_optical_frame] to frame [base_link]. canTransform returned after 6.112e-06 timeout was 0.] cached_frames=[Frame camera_color_frame exists with parent camera_link.
+Frame camera_link exists with parent neck_pitch_link.
+Frame camera_color_optical_frame exists with parent camera_color_frame.
+Frame camera_depth_frame exists with parent camera_link.
+Frame camera_depth_optical_frame exists with parent camera_depth_frame.
+Frame base_link exists with parent odom.
+Frame neck_pitch_link exists with parent neck_yaw_link.
+Frame neck_yaw_link exists with parent base_link.
+]

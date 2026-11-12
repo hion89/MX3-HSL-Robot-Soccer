@@ -1,0 +1,6 @@
+cmake_minimum_required(VERSION 3.8)
+project(hsl_bringup)
+find_package(ament_cmake REQUIRED)
+install(DIRECTORY launch config models DESTINATION share/${PROJECT_NAME})
+install(PROGRAMS scripts/run_match.sh scripts/run_stack.sh scripts/match_monitor.py scripts/match_referee.py DESTINATION lib/${PROJECT_NAME})
+ament_package()

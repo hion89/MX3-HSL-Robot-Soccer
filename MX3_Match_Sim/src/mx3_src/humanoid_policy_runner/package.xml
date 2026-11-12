@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>humanoid_policy_runner</name>
+  <version>0.0.0</version>
+  <description>RL policy runner nodes (ONNX/JIT) for KHUBER humanoid</description>
+  <maintainer email="robo1@todo.todo">robo1</maintainer>
+  <license>TODO: License declaration</license>
+
+  <depend>humanoid_serial_bridge</depend>
+  <depend>humanoid_behavior_interfaces</depend>
+
+  <exec_depend>rclpy</exec_depend>
+  <exec_depend>std_msgs</exec_depend>
+  <exec_depend>sensor_msgs</exec_depend>
+  <exec_depend>geometry_msgs</exec_depend>
+  <!-- lateral_drift_correction_node 의 RViz 디버그 마커
+       (/cmd_vel_correction/debug/markers) 에 사용. -->
+  <exec_depend>visualization_msgs</exec_depend>
+  <!-- ParameterDescriptor / ParameterType 사용 (joypad_teleop_node 의
+       gait_modes 정적 타입 선언). rclpy 가 간접적으로 끌어오지만,
+       직접 import 하므로 명시한다. -->
+  <exec_depend>rcl_interfaces</exec_depend>
+  <!-- actor_onnx_getup_runner 의 시작/중단 서비스(~/start, ~/abort)와
+       /body_motor_controller/reload_gains 클라이언트에 사용. -->
+  <exec_depend>std_srvs</exec_depend>
+  <exec_depend>twist_mux</exec_depend>   <!-- ← 추가 -->
+  <exec_depend>ament_index_python</exec_depend>
+  <exec_depend>python3-numpy</exec_depend>
+
+  <test_depend>ament_copyright</test_depend>
+  <test_depend>ament_flake8</test_depend>
+  <test_depend>ament_pep257</test_depend>
+  <test_depend>python3-pytest</test_depend>
+
+  <export>
+    <build_type>ament_python</build_type>
+  </export>
+</package>

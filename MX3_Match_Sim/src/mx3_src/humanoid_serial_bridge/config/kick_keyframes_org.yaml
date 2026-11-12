@@ -1,0 +1,139 @@
+right_kick_sequence:
+- name: ready_160x100
+  rpm: 5.0
+  hold_sec: 2.0
+  joints:
+    r_pelvis_pitch_joint: 0.52
+    r_pelvis_roll_joint: 0.0
+    r_pelvis_yaw_joint: 0.0
+    r_knee_pitch_joint: 0.95
+    r_ankle_pitch_joint: 0.48
+    r_ankle_roll_joint: 0.0
+    l_pelvis_pitch_joint: -0.52
+    l_pelvis_roll_joint: 0.0
+    l_pelvis_yaw_joint: 0.0
+    l_knee_pitch_joint: -0.95
+    l_ankle_pitch_joint: -0.48
+    l_ankle_roll_joint: 0.0
+    r_shoulder_pitch_joint: 0.08
+    r_shoulder_roll_joint: 0.0
+    r_elbow_pitch_joint: 2.45
+    l_shoulder_pitch_joint: -0.08
+    l_shoulder_roll_joint: 0.0
+    l_elbow_pitch_joint: -2.45
+- name: shift_left_back_160x100
+  rpm: 15.0
+  hold_sec: 1.5
+  joints:
+    r_pelvis_pitch_joint: 0.7
+    r_pelvis_roll_joint: 0.04
+    r_pelvis_yaw_joint: 0.0
+    r_knee_pitch_joint: 0.92
+    r_ankle_pitch_joint: 0.48
+    r_ankle_roll_joint: -0.10
+    l_pelvis_pitch_joint: -0.6
+    l_pelvis_roll_joint: 0.2
+    l_pelvis_yaw_joint: 0.0
+    l_knee_pitch_joint: -0.98
+    l_ankle_pitch_joint: -0.44
+    l_ankle_roll_joint: -0.22
+    r_shoulder_pitch_joint: 0.24
+    r_shoulder_roll_joint: 0.12
+    r_elbow_pitch_joint: 2.5
+    l_shoulder_pitch_joint: -0.1
+    l_shoulder_roll_joint: -0.12
+    l_elbow_pitch_joint: -2.5
+- name: unload_right_clearance
+  rpm: 20.0
+  hold_sec: 1.5
+  joints:
+    r_pelvis_pitch_joint: 0.75
+    r_pelvis_roll_joint: 0.15
+    r_pelvis_yaw_joint: 0.0
+    r_knee_pitch_joint: 1.8
+    r_ankle_pitch_joint: 0.8
+    r_ankle_roll_joint: -0.10
+    l_pelvis_pitch_joint: -0.7
+    l_pelvis_roll_joint: 0.15
+    l_pelvis_yaw_joint: 0.0
+    l_knee_pitch_joint: -0.98
+    l_ankle_pitch_joint: -0.44
+    l_ankle_roll_joint: -0.36
+    r_shoulder_pitch_joint: 0.24
+    r_shoulder_roll_joint: 0.12
+    r_elbow_pitch_joint: 2.5
+    l_shoulder_pitch_joint: -0.1
+    l_shoulder_roll_joint: -0.12
+    l_elbow_pitch_joint: -2.5    
+# - name: chamber_back_clearance
+#   rpm: 3.0
+#   hold_sec: 3.0
+#   joints:
+#     r_pelvis_pitch_joint: -0.3
+#     r_pelvis_roll_joint: 0.22
+#     r_pelvis_yaw_joint: -0.05
+#     r_knee_pitch_joint: 1.6
+#     r_ankle_pitch_joint: 0.4
+#     r_ankle_roll_joint: -0.1
+#     l_pelvis_pitch_joint: -0.35
+#     l_pelvis_roll_joint: 0.16
+#     l_pelvis_yaw_joint: 0.0
+#     l_knee_pitch_joint: -0.65
+#     l_ankle_pitch_joint: -0.4
+#     l_ankle_roll_joint: -0.35
+#     r_shoulder_pitch_joint: 0.24
+#     r_shoulder_roll_joint: 0.12
+#     r_elbow_pitch_joint: 2.5
+#     l_shoulder_pitch_joint: -0.1
+#     l_shoulder_roll_joint: -0.12
+#     l_elbow_pitch_joint: -2.5
+- name: swing_forward_clearance
+  rpm: 45.0
+  hold_sec: 0.6
+  joints:
+    r_pelvis_pitch_joint: 1.1
+    r_pelvis_roll_joint: -0.1 ###-0.01
+    r_pelvis_yaw_joint: 0.02
+    r_knee_pitch_joint: 1.05
+    r_ankle_pitch_joint: 0.8
+    r_ankle_roll_joint: -0.06
+
+    l_pelvis_pitch_joint: -0.46
+    l_pelvis_roll_joint: -0.2
+    l_pelvis_yaw_joint: 0.0
+    l_knee_pitch_joint: -0.72
+    l_ankle_pitch_joint: -0.36
+    l_ankle_roll_joint: -0.24
+
+    r_shoulder_pitch_joint: 0.10
+    r_shoulder_roll_joint: 0.08
+    r_elbow_pitch_joint: 2.50
+    l_shoulder_pitch_joint: 0.16
+    l_shoulder_roll_joint: -0.08
+    l_elbow_pitch_joint: -2.50
+
+
+- name: final_160x100
+  rpm: 42.0
+  hold_sec: 2.0
+  joints:
+    r_pelvis_pitch_joint: 0.52
+    r_pelvis_roll_joint: 0.0
+    r_pelvis_yaw_joint: 0.0
+    r_knee_pitch_joint: 0.95
+    r_ankle_pitch_joint: 0.48
+    r_ankle_roll_joint: 0.0
+    l_pelvis_pitch_joint: -0.52  ##-0.52
+    l_pelvis_roll_joint: 0.0
+    l_pelvis_yaw_joint: 0.0
+    l_knee_pitch_joint: -0.95
+    l_ankle_pitch_joint: -0.48
+    l_ankle_roll_joint: 0.0
+    r_shoulder_pitch_joint: 0.08
+    r_shoulder_roll_joint: 0.0
+    r_elbow_pitch_joint: 2.45
+    l_shoulder_pitch_joint: -0.08
+    l_shoulder_roll_joint: 0.0
+    l_elbow_pitch_joint: -2.45
+
+left_kick_sequence: []

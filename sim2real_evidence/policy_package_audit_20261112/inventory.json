@@ -1,0 +1,649 @@
+[
+  {
+    "folder": "XM_Walking_Policy",
+    "files": 59,
+    "size_mib": 25.6,
+    "onnx_sha256": "72e2b8d88bac39feb97bc7789e0a67e4675650713c6e4528988a32f96831fbb1",
+    "existing_model": "C:\\Users\\jes\\Desktop\\MX3_Match_Sim\\MX3_Match_Sim\\src\\hsl_src\\hsl_bringup\\models\\walk_v0_6_13500.onnx",
+    "existing_sha256": "72e2b8d88bac39feb97bc7789e0a67e4675650713c6e4528988a32f96831fbb1",
+    "exact_same_model": true,
+    "inputs": [
+      [
+        "obs",
+        [
+          1,
+          240
+        ]
+      ]
+    ],
+    "outputs": [
+      [
+        "actions",
+        [
+          1,
+          12
+        ]
+      ]
+    ],
+    "ops": [
+      "Gemm",
+      "Elu",
+      "Gemm",
+      "Elu",
+      "Gemm",
+      "Elu",
+      "Gemm"
+    ],
+    "step_dt": "0.02",
+    "joints": [
+      "r_pelvis_pitch_joint",
+      "r_pelvis_roll_joint",
+      "r_pelvis_yaw_joint",
+      "r_knee_pitch_joint",
+      "r_ankle_pitch_joint",
+      "r_ankle_roll_joint",
+      "l_pelvis_pitch_joint",
+      "l_pelvis_roll_joint",
+      "l_pelvis_yaw_joint",
+      "l_knee_pitch_joint",
+      "l_ankle_pitch_joint",
+      "l_ankle_roll_joint"
+    ],
+    "action": {
+      "scale": [
+        "0.25",
+        "0.25",
+        "0.25",
+        "0.25",
+        "0.25",
+        "0.25",
+        "0.25",
+        "0.25",
+        "0.25",
+        "0.25",
+        "0.25",
+        "0.25"
+      ],
+      "target_limits": "null",
+      "action_delay_range": [
+        "1",
+        "2"
+      ]
+    },
+    "policy_layers": {
+      "class_name": "ActorCritic",
+      "init_noise_std": "1.0",
+      "noise_std_type": "scalar",
+      "state_dependent_std": "false",
+      "actor_obs_normalization": {},
+      "critic_obs_normalization": {},
+      "actor_hidden_dims": [
+        "512",
+        "256",
+        "128"
+      ],
+      "critic_hidden_dims": [
+        "512",
+        "256",
+        "128"
+      ],
+      "activation": "elu"
+    },
+    "algorithm": {
+      "class_name": "PPO",
+      "num_learning_epochs": "3",
+      "num_mini_batches": "4",
+      "learning_rate": "0.0005",
+      "schedule": "adaptive",
+      "gamma": "0.99",
+      "lam": "0.95",
+      "entropy_coef": "0.01",
+      "desired_kl": "0.01",
+      "max_grad_norm": "0.5",
+      "value_loss_coef": "1.0",
+      "use_clipped_value_loss": "true",
+      "clip_param": "0.2",
+      "normalize_advantage_per_mini_batch": "false",
+      "rnd_cfg": "null",
+      "symmetry_cfg": {
+        "use_data_augmentation": "false",
+        "use_mirror_loss": "true",
+        "data_augmentation_func": "unitree_rl_lab.tasks.locomotion.mdp.symmetry_mx3:compute_symmetric_states",
+        "mirror_loss_coeff": "3.0"
+      }
+    },
+    "events_keys": [
+      "physics_material",
+      "reset_base",
+      "reset_robot_joints",
+      "reset_joints_noise",
+      "push_robot",
+      "reset_hold"
+    ],
+    "training_hold": {
+      "func": "unitree_rl_lab.tasks.locomotion.mdp.reset_hold:set_reset_hold_steps",
+      "params": {
+        "hold_time_s": "0.3"
+      },
+      "mode": "reset",
+      "interval_range_s": "null",
+      "is_global_time": "false",
+      "min_step_count_between_reset": "0"
+    },
+    "material": {
+      "func": "isaaclab.envs.mdp.events:randomize_rigid_body_material",
+      "params": {
+        "asset_cfg": {
+          "name": "robot",
+          "joint_names": "null",
+          "joint_ids": [
+            "null",
+            "null",
+            "null"
+          ],
+          "fixed_tendon_names": "null",
+          "fixed_tendon_ids": [
+            "null",
+            "null",
+            "null"
+          ],
+          "body_names": ".*",
+          "body_ids": [
+            "null",
+            "null",
+            "null"
+          ],
+          "object_collection_names": "null",
+          "object_collection_ids": [
+            "null",
+            "null",
+            "null"
+          ],
+          "preserve_order": "false"
+        },
+        "static_friction_range": [
+          "0.7",
+          "1.2"
+        ],
+        "dynamic_friction_range": [
+          "0.7",
+          "1.0"
+        ],
+        "restitution_range": [
+          "0.0",
+          "0.15"
+        ],
+        "num_buckets": "64"
+      },
+      "mode": "startup",
+      "interval_range_s": "null",
+      "is_global_time": "false",
+      "min_step_count_between_reset": "0"
+    },
+    "terrain": {
+      "func": "isaaclab.sim.spawners.materials.physics_materials:spawn_rigid_body_material",
+      "static_friction": "1.0",
+      "dynamic_friction": "1.0",
+      "restitution": "0.0",
+      "friction_combine_mode": "multiply",
+      "restitution_combine_mode": "multiply",
+      "compliant_contact_stiffness": "0.0",
+      "compliant_contact_damping": "0.0"
+    }
+  },
+  {
+    "folder": "XM_Kick_Policy",
+    "files": 80,
+    "size_mib": 50.22,
+    "onnx_sha256": "f71c4db1ecc0db2dd3f40de4a8008c87d88106b1ed89881c30d2722f48c3779f",
+    "existing_model": "C:\\Users\\jes\\Desktop\\MX3_Match_Sim\\MX3_Match_Sim\\src\\hsl_src\\hsl_bringup\\models\\walkkick_v1_5b_22300.onnx",
+    "existing_sha256": "f71c4db1ecc0db2dd3f40de4a8008c87d88106b1ed89881c30d2722f48c3779f",
+    "exact_same_model": true,
+    "inputs": [
+      [
+        "obs",
+        [
+          1,
+          265
+        ]
+      ]
+    ],
+    "outputs": [
+      [
+        "actions",
+        [
+          1,
+          12
+        ]
+      ]
+    ],
+    "ops": [
+      "Gemm",
+      "Elu",
+      "Gemm",
+      "Elu",
+      "Gemm",
+      "Elu",
+      "Gemm"
+    ],
+    "step_dt": "0.02",
+    "joints": [
+      "r_pelvis_pitch_joint",
+      "r_pelvis_roll_joint",
+      "r_pelvis_yaw_joint",
+      "r_knee_pitch_joint",
+      "r_ankle_pitch_joint",
+      "r_ankle_roll_joint",
+      "l_pelvis_pitch_joint",
+      "l_pelvis_roll_joint",
+      "l_pelvis_yaw_joint",
+      "l_knee_pitch_joint",
+      "l_ankle_pitch_joint",
+      "l_ankle_roll_joint"
+    ],
+    "action": {
+      "scale": [
+        "0.25",
+        "0.25",
+        "0.25",
+        "0.25",
+        "0.25",
+        "0.25",
+        "0.25",
+        "0.25",
+        "0.25",
+        "0.25",
+        "0.25",
+        "0.25"
+      ],
+      "target_limits": "null",
+      "action_delay_range": [
+        "1",
+        "4"
+      ],
+      "profile_rpm_range": [
+        "40.0",
+        "50.0"
+      ]
+    },
+    "policy_layers": {
+      "class_name": "ActorCritic",
+      "init_noise_std": "1.0",
+      "noise_std_type": "scalar",
+      "state_dependent_std": "false",
+      "actor_obs_normalization": {},
+      "critic_obs_normalization": {},
+      "actor_hidden_dims": [
+        "512",
+        "256",
+        "128"
+      ],
+      "critic_hidden_dims": [
+        "512",
+        "256",
+        "128"
+      ],
+      "activation": "elu"
+    },
+    "algorithm": {
+      "class_name": "PPO",
+      "num_learning_epochs": "3",
+      "num_mini_batches": "4",
+      "learning_rate": "0.0005",
+      "schedule": "adaptive",
+      "gamma": "0.99",
+      "lam": "0.95",
+      "entropy_coef": "0.01",
+      "desired_kl": "0.01",
+      "max_grad_norm": "0.5",
+      "value_loss_coef": "1.0",
+      "use_clipped_value_loss": "true",
+      "clip_param": "0.2",
+      "normalize_advantage_per_mini_batch": "false",
+      "rnd_cfg": "null",
+      "symmetry_cfg": {
+        "use_data_augmentation": "true",
+        "use_mirror_loss": "true",
+        "data_augmentation_func": "unitree_rl_lab.tasks.locomotion.mdp.symmetry_mx3:compute_symmetric_states",
+        "mirror_loss_coeff": "5.0"
+      }
+    },
+    "events_keys": [
+      "physics_material",
+      "randomize_ball_material",
+      "randomize_ball_mass",
+      "reset_base",
+      "reset_robot_joints",
+      "reset_joints_noise",
+      "reset_ball",
+      "reset_target",
+      "reset_kick_state",
+      "reset_hold",
+      "push_robot",
+      "randomize_base_com",
+      "base_external_force_torque",
+      "add_base_mass",
+      "randomize_actuator_gains",
+      "randomize_joint_params",
+      "reset_imu_bias",
+      "push_on_kick",
+      "ball_belief",
+      "duel_knock",
+      "ball_rolling_resistance",
+      "arm_effort_limit",
+      "kick_strength"
+    ],
+    "training_hold": {
+      "func": "unitree_rl_lab.tasks.locomotion.mdp.reset_hold:set_reset_hold_steps",
+      "params": {
+        "hold_time_s": "0.3"
+      },
+      "mode": "reset",
+      "interval_range_s": "null",
+      "is_global_time": "false",
+      "min_step_count_between_reset": "0"
+    },
+    "material": {
+      "func": "isaaclab.envs.mdp.events:randomize_rigid_body_material",
+      "params": {
+        "asset_cfg": {
+          "name": "robot",
+          "joint_names": "null",
+          "joint_ids": [
+            "null",
+            "null",
+            "null"
+          ],
+          "fixed_tendon_names": "null",
+          "fixed_tendon_ids": [
+            "null",
+            "null",
+            "null"
+          ],
+          "body_names": ".*",
+          "body_ids": [
+            "null",
+            "null",
+            "null"
+          ],
+          "object_collection_names": "null",
+          "object_collection_ids": [
+            "null",
+            "null",
+            "null"
+          ],
+          "preserve_order": "false"
+        },
+        "static_friction_range": [
+          "0.45",
+          "1.35"
+        ],
+        "dynamic_friction_range": [
+          "0.4",
+          "1.1"
+        ],
+        "restitution_range": [
+          "0.0",
+          "0.2"
+        ],
+        "num_buckets": "64"
+      },
+      "mode": "reset",
+      "interval_range_s": "null",
+      "is_global_time": "false",
+      "min_step_count_between_reset": "0"
+    },
+    "terrain": {
+      "func": "isaaclab.sim.spawners.materials.physics_materials:spawn_rigid_body_material",
+      "static_friction": "1.0",
+      "dynamic_friction": "1.0",
+      "restitution": "0.0",
+      "friction_combine_mode": "multiply",
+      "restitution_combine_mode": "multiply",
+      "compliant_contact_stiffness": "0.0",
+      "compliant_contact_damping": "0.0"
+    }
+  },
+  {
+    "folder": "XM_Getup_Policy",
+    "files": 58,
+    "size_mib": 27.3,
+    "onnx_sha256": "3c536140ac09b5b622ab7b70f7fd1720eebb93fc020c9d99f87667ff46e65095",
+    "existing_model": "C:\\Users\\jes\\Desktop\\MX3_Match_Sim\\MX3_Match_Sim\\src\\mx3_src\\humanoid_policy_runner\\models\\getup_v1_2_policy.onnx",
+    "existing_sha256": "3c536140ac09b5b622ab7b70f7fd1720eebb93fc020c9d99f87667ff46e65095",
+    "exact_same_model": true,
+    "inputs": [
+      [
+        "obs",
+        [
+          1,
+          300
+        ]
+      ]
+    ],
+    "outputs": [
+      [
+        "actions",
+        [
+          1,
+          18
+        ]
+      ]
+    ],
+    "ops": [
+      "Gemm",
+      "Elu",
+      "Gemm",
+      "Elu",
+      "Gemm",
+      "Elu",
+      "Gemm"
+    ],
+    "step_dt": "0.02",
+    "joints": [
+      "r_pelvis_pitch_joint",
+      "r_pelvis_roll_joint",
+      "r_pelvis_yaw_joint",
+      "r_knee_pitch_joint",
+      "r_ankle_pitch_joint",
+      "r_ankle_roll_joint",
+      "l_pelvis_pitch_joint",
+      "l_pelvis_roll_joint",
+      "l_pelvis_yaw_joint",
+      "l_knee_pitch_joint",
+      "l_ankle_pitch_joint",
+      "l_ankle_roll_joint",
+      "r_shoulder_pitch_joint",
+      "r_shoulder_roll_joint",
+      "r_elbow_pitch_joint",
+      "l_shoulder_pitch_joint",
+      "l_shoulder_roll_joint",
+      "l_elbow_pitch_joint"
+    ],
+    "action": {
+      "scale": [
+        "0.25",
+        "0.25",
+        "0.25",
+        "0.25",
+        "0.25",
+        "0.25",
+        "0.25",
+        "0.25",
+        "0.25",
+        "0.25",
+        "0.25",
+        "0.25",
+        "0.25",
+        "0.25",
+        "0.25",
+        "0.25",
+        "0.25",
+        "0.25"
+      ],
+      "target_limits": {
+        "r_pelvis_pitch_joint": [
+          "-1.5708",
+          "1.5708"
+        ],
+        "r_pelvis_roll_joint": [
+          "-0.4363",
+          "1.3963"
+        ],
+        "r_pelvis_yaw_joint": [
+          "-1.5708",
+          "1.5708"
+        ],
+        "r_knee_pitch_joint": [
+          "0.0",
+          "2.4435"
+        ],
+        "r_ankle_pitch_joint": [
+          "-0.8727",
+          "1.8326"
+        ],
+        "r_ankle_roll_joint": [
+          "-0.5236",
+          "0.5236"
+        ],
+        "l_pelvis_pitch_joint": [
+          "-1.5708",
+          "1.5708"
+        ],
+        "l_pelvis_roll_joint": [
+          "-1.3963",
+          "0.4363"
+        ],
+        "l_pelvis_yaw_joint": [
+          "-1.5708",
+          "1.5708"
+        ],
+        "l_knee_pitch_joint": [
+          "-2.4435",
+          "0.0"
+        ],
+        "l_ankle_pitch_joint": [
+          "-1.8326",
+          "0.8727"
+        ],
+        "l_ankle_roll_joint": [
+          "-0.5236",
+          "0.5236"
+        ],
+        "r_shoulder_pitch_joint": [
+          "-2.618",
+          "2.618"
+        ],
+        "r_shoulder_roll_joint": [
+          "-0.2618",
+          "2.8798"
+        ],
+        "r_elbow_pitch_joint": [
+          "0.0",
+          "2.9671"
+        ],
+        "l_shoulder_pitch_joint": [
+          "-2.618",
+          "2.618"
+        ],
+        "l_shoulder_roll_joint": [
+          "-2.8798",
+          "0.2618"
+        ],
+        "l_elbow_pitch_joint": [
+          "-2.9671",
+          "0.0"
+        ]
+      },
+      "action_delay_range": [
+        "1",
+        "2"
+      ]
+    },
+    "policy_layers": {
+      "class_name": "ActorCritic",
+      "init_noise_std": "1.0",
+      "noise_std_type": "scalar",
+      "state_dependent_std": "false",
+      "actor_obs_normalization": {},
+      "critic_obs_normalization": {},
+      "actor_hidden_dims": [
+        "512",
+        "256",
+        "128"
+      ],
+      "critic_hidden_dims": [
+        "512",
+        "256",
+        "128"
+      ],
+      "activation": "elu"
+    },
+    "algorithm": {
+      "class_name": "PPO",
+      "num_learning_epochs": "3",
+      "num_mini_batches": "4",
+      "learning_rate": "0.0005",
+      "schedule": "adaptive",
+      "gamma": "0.99",
+      "lam": "0.95",
+      "entropy_coef": "0.01",
+      "desired_kl": "0.01",
+      "max_grad_norm": "0.5",
+      "value_loss_coef": "1.0",
+      "use_clipped_value_loss": "true",
+      "clip_param": "0.2",
+      "normalize_advantage_per_mini_batch": "false",
+      "rnd_cfg": "null",
+      "symmetry_cfg": "null"
+    },
+    "events_keys": [
+      "physics_material",
+      "add_base_mass",
+      "add_link_mass",
+      "reset_base_supine",
+      "reset_joint_noise",
+      "reset_hold",
+      "push_robot",
+      "push_knockdown",
+      "push_force"
+    ],
+    "training_hold": {
+      "func": "unitree_rl_lab.tasks.locomotion.mdp.reset_hold:set_reset_hold_steps",
+      "params": {
+        "hold_time_s": "0.1"
+      },
+      "mode": "reset",
+      "interval_range_s": "null",
+      "is_global_time": "false",
+      "min_step_count_between_reset": "0"
+    },
+    "material": {
+      "func": "unitree_rl_lab.tasks.locomotion.mdp.getup_v1_mdp:randomize_friction_per_env",
+      "params": {
+        "static_friction_range": [
+          "0.25",
+          "1.4"
+        ],
+        "dynamic_friction_range": [
+          "0.2",
+          "1.2"
+        ]
+      },
+      "mode": "startup",
+      "interval_range_s": "null",
+      "is_global_time": "false",
+      "min_step_count_between_reset": "0"
+    },
+    "terrain": {
+      "func": "isaaclab.sim.spawners.materials.physics_materials:spawn_rigid_body_material",
+      "static_friction": "1.0",
+      "dynamic_friction": "1.0",
+      "restitution": "0.0",
+      "friction_combine_mode": "multiply",
+      "restitution_combine_mode": "multiply",
+      "compliant_contact_stiffness": "0.0",
+      "compliant_contact_damping": "0.0"
+    }
+  }
+]

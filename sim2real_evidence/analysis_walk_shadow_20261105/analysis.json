@@ -1,0 +1,278 @@
+{
+  "csv_sha256": "3ea70087338429b85b40dfd931631c1754f4e716380f901cdd1c6201318d81cf",
+  "model_sha256": "72e2b8d88bac39feb97bc7789e0a67e4675650713c6e4528988a32f96831fbb1",
+  "runtime": {
+    "onnxruntime": "1.23.0",
+    "numpy": "1.26.4",
+    "platform": "Windows CPU offline"
+  },
+  "all_rows": 906,
+  "inference_rows": 859,
+  "run_states": {
+    "HOLD_START": 47,
+    "RUN": 859
+  },
+  "gait_states_inference": {
+    "WALKING": 48,
+    "STOPPING": 1,
+    "STOPPED": 810
+  },
+  "transitions": [
+    {
+      "time_seconds": 0.0352,
+      "run_state": "HOLD_START",
+      "gait_state": "STOPPED",
+      "gait_frequency": 0.0
+    },
+    {
+      "time_seconds": 1.0121,
+      "run_state": "RUN",
+      "gait_state": "WALKING",
+      "gait_frequency": 2.0
+    },
+    {
+      "time_seconds": 2.0104,
+      "run_state": "RUN",
+      "gait_state": "STOPPING",
+      "gait_frequency": 0.0
+    },
+    {
+      "time_seconds": 2.0297,
+      "run_state": "RUN",
+      "gait_state": "STOPPED",
+      "gait_frequency": 0.0
+    }
+  ],
+  "action_reproduction": {
+    "compared_rows": 854,
+    "max_action_error": 1.8775463104248047e-06,
+    "p99_action_error": 1.3113021850585938e-06
+  },
+  "csv_inference_hz": 47.99355610994887,
+  "csv_interval_ms": {
+    "median": 19.999999999999574,
+    "p99": 45.19999999999845,
+    "max": 47.100000000000364,
+    "count_over_30ms": 36
+  },
+  "interpretation": "Recorded stationary feedback replay; no physical feedback to replayed targets; no balance claim",
+  "stop_replay_initialization": "Five copies of first RUN measurement with zero previous action and zero gait; exact hold sensor history unavailable",
+  "joints": [
+    {
+      "joint": "r_pelvis_pitch_joint",
+      "default_rad": 0.6200000047683716,
+      "current_last5_median_rad": 0.6304659843444824,
+      "target_last5_median_rad": 0.8759765028953552,
+      "delta_last5_median_deg": 14.066801071166992,
+      "peak_delta_deg": 15.299233436584473,
+      "peak_time_seconds": 2.4502,
+      "peak_gait_state": "STOPPED",
+      "stopped_peak_abs_delta_deg": 15.299233436584473,
+      "stop_replay_peak_abs_delta_deg": 15.37877082824707,
+      "stop_replay_last5_median_delta_deg": 14.066773414611816,
+      "urdf_limits_rad": [
+        -1.5707963267949,
+        1.5707963267949
+      ],
+      "recorded_targets_outside_urdf": 0
+    },
+    {
+      "joint": "r_pelvis_roll_joint",
+      "default_rad": 0.0,
+      "current_last5_median_rad": -0.006136000156402588,
+      "target_last5_median_rad": 0.006756999995559454,
+      "delta_last5_median_deg": 0.7400322556495667,
+      "peak_delta_deg": 6.87744140625,
+      "peak_time_seconds": 1.3295,
+      "peak_gait_state": "WALKING",
+      "stopped_peak_abs_delta_deg": 3.962461471557617,
+      "stop_replay_peak_abs_delta_deg": 0.9378039240837097,
+      "stop_replay_last5_median_delta_deg": 0.7400305271148682,
+      "urdf_limits_rad": [
+        -0.436332312998582,
+        1.39626340159546
+      ],
+      "recorded_targets_outside_urdf": 0
+    },
+    {
+      "joint": "r_pelvis_yaw_joint",
+      "default_rad": 0.0,
+      "current_last5_median_rad": 0.003068000078201294,
+      "target_last5_median_rad": 0.04700250178575516,
+      "delta_last5_median_deg": 2.5187222957611084,
+      "peak_delta_deg": -3.4596335887908936,
+      "peak_time_seconds": 1.9896,
+      "peak_gait_state": "WALKING",
+      "stopped_peak_abs_delta_deg": 3.402853488922119,
+      "stop_replay_peak_abs_delta_deg": 3.4263205528259277,
+      "stop_replay_last5_median_delta_deg": 2.5187225341796875,
+      "urdf_limits_rad": [
+        -1.5707963267949,
+        1.5707963267949
+      ],
+      "recorded_targets_outside_urdf": 0
+    },
+    {
+      "joint": "r_knee_pitch_joint",
+      "default_rad": 1.2000000476837158,
+      "current_last5_median_rad": 1.214913010597229,
+      "target_last5_median_rad": 1.375478982925415,
+      "delta_last5_median_deg": 9.197720527648926,
+      "peak_delta_deg": 23.800264358520508,
+      "peak_time_seconds": 1.6104,
+      "peak_gait_state": "WALKING",
+      "stopped_peak_abs_delta_deg": 9.39295768737793,
+      "stop_replay_peak_abs_delta_deg": 9.319034576416016,
+      "stop_replay_last5_median_delta_deg": 9.19772720336914,
+      "urdf_limits_rad": [
+        0.0,
+        2.44346095279206
+      ],
+      "recorded_targets_outside_urdf": 0
+    },
+    {
+      "joint": "r_ankle_pitch_joint",
+      "default_rad": 0.6200000047683716,
+      "current_last5_median_rad": 0.6350679993629456,
+      "target_last5_median_rad": 0.619008481502533,
+      "delta_last5_median_deg": -0.9162442088127136,
+      "peak_delta_deg": 9.480960845947266,
+      "peak_time_seconds": 1.6104,
+      "peak_gait_state": "WALKING",
+      "stopped_peak_abs_delta_deg": 2.4313457012176514,
+      "stop_replay_peak_abs_delta_deg": 2.5539681911468506,
+      "stop_replay_last5_median_delta_deg": -0.9162373542785645,
+      "urdf_limits_rad": [
+        -0.872664625997165,
+        1.83259571459405
+      ],
+      "recorded_targets_outside_urdf": 0
+    },
+    {
+      "joint": "r_ankle_roll_joint",
+      "default_rad": 0.0,
+      "current_last5_median_rad": 0.004602000117301941,
+      "target_last5_median_rad": -0.1011584997177124,
+      "delta_last5_median_deg": -6.056994438171387,
+      "peak_delta_deg": 8.844289779663086,
+      "peak_time_seconds": 1.8501,
+      "peak_gait_state": "WALKING",
+      "stopped_peak_abs_delta_deg": 6.239395618438721,
+      "stop_replay_peak_abs_delta_deg": 6.15629768371582,
+      "stop_replay_last5_median_delta_deg": -6.056957721710205,
+      "urdf_limits_rad": [
+        -0.523598775598299,
+        0.523598775598299
+      ],
+      "recorded_targets_outside_urdf": 0
+    },
+    {
+      "joint": "l_pelvis_pitch_joint",
+      "default_rad": -0.6200000047683716,
+      "current_last5_median_rad": -0.6304659843444824,
+      "target_last5_median_rad": -0.8444855213165283,
+      "delta_last5_median_deg": -12.278800964355469,
+      "peak_delta_deg": -14.325149536132812,
+      "peak_time_seconds": 2.4106,
+      "peak_gait_state": "STOPPED",
+      "stopped_peak_abs_delta_deg": 14.325149536132812,
+      "stop_replay_peak_abs_delta_deg": 14.376205444335938,
+      "stop_replay_last5_median_delta_deg": -12.278800964355469,
+      "urdf_limits_rad": [
+        -1.5707963267949,
+        1.5707963267949
+      ],
+      "recorded_targets_outside_urdf": 0
+    },
+    {
+      "joint": "l_pelvis_roll_joint",
+      "default_rad": 0.0,
+      "current_last5_median_rad": 0.009204000234603882,
+      "target_last5_median_rad": 0.032796502113342285,
+      "delta_last5_median_deg": 1.3510057926177979,
+      "peak_delta_deg": -6.324193000793457,
+      "peak_time_seconds": 1.5697,
+      "peak_gait_state": "WALKING",
+      "stopped_peak_abs_delta_deg": 2.608734130859375,
+      "stop_replay_peak_abs_delta_deg": 1.7490743398666382,
+      "stop_replay_last5_median_delta_deg": 1.351022481918335,
+      "urdf_limits_rad": [
+        -1.39626340159546,
+        0.436332312998582
+      ],
+      "recorded_targets_outside_urdf": 0
+    },
+    {
+      "joint": "l_pelvis_yaw_joint",
+      "default_rad": 0.0,
+      "current_last5_median_rad": -0.003068000078201294,
+      "target_last5_median_rad": -0.06641550362110138,
+      "delta_last5_median_deg": -3.6300599575042725,
+      "peak_delta_deg": -5.06466007232666,
+      "peak_time_seconds": 2.3895,
+      "peak_gait_state": "STOPPED",
+      "stopped_peak_abs_delta_deg": 5.06466007232666,
+      "stop_replay_peak_abs_delta_deg": 5.1381611824035645,
+      "stop_replay_last5_median_delta_deg": -3.63004994392395,
+      "urdf_limits_rad": [
+        -1.5707963267949,
+        1.5707963267949
+      ],
+      "recorded_targets_outside_urdf": 0
+    },
+    {
+      "joint": "l_knee_pitch_joint",
+      "default_rad": -1.2000000476837158,
+      "current_last5_median_rad": -1.217980980873108,
+      "target_last5_median_rad": -1.2943284511566162,
+      "delta_last5_median_deg": -4.374244213104248,
+      "peak_delta_deg": -24.55794334411621,
+      "peak_time_seconds": 1.3503,
+      "peak_gait_state": "WALKING",
+      "stopped_peak_abs_delta_deg": 4.9690375328063965,
+      "stop_replay_peak_abs_delta_deg": 4.650033473968506,
+      "stop_replay_last5_median_delta_deg": -4.374244213104248,
+      "urdf_limits_rad": [
+        -2.44346095279206,
+        0.0
+      ],
+      "recorded_targets_outside_urdf": 0
+    },
+    {
+      "joint": "l_ankle_pitch_joint",
+      "default_rad": -0.6200000047683716,
+      "current_last5_median_rad": -0.6350679993629456,
+      "target_last5_median_rad": -0.5768804550170898,
+      "delta_last5_median_deg": 3.3338987827301025,
+      "peak_delta_deg": -8.796965599060059,
+      "peak_time_seconds": 1.3702,
+      "peak_gait_state": "WALKING",
+      "stopped_peak_abs_delta_deg": 4.887502193450928,
+      "stop_replay_peak_abs_delta_deg": 4.952522277832031,
+      "stop_replay_last5_median_delta_deg": 3.3339056968688965,
+      "urdf_limits_rad": [
+        -1.83259571459405,
+        0.872664625997165
+      ],
+      "recorded_targets_outside_urdf": 0
+    },
+    {
+      "joint": "l_ankle_roll_joint",
+      "default_rad": 0.0,
+      "current_last5_median_rad": -0.004602000117301941,
+      "target_last5_median_rad": -0.1406795084476471,
+      "delta_last5_median_deg": -7.794976234436035,
+      "peak_delta_deg": -11.906119346618652,
+      "peak_time_seconds": 1.0697,
+      "peak_gait_state": "WALKING",
+      "stopped_peak_abs_delta_deg": 8.383403778076172,
+      "stop_replay_peak_abs_delta_deg": 8.39366626739502,
+      "stop_replay_last5_median_delta_deg": -7.7949604988098145,
+      "urdf_limits_rad": [
+        -0.523598775598299,
+        0.523598775598299
+      ],
+      "recorded_targets_outside_urdf": 0
+    }
+  ]
+}

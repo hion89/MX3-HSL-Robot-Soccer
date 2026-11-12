@@ -1,0 +1,152 @@
+# =============================================================================
+#  nav2_params.yaml  —  KHUBER 보행 로봇용 Nav2 설정 (RPP 기반)
+#  전제: localization 은 나중. 지금은 map→odom static identity.
+#        장애물 센서 없음 → costmap 은 inflation 만(장애물 레이어 비활성).
+#  ★ Nav2 는 m/s 로 동작한다. 이 값들은 "실제 속도(m/s)" 기준이며,
+#    nav_cmd_bridge 가 정책 명령값으로 역변환한다.
+# =============================================================================
+
+# ---------------- BT Navigator: 네비게이션 행동트리 ----------------
+bt_navigator:
+  ros__parameters:
+    global_frame: map
+    robot_base_frame: base_link
+    odom_topic: /odom
+    bt_loop_duration: 10
+    default_server_timeout: 20
+    # 기본 NavToPose/NavThroughPoses BT 사용(별도 xml 미지정 시 기본값)
+
+# ---------------- Planner: 전역 경로 생성 ----------------
+planner_server:
+  ros__parameters:
+    expected_planner_frequency: 5.0
+    planner_plugins: ["GridBased"]
+    GridBased:
+      plugin: "nav2_navfn_planner/NavfnPlanner"  # 빈 평지라 NavFn 으로 충분
+      tolerance: 0.25
+      use_astar: false
+      allow_unknown: true
+
+# ---------------- Controller: 경로 추종(RPP) ----------------
+controller_server:
+  ros__parameters:
+    controller_frequency: 10.0      # 보행은 느리므로 10Hz면 충분
+    min_x_velocity_threshold: 0.001
+    min_theta_velocity_threshold: 0.001
+    failure_tolerance: 0.3
+
+    progress_checker_plugin: "progress_checker"
+    goal_checker_plugins: ["general_goal_checker"]
+    controller_plugins: ["FollowPath"]
+
+    progress_checker:
+      plugin: "nav2_controller::SimpleProgressChecker"
+      required_movement_radius: 0.3   # 보행+데드존 고려해 넉넉히
+      movement_time_allowance: 15.0   # 느린 보행이라 길게
+
+    general_goal_checker:
+      plugin: "nav2_controller::SimpleGoalChecker"
+      stateful: true
+      xy_goal_tolerance: 0.30         # 데드존(0.1857m/s)에서 멈추는 거리보다 넉넉히 → 헛걸음 전에 도착 선언
+      yaw_goal_tolerance: 0.2         # ≈11.5°. RPP가 끝에서 목표 yaw로 회전 정렬하는 버전이면 정확해짐.
+                                      #   ★ 끝에서 제자리 회전해 맞추면 = 지원O(유지/0.15까지 조여도 됨).
+                                      #   ★ 못 돌고 깨작대다 thrash 나면 = 지원X(기본 RPP) → 0.5로 되돌리고
+                                      #      최종 방향은 behavior/skill 제자리회전으로 맞출 것.
+
+    FollowPath:
+      plugin: "nav2_regulated_pure_pursuit_controller::RegulatedPurePursuitController"
+      # --- 속도(m/s, rad/s). 데드존(전진 0.1857 m/s) 위에서 운용 ---
+      desired_linear_vel: 0.35             # 걷기 최대속도(실제 m/s)
+      min_approach_linear_velocity: 0.20   # 전진 데드존(0.1857) 위 → 도착 반경 들어올 때까지 안 멈춤
+      approach_velocity_scaling_dist: 0.6
+      max_angular_vel: 1.05                 # 회전 명령 1.5 의 실제속도(1.5 × wz_scale 0.7)
+      # --- lookahead ---
+      lookahead_dist: 0.4
+      min_lookahead_dist: 0.3
+      max_lookahead_dist: 0.6
+      use_velocity_scaled_lookahead_dist: false
+      # --- regulation (곡률에서 감속). 센서 없으니 cost 기반은 끔 ---
+      use_regulated_linear_velocity_scaling: true
+      use_cost_regulated_linear_velocity_scaling: false
+      regulated_linear_scaling_min_radius: 0.5
+      regulated_linear_scaling_min_speed: 0.18
+      # --- 후진/충돌: 후진 데드존 크고 센서 없음 ---
+      allow_reversing: false
+      use_collision_detection: false
+      # 제자리 회전 가능(최대 ~1.2) → 경로 시작 시 제자리 회전으로 정렬
+      use_rotate_to_heading: false
+      rotate_to_heading_min_angle: 0.5
+      rotate_to_heading_angular_vel: 1.05   # 회전 명령 1.5 의 실제속도(1.5 × wz_scale 0.7)
+      max_robot_pose_search_dist: 2.0
+      transform_tolerance: 0.5
+
+# ---------------- Global Costmap ----------------
+global_costmap:
+  global_costmap:
+    ros__parameters:
+      global_frame: map
+      robot_base_frame: base_link
+      update_frequency: 2.0
+      publish_frequency: 1.0
+      robot_radius: 0.2               # KHUBER 대략 반경(footprint). 실측에 맞춰 조정
+      resolution: 0.05
+      track_unknown_space: false
+      # 장애물 센서가 없으므로 static(빈 맵) + inflation 만 사용
+      plugins: ["static_layer", "inflation_layer"]
+      static_layer:
+        plugin: "nav2_costmap_2d::StaticLayer"
+        map_subscribe_transient_local: true
+      inflation_layer:
+        plugin: "nav2_costmap_2d::InflationLayer"
+        inflation_radius: 0.25
+        cost_scaling_factor: 3.0
+
+# ---------------- Local Costmap ----------------
+local_costmap:
+  local_costmap:
+    ros__parameters:
+      global_frame: odom              # 로컬은 odom 기준(롤링 윈도우)
+      robot_base_frame: base_link
+      update_frequency: 5.0
+      publish_frequency: 2.0
+      rolling_window: true
+      width: 3
+      height: 3
+      resolution: 0.05
+      robot_radius: 0.2
+      track_unknown_space: false      # 미지 셀을 free 로 처리. 장애물 레이어가 없어 셀이 unknown 으로 남으면
+                                      #   BackUp 충돌검사가 위험으로 보고 즉시 abort → false 로 통과시킴.
+      # 센서 없음 → inflation 만(장애물 레이어 없음)
+      plugins: ["inflation_layer"]
+      inflation_layer:
+        plugin: "nav2_costmap_2d::InflationLayer"
+        inflation_radius: 0.25
+        cost_scaling_factor: 3.0
+
+# ---------------- Map Server (빈 맵) ----------------
+map_server:
+  ros__parameters:
+    yaml_filename: "empty_field.yaml"   # launch 에서 절대경로로 덮어씀
+
+# ---------------- Behavior Server (회복 동작) ----------------
+behavior_server:
+  ros__parameters:
+    local_frame: odom
+    global_frame: map
+    robot_base_frame: base_link
+    behavior_plugins: ["spin", "backup", "wait"]   # 기본 BT 가 backup 액션 서버를 요구함
+    spin:
+      plugin: "nav2_behaviors/Spin"
+    backup:
+      plugin: "nav2_behaviors/BackUp"
+      # 실제 후진은 nav_cmd_bridge(allow_reverse=false)가 막으므로 데드존 문제 없음.
+      # BT 로드를 위해 액션 서버만 존재하면 된다.
+    wait:
+      plugin: "nav2_behaviors/Wait"
+    simulate_ahead_time: 0.1             # 후진 충돌검사 look-ahead 최소화.
+                                         #   센서 없고 local costmap 에 장애물 데이터가 없어서,
+                                         #   투영 pose 가 작은 격자 밖으로 나가면 "Pose Goes Off Grid"로 오판해 abort.
+                                         #   거의 현재 pose 만 검사하게 줄여 통과시킨다(검사할 실제 장애물이 없으므로 안전).
+    max_rotational_vel: 0.5
+    min_rotational_vel: 0.2              # 회전 데드존 고려
+    rotational_acc_lim: 1.0

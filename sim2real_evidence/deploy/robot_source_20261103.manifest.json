@@ -1,0 +1,1321 @@
+{
+  "schema_version": 1,
+  "snapshot_label": "2026-11-03",
+  "source_workspace": "C:\\Users\\jes\\Desktop\\isaac_ws\\isaac_ws\\sim2real_ws",
+  "robot_workspace": "/home/robo04/sim2real_ws",
+  "packages": [
+    "humanoid_behavior_interfaces",
+    "humanoid_bringup",
+    "humanoid_game_controller",
+    "humanoid_localization",
+    "humanoid_perception",
+    "humanoid_policy_runner",
+    "humanoid_serial_bridge",
+    "humanoid_strategy",
+    "humanoid_utils"
+  ],
+  "python_3_10_syntax_checked_files": 153,
+  "excludes": [
+    "build",
+    "install",
+    "log",
+    "models",
+    ".policy-python",
+    "debug_bags",
+    "zed_mini_test",
+    "releases",
+    "bytecode caches"
+  ],
+  "files": [
+    {
+      "path": "README.md",
+      "size": 3661,
+      "sha256": "489bbfc264387400e75315ed2210efed68aeed7510bb5f7dc974b1116bcdb201"
+    },
+    {
+      "path": "docs/JETSON_TENSORRT.md",
+      "size": 6079,
+      "sha256": "a1e7b73484b9e05a0c567ef10f37b44ddf68738fadd9568014dfe0d790f7e630"
+    },
+    {
+      "path": "docs/SIM_TO_REAL_MANUAL.md",
+      "size": 23892,
+      "sha256": "6238190987d06ca06027d63b3ed652f581ba6e2c193b8287a55decf8a38844a6"
+    },
+    {
+      "path": "docs/XM540_END_TO_END_MANUAL.md",
+      "size": 49708,
+      "sha256": "c4d45b1c8e400231832ec5cc6d1f0bf389357e4b29781f5396a070a8c6838796"
+    },
+    {
+      "path": "docs/XM540_FAILURE_20261007_ANALYSIS.md",
+      "size": 20352,
+      "sha256": "f649b2e5267a050a8d4676f768c35bba4c61c4ef28b47b4f706a983dc6c82dd4"
+    },
+    {
+      "path": "docs/XM540_LEG_CONTROL_COMPARISON.md",
+      "size": 8759,
+      "sha256": "5c267c5edf71b7ba59f8273bd1226af05cdf543b5d4811bcf212c3a51db81fb3"
+    },
+    {
+      "path": "docs/XM540_POLICY_NUMPY.md",
+      "size": 2439,
+      "sha256": "0aedaea51ffe8b0c96339d4e563bf29d9c921383b1102d9d0d153b76f4118090"
+    },
+    {
+      "path": "docs/XM540_REAL_DEPLOYMENT_PLAN.md",
+      "size": 37231,
+      "sha256": "32a6aaab5d4f9f92e2d9475d24adfa930ae409b292b2e7530d901afbf39b6cf8"
+    },
+    {
+      "path": "docs/XM540_ROBOT_REBUILD.md",
+      "size": 7556,
+      "sha256": "c34bf0ace376561a99b378bc680dafa539468715072ea1c98b38b63fe255854b"
+    },
+    {
+      "path": "docs/XM540_WALK_DIAGNOSTIC_REVIEW.md",
+      "size": 6688,
+      "sha256": "ea087c52e1e408493b4a524b2742ca958919988b5e884d80c168da0fe0c7dda5"
+    },
+    {
+      "path": "docs/XM540_WALK_RECOVERY.md",
+      "size": 11093,
+      "sha256": "287d1b5a6302e1d4ab1660def330cdf6d153b17e9c3b186eda433f5fa15b51bd"
+    },
+    {
+      "path": "scripts/repair_xm540_walk_limits.py",
+      "size": 7687,
+      "sha256": "a5ee6f47a1e4f550117ac271f7b8a8111eea472ad5b942ce478bb2105f3b06ab"
+    },
+    {
+      "path": "scripts/test_repair_xm540_walk_limits.py",
+      "size": 4960,
+      "sha256": "5f01986c4338829af05f271564263652bb8e8a4ebcad0d008b6b6be7fdff2045"
+    },
+    {
+      "path": "src/humanoid_behavior_interfaces/CMakeLists.txt",
+      "size": 1835,
+      "sha256": "4e01e2507a83c896892966f03bf7c0a50fcfe028f9cda044cc4640f1d0a759f2"
+    },
+    {
+      "path": "src/humanoid_behavior_interfaces/msg/GameState.msg",
+      "size": 3680,
+      "sha256": "2f405f7a521fe39f0e1c23fc20235cc53469a6559332817ec0832e94e34882b0"
+    },
+    {
+      "path": "src/humanoid_behavior_interfaces/msg/RoleAssignment.msg",
+      "size": 2253,
+      "sha256": "4fe6479d9a9c1d06c2b6ceff4716f9469ca5d5b7ad94f96d1e2668d54ef13131"
+    },
+    {
+      "path": "src/humanoid_behavior_interfaces/msg/StrategyState.msg",
+      "size": 1263,
+      "sha256": "2c57baae60302f58d55c63de6c7dc541239f514741c00b5c58a0a4f2aa4142e8"
+    },
+    {
+      "path": "src/humanoid_behavior_interfaces/msg/TeamComm.msg",
+      "size": 1550,
+      "sha256": "9b0d78b0d856aa4d36fc4b641e26dc1623c50ffc790e67c464f7d804d3f9a347"
+    },
+    {
+      "path": "src/humanoid_behavior_interfaces/msg/TeammateState.msg",
+      "size": 2891,
+      "sha256": "d9e422917eae33e1b72778ab9f803000fbcfbcc3f364eab332c43ec61861bbbe"
+    },
+    {
+      "path": "src/humanoid_behavior_interfaces/package.xml",
+      "size": 901,
+      "sha256": "85742407a9af0356bb87c58745f4b9653463e45363b134a30df746dab517ecb3"
+    },
+    {
+      "path": "src/humanoid_behavior_interfaces/srv/GetJointLimits.srv",
+      "size": 532,
+      "sha256": "2d12199470b473f7fb66d8f182e8732594b968602b8e6935c050a5cfdf3f747e"
+    },
+    {
+      "path": "src/humanoid_behavior_interfaces/srv/Kick.srv",
+      "size": 217,
+      "sha256": "c4985ffd200642ef6c9e7200351541ea4901e2884baebbf912c5eb05f7ed1b1c"
+    },
+    {
+      "path": "src/humanoid_behavior_interfaces/srv/MotorReset.srv",
+      "size": 350,
+      "sha256": "0e2b42f54e1df6762eb9bc464fdda8701d2609013b7c228e05846a5d95a12e28"
+    },
+    {
+      "path": "src/humanoid_behavior_interfaces/srv/RobotInit.srv",
+      "size": 132,
+      "sha256": "3022355fedc8a73d77e7c6094a60cd658f77d1fa5716fe840d75c733ebd2c6ba"
+    },
+    {
+      "path": "src/humanoid_behavior_interfaces/srv/StandUp.srv",
+      "size": 236,
+      "sha256": "222c72b1639cd3ccefe89fbb6d48f668109067d8f81e09677d21e2f2f7ea416f"
+    },
+    {
+      "path": "src/humanoid_behavior_interfaces/srv/TorqueEnable.srv",
+      "size": 43,
+      "sha256": "3aa46a10083fb410a023013024146aa05003920d20236aa244a0a88609453edf"
+    },
+    {
+      "path": "src/humanoid_behavior_interfaces/srv/TorqueEnableJoints.srv",
+      "size": 651,
+      "sha256": "66574373b9be01827fcf8cfa49ab2808e393625ac0f0a8c2d532b65ffd22a383"
+    },
+    {
+      "path": "src/humanoid_bringup/config/robot_params.yaml",
+      "size": 13050,
+      "sha256": "19885039f80f16f34b808288618a46c5f1fa6308136afa6d588b67fd59cf6a2d"
+    },
+    {
+      "path": "src/humanoid_bringup/config/twist_mux_topics.yaml",
+      "size": 3014,
+      "sha256": "b097e24fe5335c39a87940d3328a0d121fad6f9151d1aa2407ee6510a1607643"
+    },
+    {
+      "path": "src/humanoid_bringup/humanoid_bringup/__init__.py",
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "src/humanoid_bringup/launch/behavior_stack.launch.py",
+      "size": 7139,
+      "sha256": "47c7405420e6a9d42cecbb2e617e66bdd289da5315bbf6d0f6e22b95ae67ec60"
+    },
+    {
+      "path": "src/humanoid_bringup/launch/bringup.launch.py",
+      "size": 8154,
+      "sha256": "dac2e3a20225ef5ec7d89608e5d21eba95dcdd25012aedd4c70dd995bb0ea071"
+    },
+    {
+      "path": "src/humanoid_bringup/launch/control.launch.py",
+      "size": 31566,
+      "sha256": "73ac0664ff06b506d98a22099551b9b63c847c5384bc5c46a8d2135297f4e465"
+    },
+    {
+      "path": "src/humanoid_bringup/launch/control_joypad.launch.py",
+      "size": 35178,
+      "sha256": "9322da69314c527b213c28090eaa59bbab8374c90b60cb8955714e62f086beea"
+    },
+    {
+      "path": "src/humanoid_bringup/launch/control_teleop.launch.py",
+      "size": 4905,
+      "sha256": "133be39726f35242a1049c61d62616a679672f158dde24a04f3b47b673ad53cd"
+    },
+    {
+      "path": "src/humanoid_bringup/launch/experiment_odom.launch.py",
+      "size": 13127,
+      "sha256": "2753913f93d79eb67488b7dce350e65c56e947cd77d14b509b494b95bd4501b0"
+    },
+    {
+      "path": "src/humanoid_bringup/launch/game_stack.launch.py",
+      "size": 7036,
+      "sha256": "190f816a2c0683f5520966ce4c6c1c3764be20ee20a1f0362dacb64c4cb6238f"
+    },
+    {
+      "path": "src/humanoid_bringup/launch/match.launch.py",
+      "size": 9997,
+      "sha256": "c01eb95ea298701c51667a7760299c0960978981a4a8ee23cf1519bd1197889f"
+    },
+    {
+      "path": "src/humanoid_bringup/launch/perception_stack.launch.py",
+      "size": 5794,
+      "sha256": "4090000ca44aae95ed32f5d591862f7e3d95a9c5b05376fbc5a581ed5f397fdf"
+    },
+    {
+      "path": "src/humanoid_bringup/package.xml",
+      "size": 1311,
+      "sha256": "d8fd38b322d9439d77c4de890c54001efd63dec137718670b28342e430b2119e"
+    },
+    {
+      "path": "src/humanoid_bringup/resource/humanoid_bringup",
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "src/humanoid_bringup/setup.cfg",
+      "size": 101,
+      "sha256": "246af5d87c4ee954fefdafc4c317311d367c6644becdf90a362afdd6589a1079"
+    },
+    {
+      "path": "src/humanoid_bringup/setup.py",
+      "size": 1074,
+      "sha256": "296e01e97001d4a18a8ebaf5cce22e6caf1d55088f3c368e36c330541bc22d88"
+    },
+    {
+      "path": "src/humanoid_bringup/test/test_copyright.py",
+      "size": 962,
+      "sha256": "ea71bbbc6247b5c14d176ed09f39ee274d563cc9b2ec355828ea451ceff31757"
+    },
+    {
+      "path": "src/humanoid_bringup/test/test_flake8.py",
+      "size": 884,
+      "sha256": "37a813a0507f0ce51a2d0b57312d2cc078a0307a3ca85580ea801b0d2f9755d2"
+    },
+    {
+      "path": "src/humanoid_bringup/test/test_pep257.py",
+      "size": 803,
+      "sha256": "e8b88d49ee296987b1b40069f81019b5fa09b1aa1bfee9a1faae45bb5cf53eda"
+    },
+    {
+      "path": "src/humanoid_game_controller/humanoid_game_controller/__init__.py",
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "src/humanoid_game_controller/humanoid_game_controller/game_controller_receiver_node.py",
+      "size": 12125,
+      "sha256": "a82f4b87af23251c902b476ae2adbfefa60fc6432256ced00cc0b132af2ccf4f"
+    },
+    {
+      "path": "src/humanoid_game_controller/humanoid_game_controller/game_controller_return_node.py",
+      "size": 16951,
+      "sha256": "03cca67a1326151332f5acd99650521eb586f3bd7ac3987429b68b0e2135de88"
+    },
+    {
+      "path": "src/humanoid_game_controller/humanoid_game_controller/game_state_gui.py",
+      "size": 14561,
+      "sha256": "e943f73191d1753dadb3c5b9ee2695172d13e41b4e7f2f34dd5731cf9592cafb"
+    },
+    {
+      "path": "src/humanoid_game_controller/humanoid_game_controller/game_state_monitor_tui.py",
+      "size": 10556,
+      "sha256": "7ddfbff22917f50b6df61c0658055c8b45d0253f6c7fc02b11c054e97dc63f2b"
+    },
+    {
+      "path": "src/humanoid_game_controller/humanoid_game_controller/game_state_to_lock_node.py",
+      "size": 9077,
+      "sha256": "c2f0f9d54bbb6c9d942c3bd1303b9ae16a80b74f661131f05657f44bfae7367f"
+    },
+    {
+      "path": "src/humanoid_game_controller/launch/game_controller.launch.py",
+      "size": 7136,
+      "sha256": "3888195d6ee9c3df1377f690754cf24ce889439af42827ce3af52be98fb1e1ba"
+    },
+    {
+      "path": "src/humanoid_game_controller/package.xml",
+      "size": 878,
+      "sha256": "fe308b8aaaf680a6c474580f2b3c3e885553b55ceeae51c97617c1c941bb26f8"
+    },
+    {
+      "path": "src/humanoid_game_controller/resource/humanoid_game_controller",
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "src/humanoid_game_controller/setup.cfg",
+      "size": 117,
+      "sha256": "14ffd99e3dafe4eb39e51f5a8de5fc11f991406f2a408e2e518858577d294597"
+    },
+    {
+      "path": "src/humanoid_game_controller/setup.py",
+      "size": 1854,
+      "sha256": "df8bc6cfe9fbb7fbcaac8cd2a9b3f2c39c9cee91efed9eab9ebb5cd2b26a8fb5"
+    },
+    {
+      "path": "src/humanoid_game_controller/test/test_copyright.py",
+      "size": 962,
+      "sha256": "ea71bbbc6247b5c14d176ed09f39ee274d563cc9b2ec355828ea451ceff31757"
+    },
+    {
+      "path": "src/humanoid_game_controller/test/test_flake8.py",
+      "size": 884,
+      "sha256": "37a813a0507f0ce51a2d0b57312d2cc078a0307a3ca85580ea801b0d2f9755d2"
+    },
+    {
+      "path": "src/humanoid_game_controller/test/test_pep257.py",
+      "size": 803,
+      "sha256": "e8b88d49ee296987b1b40069f81019b5fa09b1aa1bfee9a1faae45bb5cf53eda"
+    },
+    {
+      "path": "src/humanoid_localization/config/ball_follow.yaml",
+      "size": 6157,
+      "sha256": "c37ab8a5f2c804fee287d4a2e2d756881ba73da1096fee3f25236994f89dbcd8"
+    },
+    {
+      "path": "src/humanoid_localization/config/ekf.yaml",
+      "size": 5571,
+      "sha256": "a8797f1b7669de862c26293f0b0c22920436d7c36c81d8d605dcf8e98f0988ff"
+    },
+    {
+      "path": "src/humanoid_localization/config/field.yaml",
+      "size": 2087,
+      "sha256": "638b6215ff950a6056209436df7207928b9bd584f0c65e750fd338b5adc6089d"
+    },
+    {
+      "path": "src/humanoid_localization/config/map/empty_field.pgm",
+      "size": 9614,
+      "sha256": "92576761aa61e6b8905f7659cc23c04ce777dcb7c0b512c7ad708e0cbc82a155"
+    },
+    {
+      "path": "src/humanoid_localization/config/map/empty_field.yaml",
+      "size": 291,
+      "sha256": "abb3b706045de0fb999b113a24ded694af80af4ad4c9a211f00ae979dcc518d5"
+    },
+    {
+      "path": "src/humanoid_localization/config/nav2_params.yaml",
+      "size": 7068,
+      "sha256": "4eca842fdf1e2f3c825447fba71ce8792b57bca537f07800346a3e7b36e8c273"
+    },
+    {
+      "path": "src/humanoid_localization/config/odom_calib.yaml",
+      "size": 3881,
+      "sha256": "8a3f48419b74790b317bdb8dcef660f58f590b5a0721aca84fc99e68d1cf2e78"
+    },
+    {
+      "path": "src/humanoid_localization/config/pose_goal_controller.yaml",
+      "size": 3449,
+      "sha256": "a58c65c5f9309577a68f64d385452888bf8b08968ad2aca3d587abe3b2f486f3"
+    },
+    {
+      "path": "src/humanoid_localization/config/reentry_positions.yaml",
+      "size": 1381,
+      "sha256": "c78188d86572217f328042ee1d592ae5a886d972eddad2cdbb98e6ae6f5f14ab"
+    },
+    {
+      "path": "src/humanoid_localization/config/vision_localization.yaml",
+      "size": 6803,
+      "sha256": "6f78ee2963d81142f3dc00830f2a43b278f9aa6565c6a80fd77256f777c16484"
+    },
+    {
+      "path": "src/humanoid_localization/config/vision_servo.yaml",
+      "size": 19840,
+      "sha256": "e1e44c33996cf200ffdc2e4240980bd3eafc0794f0a03ae89f389fe14aef58dd"
+    },
+    {
+      "path": "src/humanoid_localization/humanoid_localization/__init__.py",
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "src/humanoid_localization/humanoid_localization/ball_follow_nav_node.py",
+      "size": 33163,
+      "sha256": "9a501ce6bd65f33d79509fd1d02feaad2151bd2c97e0341ea11aefa4c7b39b89"
+    },
+    {
+      "path": "src/humanoid_localization/humanoid_localization/field_lines_node.py",
+      "size": 11902,
+      "sha256": "130f730243c0dca2ede5fe1c4073d43f7b01b1aa51e42b927f57f2a4cf811acb"
+    },
+    {
+      "path": "src/humanoid_localization/humanoid_localization/nav_cmd_bridge_node.py",
+      "size": 7895,
+      "sha256": "19e29327bfdabb655aedc4d71669071aecadee5e0bc39a8ce17c132ec6d4ec83"
+    },
+    {
+      "path": "src/humanoid_localization/humanoid_localization/pose_goal_controller_node.py",
+      "size": 46514,
+      "sha256": "4336a09e0401e6aadd396b235ec93bec86c425a77330af3b2a237d0716d840d8"
+    },
+    {
+      "path": "src/humanoid_localization/humanoid_localization/vision/__init__.py",
+      "size": 1656,
+      "sha256": "73e75113ba2e07131ed0d79aa31f28c391056c5958eabe251cd73695062c1910"
+    },
+    {
+      "path": "src/humanoid_localization/humanoid_localization/vision/field_geometry.py",
+      "size": 18949,
+      "sha256": "78ee9c9c65732ee80611524feeb855ebbd9c22696ba184918fce446da462e50a"
+    },
+    {
+      "path": "src/humanoid_localization/humanoid_localization/vision/field_landmark_localizer_node.py",
+      "size": 48263,
+      "sha256": "565dd0d6afa91926a386b727e8bbe3e64d80884f760029ad9e740e9605ab8b38"
+    },
+    {
+      "path": "src/humanoid_localization/humanoid_localization/vision/field_landmarks.py",
+      "size": 7341,
+      "sha256": "a3dba490ab775ca868ee32939cc55465d76f184e2016877a8d3d87327ccbf5b1"
+    },
+    {
+      "path": "src/humanoid_localization/humanoid_localization/vision/landmark_pose_solver.py",
+      "size": 15269,
+      "sha256": "2f4d0f0245d863f1b7ab8df48a3764a2f3c6818efc000d27874965966e99f73f"
+    },
+    {
+      "path": "src/humanoid_localization/humanoid_localization/vision/relocalize_button_node.py",
+      "size": 9746,
+      "sha256": "fc5815e6909f8208f80b4605644dc2b85acc5713202290d0288105bec63cf777"
+    },
+    {
+      "path": "src/humanoid_localization/humanoid_localization/visual_servo_kick_node.py",
+      "size": 78062,
+      "sha256": "d421add43d455477e425dc186177a3d78b0ee810f55a40d73db263e8b75176b5"
+    },
+    {
+      "path": "src/humanoid_localization/humanoid_localization/walk_odometry_node.py",
+      "size": 30044,
+      "sha256": "1a4bc82038756ff6fade0bfe871838b2c5ee06219fd215b8c90ce881fe1ff1b8"
+    },
+    {
+      "path": "src/humanoid_localization/launch/ball_follow.launch.py",
+      "size": 3971,
+      "sha256": "d1d17da58ddb861070cd5becabd14d6abf0bbe2b744d2b1228666a6f16585177"
+    },
+    {
+      "path": "src/humanoid_localization/launch/ekf_localization.launch.py",
+      "size": 5740,
+      "sha256": "078734e165736bdee226b0fb4e8ca4e08dbc6d0d557e46cd790f5bd26ef3cff3"
+    },
+    {
+      "path": "src/humanoid_localization/launch/navigation.launch.py",
+      "size": 3404,
+      "sha256": "aca6169c709a59f97d68249f6041abeb5b27dd3ca97fbad1c8cdec907410a6c9"
+    },
+    {
+      "path": "src/humanoid_localization/launch/odom_display.launch.py",
+      "size": 5637,
+      "sha256": "8f3efd51e69bd5c0c6c82c9aecf18a4e6807620f1afe2e373144418b2aebc801"
+    },
+    {
+      "path": "src/humanoid_localization/launch/pose_goal.launch.py",
+      "size": 3376,
+      "sha256": "a1c3c35c038b8a8ef263528603c863aa155e635332797cf22019a0137aca6788"
+    },
+    {
+      "path": "src/humanoid_localization/launch/vision_localization.launch.py",
+      "size": 9354,
+      "sha256": "d9e49b4e6f1017ed399c16287471582f0dc2274e251192cb2b99364ea9c09b9d"
+    },
+    {
+      "path": "src/humanoid_localization/launch/vision_localization.rviz",
+      "size": 3438,
+      "sha256": "9244ee35d6baf399d4e9304ca3dbb7d0233b61b6850ba8235a7afdf9d035ffa2"
+    },
+    {
+      "path": "src/humanoid_localization/launch/vision_servo.launch.py",
+      "size": 4256,
+      "sha256": "cdbcbd52b72e7a2aa57c06562e5e8f492e9b09fa5322f3fac0d7b87811097e13"
+    },
+    {
+      "path": "src/humanoid_localization/launch/walk_odometry.launch.py",
+      "size": 1628,
+      "sha256": "d4583df96c9c31a0aac1c0fccdd4a6693d964f7513410adc64e5f57c00775047"
+    },
+    {
+      "path": "src/humanoid_localization/package.xml",
+      "size": 2368,
+      "sha256": "0edbe33a7efd0d5ea4ca41f441fdf076593d075fb5e6857a56056e0e1b304494"
+    },
+    {
+      "path": "src/humanoid_localization/resource/humanoid_localization",
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "src/humanoid_localization/rviz/vision_localization.rviz",
+      "size": 13953,
+      "sha256": "d80c4e76aa5ba6bb84adc7944de5b4f3a4bb1f5e3b4804260d66cdaf34c1add2"
+    },
+    {
+      "path": "src/humanoid_localization/rviz/walk_odometry.rviz",
+      "size": 11511,
+      "sha256": "eadabcfff8598dbf2a57aa43bc1374aca2b0acc80811f118248f1da9dec255c9"
+    },
+    {
+      "path": "src/humanoid_localization/setup.cfg",
+      "size": 111,
+      "sha256": "3ab372942568aa55ff403ad5b1c77cfecb61173f62fdf917985736619b9283f2"
+    },
+    {
+      "path": "src/humanoid_localization/setup.py",
+      "size": 2456,
+      "sha256": "882f11143286404bf979bf6153e333be31002a29f83c2de8cbd8b2ba068bd467"
+    },
+    {
+      "path": "src/humanoid_localization/test/test_copyright.py",
+      "size": 962,
+      "sha256": "ea71bbbc6247b5c14d176ed09f39ee274d563cc9b2ec355828ea451ceff31757"
+    },
+    {
+      "path": "src/humanoid_localization/test/test_flake8.py",
+      "size": 884,
+      "sha256": "37a813a0507f0ce51a2d0b57312d2cc078a0307a3ca85580ea801b0d2f9755d2"
+    },
+    {
+      "path": "src/humanoid_localization/test/test_pep257.py",
+      "size": 803,
+      "sha256": "e8b88d49ee296987b1b40069f81019b5fa09b1aa1bfee9a1faae45bb5cf53eda"
+    },
+    {
+      "path": "src/humanoid_localization/test/test_sideline_reentry.py",
+      "size": 4238,
+      "sha256": "d596d778a1fd00c4af2a48f1b7a3d768961d822b2249abc799f3b2c43c0897ed"
+    },
+    {
+      "path": "src/humanoid_localization/test/test_vision_solver.py",
+      "size": 10690,
+      "sha256": "edfae8cff6ada2de1bf12926c6956b3cceb059fbf57e1828c54edbd10ee81ce7"
+    },
+    {
+      "path": "src/humanoid_perception/export_engine.py",
+      "size": 2097,
+      "sha256": "1b1d5b8bcbd87af61f22e051ffda9c782b4f1e701927b1d0157635b863d1a235"
+    },
+    {
+      "path": "src/humanoid_perception/humanoid_perception/__init__.py",
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "src/humanoid_perception/humanoid_perception/ball_map_projector_node.py",
+      "size": 31038,
+      "sha256": "92f3723da4b8af1a24988c762e7bb75e2030ccb17b7e6e5a1cb634ce3b7cef8c"
+    },
+    {
+      "path": "src/humanoid_perception/humanoid_perception/depth_obstacle_detector_node.py",
+      "size": 27040,
+      "sha256": "87dabff694e5934a3a01526f642f83fab5d110cdb83b41e80eecae2ac8620b30"
+    },
+    {
+      "path": "src/humanoid_perception/humanoid_perception/yolo_detector_3d_node.py",
+      "size": 36874,
+      "sha256": "1eb5270eab24485b0d96074e9e1727da3e010d62c4b1684184441545743b06ab"
+    },
+    {
+      "path": "src/humanoid_perception/launch/ball_map.launch.py",
+      "size": 3023,
+      "sha256": "a54d626e0a22a477df79e7657ecc452504567ca67b9634844409e6794ab7c318"
+    },
+    {
+      "path": "src/humanoid_perception/launch/depth_obstacle.launch.py",
+      "size": 3040,
+      "sha256": "1d63ed13c72505042ff1ba02c7ff5de18be1f82c1a5efd759019c21ece548f56"
+    },
+    {
+      "path": "src/humanoid_perception/launch/perception.launch.py",
+      "size": 5646,
+      "sha256": "9d387643b088de716ab4f31ca5057a4bd4294b8588374b501e556155cfd26645"
+    },
+    {
+      "path": "src/humanoid_perception/launch/perception_3d_clean.launch.py",
+      "size": 12631,
+      "sha256": "fea250ad0dc38bc63c2d68f1bae82eac910b3f07de877e0dcc20b294b8cd8b40"
+    },
+    {
+      "path": "src/humanoid_perception/launch/perception_bringup.launch.py",
+      "size": 12922,
+      "sha256": "b4cd1ce8e12381cf7ea69c82d13394d0b18bac428b6becfaf8ac6d75217d89bf"
+    },
+    {
+      "path": "src/humanoid_perception/launch/perception_clean.launch.py",
+      "size": 5915,
+      "sha256": "1b3289decc3942a7b4548c3ee30699ef385fe21986156ed83e08fead5bf7a144"
+    },
+    {
+      "path": "src/humanoid_perception/launch/perception_foxglove.launch.py",
+      "size": 3910,
+      "sha256": "c5030ae444128cbeb7c6bafd3553826d6f3f1ceaef16019d8a3738373b2c4750"
+    },
+    {
+      "path": "src/humanoid_perception/launch/robot_tf_bringup.launch.py",
+      "size": 5561,
+      "sha256": "6871479cd439aa53e49878371c780fb24752c880a5cb39cdbb1b7b941b7e6ef6"
+    },
+    {
+      "path": "src/humanoid_perception/launch/yolo_3d.launch.py",
+      "size": 7543,
+      "sha256": "9be40709720b18ddf91d2cb28118d5441abdf3722683c7542114d6365deba517"
+    },
+    {
+      "path": "src/humanoid_perception/launch/yolo_only.launch.py",
+      "size": 2752,
+      "sha256": "ddaefbddc3011642131ca5f4a85b58b907f17cd293bca6b0ff990425cc442c5e"
+    },
+    {
+      "path": "src/humanoid_perception/meshes/base_link.STL",
+      "size": 2995084,
+      "sha256": "cacbe6bf11b26acb2aed700e5f992dfa5f830590bd80bd6dc806518d2b2173d3"
+    },
+    {
+      "path": "src/humanoid_perception/meshes/l_ankle_pitch_link.STL",
+      "size": 498184,
+      "sha256": "24d41205ccd19e8e484fb148d5cbf1c3d5709edc9009cf278a41f7f7229f7460"
+    },
+    {
+      "path": "src/humanoid_perception/meshes/l_ankle_roll_link.STL",
+      "size": 806984,
+      "sha256": "dd2b3904325e88f803c1b745d4a9b8b2b977d27209c653d4ad3fe31922d58c3e"
+    },
+    {
+      "path": "src/humanoid_perception/meshes/l_elbow_pitch_link.STL",
+      "size": 556184,
+      "sha256": "7bfc49d748e65b901b56d3927425963247ba3afe9b790acbbcf222f11cb1d53b"
+    },
+    {
+      "path": "src/humanoid_perception/meshes/l_knee_pitch_link.STL",
+      "size": 238684,
+      "sha256": "7b37daffe8e9e374ebc59765b89742a7a9829c8e5074d00ef7aa6b093ae01748"
+    },
+    {
+      "path": "src/humanoid_perception/meshes/l_pelvis_pitch_link.STL",
+      "size": 297984,
+      "sha256": "bf45981a13c3e4347e1b6102f0154293521018f3f9dc4e4433ab3a5a7e98f791"
+    },
+    {
+      "path": "src/humanoid_perception/meshes/l_pelvis_roll_link.STL",
+      "size": 406284,
+      "sha256": "17742d0a36df5c2102335e6224d7e83ade51feba90e8431ac1c01dd88399a6fd"
+    },
+    {
+      "path": "src/humanoid_perception/meshes/l_pelvis_yaw_link.STL",
+      "size": 332984,
+      "sha256": "374daab0d959e8e9f482c0f2eb729e2bb1f8a94724d874cb45b87a097bdb2d75"
+    },
+    {
+      "path": "src/humanoid_perception/meshes/l_shoulder_pitch_link.STL",
+      "size": 161784,
+      "sha256": "598fbd04e0e2a459832f6e16ee9fc458eb24dc84876ddd0ac318c4501a062fbe"
+    },
+    {
+      "path": "src/humanoid_perception/meshes/l_shoulder_roll_link.STL",
+      "size": 645084,
+      "sha256": "ccaf62f2f94949f312f381915969ee04cf9ba6af93e0ddaa19b96046120f1ed4"
+    },
+    {
+      "path": "src/humanoid_perception/meshes/neck_pitch_link.STL",
+      "size": 182584,
+      "sha256": "ef992cc1997a6c82d053b303576bd66641cfb5ddebc1188746e23315d25e7a93"
+    },
+    {
+      "path": "src/humanoid_perception/meshes/neck_yaw_link.STL",
+      "size": 120284,
+      "sha256": "4a5f5e9f8a63fdef9354d68a36f467241862ccd0548b70982e2d4b5fb32b95fa"
+    },
+    {
+      "path": "src/humanoid_perception/meshes/r_ankle_pitch_link.STL",
+      "size": 498184,
+      "sha256": "d214725d89d68d28970c594642249ea864024e26f073c1e3cb4964a63d270de2"
+    },
+    {
+      "path": "src/humanoid_perception/meshes/r_ankle_roll_link.STL",
+      "size": 805584,
+      "sha256": "a92abc1c31faecd1f28e8f5fe7a8f21e9e4b01a4dc3d18e93a7a717bb3ef7e7c"
+    },
+    {
+      "path": "src/humanoid_perception/meshes/r_elbow_pitch_link.STL",
+      "size": 556184,
+      "sha256": "a23a888272f80f47146f460aea8383893cb7d63daa890a7955e89f5d7c5c0231"
+    },
+    {
+      "path": "src/humanoid_perception/meshes/r_knee_pitch_link.STL",
+      "size": 238684,
+      "sha256": "ae41efc0027d43fa90c376b9638de66e8987b09f031926794cd91e7a3da85bdf"
+    },
+    {
+      "path": "src/humanoid_perception/meshes/r_pelvis_pitch_link.STL",
+      "size": 297984,
+      "sha256": "c3eabd406abb7726dba1d6b9242fbe53813d11d72bffe08d4412dc49d196eab3"
+    },
+    {
+      "path": "src/humanoid_perception/meshes/r_pelvis_roll_link.STL",
+      "size": 406284,
+      "sha256": "06d02424b981103a7d9a07dc890f8721ad4780356908fb6d7b53ce4922dadfeb"
+    },
+    {
+      "path": "src/humanoid_perception/meshes/r_pelvis_yaw_link.STL",
+      "size": 332984,
+      "sha256": "4e177ffe0786f9d1363379c34a1624be39ad58e8f65cdde03e66f51e0f82a3dd"
+    },
+    {
+      "path": "src/humanoid_perception/meshes/r_shoulder_pitch_link.STL",
+      "size": 165484,
+      "sha256": "5c558bda378fb7ca87848cfbb4db6f4aa3b43046f1fc6070f7fb9a4d6aec05b7"
+    },
+    {
+      "path": "src/humanoid_perception/meshes/r_shoulder_roll_link.STL",
+      "size": 645084,
+      "sha256": "010fe8ac90f5b6319c6dfc19170cf6d8c5b4ae42a1ad53dd8f61355e76bdc0de"
+    },
+    {
+      "path": "src/humanoid_perception/models/best.engine",
+      "size": 8804210,
+      "sha256": "7554a441d022ee5dfe1a22f8f3c6f0bd0fefa2847df945b77a1edaf4829368d6"
+    },
+    {
+      "path": "src/humanoid_perception/package.xml",
+      "size": 2091,
+      "sha256": "3bbc48b91dfc5b7f9cb0b8398bbbf97ed0871abd9111be0937ca10549488ccf9"
+    },
+    {
+      "path": "src/humanoid_perception/resource/humanoid_perception",
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "src/humanoid_perception/setup.cfg",
+      "size": 107,
+      "sha256": "6257b0419edde79b12b8f9c8fe6c8d119d05ae5796cff3d21bf11267cce48700"
+    },
+    {
+      "path": "src/humanoid_perception/setup.py",
+      "size": 2208,
+      "sha256": "a40b4c7bc437476ee93c4cbeeca96e8a70af7d13364b3513d7801c39e1fe5e54"
+    },
+    {
+      "path": "src/humanoid_perception/test/test_copyright.py",
+      "size": 962,
+      "sha256": "ea71bbbc6247b5c14d176ed09f39ee274d563cc9b2ec355828ea451ceff31757"
+    },
+    {
+      "path": "src/humanoid_perception/test/test_flake8.py",
+      "size": 884,
+      "sha256": "37a813a0507f0ce51a2d0b57312d2cc078a0307a3ca85580ea801b0d2f9755d2"
+    },
+    {
+      "path": "src/humanoid_perception/test/test_pep257.py",
+      "size": 803,
+      "sha256": "e8b88d49ee296987b1b40069f81019b5fa09b1aa1bfee9a1faae45bb5cf53eda"
+    },
+    {
+      "path": "src/humanoid_perception/urdf/XM_robot03_output.urdf",
+      "size": 27355,
+      "sha256": "7023ef2cc013f10d0b86d8c4af93fd27d0a4b9993eaf4c36201873d5b850cf48"
+    },
+    {
+      "path": "src/humanoid_perception/urdf/XM_robot03_tf_min.urdf",
+      "size": 5023,
+      "sha256": "cdd3644198c91791ee39f023b83da9dea3b7e4a46174f04193c754f6ac0bc77a"
+    },
+    {
+      "path": "src/humanoid_policy_runner/humanoid_policy_runner/__init__.py",
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "src/humanoid_policy_runner/humanoid_policy_runner/actor_onnx_getup_runner.py",
+      "size": 80787,
+      "sha256": "b4f380bd20ff64c1a63bbff6efa7b305dd672073e44768ab1a1038adabf63542"
+    },
+    {
+      "path": "src/humanoid_policy_runner/humanoid_policy_runner/actor_onnx_getup_v2_runner.py",
+      "size": 117186,
+      "sha256": "31c5a2054ca0dd7ab80ac652f5925dd17be9090e956a9ca8dc6f49a1bf8ef877"
+    },
+    {
+      "path": "src/humanoid_policy_runner/humanoid_policy_runner/actor_onnx_walking_runner.py",
+      "size": 78761,
+      "sha256": "477dcff62aa2572b12d7cad58dc71c4a1628871d0c8695a869450ffc5bdf52aa"
+    },
+    {
+      "path": "src/humanoid_policy_runner/humanoid_policy_runner/actor_onnx_walkkick_v1_runner.py",
+      "size": 100678,
+      "sha256": "1bc48054b86735dc6af09b49b525ad416779ef46d12baf2b7e9110366e1c86d9"
+    },
+    {
+      "path": "src/humanoid_policy_runner/humanoid_policy_runner/joypad_teleop_node.py",
+      "size": 61789,
+      "sha256": "96346fb6460c4750af4a5283fd91762de54ed5af81669d0fd06f956eddcbc64f"
+    },
+    {
+      "path": "src/humanoid_policy_runner/humanoid_policy_runner/keyboard_teleop_node.py",
+      "size": 21786,
+      "sha256": "40a219c1bd672b6e45d9d5cf3fa842a9008f8ab6246d906b38343c26a037dda6"
+    },
+    {
+      "path": "src/humanoid_policy_runner/humanoid_policy_runner/lateral_drift_correction_node.py",
+      "size": 42185,
+      "sha256": "3f58fd636c3efb7f38effb1d27ab182c6b1c8342d06e652700a3e874efa7cbdf"
+    },
+    {
+      "path": "src/humanoid_policy_runner/humanoid_policy_runner/xm540_build_tensorrt.py",
+      "size": 4432,
+      "sha256": "fd4d3d8abd7f37a50312a767a6b4c8cbc75ff7d927054c3a25edd7d2ffe65372"
+    },
+    {
+      "path": "src/humanoid_policy_runner/humanoid_policy_runner/xm540_dual_policy_node.py",
+      "size": 14056,
+      "sha256": "4bd49c6be13dcb173993bd111a3664e5475af3be176bae0e2fd2d7ab51a3745e"
+    },
+    {
+      "path": "src/humanoid_policy_runner/humanoid_policy_runner/xm540_export_onnx.py",
+      "size": 4276,
+      "sha256": "379fa0856209139791681352cb549b045d939f403df8c24cf74124fb82a52b44"
+    },
+    {
+      "path": "src/humanoid_policy_runner/humanoid_policy_runner/xm540_policy.py",
+      "size": 16313,
+      "sha256": "c71b564e61a33ee5fbb789cc402187a9803504d46248acb0afe3648050e7a90d"
+    },
+    {
+      "path": "src/humanoid_policy_runner/humanoid_policy_runner/xm540_tensorrt.py",
+      "size": 6567,
+      "sha256": "320bb56171024418bcc6b333ec5e5943808ab4316b0db92b31c48889f66ab777"
+    },
+    {
+      "path": "src/humanoid_policy_runner/humanoid_policy_runner/xm540_verify_mapping.py",
+      "size": 4766,
+      "sha256": "d3c5c776a84a2d44ed74a7ff0eab82dd8a676af4974adc6a51c0e6eac81a6868"
+    },
+    {
+      "path": "src/humanoid_policy_runner/launch/getup_v1_test.launch.py",
+      "size": 11362,
+      "sha256": "41fa3222654eb0e4cf9ff06598902c9ee5ccf97b7092b1b7ddd5c3f5a242e4e8"
+    },
+    {
+      "path": "src/humanoid_policy_runner/launch/getup_v2_test.launch.py",
+      "size": 17750,
+      "sha256": "919d86db354fa65fd91d675507470df391777c9facdd62704d81797743aa8dbe"
+    },
+    {
+      "path": "src/humanoid_policy_runner/launch/v1s_joypad_test.launch.py",
+      "size": 10306,
+      "sha256": "f44dc9839470ea054f4f17660d949692faa4d857add609134f313b9daac0d367"
+    },
+    {
+      "path": "src/humanoid_policy_runner/launch/xm540_dual_policy.launch.py",
+      "size": 1716,
+      "sha256": "a0b8745ba4bbd7bd34485eb00d2d906d51f2445abc4b94a683415a62f275345f"
+    },
+    {
+      "path": "src/humanoid_policy_runner/models/getup_v1_policy.onnx",
+      "size": 1283887,
+      "sha256": "154791c968ec46290d686a61fc68dde513ed48ea79225392639b56dabda142b6"
+    },
+    {
+      "path": "src/humanoid_policy_runner/models/getup_v1_policy_원본.onnx",
+      "size": 1283887,
+      "sha256": "1c7100b0b47044a9c6b8a239d8675b113555014fc2b48100691f50c46a631d03"
+    },
+    {
+      "path": "src/humanoid_policy_runner/models/getup_v2_policy.onnx",
+      "size": 1345327,
+      "sha256": "0cdffcc45a7b0106a36b442f69f09e71fcc37d6a7a8187c9b930a1ce9249c812"
+    },
+    {
+      "path": "src/humanoid_policy_runner/models/walk_policy.onnx",
+      "size": 1157911,
+      "sha256": "9f6efa34d19cf90382a056f01ad9add5e71596d528cafe4855e04d1f3ba11531"
+    },
+    {
+      "path": "src/humanoid_policy_runner/models/walk_policy_원본.onnx",
+      "size": 1157911,
+      "sha256": "72e2b8d88bac39feb97bc7789e0a67e4675650713c6e4528988a32f96831fbb1"
+    },
+    {
+      "path": "src/humanoid_policy_runner/models/walkkick_v1_policy.onnx",
+      "size": 1209111,
+      "sha256": "65a768430798004c0f08412f5341eaa6b1e6cb1e5dacb45786d34695674013a5"
+    },
+    {
+      "path": "src/humanoid_policy_runner/package.xml",
+      "size": 1680,
+      "sha256": "b14242b955a299c4ac13d701339444098b72cb2487d1ad5cdc268592b2d97716"
+    },
+    {
+      "path": "src/humanoid_policy_runner/resource/humanoid_policy_runner",
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "src/humanoid_policy_runner/setup.cfg",
+      "size": 113,
+      "sha256": "904c573f973e46f1ee4ccca980939f01ec666654fb4248133010982227c9a6f5"
+    },
+    {
+      "path": "src/humanoid_policy_runner/setup.py",
+      "size": 8592,
+      "sha256": "33440344959e07395f1a44cbefbb5d1160394527264a699a10291fe68676697e"
+    },
+    {
+      "path": "src/humanoid_policy_runner/test/test_copyright.py",
+      "size": 962,
+      "sha256": "ea71bbbc6247b5c14d176ed09f39ee274d563cc9b2ec355828ea451ceff31757"
+    },
+    {
+      "path": "src/humanoid_policy_runner/test/test_flake8.py",
+      "size": 884,
+      "sha256": "37a813a0507f0ce51a2d0b57312d2cc078a0307a3ca85580ea801b0d2f9755d2"
+    },
+    {
+      "path": "src/humanoid_policy_runner/test/test_pep257.py",
+      "size": 803,
+      "sha256": "e8b88d49ee296987b1b40069f81019b5fa09b1aa1bfee9a1faae45bb5cf53eda"
+    },
+    {
+      "path": "src/humanoid_policy_runner/test/test_xm540_mapping.py",
+      "size": 1576,
+      "sha256": "97a9060ded74bad51c11e9540811d26d01cbbe01b8d15a0706289f3dbccec360"
+    },
+    {
+      "path": "src/humanoid_policy_runner/test/test_xm540_policy.py",
+      "size": 9975,
+      "sha256": "c56e5235d541fce2cf32881059544ed25f9189d789eaa0451c82d022c5c52a10"
+    },
+    {
+      "path": "src/humanoid_policy_runner/test/test_xm540_tensorrt.py",
+      "size": 4806,
+      "sha256": "2568d800c934911ff8fe463d9ea4695a690d53e44e911c6d5eeac5fae5d7ce92"
+    },
+    {
+      "path": "src/humanoid_serial_bridge/config/kick_keyframes.yaml",
+      "size": 12274,
+      "sha256": "ef9f0720cf202e81ee85e976291f4e65ccd35fc35704e2fc4e301d4a82b7285c"
+    },
+    {
+      "path": "src/humanoid_serial_bridge/config/kick_keyframes_left_right.yaml",
+      "size": 12274,
+      "sha256": "ef9f0720cf202e81ee85e976291f4e65ccd35fc35704e2fc4e301d4a82b7285c"
+    },
+    {
+      "path": "src/humanoid_serial_bridge/config/kick_keyframes_org.yaml",
+      "size": 3786,
+      "sha256": "a2020558e2c74975b450732d81cb7aaed8e5c61ea3230dd3de67a146d939ebea"
+    },
+    {
+      "path": "src/humanoid_serial_bridge/config/motor_gains.yaml",
+      "size": 6858,
+      "sha256": "72ceefc4eaeec49e29c2499a28ac03e58bca00c2ac9fd028fb9a1e026004dde9"
+    },
+    {
+      "path": "src/humanoid_serial_bridge/config/neck_ball_tracker.yaml",
+      "size": 3992,
+      "sha256": "a26aff2406933f2f1819cba034f286efbe92f98c486e82b318f79bcd79c1f3ff"
+    },
+    {
+      "path": "src/humanoid_serial_bridge/config/servo_map.yaml",
+      "size": 7389,
+      "sha256": "aafdd1b31df1ed5243437c97fd204a35b66b2327d77f17db434ce7dca40e112c"
+    },
+    {
+      "path": "src/humanoid_serial_bridge/config/standup_keyframes.yaml",
+      "size": 6642,
+      "sha256": "669ddc2119bb762899045eb7411102c4cefa74168c244c5b26e6150b3a0cc382"
+    },
+    {
+      "path": "src/humanoid_serial_bridge/humanoid_serial_bridge/__init__.py",
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "src/humanoid_serial_bridge/humanoid_serial_bridge/behaviors/__init__.py",
+      "size": 20,
+      "sha256": "9fd744dc2b531735f17b64f2267cedf18666d0f21ab37d3a92293dac9a903ea7"
+    },
+    {
+      "path": "src/humanoid_serial_bridge/humanoid_serial_bridge/behaviors/kick_behavior.py",
+      "size": 9034,
+      "sha256": "f113ec2ea08eb9ad2f65655304b01d19ddec41a849f3840a8164ad83dfab94a2"
+    },
+    {
+      "path": "src/humanoid_serial_bridge/humanoid_serial_bridge/behaviors/robot_init_behavior.py",
+      "size": 16582,
+      "sha256": "341aa646d7686c6457fbfa4172833e8bfdef14347d6910815dffc9afa44596f4"
+    },
+    {
+      "path": "src/humanoid_serial_bridge/humanoid_serial_bridge/behaviors/standup_behavior.py",
+      "size": 20861,
+      "sha256": "22e7ea2f6a43dd48995f84649012083f83404906f1cd22261e40c4eec01fa8b6"
+    },
+    {
+      "path": "src/humanoid_serial_bridge/humanoid_serial_bridge/body_motor_controller_node.py",
+      "size": 70069,
+      "sha256": "320163f7bbf969fbd26c580c89cad1d04113fd305839d511027d60ec58e6a360"
+    },
+    {
+      "path": "src/humanoid_serial_bridge/humanoid_serial_bridge/button_input_node.py",
+      "size": 20584,
+      "sha256": "9e9bbea584e74731ea4cb218fd79ff7117bf51e8b41142497a32504efced493e"
+    },
+    {
+      "path": "src/humanoid_serial_bridge/humanoid_serial_bridge/dip_status_node.py",
+      "size": 4528,
+      "sha256": "076a7b002118779219b8e8d18c7512d292a16e643bdfb8e4780797b1d09c7df8"
+    },
+    {
+      "path": "src/humanoid_serial_bridge/humanoid_serial_bridge/fall_manager_node.py",
+      "size": 51608,
+      "sha256": "3e449f4cc47e02172891efc18f5c0074c9a32db89f0d8afadd6a9a9ad90b23a2"
+    },
+    {
+      "path": "src/humanoid_serial_bridge/humanoid_serial_bridge/hardware/__init__.py",
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "src/humanoid_serial_bridge/humanoid_serial_bridge/hardware/mcu_serial.py",
+      "size": 8461,
+      "sha256": "a65356077e64faf88d598ccd205dcbeaa72e180cf32ca41e90cb83fc45891527"
+    },
+    {
+      "path": "src/humanoid_serial_bridge/humanoid_serial_bridge/hardware/motor_gains.py",
+      "size": 11139,
+      "sha256": "2222bf114bf3e268cb43f99e0c040eba1651b4660ff3dfb8ffb227c449321ede"
+    },
+    {
+      "path": "src/humanoid_serial_bridge/humanoid_serial_bridge/hardware/u2d2_hardware.py",
+      "size": 45215,
+      "sha256": "9756847ffb077f859071592fd624743e61d7554c8adba6dc3e9840040d415b6b"
+    },
+    {
+      "path": "src/humanoid_serial_bridge/humanoid_serial_bridge/imu_math.py",
+      "size": 4332,
+      "sha256": "661b555236fb43b8bbae0d9b29a89292f2a38fd6c6d4add31e771f2fe61bc0d9"
+    },
+    {
+      "path": "src/humanoid_serial_bridge/humanoid_serial_bridge/imu_parser_node.py",
+      "size": 15262,
+      "sha256": "075761a197bd22abcd1e739b0c22b6eba031066cfa9ab4ae66068a9bbd132f12"
+    },
+    {
+      "path": "src/humanoid_serial_bridge/humanoid_serial_bridge/keyframe_editor_gui.py",
+      "size": 57470,
+      "sha256": "93520e85bfdc54a72aa9396b7429692ec728c36a0c090a03d85052280ee018c7"
+    },
+    {
+      "path": "src/humanoid_serial_bridge/humanoid_serial_bridge/led_control_node.py",
+      "size": 6588,
+      "sha256": "3103bc72689c23f7f3355d14c894d36bd5c8952acb179fe15e5544d4d5248efa"
+    },
+    {
+      "path": "src/humanoid_serial_bridge/humanoid_serial_bridge/mcu_bridge_node.py",
+      "size": 14455,
+      "sha256": "aaf7531c6453c3b7d89b29b2e7a1763a30b6779c29bb852ffea294c1963db633"
+    },
+    {
+      "path": "src/humanoid_serial_bridge/humanoid_serial_bridge/motor_monitor_tui.py",
+      "size": 9103,
+      "sha256": "b06844543da54e65ce9dfe06bdc61ff245756cad07563582fc0293f91886ebea"
+    },
+    {
+      "path": "src/humanoid_serial_bridge/humanoid_serial_bridge/neck_control_node.py",
+      "size": 27686,
+      "sha256": "c884fdcaf248539787af17e38ef91fd872f4df48cfa6a79171815ba51476d655"
+    },
+    {
+      "path": "src/humanoid_serial_bridge/humanoid_serial_bridge/neck_scan_node.py",
+      "size": 15582,
+      "sha256": "fc8a22e524b34903249a290b30d13713cee29462f1d18998e1fafef8ea0b8112"
+    },
+    {
+      "path": "src/humanoid_serial_bridge/humanoid_serial_bridge/policy_logger_node.py",
+      "size": 5151,
+      "sha256": "3d27086797c835a82dbcb2588948e94bd39d01a83318a5150466debe0d1fdce3"
+    },
+    {
+      "path": "src/humanoid_serial_bridge/humanoid_serial_bridge/pose_slider_gui.py",
+      "size": 37013,
+      "sha256": "71f3acb300bc20d6b0fd940d0c9b8d85d7629d672f8d175c21ede13fa6437c22"
+    },
+    {
+      "path": "src/humanoid_serial_bridge/humanoid_serial_bridge/robot_init_client_node.py",
+      "size": 1807,
+      "sha256": "0f3a311041582e0af2fd4bc4f2ec1fe1ec0ca94e383e4b9781b4dad2a7033e90"
+    },
+    {
+      "path": "src/humanoid_serial_bridge/humanoid_serial_bridge/serial_driver_node.py",
+      "size": 4885,
+      "sha256": "b2029f2dbf2fcdbb6e75541d107c81b06984df2f42a828064259d57384a5ba67"
+    },
+    {
+      "path": "src/humanoid_serial_bridge/humanoid_serial_bridge/standup_node.py",
+      "size": 14604,
+      "sha256": "37f6731872c8a07e0ca46702e10f963d32a129dcac7fdc703572c2ed789d1dcc"
+    },
+    {
+      "path": "src/humanoid_serial_bridge/humanoid_serial_bridge/tilt_monitor_tui.py",
+      "size": 22658,
+      "sha256": "f820726441d85824ccdbd759c4e258f51142a54b955a6bffbe658e7083d9b036"
+    },
+    {
+      "path": "src/humanoid_serial_bridge/humanoid_serial_bridge/tracking/__init__.py",
+      "size": 19,
+      "sha256": "7db3aeeadc3398d6a8359c01550d0fc7cce300fe1daad049a6c74104874ed001"
+    },
+    {
+      "path": "src/humanoid_serial_bridge/humanoid_serial_bridge/tracking/neck_ball_tracker_node.py",
+      "size": 24096,
+      "sha256": "47fd41b102809974cff728488bb2152fed3f8354f148ec2dd9247ffa8aa949a2"
+    },
+    {
+      "path": "src/humanoid_serial_bridge/launch/dynamixel_system.launch.py",
+      "size": 19522,
+      "sha256": "11924f90d2cf651a401864a9d027219782f5ff7533bfd2d363e526ba2de1eaac"
+    },
+    {
+      "path": "src/humanoid_serial_bridge/launch/neck_ball_tracker.launch.py",
+      "size": 2098,
+      "sha256": "8efe293aff110d890b19445d54ac6173ae007db00f96ff602581d4b9bae8f810"
+    },
+    {
+      "path": "src/humanoid_serial_bridge/package.xml",
+      "size": 1183,
+      "sha256": "705aedb3dccb6792dd57fda006a89e4db43a768d3749363886e97de5bcce854d"
+    },
+    {
+      "path": "src/humanoid_serial_bridge/resource/humanoid_serial_bridge",
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "src/humanoid_serial_bridge/setup.cfg",
+      "size": 113,
+      "sha256": "29a85101c8eecfac8eedd7197acf0002defa20ab952981bb7049650ea41bd0e7"
+    },
+    {
+      "path": "src/humanoid_serial_bridge/setup.py",
+      "size": 3429,
+      "sha256": "e911562ae4d14f4bc20af0ca166b41b9ff56132df55113151351ef0436305a0a"
+    },
+    {
+      "path": "src/humanoid_serial_bridge/test/test_copyright.py",
+      "size": 962,
+      "sha256": "ea71bbbc6247b5c14d176ed09f39ee274d563cc9b2ec355828ea451ceff31757"
+    },
+    {
+      "path": "src/humanoid_serial_bridge/test/test_flake8.py",
+      "size": 884,
+      "sha256": "37a813a0507f0ce51a2d0b57312d2cc078a0307a3ca85580ea801b0d2f9755d2"
+    },
+    {
+      "path": "src/humanoid_serial_bridge/test/test_pep257.py",
+      "size": 803,
+      "sha256": "e8b88d49ee296987b1b40069f81019b5fa09b1aa1bfee9a1faae45bb5cf53eda"
+    },
+    {
+      "path": "src/humanoid_serial_bridge/test_buttons.py",
+      "size": 9512,
+      "sha256": "4bd5df64b941bd7b57ca18974594f2d958953edde48f0924781c7387b03c3eb6"
+    },
+    {
+      "path": "src/humanoid_strategy/config/strategy.yaml",
+      "size": 12681,
+      "sha256": "a48ba759f2a2b40641f1896d8a6711cb52e875f54ffae52ca56521d2dfcac601"
+    },
+    {
+      "path": "src/humanoid_strategy/humanoid_strategy/__init__.py",
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "src/humanoid_strategy/humanoid_strategy/role_assigner_node.py",
+      "size": 22305,
+      "sha256": "7da9a6df558ffe34701208eced40fee0fdd22f7188e7349d44cdee189b4b75c0"
+    },
+    {
+      "path": "src/humanoid_strategy/humanoid_strategy/strategy_fsm_node.py",
+      "size": 71848,
+      "sha256": "9043e80f17aba9991287cf5e171584261cc25f7eff8b83d8752cdc22904fee67"
+    },
+    {
+      "path": "src/humanoid_strategy/humanoid_strategy/team_comm_node.py",
+      "size": 35281,
+      "sha256": "78a92fe1fa4b43d4872063886d7ff01134e7ef465adce145b78fc8710b32e029"
+    },
+    {
+      "path": "src/humanoid_strategy/launch/role_assigner.launch.py",
+      "size": 4369,
+      "sha256": "980c62275b300f6928650009decbfa1127f7f036446703680f20abc80ec197b5"
+    },
+    {
+      "path": "src/humanoid_strategy/launch/strategy.launch.py",
+      "size": 11597,
+      "sha256": "e70c3fd7a0af65cbf8fcb72ceae6ffae1c99286c940848f8c217a9134a0e52a8"
+    },
+    {
+      "path": "src/humanoid_strategy/launch/team_comm.launch.py",
+      "size": 6242,
+      "sha256": "4409b04d21d75a2cb631d2f30ca35946eef0e0d90aa63eee1badcc1f68586bed"
+    },
+    {
+      "path": "src/humanoid_strategy/package.xml",
+      "size": 1729,
+      "sha256": "91c96fd104938668592e75126b5790452a0ecc12d8199cef0f2157e1f59929e6"
+    },
+    {
+      "path": "src/humanoid_strategy/resource/humanoid_strategy",
+      "size": 1,
+      "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "path": "src/humanoid_strategy/setup.cfg",
+      "size": 103,
+      "sha256": "19937924e66decd96358f9cda3b25794f6a83ac244a318a9b36a0057f24b415e"
+    },
+    {
+      "path": "src/humanoid_strategy/setup.py",
+      "size": 1748,
+      "sha256": "e85840b664935376ab4dd3060659b56b7228f51a3c6cc072e990fb31fc1ad92b"
+    },
+    {
+      "path": "src/humanoid_strategy/test/test_copyright.py",
+      "size": 962,
+      "sha256": "ea71bbbc6247b5c14d176ed09f39ee274d563cc9b2ec355828ea451ceff31757"
+    },
+    {
+      "path": "src/humanoid_strategy/test/test_flake8.py",
+      "size": 884,
+      "sha256": "37a813a0507f0ce51a2d0b57312d2cc078a0307a3ca85580ea801b0d2f9755d2"
+    },
+    {
+      "path": "src/humanoid_strategy/test/test_pep257.py",
+      "size": 803,
+      "sha256": "e8b88d49ee296987b1b40069f81019b5fa09b1aa1bfee9a1faae45bb5cf53eda"
+    },
+    {
+      "path": "src/humanoid_utils/README.md",
+      "size": 3629,
+      "sha256": "69185e60f3ba0f38a737b24f196814eae7129e9443033de56e784048d8d5f749"
+    },
+    {
+      "path": "src/humanoid_utils/config/khuber_motor_config.xlsx",
+      "size": 11884,
+      "sha256": "a5caaa0985a98e450e48d4072419bb83ae77bbc5a05bcd697c7bd7b298d20c9d"
+    },
+    {
+      "path": "src/humanoid_utils/humanoid_utils/__init__.py",
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "src/humanoid_utils/humanoid_utils/cmd_shaping.py",
+      "size": 4694,
+      "sha256": "8afd5b0408d50c1ac3d785324a6ec894318c55e1d598b5b8357d8485c24e646f"
+    },
+    {
+      "path": "src/humanoid_utils/humanoid_utils/experiment_logger_node.py",
+      "size": 24054,
+      "sha256": "0838f96d392a34ae3274aec398b30c7e113128e73cc75d795d48b2280b981feb"
+    },
+    {
+      "path": "src/humanoid_utils/humanoid_utils/khuber_arm_pwm_test.py",
+      "size": 32552,
+      "sha256": "44bd49a3c35df5fe4c3ac5ed1d8d5801eb982dbf5bed2ba94f50023df78b7b68"
+    },
+    {
+      "path": "src/humanoid_utils/humanoid_utils/khuber_dxl_dump.py",
+      "size": 12108,
+      "sha256": "5d0141e458f55f4490f316ef2cb75698086a55f5ab20d4c2df910905241970fc"
+    },
+    {
+      "path": "src/humanoid_utils/humanoid_utils/khuber_dxl_setup.py",
+      "size": 26722,
+      "sha256": "7da3794251ab1b0656e024354a579d8c49dc33b282463788d1a4bee94af2ad32"
+    },
+    {
+      "path": "src/humanoid_utils/humanoid_utils/khuber_imu_calib.py",
+      "size": 16505,
+      "sha256": "24770185684039d25773bc3703c9fb71b2af20275cf7814f464b3f652462b894"
+    },
+    {
+      "path": "src/humanoid_utils/package.xml",
+      "size": 1281,
+      "sha256": "275566459c2f3c5a78875fcb1a3f6c20695b685e5b1f434837856c07f3349ad7"
+    },
+    {
+      "path": "src/humanoid_utils/resource/humanoid_utils",
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "src/humanoid_utils/setup.cfg",
+      "size": 97,
+      "sha256": "5e34b48b1ffd333421207e1d82cb4b0e6245966b7d9e363c415aaee4d4825549"
+    },
+    {
+      "path": "src/humanoid_utils/setup.py",
+      "size": 1961,
+      "sha256": "952e67c81164cc152a0ae3d2cab1176d1d85fa6d541722813572310624e99d99"
+    }
+  ]
+}

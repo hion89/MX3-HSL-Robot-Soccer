@@ -1,0 +1,9 @@
+robot_label,ssh_user,ip_address,workspace,team_number,player_number,goalkeeper_number,role_mode,field_profile,ros_domain_id,ros_localhost_only,mcu_by_id,u2d2_by_id,initial_x_m,initial_y_m,initial_yaw_rad,status
+robo01,TBD,TBD,TBD,35,1,1,auto,practice,42,1,TBD,TBD,TBD,TBD,TBD,planned
+robo02,TBD,TBD,TBD,35,2,1,auto,practice,42,1,TBD,TBD,TBD,TBD,TBD,planned
+robo03,TBD,TBD,TBD,35,3,1,auto,practice,42,1,TBD,TBD,TBD,TBD,TBD,planned
+robo04,robo04,192.168.1.161,/home/robo04/sim2real_ws,35,4,1,attacker,practice,42,1,usb-STMicroelectronics_STM32_Virtual_ComPort_3657367C3036-if00,usb-FTDI_USB__-__Serial_Converter_FTB8HKSR-if00-port0,-1.95,0.7583333,0,single_robot_trial_team_comm_not_confirmed
+robo05,TBD,TBD,TBD,36,1,1,auto,practice,42,1,TBD,TBD,TBD,TBD,TBD,planned
+robo06,TBD,TBD,TBD,36,2,1,auto,practice,42,1,TBD,TBD,TBD,TBD,TBD,planned
+robo07,TBD,TBD,TBD,36,3,1,auto,practice,42,1,TBD,TBD,TBD,TBD,TBD,planned
+robo08,TBD,TBD,TBD,36,4,1,auto,practice,42,1,TBD,TBD,TBD,TBD,TBD,planned

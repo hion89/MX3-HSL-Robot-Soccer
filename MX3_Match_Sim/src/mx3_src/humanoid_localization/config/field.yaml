@@ -1,0 +1,38 @@
+# =============================================================================
+#  field.yaml  —  field_lines_node 파라미터 (RViz 경기장 라인/골대 시각화)
+# -----------------------------------------------------------------------------
+#  [중요] 경기장 "치수"는 여기 두지 않는다.
+#    치수(필드 길이/폭, 페널티·골 에어리어, 센터서클, 페널티 마크, 골대 폭)는
+#    field_profile 로부터 field_geometry(vision/field_geometry.py)에서 생성된다.
+#    이는 localizer/relocalize_button 이 쓰는 바로 그 프로파일과 동일하므로,
+#    RViz 라인과 측위 랜드마크가 같은 좌표를 공유한다(중복 숫자 = drift 원천을 제거).
+#
+#    전환은 launch 인자 한 개로 끝난다(localizer 와 같은 값이 이 노드에도 주입됨):
+#       field_profile:=practice  → 연습장 3.9 x 2.6
+#       field_profile:=s_field   → 대회 9 x 6 (HSL 2026 small division; competition 별칭)
+#
+#    아래 yaml 의 field_profile 은 "기본값"이며, launch 인자가 있으면 그게 우선이다.
+#
+#  여기에는 "치수가 아닌" 시각화 전용값만 남긴다.
+# =============================================================================
+field_lines_node:
+  ros__parameters:
+    # 경기장 프로파일(기본값). launch 의 field_profile 인자가 덮어쓴다.
+    #   practice = 연습장 3.9x2.6 / s_field(=competition) = 대회 9x6
+    field_profile: "practice"
+
+    frame_id: "map"
+    line_thickness: 0.05        # 라인 굵기[m] (규정 라인 폭 0.05)
+
+    # ── 골 기둥(viz 전용; 2D 측위와 무관) ──
+    draw_goals: true
+    goal_post_height: 1.2       # S-Field 골 높이 1.2~1.3 범위의 하한
+    goal_post_radius: 0.04      # 기둥 반지름[m] (규정 기둥 지름 7~12cm → 반지름 0.035~0.06)
+
+    # ── 연습장 잔디 외곽(viz 전용) ──
+    #   practice 프로파일에서만 그려진다(대회 9x6 에선 노드가 자동으로 끔).
+    draw_turf_boundary: true
+    turf_length: 5.0
+    turf_width: 3.0
+
+    publish_rate: 1.0

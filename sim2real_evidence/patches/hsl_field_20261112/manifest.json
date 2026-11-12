@@ -1,0 +1,68 @@
+{
+  "version": "20261112-photo",
+  "sources": [
+    {
+      "path": "src/hsl_src/hsl_behavior/hsl_behavior/geometry.py",
+      "payload": "geometry.py",
+      "accepted_sha256": [
+        "622167ff7bbba232cd4bcf19f4a978bc62c7e2b3c1514d992d3b8b76732598e5",
+        "c2a4d8b73ca3051126761d03dee3a1fc32615166f929be2ff3f41979efd9f718"
+      ],
+      "after_sha256": "622167ff7bbba232cd4bcf19f4a978bc62c7e2b3c1514d992d3b8b76732598e5"
+    },
+    {
+      "path": "src/hsl_src/hsl_world_model/include/hsl_world_model/field_model.hpp",
+      "payload": "field_model.hpp",
+      "accepted_sha256": [
+        "100099c9d4645a8b97e8838f74d63c3e6908247546a0fbbaa56ff8eb4d5796a8",
+        "c3809d21d61f30ec8d2f5aab9462ea1f29de97019234b6c784ac4b512b726800"
+      ],
+      "after_sha256": "c3809d21d61f30ec8d2f5aab9462ea1f29de97019234b6c784ac4b512b726800"
+    },
+    {
+      "path": "src/hsl_src/hsl_world_model/src/self_localizer_node.cpp",
+      "payload": "self_localizer_node.cpp",
+      "accepted_sha256": [
+        "e97bc8d471640071c717fcbe1004d44ee916689cbd36e673a7561250d1cd7ea9",
+        "f41782cf8e941ea7ceb028f896d1215f3f9e746a96455a4d48cc7b9d82cabbed"
+      ],
+      "after_sha256": "e97bc8d471640071c717fcbe1004d44ee916689cbd36e673a7561250d1cd7ea9"
+    },
+    {
+      "path": "src/hsl_src/hsl_behavior/hsl_behavior/behavior_node.py",
+      "payload": "behavior_node.py",
+      "accepted_sha256": [
+        "6ff3190385f7bcd63a6243745bfd041a87d129ab862823cb8a5af241d7f2ad9e",
+        "9bfa38da153214e2b8da8d1420b8a23b7f37cee645b73b3c3a01c037e83a5e45"
+      ],
+      "after_sha256": "9bfa38da153214e2b8da8d1420b8a23b7f37cee645b73b3c3a01c037e83a5e45"
+    },
+    {
+      "path": "src/hsl_src/hsl_behavior/hsl_behavior/skills.py",
+      "payload": "skills.py",
+      "accepted_sha256": [
+        "7b526df0e424797f4cfb0146b625e71b3fc8c4824bf6fec19a21ab2d583990f5",
+        "83983846754ea4747dbb7e715c83b419d54b1ae64e6a22775212b768415801b2"
+      ],
+      "after_sha256": "83983846754ea4747dbb7e715c83b419d54b1ae64e6a22775212b768415801b2"
+    }
+  ],
+  "bundle_files": {
+    "apply_and_build.sh": "79e51203106c837e0d140957dcdb5fa15306a4bfb0c46124850c22353850e36f",
+    "apply_field.py": "1001f6a026c741612ca71af09adfad5c12d5aa468fb2605b11bdf2b006491f99",
+    "behavior_node.py": "9bfa38da153214e2b8da8d1420b8a23b7f37cee645b73b3c3a01c037e83a5e45",
+    "check_field.cpp": "458eb619756787b664b5c7ae030e68801135047b1f42a20c104327a9e7d0c607",
+    "field_model.hpp": "c3809d21d61f30ec8d2f5aab9462ea1f29de97019234b6c784ac4b512b726800",
+    "geometry.py": "622167ff7bbba232cd4bcf19f4a978bc62c7e2b3c1514d992d3b8b76732598e5",
+    "hsl_view.py": "a452c08664352a0a6fd49a6d9ef00b55dad90fa363d5dd6de972b2ec5f7874ca",
+    "hsl_view.rviz": "2977999905d508f24a04546492ac33c3449dd7ed211b344f1d8b0be8e184c948",
+    "practice_photo.json": "f42762a4cb0bf6b91a382c7111e97dc6bf5acb70c4dfa016952cf2f14e438845",
+    "README.md": "2a57d7cb51fde650c6dac4bb3b8fb9ec16f6f9cc1e30e08cb218cb6fe0fdb0c8",
+    "self_localizer_node.cpp": "e97bc8d471640071c717fcbe1004d44ee916689cbd36e673a7561250d1cd7ea9",
+    "skills.py": "83983846754ea4747dbb7e715c83b419d54b1ae64e6a22775212b768415801b2",
+    "start.sh": "8c8829493f153e67c2652696a59912ea58849e2324bbd02a067b3541c286c01e",
+    "verify_field.py": "70cd7ab932ef9e5e8c3689256fc895b95ca529ff5ee8edb27f3cc7203f28fcbc",
+    "view.launch.py": "df4713114be3d7f2c0c75938e75c7f9f2452d082683f883f316f6870fa5fbac7",
+    "view_math.py": "c94bbc7df2724796e1b974a433640b6a3afc83081edfb3b9c3ecdd4d6b82c44e"
+  }
+}

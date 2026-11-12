@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>humanoid_bringup</name>
+  <version>0.0.0</version>
+  <description>KHUBER 전체/부분 시스템 실행 launch 및 시스템 레벨 config 모음</description>
+  <maintainer email="robo1@todo.todo">robo1</maintainer>
+  <license>TODO: License declaration</license>
+
+  <!-- launch 전용(파이썬 소스 노드 없음) ament_python 패키지 -->
+  <buildtool_depend>ament_python</buildtool_depend>
+
+  <!-- 이 bringup 이 실행(include)하는 모든 패키지를 런타임 의존성으로 선언 -->
+  <exec_depend>humanoid_serial_bridge</exec_depend>
+  <exec_depend>humanoid_policy_runner</exec_depend>
+  <exec_depend>humanoid_perception</exec_depend>
+  <exec_depend>twist_mux</exec_depend>
+  <!-- 게임패드 텔레옵(control_joypad.launch.py)이 joy_node 를 실행 -->
+  <exec_depend>joy</exec_depend>
+  <!-- launch 파일 실행에 필요 -->
+  <exec_depend>ros2launch</exec_depend>
+
+  <test_depend>ament_copyright</test_depend>
+  <test_depend>ament_flake8</test_depend>
+  <test_depend>ament_pep257</test_depend>
+  <test_depend>python3-pytest</test_depend>
+
+  <export>
+    <build_type>ament_python</build_type>
+  </export>
+</package>

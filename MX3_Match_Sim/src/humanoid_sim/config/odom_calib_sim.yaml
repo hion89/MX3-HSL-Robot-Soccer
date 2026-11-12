@@ -1,0 +1,9 @@
+# 시뮬 전용 walk_odometry 보정 — humanoid_localization/config/odom_calib.yaml 위에 덮어쓴다.
+#   원본은 2026-04 (v0_6 이전 정책) 측정 + 추정값 (데드존, vy_scale 0). 지금 정책은 0.1 에서도 움직인다.
+#   아래는 MuJoCo 에서 러너 정책(walk_policy.onnx)의 명령 추종을 잰 값 (2026-10-31, 10 s 평균).
+#   실기 값은 로봇이 나오면 같은 방식으로 다시 재서 원본 파일을 갈아엎는다.
+walk_odometry_node:
+  ros__parameters:
+    calib_vx_cmd:  [-0.4,   -0.3,   -0.2,   -0.1,   0.0, 0.1,   0.2,   0.3,   0.4]
+    calib_vx_real: [-0.414, -0.322, -0.223, -0.120, 0.0, 0.093, 0.205, 0.318, 0.429]
+    vy_scale: 0.82          # vy 0.1→0.09, 0.2→0.17, 0.3→0.24 의 평균 비

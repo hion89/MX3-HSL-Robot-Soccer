@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "bundle_revision": 3,
+  "target": "src/hsl_src/hsl_world_model/src/ball_tracker_node.cpp",
+  "original_sha256": "0487c09b44dd8e32b150808640ec32c4a83555f891c581d476738f2714999e1e",
+  "previous_sha256": "0349808f7c3789dc634dbf9c6512c86d5569119c4a581dd7e0cf1f881680ea55",
+  "patched_sha256": "24f90fcc09275786e982a64daf998c813f802df1e030ae2d2943b59e1a1ba545",
+  "patch_scope": "Enable a real dedicated parent-node TF executor; preserve exact-time TF diagnostics",
+  "frame_definitions_changed": false,
+  "detection_timestamp_preserved": true,
+  "motor_code_changed": false,
+  "humble_api_reviewed": true,
+  "target_compile_and_runtime": "PENDING",
+  "supersedes_v2_runtime_failure": "Humble Buffer requires a dedicated TF thread even for the zero-timeout ROS-time overload",
+  "isolated_test_domain": 77,
+  "robot_domain": 42
+}

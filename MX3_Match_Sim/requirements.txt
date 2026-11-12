@@ -1,0 +1,5 @@
+# setup.sh 가 .venv (python3 -m venv --system-site-packages) 에 설치한다. 만든 PC 에서 돌려 본 버전.
+mujoco==3.17.0
+onnxruntime==1.31.1
+# 시스템 (apt) numpy 1.26 을 그대로 쓴다 — ROS 패키지가 numpy 1.x 로 빌드돼 있어 2.x 가 앞에 오면 깨질 수 있다
+numpy<2

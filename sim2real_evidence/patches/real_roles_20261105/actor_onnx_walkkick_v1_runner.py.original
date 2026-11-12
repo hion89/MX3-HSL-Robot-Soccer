@@ -1,0 +1,1964 @@
+#!/usr/bin/env python3
+# actor_onnx_walkkick_v1_runner.py
+#
+# ============================================================================
+#  walk_kick_v1 정책(walk_kick_v1_env.py 로 학습) 전용 ONNX 실행 노드.
+# ----------------------------------------------------------------------------
+#  actor_onnx_walkkick_runner.py 와의 유일한 차이는 gait_phase(3) 관측이다.
+#
+#  walk_kick_v1_env.py 는 "킥 레이어는 옛 walk_kick 그대로, 보행 레이어만
+#  velocity_v0_3 로 교체" 한 환경이다. 그래서 킥 관련 항(ball_pos_b frozen /
+#  target_dir_b / kick_strength)과 그 의미는 옛 walk_kick 과 100% 같고,
+#  v0_3 보행이 쓰는 PhaseOnlyGaitCommand 의 gait_phase(3) 만 추가된다.
+#
+#      옛 walk_kick : per-frame 50 -> obs 250
+#      walk_kick_v1 : per-frame 53 -> obs 265
+#
+#  ★ gait_phase 를 빠뜨리면 차원이 250 이 되어 모델 로드에서 걸린다.
+#    그러나 "순서" 를 틀리면 차원은 265 로 맞아 조용히 오동작한다.
+#    velocity_commands 다음, joint_pos_rel 앞이다. 절대 바꾸지 말 것.
+#
+# ----------------------------------------------------------------------------
+#  보행 위상은 이 노드가 직접 적분한다 (학습의 CommandTerm 을 이식)
+# ----------------------------------------------------------------------------
+#  ★ 반드시 "증분 적분" 이어야 한다 ★
+#
+#      phase = fmod(phase + dt * freq, 1.0)
+#
+#  절대 시각 기반(phase = fmod(now * freq, 1.0))으로 구현하면 주파수를
+#  바꾸는 순간 위상이 점프한다. (HTWK 배포 코드의 실제 버그)
+#
+#  walk_kick_v1_env.py 의 gait 설정:
+#      frequency=2.0, stop_rate=2.0, frequency_scale=2.0
+#      include_frequency=True          -> 관측 3 차원 (cos, sin, freq/scale)
+#      standing_threshold=0.1          -> 명령 노름이 이 아래면 정지
+#      reset_phase_on_resample=True    -> 리셋 시 위상 0
+#      freeze_during_reset_hold=True   -> hold 동안 freq=0
+#
+#  ★ 학습의 base_velocity 는 lin_vel_x=(0.1, 0.5) ★
+#  하한 0.1 이 standing_threshold(0.1)와 '같다'. 즉 cmd_vx 를 0.1 근처로
+#  주면 명령 노름이 임계에 걸려 freq=0 (제자리 정지)이 될 수 있다.
+#  cmd_vx 는 0.15 이상으로 두는 것을 권한다(기동 시 경고를 띄운다).
+#
+#  이 노드의 "킥 트리거" = 학습의 "episode reset" 이다. 따라서 트리거 시
+#  위상을 0 으로 리셋하고(reset_phase_on_resample), resume_hold 동안
+#  freq=0 으로 두어(freeze_during_reset_hold) 위상을 0 에 묶는다.
+#
+# ----------------------------------------------------------------------------
+#  킥 관련 항의 의미 (옛 walk_kick 과 동일)
+# ----------------------------------------------------------------------------
+#   - velocity_commands: 공까지 "걸어가는" 전진 명령 [vx, vy, wz].
+#       walk_kick_v1 학습 분포는 vx=0.1~0.5, vy=0, wz=0 (상수).
+#       ★ v1 은 킥 후 명령을 0 으로 바꾸지 않는다 ★ 학습 코드 주석대로,
+#       실 로봇에서 킥 순간을 잡아 정확한 타이밍에 0 을 줄 수 없기 때문.
+#       따라서 이 노드도 트리거 시 freeze 한 값을 끝까지 유지한다.
+#   - ball_pos_b(frozen): 트리거(=episode reset) 순간 base 프레임에서 한 번
+#       읽은 공의 (x, y). 이후 로봇이 걸어가도 값은 변하지 않는다
+#       (one-shot detection -> open-loop kick). z 는 학습에서 제외됨.
+#   - target_dir_b: 트리거 시 "월드 고정" 목표 방향을 현재 body 프레임으로
+#       재투영. Δyaw = (현재 yaw - 트리거 yaw) 일 때
+#         target_dir_b = (cos(offset - Δyaw), sin(offset - Δyaw)).
+#       IMU gyro_z 를 트리거 이후 적분해 Δyaw 를 추정한다.
+#   - kick_strength: ones_obs 라 "항상 1.0" 상수.
+#
+#  ball_pos_b 소스(파라미터로 선택):
+#   - use_perception_ball=False(기본): ball_pos_b_x/y 파라미터를 트리거 시 freeze.
+#   - use_perception_ball=True: /perception/detections_3d 에서 최신 공을 TF 로
+#       base_link 로 변환해 두었다가, 트리거 순간의 값을 freeze.
+#
+#  CSV: ~/policy_logs/walkkick_v1_log_YYYYMMDD_HHMMSS.csv
+# ============================================================================
+
+import math
+import os
+import csv
+import time
+from collections import deque
+from datetime import datetime
+from pathlib import Path
+from typing import Optional
+
+import numpy as np
+import rclpy
+from rcl_interfaces.msg import SetParametersResult
+from rclpy.node import Node
+
+from sensor_msgs.msg import JointState, Imu
+from geometry_msgs.msg import Vector3Stamped, Twist
+
+# [2026-08 CPU 최적화] projected gravity 파생 계산 헬퍼.
+#   /imu/projected_gravity(200Hz) 구독을 없애고 /imu/data 의 orientation
+#   에서 직접 만든다. 원본(imu_parser_node.MadgwickAHRS.gravity_vector_body)
+#   과 수식·연산순서가 동일해 값이 비트 단위로 같다.
+#   ※ humanoid_policy_runner 는 package.xml 에서 이미 humanoid_serial_bridge
+#     를 의존하고 있다(robot_init_behavior import 선례). 추가 의존 불필요.
+from humanoid_serial_bridge.imu_math import projected_gravity_from_quat
+from std_msgs.msg import String, Bool, Float32  # String: /robot_state, Bool: /kick_trigger, /kick_done
+
+try:
+    import onnxruntime as ort
+except ImportError:
+    raise ImportError(
+        "onnxruntime이 설치되어 있지 않습니다.\n"
+        "  CPU:  pip install onnxruntime\n"
+        "  GPU:  pip install onnxruntime-gpu"
+    )
+
+try:
+    from ament_index_python.packages import get_package_share_directory
+except Exception:
+    get_package_share_directory = None
+
+# ── 퍼셉션(공 검출) 경로용 선택적 의존성 ──
+# 이 import 들이 없거나(빌드 환경 미설치) 토픽이 안 들어와도 노드는
+# 파라미터 공위치로 정상 동작한다(use_perception_ball=False 기본).
+_PERCEPTION_AVAILABLE = True
+try:
+    from vision_msgs.msg import Detection3DArray
+    import tf2_ros
+    from geometry_msgs.msg import PointStamped
+    import tf2_geometry_msgs  # noqa: F401  (PointStamped 의 do_transform 등록용)
+except Exception:
+    _PERCEPTION_AVAILABLE = False
+
+
+# ============================================================================
+#  정책 출력/입력 관절 순서 — Isaac MX_LEG_JOINTS 와 동일(preserve_order=True).
+#  이 순서가 학습과 어긋나면 좌/우가 뒤바뀌어 즉시 발산하므로 절대 바꾸지 말 것.
+# ============================================================================
+POLICY_JOINTS = [
+    "r_pelvis_pitch_joint",
+    "r_pelvis_roll_joint",
+    "r_pelvis_yaw_joint",
+    "r_knee_pitch_joint",
+    "r_ankle_pitch_joint",
+    "r_ankle_roll_joint",
+    "l_pelvis_pitch_joint",
+    "l_pelvis_roll_joint",
+    "l_pelvis_yaw_joint",
+    "l_knee_pitch_joint",
+    "l_ankle_pitch_joint",
+    "l_ankle_roll_joint",
+]
+
+# /joint_states 가 다리 12관절을 담은 메시지(=body)인지 빠르게 판별하는 집합.
+# (/joint_states 에는 목 2관절도 함께 발행되므로, 다리가 든 메시지일 때만 틱)
+POLICY_JOINTS_SET = set(POLICY_JOINTS)
+
+
+# ============================================================================
+#  obs 차원 상수 — walk_kick_v1_env.py PolicyCfg 기준 (하드 검증용)
+# ----------------------------------------------------------------------------
+#  per-frame 슬라이스 경계 (53 차원):
+#    [ 0: 3]  base_ang_vel       (x0.2)
+#    [ 3: 6]  projected_gravity
+#    [ 6: 9]  velocity_commands  [vx, vy, wz]
+#    [ 9:12]  gait_phase         (cos, sin, freq/frequency_scale)   ← v1 추가
+#    [12:24]  joint_pos_rel      (12)
+#    [24:36]  joint_vel_rel      (x0.05, 12)
+#    [36:48]  last_action        (12)
+#    [48:50]  ball_pos_b         (x, y) — frozen
+#    [50:52]  target_dir_b       (cos, sin)
+#    [52:53]  kick_strength      (=1.0)
+#
+#  ★ 옛 walk_kick(50) 과의 차이는 [9:12] gait_phase 하나뿐이다.
+#    이 항이 velocity_commands 와 joint_pos_rel 사이에 들어간다.
+# ============================================================================
+HISTORY_LEN = 5
+FRAME_DIM = 53
+OBS_DIM = FRAME_DIM * HISTORY_LEN   # 265
+
+# per-frame 내부 슬라이스 경계
+SL_ANG_VEL   = (0, 3)
+SL_GRAVITY   = (3, 6)
+SL_VEL_CMD   = (6, 9)
+SL_GAIT      = (9, 12)     # ← v1 추가. 이 뒤로 전부 +3 밀린다.
+SL_JOINT_POS = (12, 24)
+SL_JOINT_VEL = (24, 36)
+SL_LAST_ACT  = (36, 48)
+SL_BALL      = (48, 50)
+SL_TARGET    = (50, 52)
+SL_KSTR      = (52, 53)
+
+# ── gait 기본값 — walk_kick_v1_env.py CommandsCfg.gait 와 반드시 일치 ──
+GAIT_FREQUENCY = 2.0        # 명령 주파수 [Hz]
+GAIT_STOP_RATE = 2.0        # 정지 시 위상 수렴 속도
+GAIT_FREQUENCY_SCALE = 2.0  # 관측 정규화 (freq / scale). 보행 중 항상 1.0
+GAIT_STANDING_THRESHOLD = 0.1  # 명령 노름이 이 아래면 정지 판정
+
+# ── 학습 분포 (walk_kick 환경의 spawn / command 범위) ──────────────────────
+# ★ 여기 한 곳만 고치면 파라미터 기본값·게이트·기동 경고가 함께 따라간다 ★
+#   러너 곳곳에 숫자를 흩어 두었더니 모델을 바꿀 때마다 일부만 갱신되어
+#   주석과 실제 게이트가 어긋나는 일이 반복됐다(2026-08-18 정정).
+#
+#   [2026-08-18 현재 값]
+#     공 거리 : 0.2 ~ 0.5 m      (이전 기재값 0.3~1.0 은 틀렸음)
+#     전진속도: 0.1 ~ 0.5 m/s    (이전 기재값 0.4~0.6 은 틀렸음)
+#     공 방위 : ±90°             (2026-08-19 재학습으로 60→90 확대)
+#     목표 방향: ±90°            (동일)
+#
+#   ⚠ CMD_VX_MIN(0.1) 이 GAIT_STANDING_THRESHOLD(0.1) 와 같다.
+#     cmd_vx 를 하한 가까이 주면 명령 노름이 임계에 걸려 gait freq=0 이
+#     되고 킥 중에 걷지 않는다. 실사용은 0.15 이상을 권한다.
+BALL_DIST_MIN = 0.20        # 공 거리 하한 [m]
+BALL_DIST_MAX = 0.50        # 공 거리 상한 [m]
+BALL_BEARING_MAX_DEG = 90.0  # 공 방위 허용 [deg] (2026-08-19: 60→90 재학습)
+CMD_VX_MIN = 0.10           # 전진 명령 하한 [m/s]
+CMD_VX_MAX = 0.50           # 전진 명령 상한 [m/s]
+# 기본값은 각 범위의 중앙으로 둔다.
+BALL_DIST_DEFAULT = round((BALL_DIST_MIN + BALL_DIST_MAX) / 2.0, 3)   # 0.35
+CMD_VX_DEFAULT = round((CMD_VX_MIN + CMD_VX_MAX) / 2.0, 3)            # 0.3
+
+
+def _expand_path(p: str) -> str:
+    return str(Path(os.path.expanduser(p)).resolve())
+
+
+def _load_default_joint_pos() -> dict[str, float]:
+    """학습 시 사용한 기본 자세(init_state.joint_pos)를 가져온다.
+
+    obs 의 joint_pos_rel = q_current - q_default 이므로, 이 값이 학습과
+    어긋나면 정자세조차 0 이 아닌 값으로 들어가 정책이 틀어진다.
+    보행 노드와 "동일한" 로더를 쓴다(보행이 정상 동작하므로 이 경로가
+    Isaac init_state 와 일치함이 검증된 상태).
+    """
+    # 1) robot_init_behavior 의 leg_init_q (실기 기준값) — 보행 노드와 동일 경로
+    try:
+        from humanoid_serial_bridge.behaviors.robot_init_behavior import RobotInitBehavior
+        rib = RobotInitBehavior(hw=None)
+        return {k: float(v) for k, v in rib.leg_init_q.items()}
+    except Exception:
+        pass
+
+    # 2) 최종 하드코딩 폴백.
+    #    ★ 여기로 떨어지면 거의 확실히 발산한다 ★
+    #    joint_pos_rel = q - default 이므로 default 가 틀리면 정자세에서도
+    #    0 이 아닌 상수 오프셋이 실리고, 정책은 로봇이 굽은 것으로 보고
+    #    격렬하게 반응한다. 그래서 조용히 넘어가지 않고 크게 경고한다.
+    #
+    #    ※ mx_bot.py 의 ACTIVE_ROBOT (현재 XM_robot04) init_joint_pos 와
+    #      반드시 일치해야 한다. 학습 로봇을 바꾸면 여기도 갱신할 것.
+    print("=" * 70)
+    print("[WALKKICK-V1] 경고: RobotInitBehavior 로더 실패 → 하드코딩 기본자세 사용")
+    print("             humanoid_serial_bridge 가 PYTHONPATH 에 있는지 확인하세요.")
+    print("             값이 학습과 다르면 시작 즉시 발산합니다.")
+    print("=" * 70)
+    return {
+        "r_pelvis_pitch_joint": 0.62,
+        "r_pelvis_roll_joint": 0.0,
+        "r_pelvis_yaw_joint": 0.0,
+        "r_knee_pitch_joint": 1.2,
+        "r_ankle_pitch_joint": 0.62,
+        "r_ankle_roll_joint": 0.0,
+
+        "l_pelvis_pitch_joint": -0.62,
+        "l_pelvis_roll_joint": 0.0,
+        "l_pelvis_yaw_joint": 0.0,
+        "l_knee_pitch_joint": -1.2,
+        "l_ankle_pitch_joint": -0.62,
+        "l_ankle_roll_joint": 0.0,
+    }
+
+
+class GaitPhaseIntegrator:
+    """보행 위상 적분기 — 학습의 PhaseOnlyGaitCommand._update_command() 이식.
+
+    walk_kick_v1_env.py 의 gait 설정(include_frequency=True)에 대응하는
+    3 차원 관측 변형이다. actor_onnx_walking_runner.py 의 v0_2 변형과 동일한 식.
+
+    ★ 반드시 "증분 적분" 이어야 한다 ★
+        phase = fmod(phase + dt * freq, 1.0)
+    절대 시각 기반(fmod(now * freq, 1.0))으로 구현하면 주파수를 바꾸는
+    순간 위상이 점프한다.
+
+    ★ 정지 시 위상을 0 으로 "즉시" 리셋하면 안 된다 ★
+    학습은 stop_rate 로 0 을 향해 최단 경로 선형 이동한다. 즉시 리셋하면
+    과도 구간이 학습 분포에 없는 값이 되어 정책이 흔들린다.
+
+    walk_kick_v1 의 base_velocity 는 lin_vel_x=(0.1, 0.5) 다. 하한 0.1 은
+    standing_threshold(0.1)와 같아 경계에 걸리므로, cmd_vx 를 하한 가까이
+    두면 freq=0 으로 떨어질 수 있다. 정지 수렴 로직은 reset_hold 구간과
+    이 저속 경계에서 실제로 작동한다.
+    그래도 학습 코드와 같은 식을 그대로 둔다 (분포 일치가 목적).
+    """
+
+    def __init__(self, frequency: float = GAIT_FREQUENCY,
+                 stop_rate: float = GAIT_STOP_RATE,
+                 eps: float = 1e-6):
+        self.frequency = float(frequency)
+        self.stop_rate = float(stop_rate)
+        self.eps = float(eps)
+
+        self.phase = 0.0
+        self.effective_frequency = 0.0
+        self.is_walking = False
+        self.is_stopping = False
+
+    def reset(self):
+        """위상을 0 에서 다시 시작.
+
+        학습의 reset_phase_on_resample=True 에 대응한다. 이 노드에서는
+        "킥 트리거 = episode reset" 이므로 _start_kick 에서 호출한다.
+        """
+        self.phase = 0.0
+        self.effective_frequency = 0.0
+        self.is_walking = False
+        self.is_stopping = False
+
+    def update(self, dt: float, freq_cmd: float):
+        """한 스텝 진행.
+
+        Args:
+            dt: 실제 틱 간격 [s]. 타이머 주기가 아니라 측정값을 쓸 것.
+                주기가 흔들리면 위상이 학습과 어긋난다.
+            freq_cmd: 이번 스텝의 주파수 명령 [Hz]. 0 이면 정지.
+        """
+        freq = max(0.0, float(freq_cmd))
+        self.effective_frequency = freq
+        self.is_walking = freq > self.eps
+
+        if self.is_walking:
+            self.phase = math.fmod(self.phase + dt * freq, 1.0)
+            if self.phase < 0.0:
+                self.phase += 1.0
+            self.is_stopping = False
+            return
+
+        # 정지: 0 을 향해 최단 경로로 선형 이동 (학습과 동일)
+        step = self.stop_rate * dt
+        if self.phase > 0.5:
+            d = min(1.0 - self.phase, step)
+            self.phase = math.fmod(self.phase + d, 1.0)
+            if self.phase < self.eps:
+                self.phase = 0.0
+        else:
+            d = min(self.phase, step)
+            self.phase = self.phase - d
+            if self.phase < self.eps:
+                self.phase = 0.0
+
+        self.is_stopping = self.phase > self.eps
+
+    def observation(self, frequency_scale: float = GAIT_FREQUENCY_SCALE
+                    ) -> np.ndarray:
+        """관측 3 차원 (cos, sin, freq/scale).
+
+        include_frequency=True 이므로 주파수가 관측에 포함된다. 게이팅은
+        없다 — 정지 상태는 freq=0 으로 구분되고, 과도 구간의 위상이
+        정책에게 그대로 보인다.
+        """
+        two_pi = 2.0 * math.pi
+        return np.array([
+            math.cos(two_pi * self.phase),
+            math.sin(two_pi * self.phase),
+            self.effective_frequency / max(frequency_scale, 1e-6),
+        ], dtype=np.float32)
+
+
+class FrameHistory:
+    """per-frame(50) 을 H(5) 만큼 보관하는 링버퍼.
+
+    get_frames() 는 (H, FRAME_DIM) 배열을 반환하며 index 0 = 가장 오래된
+    프레임, index H-1 = 가장 최신 프레임이다(oldest→newest). 이 순서는
+    보행 노드에서 검증된 Isaac history 레이아웃과 동일하다.
+    """
+
+    def __init__(self, H: int, dim: int):
+        self.H = H
+        self.dim = dim
+        self.deq = deque(maxlen=H)
+
+    def reset(self, frame: np.ndarray) -> np.ndarray:
+        # 트리거 직후: 같은 프레임으로 H 칸을 모두 채워 history 오염을 막는다.
+        self.deq.clear()
+        for _ in range(self.H):
+            self.deq.append(frame.copy())
+        return self.get_frames()
+
+    def push(self, frame: np.ndarray) -> np.ndarray:
+        self.deq.append(frame.copy())
+        while len(self.deq) < self.H:
+            self.deq.appendleft(frame.copy())
+        return self.get_frames()
+
+    def get_frames(self) -> np.ndarray:
+        return np.stack(list(self.deq), axis=0).astype(np.float32)
+
+
+def build_obs265_from_frames(frames: np.ndarray) -> np.ndarray:
+    """history(5) x frame(53) → obs(265). term-major(항별 묶음) flatten.
+
+    Isaac Lab 의 concatenate_terms=True + history_length=5 레이아웃:
+    "항(term) 하나마다 5프레임을 oldest→newest 로 묶어(reshape, C-order)
+     항 선언 순서대로 이어붙인다". 보행 노드 build_obs225 와 100% 동일한
+    방식이며, 여기에 v0_3 의 gait_phase 와 walk_kick 의 3개 항을 더한 것이다.
+    """
+    H, fdim = frames.shape
+    assert (H, fdim) == (HISTORY_LEN, FRAME_DIM), (H, fdim)
+
+    parts = [
+        frames[:, SL_ANG_VEL[0]:SL_ANG_VEL[1]].reshape(H * 3),     # base_ang_vel
+        frames[:, SL_GRAVITY[0]:SL_GRAVITY[1]].reshape(H * 3),     # projected_gravity
+        frames[:, SL_VEL_CMD[0]:SL_VEL_CMD[1]].reshape(H * 3),     # velocity_commands
+        frames[:, SL_GAIT[0]:SL_GAIT[1]].reshape(H * 3),           # gait_phase (v1 추가)
+        frames[:, SL_JOINT_POS[0]:SL_JOINT_POS[1]].reshape(H * 12),  # joint_pos_rel
+        frames[:, SL_JOINT_VEL[0]:SL_JOINT_VEL[1]].reshape(H * 12),  # joint_vel_rel
+        frames[:, SL_LAST_ACT[0]:SL_LAST_ACT[1]].reshape(H * 12),    # last_action
+        frames[:, SL_BALL[0]:SL_BALL[1]].reshape(H * 2),           # ball_pos_b
+        frames[:, SL_TARGET[0]:SL_TARGET[1]].reshape(H * 2),       # target_dir_b
+        frames[:, SL_KSTR[0]:SL_KSTR[1]].reshape(H * 1),           # kick_strength
+    ]
+    obs = np.concatenate(parts, axis=0).astype(np.float32)
+    assert obs.shape == (OBS_DIM,), obs.shape
+    return obs
+
+
+class ActorOnnxWalkKickV1Node(Node):
+    def __init__(self):
+        super().__init__("actor_onnx_walkkick_v1_node")
+
+        # ── 기본 모델 경로 ──
+        default_actor = "~/walkkick_v1_policy.onnx"
+        if get_package_share_directory is not None:
+            try:
+                default_actor = os.path.join(
+                    get_package_share_directory("humanoid_policy_runner"),
+                    "models",
+                    "walkkick_v1_policy.onnx",
+                )
+            except Exception:
+                pass
+
+        self.declare_parameter("actor_path", default_actor)
+        self.declare_parameter("policy_rate_hz", 50.0)
+
+        # ── velocity_commands (공까지 걸어가는 전진 명령) ──
+        # ★ 학습 분포: vx = 0.1 ~ 0.5, vy=0, wz=0 ★  (2026-08-18 정정)
+        #   이 값은 obs(velocity_commands)다. 실기가 명령의 70% 만
+        #   나간다고 해서 0.8 같은 값을 넣으면 관측 자체가 학습 범위
+        #   밖이 된다. 느린 건 감수하고 명령은 0.1~0.5 안에 둘 것.
+        #
+        #   ⚠ 하한 0.1 은 standing_threshold(0.1)와 같다.
+        #     cmd_vx 를 0.1 근처로 주면 명령 노름이 임계에 걸려 gait
+        #     freq=0 이 되고, 킥 중에 걷지 않는다. 0.15 이상 권장.
+        #   기본값은 범위 중앙인 0.30.
+        # 트리거 시 freeze 된다. use_cmd_vel_topic=True 면 /cmd_vel 로
+        # 트리거 전에 바꿀 수 있다.
+        self.declare_parameter("cmd_vx", CMD_VX_DEFAULT)
+        self.declare_parameter("cmd_vy", 0.00)
+        self.declare_parameter("cmd_wz", 0.00)
+
+        # ── gait 파라미터 — walk_kick_v1_env.py CommandsCfg.gait 와 일치 ──
+        # 학습값과 다르면 정책이 보는 위상이 실제 다리 상태와 어긋난다.
+        # 튜닝 대상이 아니라 "학습과 맞추는" 값이다.
+        self.declare_parameter("gait_frequency", GAIT_FREQUENCY)
+        self.declare_parameter("gait_stop_rate", GAIT_STOP_RATE)
+        self.declare_parameter("gait_frequency_scale", GAIT_FREQUENCY_SCALE)
+        self.declare_parameter("gait_standing_threshold", GAIT_STANDING_THRESHOLD)
+
+        # ── [텔레오퍼레이션] live_cmd_vel ──
+        # True 면 obs 의 velocity_commands 가 트리거 시점에 freeze 되지 않고
+        # /cmd_vel(self.cmd) 을 매 틱 실시간 추종한다. 키보드 텔레오퍼레이션으로
+        # 걸어다니게 할 때 사용. (이 모드에선 cmd_ramp 는 무시되고 키보드 값이
+        # 그대로 obs 로 들어간다. kick_duration_s<=0 과 함께 쓰면 무한 구동.)
+        self.declare_parameter("live_cmd_vel", False)
+
+        # ── ball_pos_b (base 기준 공위치, 트리거 시 freeze) ──
+        # ★ 학습 spawn: 극좌표 거리 0.2 ~ 0.5 m, 방위 ±60° ★ (2026-08-18 정정)
+        #   범위 밖의 값을 넣으면 첫 프레임부터 OOD 라 발산할 수 있다
+        #   (실제로 겪은 실패). 기본값은 범위 중앙인 0.35. z 는 obs 제외.
+        #
+        #   ※ 이 파라미터는 런타임 변경이 반영된다(파라미터 콜백 지원).
+        #     visual_servo_kick_node 가 트리거 직전에 비전 실측 공위치를
+        #     SetParameters 로 밀어넣는 경로(push_ball_pos_to_kicker)에서
+        #     이 기능이 필요하다.
+        self.declare_parameter("ball_pos_b_x", BALL_DIST_DEFAULT)
+        self.declare_parameter("ball_pos_b_y", 0.00)
+
+        # ── target_dir_b ──
+        # 목표 방향 offset(rad). walk_kick_env 는 항상 정면(0). 0 이면 트리거
+        # 직후 (1,0). 로봇이 회전하면 gyro 적분으로 갱신.
+        self.declare_parameter("kick_target_yaw_offset_rad", 0.0)
+        # target_dir_b 갱신 방식: True 면 gyro_z 적분으로 Δyaw 추정(학습 충실),
+        # False 면 트리거 값(cos/sin offset) 으로 고정(직진 킥 단순화).
+        self.declare_parameter("target_dir_track_yaw", True)
+
+        # ── kick_strength ──
+        # walk_kick_env 는 ones_obs(항상 1.0). 특별한 이유 없으면 1.0 고정.
+        self.declare_parameter("kick_strength", 1.0)
+
+        # ── 예전(no-kick / locomotion) 정책 테스트용 ──
+        # True 면 ball_pos_b=(0,0), target_dir_b=(0,0), kick_strength=0 을 강제한다.
+        # (예전 정책이 이 세 항을 0 으로 학습한 경우 사용. ball_pos_b_x/y,
+        #  kick_strength 파라미터는 무시됨.)
+        # ★ 단, obs '차원/레이아웃'은 그대로 250(walk_kick) 이므로, 예전 정책이
+        #   250 차원 같은 레이아웃일 때만 유효하다. 차원이 다르면 이 노드론 불가.
+        self.declare_parameter("zero_kick_terms", False)
+
+        # ── 퍼셉션 공 입력(선택) ──
+        self.declare_parameter("use_perception_ball", False)
+        self.declare_parameter("detections_topic", "/perception/detections_3d")
+        self.declare_parameter("base_frame", "base_link")
+        # ★ yolo_detector_3d_node 는 class_id 에 "이름 문자열" 을 넣는다 ★
+        #   (hyp.hypothesis.class_id = self._class_name(int(c)))
+        #   기본값을 "0" 으로 두면 절대 매칭되지 않아 조용히 파라미터
+        #   폴백으로 떨어진다. 반드시 "ball".
+        self.declare_parameter("ball_class_id", "ball")
+
+        # ── 공 위치 소스 ──────────────────────────────────────────
+        #   param       : ball_pos_b_x/y 파라미터 (벤치 테스트)
+        #   detections  : /perception/detections_3d → TF → base_link
+        #   map_point   : /ball/map_point (map 프레임, EMA 평활 + 지면투영)
+        #                 → TF → base_link. 검출 노이즈가 덜 튄다.
+        self.declare_parameter("ball_source", "param")
+        self.declare_parameter("ball_map_point_topic", "/ball/map_point")
+
+        # ── 목표 방향 소스 ────────────────────────────────────────
+        #   param   : kick_target_yaw_offset_rad + gyro 적분 Δyaw (기존)
+        #   goal_tf : map 프레임 상대 골대 중심을 매 틱 base_link 로 변환
+        #             gyro 드리프트가 없고 로컬라이제이션과 일관된다.
+        self.declare_parameter("target_source", "param")
+        self.declare_parameter("map_frame", "map")
+        # strategy_fsm_node / role_assigner_node 의 attack_goal_x 와 맞출 것.
+        # S-Field(9x6) 기준 상대 골대는 +X 쪽 4.5 m.
+        self.declare_parameter("attack_goal_x", 4.5)
+        self.declare_parameter("attack_goal_y", 0.0)
+
+        # ── 트리거 시 학습 분포 게이트 ─────────────────────────────
+        # 학습 분포 (2026-08-18 정정):
+        #   공   : 거리 0.2~0.5 m, 방위 ±90°
+        #   목표 : 로봇 정면 기준 ±90°
+        # 이 밖의 값을 넣으면 첫 프레임부터 OOD 라 발산한다.
+        # True 면 트리거를 거부하고, False 면 경고만 남긴다.
+        self.declare_parameter("strict_ood_gate", True)
+        self.declare_parameter("gate_ball_dist_min", BALL_DIST_MIN)
+        self.declare_parameter("gate_ball_dist_max", BALL_DIST_MAX)
+        self.declare_parameter("gate_ball_bearing_max_deg", BALL_BEARING_MAX_DEG)
+        self.declare_parameter("gate_target_angle_max_deg",
+                               BALL_BEARING_MAX_DEG)
+        self.declare_parameter("ball_detection_timeout_s", 0.5)  # 이보다 오래된 검출은 무시
+
+        # ── 트리거/지속 ──
+        self.declare_parameter("kick_duration_s", 3.0)   # 접근+킥 포함 구동 시간
+        self.declare_parameter("auto_start_kick", False)  # True 면 startup_hold 후 자동 트리거
+
+        # ── action 처리(보행과 동일) ──
+        self.declare_parameter("action_scale", 0.25)
+        self.declare_parameter("clip_actions", 10.0)
+        self.declare_parameter("base_ang_vel_scale", 0.2)
+        self.declare_parameter("joint_vel_scale", 0.05)
+
+        self.declare_parameter("enable_action_filter", False)
+        self.declare_parameter("tau_action_filter", 0.03)
+
+        self.declare_parameter("max_target_delta_from_current_rad", 10.35)
+        self.declare_parameter("max_target_abs_from_default_rad", 10.80)
+
+        self.declare_parameter("startup_hold_seconds", 1.0)
+        self.declare_parameter("use_default_pose_on_startup_hold", True)
+        self.declare_parameter("resume_hold_seconds", 1.0)
+
+        # ── idle 구간 발행 정책 (2026-08-18 추가) ──
+        # 이 노드는 킥이 비활성일 때 default 자세를 /joint_goals 로 계속
+        # 발행해 왔다. 단독 실행(킥만 테스트)에서는 그게 맞지만, 보행
+        # 러너(actor_onnx_walking_runner)와 함께 띄우는 핸드오프 구성에서는
+        # 두 노드가 같은 토픽을 매 틱 덮어써서 관절이 진동한다.
+        #
+        #   True  : 기존 동작(단독 킥 테스트용). idle 에 default 자세 유지.
+        #   False : idle 에 아무것도 발행하지 않음(핸드오프용). 보행 러너가
+        #           /joint_goals 의 주인이고, 트리거 순간에만 소유권을 받는다.
+        self.declare_parameter("idle_publish_default_pose", True)
+
+        # ── /cmd_vel 구독 여부 (2026-08-18 추가) ──
+        # 이 노드는 /cmd_vel 을 구독해 self.cmd 를 실시간 갱신하고,
+        # 트리거 순간의 값을 cmd_init 으로 freeze 한다. 단독 실행에서는
+        # /cmd_vel 발행자가 없어 cmd_vx 파라미터값이 그대로 유지되지만,
+        # control_joypad.launch.py 처럼 조이패드가 /cmd_vel 을 20Hz 로
+        # 계속 발행하는 구성에서는 얘기가 다르다:
+        #   스틱을 놓은 상태(= /cmd_vel 이 0)에서 A 를 누르면
+        #   cmd_init = [0,0,0] 으로 얼어붙는다. velocity_commands 는
+        #   obs 의 핵심 항목이라 0 이 들어가면 공까지 걸어가지 못한다.
+        #   cmd_vx 파라미터를 아무리 설정해도 매 틱 덮어써져 무의미하다.
+        #
+        #   True  : /cmd_vel 구독(기존 동작). 트리거 전에 명령을 동적으로
+        #           조정하고 싶은 단독 테스트용.
+        #   False : 구독하지 않음. cmd_vx/cmd_vy/cmd_wz 파라미터값 고정.
+        #           보행 러너와 함께 띄우는 구성에서는 반드시 False.
+        self.declare_parameter("use_cmd_vel_topic", True)
+
+        self.declare_parameter("default_joint_pos", [0.0] * 12)
+        self.declare_parameter("debug_print_every", 50)
+        self.declare_parameter("onnx_provider", "auto")
+        self.declare_parameter("pelvis_pitch_offset", 0.0)
+
+        # ── [진단용] projected_gravity 전방 기울기 오프셋 ──
+        # 정책 obs 의 projected_gravity 를 body y축으로 회전시켜, 실제로는
+        # 안 숙였어도 "앞으로 grav_pitch_offset_rad 만큼 숙인 것처럼" 보이게 한다.
+        #   - 양수(+) = 앞으로 숙임(forward lean) → grav_x 가 +로 증가.
+        #   - 예: 7도 ≈ 0.122 rad.
+        # ★ 주의: 이는 학습 분포 밖 상태를 런타임에서 가리는 "마스킹 패치"다.
+        #   영구 수정용이 아니라, "앞숙임을 유지하면 안 밀어도 걷는가?"를
+        #   확인하는 가설검증 프로브로만 쓴다. 근본 해결은 학습 측에서
+        #   base pitch reset 범위를 넓히는 것. 기본값 0.0(=비활성).
+        self.declare_parameter("grav_pitch_offset_rad", 0.0)
+
+        # ── [옵션3] velocity_commands ramp ──
+        # 트리거(추론 시작) 직후 cmd 를 0 에서 목표값(cmd_init)까지 선형으로
+        # 끌어올리는 시간(초). 0 이면 비활성(=즉시 목표값). 시작 시 풀 명령이
+        # 한 번에 들어가 앞으로 튀어나가는(lunge) 걸 완화한다.
+        # ★ velocity_commands 는 setpoint 라 0~목표 사이 값들도 학습 분포 안 →
+        #   4개 옵션 중 가장 분포 충실(권장).
+        self.declare_parameter("cmd_ramp_seconds", 0.0)
+
+        # ── [옵션4] action warmup(점진 활성화) ──
+        # 추론 시작 후 action_warmup_seconds 동안 action 출력을
+        # action_warmup_scale → 1.0 으로 선형 증가시켜 startup 을 부드럽게 한다.
+        # 0 이면 비활성. ★ 주의: action 을 줄이면 실제 관절 움직임이 줄지만
+        #   obs 의 last_action 은 raw 값이라 그동안 둘이 어긋난다(약한 OOD).
+        #   짧게(0.3~0.5s)만 쓰는 것을 권장.
+        self.declare_parameter("action_warmup_seconds", 0.0)
+        self.declare_parameter("action_warmup_scale", 0.3)
+
+        # ── CSV 로깅 ──
+        self.declare_parameter("enable_csv_log", True)
+        self.declare_parameter("csv_output_dir", "~/policy_logs")
+        self.declare_parameter("csv_flush_every", 25)
+
+        # ── 파라미터 읽기 ──
+        self.actor_path = _expand_path(str(self.get_parameter("actor_path").value))
+        self.policy_rate_hz = float(self.get_parameter("policy_rate_hz").value)
+        self.policy_dt = 1.0 / max(1e-6, self.policy_rate_hz)
+
+        # velocity_commands 초기값(트리거 시 freeze 될 "최신" 명령)
+        self.cmd = np.array([
+            float(self.get_parameter("cmd_vx").value),
+            float(self.get_parameter("cmd_vy").value),
+            float(self.get_parameter("cmd_wz").value),
+        ], dtype=np.float32)
+
+        self.ball_pos_b_param = np.array([
+            float(self.get_parameter("ball_pos_b_x").value),
+            float(self.get_parameter("ball_pos_b_y").value),
+        ], dtype=np.float32)
+        # ★ 런타임 파라미터 반영 (2026-08-18 추가) ★
+        #   visual_servo_kick_node 의 push_ball_pos_to_kicker 는 트리거 직전에
+        #   비전 실측 공위치를 SetParameters 로 이 노드에 밀어넣는다. 그런데
+        #   기존 코드는 ball_pos_b_x/y 를 __init__ 에서 한 번만 읽어서,
+        #   SetParameters 는 성공하는데 노드는 새 값을 영영 보지 못했다
+        #   (= push 가 조용히 무시됨). 콜백을 달아 실제로 반영되게 한다.
+        #
+        #   ball_pos_b 는 학습 환경에서도 episode 당 상수(frozen)라, 트리거
+        #   시점의 값이 곧 "목표 명세"다. 따라서 트리거 직전에 최신 실측값을
+        #   넣어주는 것이 킥 정확도를 좌우한다.
+        #   (콜백 등록은 관련 상태가 모두 초기화된 __init__ 끝에서 한다)
+
+        self.kick_target_yaw_offset = float(self.get_parameter("kick_target_yaw_offset_rad").value)
+        self.target_dir_track_yaw = bool(self.get_parameter("target_dir_track_yaw").value)
+        # 예전 정책 테스트: ball/target/strength 전부 0 강제 토글.
+        self.zero_kick_terms = bool(self.get_parameter("zero_kick_terms").value)
+        # 텔레오퍼레이션: velocity_commands 실시간 추종 모드.
+        self.live_cmd_vel = bool(self.get_parameter("live_cmd_vel").value)
+        self.kick_strength_cmd = float(np.clip(
+            float(self.get_parameter("kick_strength").value), 0.0, 1.0))
+
+        self.use_perception_ball = bool(self.get_parameter("use_perception_ball").value)
+        self.detections_topic = str(self.get_parameter("detections_topic").value)
+        self.base_frame = str(self.get_parameter("base_frame").value)
+        self.ball_class_id = str(self.get_parameter("ball_class_id").value)
+        self.ball_detection_timeout_s = float(self.get_parameter("ball_detection_timeout_s").value)
+
+        self.ball_source = str(self.get_parameter("ball_source").value).lower()
+        self.ball_map_point_topic = str(
+            self.get_parameter("ball_map_point_topic").value)
+        self.target_source = str(self.get_parameter("target_source").value).lower()
+        self.map_frame = str(self.get_parameter("map_frame").value)
+        self.attack_goal_x = float(self.get_parameter("attack_goal_x").value)
+        self.attack_goal_y = float(self.get_parameter("attack_goal_y").value)
+
+        self.strict_ood_gate = bool(self.get_parameter("strict_ood_gate").value)
+        self.gate_ball_dist_min = float(self.get_parameter("gate_ball_dist_min").value)
+        self.gate_ball_dist_max = float(self.get_parameter("gate_ball_dist_max").value)
+        self.gate_ball_bearing_max = math.radians(
+            float(self.get_parameter("gate_ball_bearing_max_deg").value))
+        self.gate_target_angle_max = math.radians(
+            float(self.get_parameter("gate_target_angle_max_deg").value))
+
+        # 하위호환: use_perception_ball=True 면 ball_source 를 detections 로 승격
+        if self.use_perception_ball and self.ball_source == "param":
+            self.ball_source = "detections"
+
+        # TF 가 필요한 모드인지
+        self._needs_tf = (
+            self.ball_source in ("detections", "map_point")
+            or self.target_source == "goal_tf"
+        )
+
+        self.kick_duration_s = float(self.get_parameter("kick_duration_s").value)
+        self.auto_start_kick = bool(self.get_parameter("auto_start_kick").value)
+
+        self.action_scale = float(self.get_parameter("action_scale").value)
+        self.clip_actions = float(self.get_parameter("clip_actions").value)
+        self.base_ang_vel_scale = float(self.get_parameter("base_ang_vel_scale").value)
+        self.joint_vel_scale = float(self.get_parameter("joint_vel_scale").value)
+
+        self.enable_action_filter = bool(self.get_parameter("enable_action_filter").value)
+        self.tau_action_filter = float(self.get_parameter("tau_action_filter").value)
+        self.alpha = float(np.exp(-self.policy_dt / max(1e-6, self.tau_action_filter)))
+
+        self.max_target_delta_from_current = float(self.get_parameter("max_target_delta_from_current_rad").value)
+        self.max_target_abs_from_default = float(self.get_parameter("max_target_abs_from_default_rad").value)
+
+        self.startup_hold_seconds = float(self.get_parameter("startup_hold_seconds").value)
+        self.use_default_pose_on_startup_hold = bool(self.get_parameter("use_default_pose_on_startup_hold").value)
+        self.resume_hold_seconds = float(self.get_parameter("resume_hold_seconds").value)
+        self.idle_publish_default_pose = bool(
+            self.get_parameter("idle_publish_default_pose").value)
+        self.use_cmd_vel_topic = bool(
+            self.get_parameter("use_cmd_vel_topic").value)
+
+        # ── gait 위상 적분기 ──
+        self.gait_frequency = float(self.get_parameter("gait_frequency").value)
+        self.gait_stop_rate = float(self.get_parameter("gait_stop_rate").value)
+        self.gait_frequency_scale = float(
+            self.get_parameter("gait_frequency_scale").value)
+        self.gait_standing_threshold = float(
+            self.get_parameter("gait_standing_threshold").value)
+        self.gait = GaitPhaseIntegrator(
+            frequency=self.gait_frequency,
+            stop_rate=self.gait_stop_rate,
+        )
+        # 위상 적분용 별도 시계. _integrate_yaw 의 _last_tick_time 과 공유하면
+        # 한쪽이 dt 를 소비해 다른 쪽이 0 을 받는다.
+        self._last_gait_time = None
+
+        self.debug_print_every = int(self.get_parameter("debug_print_every").value)
+        self.pelvis_pitch_offset = float(self.get_parameter("pelvis_pitch_offset").value)
+        # [진단용] 전방 기울기 오프셋(rad). 0 이면 회전 비활성(원본 grav 그대로).
+        self.grav_pitch_offset_rad = float(self.get_parameter("grav_pitch_offset_rad").value)
+        # 회전행렬 성분 미리 계산(틱마다 재계산 방지). theta>0 → 앞으로 숙임.
+        self._grav_off_c = float(np.cos(self.grav_pitch_offset_rad))
+        self._grav_off_s = float(np.sin(self.grav_pitch_offset_rad))
+
+        # [옵션3] cmd ramp / [옵션4] action warmup
+        self.cmd_ramp_seconds = float(self.get_parameter("cmd_ramp_seconds").value)
+        self.action_warmup_seconds = float(self.get_parameter("action_warmup_seconds").value)
+        self.action_warmup_scale = float(np.clip(
+            float(self.get_parameter("action_warmup_scale").value), 0.0, 1.0))
+
+        # ── ONNX 모델 로드 ──
+        if not os.path.isfile(self.actor_path):
+            raise RuntimeError(f"actor_path not found: {self.actor_path}")
+
+        provider_param = str(self.get_parameter("onnx_provider").value).lower()
+        providers = self._select_providers(provider_param)
+
+        self.session = ort.InferenceSession(self.actor_path, providers=providers)
+        self.input_name = self.session.get_inputs()[0].name
+        self.output_name = self.session.get_outputs()[0].name
+
+        actual_provider = self.session.get_providers()[0]
+        self.get_logger().info(f"ONNX loaded: {self.actor_path}")
+        self.get_logger().info(f"ONNX provider: {actual_provider}")
+        self.get_logger().info(f"  input:  {self.input_name} {self.session.get_inputs()[0].shape}")
+        self.get_logger().info(f"  output: {self.output_name} {self.session.get_outputs()[0].shape}")
+
+        # ── 모델 입력 차원 검증 ──
+        # walk_kick 정책은 반드시 250. 다르면 학습 환경/레이아웃 불일치이므로
+        # 조용히 발산시키지 말고 명확히 경고한다.
+        try:
+            model_obs_dim = self.session.get_inputs()[0].shape[-1]
+            model_obs_dim = int(model_obs_dim) if isinstance(model_obs_dim, int) else None
+        except Exception:
+            model_obs_dim = None
+
+        if model_obs_dim is not None and model_obs_dim != OBS_DIM:
+            self.get_logger().error(
+                f"[WALKKICK-V1] ONNX 입력 차원={model_obs_dim} != 기대값 {OBS_DIM} "
+                f"(frame {FRAME_DIM} x history {HISTORY_LEN}). "
+                f"이 노드는 walk_kick_env_cfg.py(velocity_commands 포함, ball 2D, "
+                f"kick_strength=ones) 전용입니다. 모델이 다른 env 로 학습됐는지 확인하세요."
+            )
+        else:
+            self.get_logger().info(f"[WALKKICK-V1] OBS_DIM = {OBS_DIM} (frame {FRAME_DIM} x {HISTORY_LEN}) — 모델과 일치.")
+
+        # ── 기본 자세 ──
+        isaac_default = _load_default_joint_pos()
+        param_default = np.array(self.get_parameter("default_joint_pos").value, dtype=np.float32).reshape(-1)
+
+        if len(isaac_default) > 0:
+            vals = [float(isaac_default.get(jn, 0.0)) for jn in POLICY_JOINTS]
+            self.default_q12 = np.array(vals, dtype=np.float32)
+            self.get_logger().info("Loaded default_joint_pos from Isaac ROBOT_CFG.init_state.")
+        elif param_default.size == 12:
+            self.default_q12 = param_default.astype(np.float32)
+            self.get_logger().warn("Using default_joint_pos from ROS parameter.")
+        else:
+            self.default_q12 = np.zeros((12,), dtype=np.float32)
+            self.get_logger().warn("default_joint_pos fallback to zeros.")
+
+        self.default_qd12 = np.zeros((12,), dtype=np.float32)
+
+        # ── 센서/상태 변수 ──
+        self.last_joint_state: Optional[JointState] = None
+        self.last_imu: Optional[Imu] = None
+        self.last_gravity: Optional[Vector3Stamped] = None
+
+        self.q12 = np.zeros((12,), dtype=np.float32)
+        self.qd12 = np.zeros((12,), dtype=np.float32)
+
+        self.last_action12 = np.zeros((12,), dtype=np.float32)
+        self.filt_action12 = np.zeros((12,), dtype=np.float32)
+
+        # hold 중 관절 목표 덮어쓰기용. None 이면 정책 목표를 그대로 낸다.
+        # (hold 여부와 무관하게 추론은 항상 돌아야 last_action 이 학습과
+        #  같아진다 — 근거는 control_tick 의 in_hold 분기 주석 참조)
+        self._hold_pose_override = None
+
+        # ── 킥 상태(트리거 시 freeze 되는 값들 = 학습 episode reset 대응) ──
+        self.cmd_init = self.cmd.copy()                  # freeze 된 velocity_commands(=ramp 목표)
+        # [옵션3] ramp 진행 중 실제 obs 로 들어가는 현재 cmd. 기본은 목표값.
+        self.cmd_now = self.cmd_init.copy()
+        # [옵션3/4] 추론(hold 종료 후 첫 정책출력) 시작 시각. ramp/warmup 의 기준.
+        # _start_kick 마다 None 으로 리셋 → 트리거마다 ramp/warmup 다시 시작.
+        self._infer_start_time = None
+        self.ball_pos_b_init = self.ball_pos_b_param.copy()  # freeze 된 공위치 (x,y)
+        self.kick_strength_init = self.kick_strength_cmd
+        self.delta_yaw = 0.0          # 트리거 이후 누적 yaw 변화 (gyro 적분)
+        self.target_dir_b = self._compute_target_dir_b()  # 현재 target_dir_b
+
+        self.kick_active = False
+        self.kick_start_time = None
+        self._last_tick_time = None   # gyro 적분용 dt 계산
+
+        # 퍼셉션으로 받아 둔 "최신" base 기준 공위치 (x,y) + 수신 시각
+        self.latest_ball_b: Optional[np.ndarray] = None
+        self.latest_ball_stamp: float = -1.0
+
+        self.history = FrameHistory(H=HISTORY_LEN, dim=FRAME_DIM)
+        self.history_initialized = False
+
+        self.start_wall_time = time.time()
+        self.tick_count = 0
+
+        # ── CSV 로거 ──
+        self.enable_csv_log = bool(self.get_parameter("enable_csv_log").value)
+        self.csv_flush_every = int(self.get_parameter("csv_flush_every").value)
+        self._csv_file = None
+        self._csv_writer = None
+        self._csv_row_count = 0
+        self._csv_closed = False
+        if self.enable_csv_log:
+            self._init_csv_logger()
+
+        # ── 퍼셉션 / TF (ball_source, target_source 에 따라 활성) ──
+        self.tf_buffer = None
+        self.tf_listener = None
+        self.latest_ball_map = None      # map_point 모드용 (map 프레임 xy)
+        self.latest_ball_map_stamp = 0.0
+
+        if self._needs_tf:
+            if not _PERCEPTION_AVAILABLE:
+                self.get_logger().error(
+                    "[WALKKICK-V1] ball_source/target_source 가 TF 를 요구하는데 "
+                    "vision_msgs/tf2 import 실패. 파라미터 모드로 폴백합니다. "
+                    "(rosdep: vision_msgs, tf2_ros, tf2_geometry_msgs)"
+                )
+                self.ball_source = "param"
+                self.target_source = "param"
+                self._needs_tf = False
+            else:
+                self.tf_buffer = tf2_ros.Buffer()
+                self.tf_listener = tf2_ros.TransformListener(self.tf_buffer, self)
+
+        if self.ball_source == "detections":
+            self.create_subscription(
+                Detection3DArray, self.detections_topic, self.cb_detections, 10)
+            self.get_logger().info(
+                f"[WALKKICK-V1] ball_source=detections — {self.detections_topic} "
+                f"(class_id='{self.ball_class_id}') → {self.base_frame}"
+            )
+        elif self.ball_source == "map_point":
+            self.create_subscription(
+                PointStamped, self.ball_map_point_topic, self.cb_ball_map_point, 10)
+            self.get_logger().info(
+                f"[WALKKICK-V1] ball_source=map_point — {self.ball_map_point_topic} "
+                f"({self.map_frame}) → {self.base_frame}"
+            )
+        else:
+            self.get_logger().info(
+                "[WALKKICK-V1] ball_source=param — ball_pos_b_x/y 파라미터 사용")
+
+        if self.target_source == "goal_tf":
+            self.get_logger().info(
+                f"[WALKKICK-V1] target_source=goal_tf — 상대 골대 "
+                f"({self.attack_goal_x:+.2f}, {self.attack_goal_y:+.2f}) @ "
+                f"{self.map_frame} → 매 틱 {self.base_frame} 재투영"
+            )
+        else:
+            self.get_logger().info(
+                "[WALKKICK-V1] target_source=param — 트리거 시 정면 + gyro Δyaw 추적")
+
+        # ── [2026-08 CPU 최적화] projected gravity 취득 방식 ──────────────
+        #   derive    : /imu/data.orientation 에서 파생 계산 (구독 없음, 기본)
+        #   subscribe : 기존대로 /imu/projected_gravity 구독 (롤백 경로)
+        #   verify    : 둘 다 받아 비교 로그 (실기 대조용, CPU 절감 없음)
+        #
+        #   오프라인 검증에서 랜덤 쿼터니언 20만 개에 대해 파생값이 원본과
+        #   비트 단위로 일치함을 확인했다(최대 오차 0.0). 그래도 실기에서
+        #   한 번 대조하고 넘어가고 싶으면 verify 로 띄울 것:
+        #     ros2 run ... --ros-args -p gravity_source:=verify
+        self.declare_parameter("gravity_source", "derive")
+        self.gravity_source = str(
+            self.get_parameter("gravity_source").value).lower()
+        if self.gravity_source not in ("derive", "subscribe", "verify"):
+            self.get_logger().warn(
+                f"gravity_source='{self.gravity_source}' 는 알 수 없는 값 — "
+                f"'derive' 로 강제합니다.")
+            self.gravity_source = "derive"
+        # verify 모드용: 파생값과 구독값의 최대 절대차 누적
+        self._grav_verify_max = 0.0
+        self._grav_verify_n = 0
+        self._grav_verify_last_log = 0.0
+        self.get_logger().info(f"gravity_source = {self.gravity_source}")
+
+        # ── ROS 구독/발행 ──
+        self.create_subscription(JointState, "/joint_states", self.cb_joint, 20)
+        self.create_subscription(Imu, "/imu/data", self.cb_imu, 20)
+
+        # ── [2026-08 CPU 최적화] projected gravity 구독 제거 ────────────────
+        #   /imu/projected_gravity 는 /imu/data.orientation 만의 순수 함수라
+        #   정보량이 0 인 중복 토픽이다(imu_math.projected_gravity_from_quat).
+        #   두 토픽을 다 구독하면 executor 가 초당 400번 깨어나는데, rclpy 는
+        #   깨어날 때마다 wait set 을 Python 에서 재구축하므로 그게 그대로 CPU 다.
+        #   파생 계산으로 바꾸면 깨우기가 200 으로 절반이 된다.
+        #
+        #   ★ /imu/data 는 200Hz 그대로 유지한다 ★
+        #     이 노드의 관측 신선도는 전혀 바뀌지 않는다. 학습 시 설정한
+        #     action delay 와의 정합성이 깨지지 않으므로 sim-to-real 리스크 없음.
+        #     (데시메이션은 fall_manager/walk_odometry 같은 50Hz 소비자에게만 적용)
+        #
+        #   gravity_source 로 동작을 고를 수 있다:
+        #     "derive"    (기본) 파생 계산. 구독 안 함.
+        #     "subscribe" 기존 동작. 문제 발생 시 즉시 되돌리는 경로.
+        #     "verify"    둘 다 받아 차이를 주기적으로 로그. 실기 대조용.
+        #                 (이 모드는 깨우기가 줄지 않는다. 검증 전용)
+        if self.gravity_source in ("subscribe", "verify"):
+            self.create_subscription(
+                Vector3Stamped, "/imu/projected_gravity", self.cb_gravity, 20)
+        # /cmd_vel 은 use_cmd_vel_topic=True 일 때만 구독한다.
+        # False 면 cmd_vx/cmd_vy/cmd_wz 파라미터값이 끝까지 유지된다.
+        if self.use_cmd_vel_topic:
+            self.create_subscription(Twist, "/cmd_vel", self.cb_cmd_vel, 10)
+        self.create_subscription(Bool, "/kick_trigger", self.cb_kick_trigger, 10)
+        self.create_subscription(String, "/robot_state", self.cb_robot_state, 10)
+
+        self.robot_state = "NORMAL"   # fall_manager 미가동 시 기본 NORMAL
+        self.resume_time = None
+
+        self.goal_pub = self.create_publisher(JointState, "/joint_goals", 10)
+        self.kick_done_pub = self.create_publisher(Bool, "/kick_done", 10)
+        # Foxglove 에서 위상이 톱니파를 그리는지 눈으로 확인하기 위한 토픽.
+        # 위상이 계단처럼 튀면 dt 측정이나 타이머 주기에 문제가 있다는 뜻.
+        self.phase_pub = self.create_publisher(Float32, "/gait/phase", 10)
+
+        self.get_logger().info(f"policy_rate_hz = {self.policy_rate_hz} (event-driven)")
+        self.get_logger().info(
+            f"[WALKKICK-V1] cmd(freeze 예정) = {self.cmd.tolist()}, "
+            f"ball_pos_b(param) = {self.ball_pos_b_param.tolist()} [m], "
+            f"target offset = {self.kick_target_yaw_offset:.3f} rad, "
+            f"track_yaw = {self.target_dir_track_yaw}"
+        )
+        # 명령 소스를 명시한다. 조이패드 등이 /cmd_vel 을 계속 발행하는
+        # 구성에서 구독을 켜두면 파라미터값이 조용히 덮어써지기 때문에,
+        # 어느 쪽인지 로그로 남겨 원인 추적을 쉽게 한다.
+        if self.use_cmd_vel_topic:
+            self.get_logger().info(
+                "[WALKKICK-V1] cmd 소스 = /cmd_vel 구독 (트리거 시점 값을 freeze). "
+                "다른 노드가 /cmd_vel 을 발행하면 cmd_vx 파라미터는 무시된다.")
+        else:
+            self.get_logger().info(
+                "[WALKKICK-V1] cmd 소스 = 파라미터 고정 "
+                f"(use_cmd_vel_topic=False) → vx={self.cmd[0]:.2f} 유지")
+        # 학습 분포(vx 0.1~0.5) 밖이면 경고. 막지는 않는다.
+        _vx = float(self.cmd[0])
+        if not (CMD_VX_MIN - 1e-6) <= _vx <= (CMD_VX_MAX + 1e-6):
+            self.get_logger().warn(
+                f"[WALKKICK-V1] cmd_vx={_vx:.2f} 는 학습 분포 "
+                f"({CMD_VX_MIN}~{CMD_VX_MAX}) 밖입니다. velocity_commands 는 "
+                "obs 항목이라 분포 밖 값은 접근 보행 품질을 떨어뜨립니다.")
+        # ⚠ 하한이 standing_threshold 와 같아 저속에서 gait 가 멈춘다.
+        elif _vx < self.gait_standing_threshold + 0.05:
+            self.get_logger().warn(
+                f"[WALKKICK-V1] cmd_vx={_vx:.2f} 가 standing_threshold"
+                f"({self.gait_standing_threshold:.2f})에 너무 가깝습니다. "
+                "명령 노름이 임계 아래로 떨어지면 gait freq=0 이 되어 "
+                "킥 중에 걷지 않습니다. 0.15 이상을 권합니다.")
+        self.get_logger().info(
+            f"[WALKKICK-V1] kick_strength = {self.kick_strength_cmd:.2f} (walk_kick_env=ones_obs→1.0 권장), "
+            f"duration = {self.kick_duration_s}s, auto_start = {self.auto_start_kick}"
+        )
+        if self.live_cmd_vel:
+            self.get_logger().warn(
+                "[WALKKICK-V1] live_cmd_vel = True — velocity_commands 가 /cmd_vel 실시간 추종"
+                "(freeze/ramp 무시). 키보드 텔레오퍼레이션 모드."
+            )
+        if self.kick_duration_s <= 0.0:
+            self.get_logger().warn(
+                "[WALKKICK-V1] kick_duration_s <= 0 — 자동종료 없음(무한 구동). "
+                "정지하려면 /robot_state 를 NORMAL 외로 바꾸거나 노드를 종료하세요."
+            )
+        if self.zero_kick_terms:
+            self.get_logger().warn(
+                "[WALKKICK-V1] zero_kick_terms = True — ball_pos_b=(0,0), target_dir_b=(0,0), "
+                "kick_strength=0 강제(예전 정책 테스트 모드). ★ obs 차원은 여전히 250 이므로 "
+                "예전 정책이 250 차원 동일 레이아웃일 때만 유효함(모델 입력 차원 로그 확인)."
+            )
+        # [진단용] 전방 기울기 오프셋 상태 — 0 이 아니면 projected_gravity 를
+        # 런타임에 회전(마스킹)하고 있다는 뜻이므로 시작 시 명확히 경고/표시한다.
+        if self.grav_pitch_offset_rad != 0.0:
+            self.get_logger().warn(
+                f"[WALKKICK-V1][진단] grav_pitch_offset_rad = {self.grav_pitch_offset_rad:+.3f} rad "
+                f"(≈ {np.degrees(self.grav_pitch_offset_rad):+.1f}deg 앞숙임) — "
+                f"projected_gravity 를 런타임에서 회전 중. 영구 수정 아님(가설검증용)."
+            )
+        else:
+            self.get_logger().info("[WALKKICK-V1] grav_pitch_offset_rad = 0.0 (중력 오프셋 비활성, 원본 grav 사용)")
+        # [옵션3/4] startup 부드러움 옵션 상태 표시
+        self.get_logger().info(
+            f"[WALKKICK-V1] cmd_ramp = {self.cmd_ramp_seconds:.2f}s "
+            f"({'활성: 0→cmd 선형' if self.cmd_ramp_seconds > 0 else '비활성'}), "
+            f"action_warmup = {self.action_warmup_seconds:.2f}s x{self.action_warmup_scale:.2f}→1.0 "
+            f"({'활성' if self.action_warmup_seconds > 0 else '비활성'}), "
+            f"action_filter = {self.enable_action_filter}(tau={self.tau_action_filter:.3f}), "
+            f"action_scale = {self.action_scale:.3f}"
+        )
+        self.get_logger().info(
+            "[WALKKICK-V1] 트리거: ros2 topic pub --once /kick_trigger std_msgs/msg/Bool \"{data: true}\""
+        )
+
+        # 모든 상태가 초기화된 뒤에 콜백을 건다. 초기화 도중에 걸면
+        # 콜백이 참조하는 속성(strict_ood_gate, kick_active)이 아직 없어
+        # AttributeError 가 날 수 있다.
+        self.add_on_set_parameters_callback(self._on_set_parameters)
+
+    # ──────────────────────────────────────
+    # 런타임 파라미터 반영
+    # ──────────────────────────────────────
+    def _on_set_parameters(self, params):
+        """런타임 변경을 허용할 파라미터만 노드 상태에 반영한다.
+
+        ★ 이 콜백이 없으면 visual_servo_kick_node 의
+          push_ball_pos_to_kicker 가 조용히 무시된다 ★
+        기존 코드는 ball_pos_b_x/y 를 __init__ 에서 한 번만 읽었기 때문에,
+        SetParameters 서비스 호출은 성공하는데(파라미터 값은 바뀜) 노드는
+        새 값을 영영 보지 못했다. ball_pos_b 는 학습 환경에서도 episode 당
+        상수(frozen)이고 트리거 시점의 값이 곧 "목표 명세"이므로, 트리거
+        직전에 최신 비전 실측값을 넣는 이 경로가 킥 정확도를 좌우한다.
+
+        허용 목록에 없는 파라미터는 값만 바뀌고 동작에는 반영되지 않는다
+        (대부분 __init__ 에서 한 번 읽는 구조라 그렇다).
+        """
+        for p in params:
+            if p.name == "ball_pos_b_x":
+                self.ball_pos_b_param[0] = float(p.value)
+            elif p.name == "ball_pos_b_y":
+                self.ball_pos_b_param[1] = float(p.value)
+            elif p.name == "strict_ood_gate":
+                self.strict_ood_gate = bool(p.value)
+            elif p.name == "kick_target_yaw_offset_rad":
+                self.kick_target_yaw_offset = float(p.value)
+            else:
+                continue
+            if self.kick_active:
+                # 트리거 시 freeze 되므로 진행 중인 킥은 바뀌지 않는다.
+                # 조용히 무시하면 "왜 안 먹지" 로 이어지므로 알린다.
+                self.get_logger().warn(
+                    f"[WALKKICK-V1] 킥 구동 중 {p.name} 변경 — 이번 킥에는 "
+                    "반영되지 않는다(트리거 시 freeze). 다음 킥부터 적용된다.")
+        return SetParametersResult(successful=True)
+
+    # ──────────────────────────────────────
+    # target_dir_b 계산
+    # ──────────────────────────────────────
+    def _compute_target_dir_b(self) -> np.ndarray:
+        """현재 target_dir_b 를 계산한다.
+
+        학습 정의: 월드 고정 목표 방향(트리거 시 robot forward + offset)을
+        현재 body 프레임으로 재투영. body 프레임 각도 = offset - Δyaw.
+          target_dir_b = (cos(offset - Δyaw), sin(offset - Δyaw))
+        track_yaw=False 면 Δyaw=0 으로 두어 트리거 값에 고정한다.
+        zero_kick_terms=True(예전 정책 테스트) 면 (0,0) 을 반환한다.
+        """
+        if self.zero_kick_terms:
+            return np.zeros(2, dtype=np.float32)
+        ang = self.kick_target_yaw_offset
+        if self.target_dir_track_yaw:
+            ang = ang - self.delta_yaw
+        return np.array([float(np.cos(ang)), float(np.sin(ang))], dtype=np.float32)
+
+    # ──────────────────────────────────────
+    # CSV 로거
+    # ──────────────────────────────────────
+    def _init_csv_logger(self):
+        out_dir = os.path.expanduser(self.get_parameter("csv_output_dir").value)
+        os.makedirs(out_dir, exist_ok=True)
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        csv_path = os.path.join(out_dir, f"walkkick_v1_log_{timestamp}.csv")
+
+        self._csv_file = open(csv_path, "w", newline="", encoding="utf-8")
+        self._csv_writer = csv.writer(self._csv_file)
+
+        header = ["tick", "time_sec"]
+        header += ["imu_wx", "imu_wy", "imu_wz", "imu_ax", "imu_ay", "imu_az"]
+        header += ["grav_x", "grav_y", "grav_z"]
+        header += ["cmd_vx", "cmd_vy", "cmd_wz"]                 # freeze 된 velocity_commands
+        header += ["ball_bx", "ball_by"]                         # freeze 된 공위치 (x,y)
+        header += ["tgt_dir_x", "tgt_dir_y", "delta_yaw", "kstr"]  # target_dir + Δyaw + kick_strength
+        # gait 위상 — 실기에서 위상이 톱니파를 그리는지 사후 검증용.
+        # 계단처럼 튀면 틱 주기(dt) 측정에 문제가 있다는 뜻이다.
+        header += ["gait_phase", "gait_cos", "gait_sin", "gait_freq"]
+        for jn in POLICY_JOINTS:
+            header.append(f"q_{jn}")
+        for jn in POLICY_JOINTS:
+            header.append(f"qd_{jn}")
+        for jn in POLICY_JOINTS:
+            header.append(f"q_rel_{jn}")
+        for jn in POLICY_JOINTS:
+            header.append(f"qd_scaled_{jn}")
+        for jn in POLICY_JOINTS:
+            header.append(f"a_prev_{jn}")
+        for jn in POLICY_JOINTS:
+            header.append(f"a_raw_{jn}")
+        for jn in POLICY_JOINTS:
+            header.append(f"a_clip_{jn}")
+        for jn in POLICY_JOINTS:
+            header.append(f"q_target_{jn}")
+        for jn in POLICY_JOINTS:
+            header.append(f"q_default_{jn}")
+        header += ["inference_ms"]
+
+        self._csv_writer.writerow(header)
+        self._csv_file.flush()
+        self.get_logger().info(f"CSV logging: {csv_path} ({len(header)} columns)")
+
+    def _log_csv_row(self, q_rel, qd_scaled, a_raw, a_clip, q_target, inference_ms):
+        if not self.enable_csv_log or self._csv_writer is None:
+            return
+        elapsed = time.time() - self.start_wall_time
+        row = [self.tick_count, f"{elapsed:.4f}"]
+
+        if self.last_imu is not None:
+            row += [
+                f"{self.last_imu.angular_velocity.x:.6f}",
+                f"{self.last_imu.angular_velocity.y:.6f}",
+                f"{self.last_imu.angular_velocity.z:.6f}",
+                f"{self.last_imu.linear_acceleration.x:.6f}",
+                f"{self.last_imu.linear_acceleration.y:.6f}",
+                f"{self.last_imu.linear_acceleration.z:.6f}",
+            ]
+        else:
+            row += [""] * 6
+
+        if self.last_gravity is not None:
+            row += [
+                f"{self.last_gravity.vector.x:.6f}",
+                f"{self.last_gravity.vector.y:.6f}",
+                f"{self.last_gravity.vector.z:.6f}",
+            ]
+        else:
+            row += [""] * 3
+
+        row += [f"{self.cmd_now[0]:.4f}", f"{self.cmd_now[1]:.4f}", f"{self.cmd_now[2]:.4f}"]
+        row += [f"{self.ball_pos_b_init[0]:.4f}", f"{self.ball_pos_b_init[1]:.4f}"]
+        row += [
+            f"{self.target_dir_b[0]:.4f}", f"{self.target_dir_b[1]:.4f}",
+            f"{self.delta_yaw:.4f}", f"{self.kick_strength_init:.4f}",
+        ]
+        _g = self.gait.observation(self.gait_frequency_scale)
+        row += [
+            f"{self.gait.phase:.6f}",
+            f"{_g[0]:.6f}", f"{_g[1]:.6f}", f"{_g[2]:.6f}",
+        ]
+
+        for arr in [self.q12, self.qd12, q_rel, qd_scaled, self.last_action12,
+                    a_raw, a_clip, q_target, self.default_q12]:
+            for v in arr:
+                row.append(f"{v:.6f}")
+        row.append(f"{inference_ms:.3f}")
+
+        self._csv_writer.writerow(row)
+        self._csv_row_count += 1
+        if self._csv_row_count % self.csv_flush_every == 0:
+            self._csv_file.flush()
+
+    def _close_csv(self):
+        if self._csv_closed or self._csv_file is None:
+            return
+        try:
+            self._csv_file.flush()
+            os.fsync(self._csv_file.fileno())
+            self._csv_file.close()
+            self.get_logger().info(f"CSV closed: {self._csv_row_count} rows")
+        except Exception:
+            pass
+        self._csv_closed = True
+
+    # ──────────────────────────────────────
+    # ONNX provider 선택
+    # ──────────────────────────────────────
+    def _select_providers(self, mode: str) -> list:
+        available = ort.get_available_providers()
+        self.get_logger().info(f"ONNX available providers: {available}")
+        if mode == "cpu":
+            return ["CPUExecutionProvider"]
+        elif mode == "cuda":
+            return ["CUDAExecutionProvider", "CPUExecutionProvider"]
+        elif mode == "tensorrt":
+            return ["TensorrtExecutionProvider", "CUDAExecutionProvider", "CPUExecutionProvider"]
+        else:
+            providers = []
+            if "TensorrtExecutionProvider" in available:
+                providers.append("TensorrtExecutionProvider")
+            if "CUDAExecutionProvider" in available:
+                providers.append("CUDAExecutionProvider")
+            providers.append("CPUExecutionProvider")
+            return providers
+
+    # ──────────────────────────────────────
+    # 콜백
+    # ──────────────────────────────────────
+    def cb_joint(self, msg: JointState):
+        self.last_joint_state = msg
+        # 다리 12관절이 든 메시지(=body)일 때만 1스텝 트리거(목만 든 메시지는 무시).
+        if not POLICY_JOINTS_SET.issubset(msg.name):
+            return
+        self.control_tick()
+
+    def cb_imu(self, msg: Imu):
+        self.last_imu = msg
+
+        # ── [2026-08 CPU 최적화] projected gravity 파생 ────────────────────
+        #   구독 대신 여기서 만든다. 값은 imu_parser 가 보내주던 것과
+        #   비트 단위로 동일하다(imu_math 주석의 동기화 의무 참조).
+        #   subscribe 모드에서는 cb_gravity 가 채우므로 건드리지 않는다.
+        if self.gravity_source == "subscribe":
+            return
+
+        gx, gy, gz = projected_gravity_from_quat(msg.orientation)
+
+        # Vector3Stamped 객체를 200Hz 로 새로 만들면 그것도 비용이므로
+        # 최초 1회만 할당하고 이후에는 필드만 갱신한다.
+        #   - 하위 코드가 self.last_gravity.vector.x 형태로 읽으므로 타입 유지.
+        #   - SingleThreadedExecutor 라 콜백과 소비가 같은 스레드에서 순차
+        #     실행된다 → in-place 갱신이 안전하다.
+        #   - "첫 IMU 수신 전에는 None" 이라는 기존 준비상태 판정
+        #     (`self.last_gravity is not None`)을 그대로 보존하려고
+        #     미리 할당하지 않는다.
+        if self.last_gravity is None:
+            self.last_gravity = Vector3Stamped()
+            self.last_gravity.header.frame_id = "imu_link"
+        self.last_gravity.header.stamp = msg.header.stamp
+        self.last_gravity.vector.x = gx
+        self.last_gravity.vector.y = gy
+        self.last_gravity.vector.z = gz
+
+    def cb_gravity(self, msg: Vector3Stamped):
+        """/imu/projected_gravity 콜백.
+
+        gravity_source 가 "subscribe" 또는 "verify" 일 때만 구독이 걸린다.
+        기본값 "derive" 에서는 호출되지 않는다.
+        """
+        if self.gravity_source == "verify":
+            # 파생값(cb_imu 가 채운 것)과 구독값을 대조한다.
+            if self.last_gravity is not None:
+                d = max(
+                    abs(self.last_gravity.vector.x - msg.vector.x),
+                    abs(self.last_gravity.vector.y - msg.vector.y),
+                    abs(self.last_gravity.vector.z - msg.vector.z),
+                )
+                if d > self._grav_verify_max:
+                    self._grav_verify_max = d
+                self._grav_verify_n += 1
+                now = time.time()
+                if now - self._grav_verify_last_log >= 5.0:
+                    self._grav_verify_last_log = now
+                    self.get_logger().info(
+                        f"[grav-verify] n={self._grav_verify_n} "
+                        f"max|derive-subscribe|={self._grav_verify_max:.3e} "
+                        f"(1e-6 이하면 동일한 것으로 간주)")
+            return
+
+        self.last_gravity = msg
+
+    def cb_cmd_vel(self, msg: Twist):
+        # 트리거 "전"에 전진 명령을 동적으로 조정하고 싶을 때 사용.
+        # 실제 obs 에 들어가는 값은 트리거 순간 freeze 되는 self.cmd_init.
+        self.cmd[0] = float(msg.linear.x)
+        self.cmd[1] = float(msg.linear.y)
+        self.cmd[2] = float(msg.angular.z)
+
+    def cb_detections(self, msg: "Detection3DArray"):
+        """퍼셉션 공 검출 → base_link 로 TF 변환해 최신값을 보관(트리거 시 freeze)."""
+        if self.tf_buffer is None:
+            return
+        src_frame = msg.header.frame_id
+        for det in msg.detections:
+            if not det.results:
+                continue
+            # vision_msgs(Humble): det.results[i].hypothesis.class_id (string)
+            cid = None
+            try:
+                cid = str(det.results[0].hypothesis.class_id)
+            except Exception:
+                try:
+                    cid = str(det.results[0].id)  # 일부 버전 호환
+                except Exception:
+                    cid = None
+            if cid != self.ball_class_id:
+                continue
+
+            # 검출 중심(카메라 광학 프레임) → base_link 변환
+            pt = PointStamped()
+            pt.header.frame_id = src_frame
+            pt.header.stamp = msg.header.stamp
+            pt.point = det.bbox.center.position
+            try:
+                # 최신 TF 사용(rclpy.time.Time() = latest). 실패 시 무시.
+                pt_b = self.tf_buffer.transform(
+                    pt, self.base_frame, timeout=rclpy.duration.Duration(seconds=0.05))
+                self.latest_ball_b = np.array(
+                    [float(pt_b.point.x), float(pt_b.point.y)], dtype=np.float32)
+                self.latest_ball_stamp = time.time()
+            except Exception as e:
+                # TF 미준비 등은 흔하므로 throttle 로그.
+                self.get_logger().warn(
+                    f"[WALKKICK-V1] ball TF {src_frame}->{self.base_frame} 실패: {e}",
+                    throttle_duration_sec=2.0)
+            break  # 첫 공 하나만 사용
+
+    def cb_ball_map_point(self, msg: "PointStamped"):
+        """/ball/map_point (map 프레임) 최신값 보관.
+
+        ball_map_projector_node 가 EMA 평활 + 지면 투영 + lost_timeout 까지
+        처리한 값이라, 원시 detections 보다 튀지 않는다. 트리거 순간에
+        base_link 로 변환해 freeze 한다.
+        """
+        self.latest_ball_map = np.array(
+            [float(msg.point.x), float(msg.point.y)], dtype=np.float32)
+        self.latest_ball_map_stamp = time.time()
+
+    def _map_xy_to_base(self, x: float, y: float):
+        """map 프레임 (x, y) 를 base_link 로 변환. 실패 시 None."""
+        if self.tf_buffer is None:
+            return None
+        pt = PointStamped()
+        pt.header.frame_id = self.map_frame
+        pt.header.stamp = rclpy.time.Time().to_msg()   # latest
+        pt.point.x = float(x)
+        pt.point.y = float(y)
+        pt.point.z = 0.0
+        try:
+            pt_b = self.tf_buffer.transform(
+                pt, self.base_frame,
+                timeout=rclpy.duration.Duration(seconds=0.05))
+            return np.array([float(pt_b.point.x), float(pt_b.point.y)],
+                            dtype=np.float32)
+        except Exception as e:
+            self.get_logger().warn(
+                f"[WALKKICK-V1] TF {self.map_frame}->{self.base_frame} 실패: {e}",
+                throttle_duration_sec=2.0)
+            return None
+
+    def _goal_dir_b(self):
+        """상대 골대 방향 단위벡터를 base_link 에서 계산. 실패 시 None.
+
+        학습 정의와의 대응:
+          학습은 리셋 시 "월드 고정 방향" 을 정하고, 관측은 그 방향을 매
+          스텝 현재 body 프레임으로 재투영한다. 여기서는 map 프레임에
+          고정된 골대 중심을 매 틱 base_link 로 변환하므로 의미가 같다.
+
+          엄밀히는 학습이 "고정 방향", 여기가 "고정 점을 향한 방향" 이라
+          로봇이 이동하면 미세하게 다르다. 다만 골대가 보통 3 m 이상
+          떨어져 있고 킥 접근 이동은 1 m 안쪽이라 각도 차이는 작다.
+          물리적으로도 "골대를 향해 찬다" 가 원하는 의미다.
+
+        gyro 적분 방식(target_source=param)과 달리 드리프트가 없다.
+        """
+        v = self._map_xy_to_base(self.attack_goal_x, self.attack_goal_y)
+        if v is None:
+            return None
+        n = float(np.linalg.norm(v))
+        if n < 1e-6:
+            return None
+        return (v / n).astype(np.float32)
+
+    def _resolve_ball_pos_b(self):
+        """트리거 시점의 공 위치(base_link xy)를 소스에 따라 결정.
+
+        Returns:
+            (ball_xy, source_name). 실패하면 파라미터 값으로 폴백한다.
+        """
+        now = time.time()
+
+        if self.ball_source == "detections":
+            if (self.latest_ball_b is not None
+                    and (now - self.latest_ball_stamp) <= self.ball_detection_timeout_s):
+                return self.latest_ball_b.copy(), "detections"
+            self.get_logger().warn(
+                "[WALKKICK-V1] detections 공 검출이 없거나 오래됨 → 파라미터 폴백")
+
+        elif self.ball_source == "map_point":
+            if (self.latest_ball_map is not None
+                    and (now - self.latest_ball_map_stamp) <= self.ball_detection_timeout_s):
+                v = self._map_xy_to_base(
+                    float(self.latest_ball_map[0]), float(self.latest_ball_map[1]))
+                if v is not None:
+                    return v, "map_point"
+            self.get_logger().warn(
+                "[WALKKICK-V1] map_point 공 위치가 없거나 TF 실패 → 파라미터 폴백")
+
+        return self.ball_pos_b_param.copy(), "param"
+
+    def _check_training_distribution(self, ball_xy, tgt_dir) -> bool:
+        """트리거 값이 학습 분포 안인지 검사.
+
+        walk_kick_v1_env.py 의 스폰/목표 범위:
+            공   : 거리 0.2~0.5 m, 방위 ±90°
+            목표 : 로봇 정면 기준 ±90°
+
+        이 밖의 값을 넣으면 첫 프레임부터 OOD 다. 정책은 그 영역을 한
+        번도 본 적이 없으므로 외삽이 되고, 보통 즉시 발산한다.
+        범위 밖이면 상위 FSM 이 먼저 로봇을 정렬시켜야 한다.
+
+        Returns:
+            True 면 트리거 진행 가능.
+        """
+        problems = []
+
+        d = float(np.linalg.norm(ball_xy))
+        bearing = math.atan2(float(ball_xy[1]), float(ball_xy[0]))
+        if not (self.gate_ball_dist_min <= d <= self.gate_ball_dist_max):
+            problems.append(
+                f"공 거리 {d:.2f} m (허용 {self.gate_ball_dist_min:.2f}~"
+                f"{self.gate_ball_dist_max:.2f})")
+        if abs(bearing) > self.gate_ball_bearing_max:
+            problems.append(
+                f"공 방위 {math.degrees(bearing):+.1f}° "
+                f"(허용 ±{math.degrees(self.gate_ball_bearing_max):.0f}°)")
+
+        tgt_ang = math.atan2(float(tgt_dir[1]), float(tgt_dir[0]))
+        if abs(tgt_ang) > self.gate_target_angle_max:
+            problems.append(
+                f"목표 방향 {math.degrees(tgt_ang):+.1f}° "
+                f"(허용 ±{math.degrees(self.gate_target_angle_max):.0f}°)")
+
+        if not problems:
+            return True
+
+        msg = "[WALKKICK-V1] 학습 분포 밖: " + " / ".join(problems)
+        if self.strict_ood_gate:
+            self.get_logger().error(msg + " → 트리거 거부. 먼저 정렬하세요.")
+            return False
+        self.get_logger().warn(msg + " → strict_ood_gate=False 라 강행합니다.")
+        return True
+
+    def cb_kick_trigger(self, msg: Bool):
+        if not msg.data:
+            return
+        self._start_kick()
+
+    def _abort_kick(self, reason: str):
+        """트리거가 거부됐음을 알린다(핸드오프 복귀용).
+
+        보행 러너(actor_onnx_walking_runner)는 /kick_trigger 를 보는 즉시
+        /joint_goals 발행을 멈추고 이 노드에 소유권을 넘긴다. 그런데
+        _start_kick 이 게이트에 걸려 그냥 return 하면 /kick_done 이 영영
+        발행되지 않아, 보행 러너가 워치독(기본 8s)이 돌 때까지 아무도
+        관절을 잡지 않는 상태가 된다. 거부됐을 때도 즉시 소유권을
+        돌려주기 위해 /kick_done 을 발행한다.
+        """
+        self.get_logger().warn(f"[WALKKICK-V1] 트리거 거부: {reason}")
+        self.kick_done_pub.publish(Bool(data=True))
+
+    def _start_kick(self):
+        """킥 시작(학습 episode reset 대응): cmd/공/세기/target freeze + history 리셋."""
+        if self.robot_state != "NORMAL":
+            self._abort_kick(f"robot_state={self.robot_state} (NORMAL 아님)")
+            return
+
+        # velocity_commands freeze (현재 self.cmd = param 또는 /cmd_vel 최신값)
+        self.cmd_init = self.cmd.copy()
+        # [옵션3/4] ramp/warmup 기준 리셋 — 이번 트리거의 추론 시작 시각은
+        # hold 종료 후 첫 정책출력 틱에서 설정된다. cmd_now 는 ramp 시작값(0).
+        self._infer_start_time = None
+        self.cmd_now = (np.zeros(3, dtype=np.float32) if self.cmd_ramp_seconds > 0.0
+                        else self.cmd_init.copy())
+
+        # ── ball_pos_b freeze ──
+        # ★ 반드시 "한 번만" 읽어 동결한다 ★
+        # 학습 관측이 ball_pos_xy_in_robot_frame_frozen 이라, 리셋 시 한 번
+        # 읽은 값이 에피소드 내내 고정된다. 정책은 "기억한 공 위치로
+        # 접근" 하도록 배웠다. 실시간 갱신 값을 주면 관측 분포가 완전히
+        # 달라져 OOD 다. 비전을 연결하되 freeze 하는 이유가 이것이다.
+        ball_xy, src = self._resolve_ball_pos_b()
+
+        # ── target_dir_b ──
+        # 이쪽은 반대로 "매 틱 갱신" 이 맞다. 학습 관측이 월드 고정 방향을
+        # 현재 body 프레임으로 재투영하는 값이라, 로봇이 회전하면 변한다.
+        self.delta_yaw = 0.0
+        tgt_dir = None
+        if self.target_source == "goal_tf":
+            tgt_dir = self._goal_dir_b()
+            if tgt_dir is None:
+                self.get_logger().warn(
+                    "[WALKKICK-V1] goal_tf 실패 → 이번 트리거는 param 방식으로 폴백")
+        if tgt_dir is None:
+            tgt_dir = self._compute_target_dir_b()
+
+        # ── 학습 분포 게이트 (zero_kick_terms 테스트 모드는 면제) ──
+        if not self.zero_kick_terms:
+            if not self._check_training_distribution(ball_xy, tgt_dir):
+                # 게이트 거부도 핸드오프 복귀 대상이다(위 _abort_kick 주석 참조).
+                # 상세 사유는 _check_training_distribution 이 이미 ERROR 로 남겼다.
+                self._abort_kick("학습 분포 게이트")
+                return
+
+        self.ball_pos_b_init = ball_xy
+        self.target_dir_b = tgt_dir
+        self.kick_strength_init = float(np.clip(self.kick_strength_cmd, 0.0, 1.0))
+
+        # 예전(no-kick) 정책 테스트: ball/target/strength 전부 0 강제.
+        if self.zero_kick_terms:
+            self.ball_pos_b_init = np.zeros(2, dtype=np.float32)
+            self.target_dir_b = np.zeros(2, dtype=np.float32)
+            self.kick_strength_init = 0.0
+            src = "zero_kick_terms"
+
+        # ★ 위상 리셋 — 학습의 reset_phase_on_resample=True 대응 ★
+        # 이 노드의 "킥 트리거" 가 학습의 "episode reset" 이므로 위상도
+        # 0 에서 다시 시작해야 한다. 이어서 resume_hold 동안 freq=0 이
+        # 적용되어(freeze_during_reset_hold) 위상이 0 에 묶인다.
+        self.gait.reset()
+        self._last_gait_time = None
+
+        # history / last_action 리셋 → 옛 상태 오염 방지(보행 resume 로직과 동일).
+        self.history_initialized = False
+        self.last_action12 = np.zeros((12,), dtype=np.float32)
+        self.filt_action12 = np.zeros((12,), dtype=np.float32)
+        self._last_tick_time = None
+        # 트리거 직후 resume_hold_seconds 동안 default 자세 유지하며 history 를
+        # 실제 프레임으로 채운다(보행 NORMAL 복귀와 동일한 ease-in → 급발진 방지).
+        self.resume_time = time.time()
+
+        self.kick_active = True
+        self.kick_start_time = time.time()
+        self.get_logger().info(
+            f"[WALKKICK-V1] start — cmd={self.cmd_init.tolist()}, "
+            f"ball_pos_b={self.ball_pos_b_init.tolist()} [m] ({src}), "
+            f"strength={self.kick_strength_init:.2f}, "
+            f"target_dir_b={self.target_dir_b.tolist()}, duration={self.kick_duration_s}s"
+        )
+
+    def _finish_kick(self):
+        self.kick_active = False
+        self.kick_start_time = None
+        done = Bool()
+        done.data = True
+        self.kick_done_pub.publish(done)
+        self.get_logger().info("[WALKKICK-V1] done — default 자세 hold. (/kick_done 발행)")
+
+    def cb_robot_state(self, msg: String):
+        new_state = msg.data
+        if new_state != self.robot_state:
+            self.get_logger().info(f"[robot_state] {self.robot_state} -> {new_state}")
+            if new_state != "NORMAL":
+                self.history_initialized = False
+            else:
+                self.resume_time = time.time()
+                # 복귀 시 last_action 오염 방지(보행 노드와 동일).
+                self.last_action12 = np.zeros((12,), dtype=np.float32)
+        self.robot_state = new_state
+
+    def policy_enabled(self) -> bool:
+        return self.robot_state == "NORMAL"
+
+    def ready(self) -> bool:
+        return (
+            self.last_joint_state is not None and
+            self.last_imu is not None and
+            self.last_gravity is not None
+        )
+
+    # ──────────────────────────────────────
+    # 센서 처리
+    # ──────────────────────────────────────
+    def extract_q_qd_from_joint_state(self):
+        js = self.last_joint_state
+        assert js is not None
+        name_to_idx = {name: i for i, name in enumerate(js.name)}
+        missing = [jn for jn in POLICY_JOINTS if jn not in name_to_idx]
+        if missing:
+            raise RuntimeError(f"joint_states missing joints: {missing}")
+
+        q = np.zeros((12,), dtype=np.float32)
+        qd = np.zeros((12,), dtype=np.float32)
+        for i, jn in enumerate(POLICY_JOINTS):
+            idx = name_to_idx[jn]
+            if idx >= len(js.position):
+                raise RuntimeError(f"joint_states position missing for {jn}")
+            q[i] = float(js.position[idx])
+            qd[i] = float(js.velocity[idx]) if idx < len(js.velocity) else 0.0
+        return q, qd
+
+    def _integrate_yaw(self):
+        """gyro_z 를 적분해 트리거 이후 Δyaw 를 갱신(target_dir_b 추적용)."""
+        if not self.target_dir_track_yaw or self.last_imu is None:
+            return
+        now = time.time()
+        if self._last_tick_time is None:
+            self._last_tick_time = now
+            return
+        dt = now - self._last_tick_time
+        self._last_tick_time = now
+        # IMU 의 z 각속도(body yaw rate)를 적분. dt 는 실제 틱 간격.
+        self.delta_yaw += float(self.last_imu.angular_velocity.z) * dt
+
+    def one_frame(self) -> np.ndarray:
+        """walk_kick_v1 PolicyCfg 항 순서대로 per-frame(53) 구성."""
+        assert self.last_imu is not None
+        assert self.last_gravity is not None
+
+        # 1) base_ang_vel (x0.2)
+        imu_w = np.array([
+            self.last_imu.angular_velocity.x,
+            self.last_imu.angular_velocity.y,
+            self.last_imu.angular_velocity.z,
+        ], dtype=np.float32)
+        w_b = (self.base_ang_vel_scale * imu_w).astype(np.float32)
+
+        # 2) projected_gravity
+        g_b = np.array([
+            self.last_gravity.vector.x,
+            self.last_gravity.vector.y,
+            self.last_gravity.vector.z,
+        ], dtype=np.float32)
+
+        # [진단용] 전방 기울기 오프셋 적용 — body y축 회전.
+        # theta>0 이면 grav_x 가 +로 커져 "앞으로 숙인 것처럼" 정책에 보인다.
+        # 회전행렬이라 |g_b| 크기는 보존되므로 별도 정규화 불필요.
+        #   gx' = gx*cos - gz*sin
+        #   gz' = gx*sin + gz*cos
+        # (정자세 [0,0,-1] 에 theta 적용 → [+sin(theta), 0, -cos(theta)],
+        #  즉 grav_x ≈ +theta 로 forward lean 이 됨)
+        if self.grav_pitch_offset_rad != 0.0:
+            c, s = self._grav_off_c, self._grav_off_s
+            gx, gy, gz = float(g_b[0]), float(g_b[1]), float(g_b[2])
+            g_b = np.array([gx * c - gz * s, gy, gx * s + gz * c], dtype=np.float32)
+
+        # 3) velocity_commands (freeze 된 전진 명령, ramp 적용 시 cmd_now)
+        vel_cmd = self.cmd_now.astype(np.float32)
+
+        # 3-1) gait_phase (cos, sin, freq/scale) ← v1 추가
+        # control_tick 에서 이미 update() 된 상태를 읽기만 한다.
+        # 여기서 update 하면 hold 판정 전에 위상이 흘러가 버린다.
+        gait_obs = self.gait.observation(self.gait_frequency_scale)
+
+        # 4) joint_pos_rel
+        q_rel = (self.q12 - self.default_q12).astype(np.float32)
+
+        # 5) joint_vel_rel (x0.05)
+        qd_rel = (self.qd12 - self.default_qd12).astype(np.float32)
+        qd_rel_scaled = (self.joint_vel_scale * qd_rel).astype(np.float32)
+
+        # 6) last_action — 7) ball_pos_b(2) — 8) target_dir_b(2) — 9) kick_strength(1)
+        ball_b = self.ball_pos_b_init.astype(np.float32)            # (2,) freeze
+        tgt_b = self.target_dir_b.astype(np.float32)                # (2,)
+        kstr = np.array([self.kick_strength_init], dtype=np.float32)  # (1,)
+
+        # ★ 항 순서는 walk_kick_v1_env.py PolicyCfg 선언 순서와 동일해야 한다.
+        #   gait_obs 는 vel_cmd 다음, q_rel 앞이다. 순서를 바꾸면 차원은
+        #   265 로 맞아서 로드는 되지만 정책이 전혀 다른 값을 본다.
+        frame = np.concatenate(
+            [w_b, g_b, vel_cmd, gait_obs, q_rel, qd_rel_scaled,
+             self.last_action12, ball_b, tgt_b, kstr],
+            axis=0,
+        ).astype(np.float32)
+
+        assert frame.shape == (FRAME_DIM,), frame.shape
+        return frame
+
+    # ──────────────────────────────────────
+    # 발행
+    # ──────────────────────────────────────
+    def publish_joint_goals(self, q_target12: np.ndarray):
+        msg = JointState()
+        if self.last_joint_state is not None:
+            msg.header.stamp = self.last_joint_state.header.stamp  # E2E 딜레이 측정용
+        else:
+            msg.header.stamp = self.get_clock().now().to_msg()
+        msg.name = POLICY_JOINTS.copy()
+        msg.position = [float(x) for x in q_target12]
+        self.goal_pub.publish(msg)
+
+    # ──────────────────────────────────────
+    # 메인 제어 루프
+    # ──────────────────────────────────────
+    def control_tick(self):
+        if not self.ready():
+            return
+
+        # fall_manager 게이트: NORMAL 이 아니면 정책 출력 금지.
+        if not self.policy_enabled():
+            return
+
+        try:
+            self.q12, self.qd12 = self.extract_q_qd_from_joint_state()
+        except Exception as e:
+            self.get_logger().warn(f"extract_q_qd failed: {e}")
+            return
+
+        # ── 킥 트리거 게이트 ──
+        if self.auto_start_kick and (not self.kick_active):
+            if (time.time() - self.start_wall_time) >= self.startup_hold_seconds:
+                self._start_kick()
+        if self.kick_active and self.kick_start_time is not None:
+            # kick_duration_s <= 0 이면 자동종료 안 함(텔레오퍼레이션 등 무한 구동).
+            if self.kick_duration_s > 0.0 and \
+                    (time.time() - self.kick_start_time) >= self.kick_duration_s:
+                self._finish_kick()
+        # 킥 비활성 구간.
+        #   idle_publish_default_pose=True  → default 자세 유지(단독 테스트).
+        #   False → 아무것도 발행하지 않음(핸드오프: 보행 러너가 주인).
+        if not self.kick_active:
+            if self.idle_publish_default_pose:
+                self.publish_joint_goals(self.default_q12.copy())
+            return
+
+        # ── hold(ease-in) 판정 — one_frame 전에 먼저 계산 ──
+        # 시작 직후/트리거 직후 짧게 default 자세를 유지하며 history 를 실제
+        # 프레임으로 채운다(급발진 방지). 보행 노드와 동일.
+        elapsed = time.time() - self.start_wall_time
+        in_startup_hold = elapsed < self.startup_hold_seconds
+        in_resume_hold = (
+            self.resume_time is not None
+            and (time.time() - self.resume_time) < self.resume_hold_seconds
+        )
+        in_hold = in_startup_hold or in_resume_hold
+
+        # [옵션3/4] hold 가 끝나 "정책이 실제로 출력하는" 첫 틱에 추론 시작시각 기록.
+        if (not in_hold) and (self._infer_start_time is None):
+            self._infer_start_time = time.time()
+
+        # ★ hold 중에는 명령 관측을 0 으로 ★
+        # 학습(mdp/reset_hold.py generated_commands_with_reset_hold)이
+        #     hold_mask = env.reset_hold_steps > 0
+        #     cmd[hold_mask] = 0.0
+        # 로 reset_hold 동안 명령 관측을 0 으로 만든다. 러너가 hold 중에도
+        # cmd_init 을 넣으면 히스토리 5 칸이 전부 학습과 다른 값으로 채워진
+        # 채 첫 추론이 나간다 — "시작하자마자 발산" 의 전형적 경로다.
+        if in_hold:
+            self.cmd_now = np.zeros(3, dtype=np.float32)
+        # [텔레오퍼레이션] live_cmd_vel: obs 의 velocity_commands 가 /cmd_vel
+        # (self.cmd) 을 실시간 추종(freeze/ramp 무시). 그 외엔 기존 ramp 로직.
+        elif self.live_cmd_vel:
+            self.cmd_now = self.cmd.astype(np.float32).copy()
+        else:
+            # [옵션3] cmd ramp: 추론 시작 후 cmd_ramp_seconds 동안 0→cmd_init 선형.
+            #   hold 중(추론 전)에는 frac=0 → cmd_now=0 으로 history 를 채운다.
+            if self.cmd_ramp_seconds > 0.0:
+                if self._infer_start_time is None:
+                    frac = 0.0
+                else:
+                    frac = min(1.0, (time.time() - self._infer_start_time) / self.cmd_ramp_seconds)
+            else:
+                frac = 1.0
+            self.cmd_now = (frac * self.cmd_init).astype(np.float32)
+
+        # ── gait 위상 갱신 — one_frame 전에 호출 ──
+        # freq 결정 규칙은 학습(PhaseOnlyGaitCommand._update_command)과 동일:
+        #   1) hold 중이면 freq=0        (freeze_during_reset_hold=True)
+        #   2) 명령 노름 < standing_threshold 면 freq=0
+        #   3) 그 외 freq = gait_frequency
+        # ★ 학습 분포가 vx=0.1~0.5 라 2) 가 실제로 걸릴 수 있다 ★
+        #   하한 0.1 이 standing_threshold(0.1)와 같기 때문. cmd_vx 를
+        #   0.1 근처로 주면 킥 중에 freq=0 이 되어 걷지 않는다.
+        now_g = time.time()
+        if self._last_gait_time is None:
+            dt_gait = 0.0
+        else:
+            dt_gait = now_g - self._last_gait_time
+        self._last_gait_time = now_g
+
+        cmd_norm = float(np.linalg.norm(self.cmd_now))
+        if in_hold or cmd_norm < self.gait_standing_threshold:
+            freq_cmd = 0.0
+        else:
+            freq_cmd = self.gait_frequency
+        self.gait.update(dt_gait, freq_cmd)
+
+        ph = Float32()
+        ph.data = float(self.gait.phase)
+        self.phase_pub.publish(ph)
+
+        # ── target_dir_b 갱신 — one_frame 전에 호출 ──
+        # goal_tf: map 프레임 골대를 매 틱 base_link 로 재투영(드리프트 없음).
+        #          TF 가 순간적으로 끊기면 직전 값을 유지한다(0 으로 떨구면
+        #          단위벡터가 아니게 되어 정책이 본 적 없는 값이 된다).
+        # param  : 기존 gyro 적분 Δyaw 방식.
+        if self.target_source == "goal_tf":
+            _d = self._goal_dir_b()
+            if _d is not None:
+                self.target_dir_b = _d
+        else:
+            self._integrate_yaw()
+            self.target_dir_b = self._compute_target_dir_b()
+
+        current_frame = self.one_frame()
+
+        if not self.history_initialized:
+            self.history.reset(current_frame)
+            self.history_initialized = True
+
+        if in_hold:
+            q_hold = self.default_q12.copy() if self.use_default_pose_on_startup_hold else self.q12.copy()
+            self.publish_joint_goals(q_hold)
+            # ★ hold 동안에도 반드시 추론을 돌려 last_action 을 갱신한다 ★
+            #
+            # 학습(DelayedJointPositionAction.process_actions)은 hold 동안
+            # "액추에이터로 가는 액션" 만 0 으로 마스킹한다. 반면 관측
+            # last_action 은 mdp.last_action -> env.action_manager.action,
+            # 즉 마스킹 "전" 원본 정책 출력이다. 마스킹은 term 내부에서
+            # clone 한 사본에만 적용되므로 action_manager._action 은 그대로다.
+            #
+            # 실측 비교 (sim_log vs walkkick_v1_log):
+            #   hold 종료 시점 관측 last_action 크기
+            #     시뮬 : 히스토리 5 칸 전부 ~5.74
+            #     실기 : 히스토리 5 칸 전부  0.00   ← 추론을 건너뛴 결과
+            #   관측 53 차원 중 12 차원(23%)이 통째로 다른 상태에서 첫
+            #   실동작이 시작되어, 실기는 시뮬이 hold 중 쌓아올린 "큰 액션"
+            #   영역에 끝내 진입하지 못하고 |a|~1.0 에 갇혔다.
+            #
+            # 따라서 여기서 return 하면 안 된다. 아래 추론 경로를 그대로
+            # 타되, 관절 목표만 hold 자세로 덮어쓴다.
+            self._hold_pose_override = q_hold
+        else:
+            self._hold_pose_override = None
+
+        # ── obs 구성 + ONNX 추론 ──
+        frames = self.history.get_frames()
+        obs = build_obs265_from_frames(frames)
+        obs_input = obs.reshape(1, -1).astype(np.float32)
+
+        t0 = time.perf_counter()
+        outputs = self.session.run([self.output_name], {self.input_name: obs_input})
+        inference_ms = (time.perf_counter() - t0) * 1000.0
+
+        a_raw = outputs[0].flatten().astype(np.float32)
+        if a_raw.shape != (12,):
+            self.get_logger().error(f"actor output dim invalid: {a_raw.shape}")
+            return
+
+        a_used = np.clip(a_raw, -self.clip_actions, self.clip_actions).astype(np.float32)
+        if self.enable_action_filter:
+            self.filt_action12 = (self.alpha * self.filt_action12 + (1.0 - self.alpha) * a_used).astype(np.float32)
+            a_cmd = self.filt_action12.copy()
+        else:
+            a_cmd = a_used.copy()
+
+        # [옵션4] action warmup: 추론 시작 후 첫 N초 동안 action 을 점진 활성화.
+        #   scale 은 action_warmup_scale → 1.0 으로 선형 증가. startup lunge 완화.
+        #   ★ a_cmd(=관절명령)만 줄이고, 아래 last_action 은 raw(a_used) 유지 →
+        #     기존 필터와 동일하게 obs 일관성은 raw 기준. (짧게만 쓸 것)
+        if self.action_warmup_seconds > 0.0 and self._infer_start_time is not None:
+            we = time.time() - self._infer_start_time
+            if we < self.action_warmup_seconds:
+                s = self.action_warmup_scale + (1.0 - self.action_warmup_scale) * (we / self.action_warmup_seconds)
+                a_cmd = (a_cmd * float(s)).astype(np.float32)
+
+        # action(=position residual) → 목표 관절각
+        q_target = self.default_q12 + self.action_scale * a_cmd
+
+        # 골반 pitch 오프셋(0: r_pelvis_pitch, 6: l_pelvis_pitch — 부호 반대)
+        q_target[0] += self.pelvis_pitch_offset
+        q_target[6] -= self.pelvis_pitch_offset
+
+        # 안전 클램프: default 기준 + 현재값 기준(보행과 동일)
+        q_target = np.clip(
+            q_target,
+            self.default_q12 - self.max_target_abs_from_default,
+            self.default_q12 + self.max_target_abs_from_default,
+        ).astype(np.float32)
+        q_target = np.clip(
+            q_target,
+            self.q12 - self.max_target_delta_from_current,
+            self.q12 + self.max_target_delta_from_current,
+        ).astype(np.float32)
+
+        # ★ hold 중이면 관절 목표만 기본자세로 덮어쓴다 ★
+        # 학습의 DelayedJointPositionAction 은 hold 동안 액추에이터로 가는
+        # 액션만 0 으로 만들고, 관측 last_action 은 원본을 유지한다.
+        # 위에서 추론을 이미 마쳤으므로 last_action / history / CSV 는
+        # 학습과 동일하게 갱신되고, 여기서 출력만 막으면 등가가 된다.
+        if self._hold_pose_override is not None:
+            q_target = self._hold_pose_override
+
+        self.publish_joint_goals(q_target)
+
+        # ── CSV ──
+        q_rel = (self.q12 - self.default_q12).astype(np.float32)
+        qd_scaled = (self.joint_vel_scale * (self.qd12 - self.default_qd12)).astype(np.float32)
+        self._log_csv_row(
+            q_rel=q_rel, qd_scaled=qd_scaled,
+            a_raw=a_raw, a_clip=a_used, q_target=q_target, inference_ms=inference_ms,
+        )
+
+        # 다음 프레임용 last_action 갱신 후 history push
+        self.last_action12 = a_used.copy()
+        self.history.push(self.one_frame())
+
+        self.tick_count += 1
+
+        if self.tick_count % 100 == 0:
+            elapsed_total = time.time() - self.start_wall_time
+            actual_hz = self.tick_count / max(1e-6, elapsed_total)
+            self.get_logger().info(
+                f"[rate] actual={actual_hz:.1f}Hz declared={self.policy_rate_hz}Hz "
+                f"policy_dt={self.policy_dt*1000:.1f}ms"
+            )
+        if self.debug_print_every > 0 and (self.tick_count % self.debug_print_every) == 0:
+            self.get_logger().info(
+                f"tick={self.tick_count} a0={a_used[0]:+.3f} a1={a_used[1]:+.3f} "
+                f"q0={self.q12[0]:+.3f} qt0={q_target[0]:+.3f} "
+                f"dyaw={self.delta_yaw:+.2f} tdir=({self.target_dir_b[0]:+.2f},{self.target_dir_b[1]:+.2f}) "
+                f"infer={inference_ms:.2f}ms"
+            )
+
+    # ──────────────────────────────────────
+    # 종료
+    # ──────────────────────────────────────
+    def destroy_node(self):
+        self._close_csv()
+        super().destroy_node()
+
+
+def main(args=None):
+    rclpy.init(args=args)
+    node = ActorOnnxWalkKickV1Node()
+    try:
+        rclpy.spin(node)
+    except KeyboardInterrupt:
+        pass
+    finally:
+        try:
+            node.destroy_node()
+        except Exception:
+            pass
+        try:
+            if rclpy.ok():
+                rclpy.shutdown()
+        except Exception:
+            pass
+
+
+if __name__ == "__main__":
+    main()

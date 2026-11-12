@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<package format="3">
+  <name>hsl_world_model</name>
+  <version>0.1.0</version>
+  <description>세계 모델: 다리 기구학 오도메트리, B-Human 식 다중가설 UKF 자기위치, 공 추적·팀 공 융합</description>
+  <maintainer email="gntjr2@gmail.com">bami001</maintainer>
+  <license>BSD-3-Clause</license>
+  <buildtool_depend>ament_cmake</buildtool_depend>
+  <depend>rclcpp</depend>
+  <depend>std_msgs</depend>
+  <depend>sensor_msgs</depend>
+  <depend>geometry_msgs</depend>
+  <depend>nav_msgs</depend>
+  <depend>vision_msgs</depend>
+  <depend>tf2</depend>
+  <depend>tf2_ros</depend>
+  <depend>tf2_eigen</depend>
+  <depend>kdl_parser</depend>
+  <depend>orocos_kdl_vendor</depend>
+  <depend>eigen3_cmake_module</depend>
+  <depend>hsl_interfaces</depend>
+  <depend>humanoid_behavior_interfaces</depend>
+  <export><build_type>ament_cmake</build_type></export>
+</package>

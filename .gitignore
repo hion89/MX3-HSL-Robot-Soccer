@@ -1,0 +1,25 @@
+**/__pycache__/
+*.py[cod]
+**/.analysis_env/
+**/.venv/
+**/venv/
+**/build/
+**/install/
+**/log/
+**/runtime_logs/
+**/chrome_profile/
+**/.pytest_cache/
+**/.vscode/
+**/.DS_Store
+**/.env
+**/.env.*
+**/*credential*
+**/id_rsa*
+**/id_ed25519*
+**/*.pem
+**/*.key
+**/*.db3
+**/*.mcap
+**/*.mp4
+**/*.avi
+/깃허브 링크.docx

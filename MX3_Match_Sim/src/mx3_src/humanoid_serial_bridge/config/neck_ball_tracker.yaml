@@ -1,0 +1,66 @@
+# =============================================================================
+#  neck_ball_tracker.yaml  —  neck_ball_tracker_node 파라미터
+#  최상위 키는 노드 이름('neck_ball_tracker_node')과 일치해야 한다.
+# =============================================================================
+neck_ball_tracker_node:
+  ros__parameters:
+    # --- 토픽 ---
+    detections_topic: "/perception/detections_3d"
+    yaw_cmd_topic:    "/neck/yaw_deg"          # neck_control_node 입력
+    pitch_cmd_topic:  "/neck/pitch_deg"        # neck_control_node 입력
+    yaw_state_topic:  "/neck/yaw_deg_state"    # neck_control_node 출력(현재각)
+    pitch_state_topic: "/neck/pitch_deg_state"
+    state_topic:      "/neck/tracking_state"   # 디버그
+    error_topic:      "/neck/track_error_deg"  # 디버그 [err_h, err_v] deg
+
+    # --- 검출 필터 ---
+    ball_class_name: "ball"   # 검출 노드 class_names 의 공 이름(문자열)
+    min_score: 0.40           # 신뢰도 하한
+    min_valid_z_m: 0.05       # 깊이 무효(z<=이값) 검출 제거
+
+    # --- 제어 게인/평활 ---
+    control_rate_hz: 30.0     # 제어 타이머 주기
+    kp_yaw: 0.5               # 0~1. 1=한 번에 정조준(공격적), 작을수록 부드럽고 느림
+    kp_pitch: 0.5
+    deadzone_deg: 1.5         # 이 각오차 안이면 정지(중앙 근처 미세 떨림 방지)
+    ema_alpha: 0.5            # 공 각오차 EMA. 1=평활없음, 작을수록 부드럽지만 지연↑
+
+    # --- 슬루(속도) 제한: 사이클당 최대 변화량[deg] ---
+    #   × control_rate_hz = 최대 각속도[deg/s].
+    #   예) 2.5 × 30 = 75 deg/s. 로컬라이저의 '목 각속도 게이트' 임계보다 살짝 위로
+    #   두면 미세추적은 비전 통과, 큰 슬루(재포착/중립복귀)만 게이트가 잡는다.
+    #   목이 너무 휙휙 돌면 ↓(1.5), 공을 못 따라가면 ↑(3.5).
+    max_step_yaw_deg: 2.5
+    max_step_pitch_deg: 2.0
+
+    # --- 목 가동 범위(neck_control_node 와 동일) ---
+    yaw_min_deg: -90.0
+    yaw_max_deg:  90.0
+    pitch_min_deg: -60.0   # 아래 한계 (2026-07: -70 → -60 축소, neck_control_node 와 동기화)
+    pitch_max_deg:  0.0    # 절대 위쪽 한계(정면). 추적 유효 한계는 아래 cap 로 더 낮아짐.
+
+    # ★공이 바닥에 있어 목을 시작각 위로 들면 공을 놓친다.
+    #   True면 추적 중 pitch 위쪽 한계를 '시작각(neutral_pitch_deg)'에 묶는다
+    #   → 시작각 위로는 절대 안 올라가고, 아래로는 pitch_min_deg 까지 자유롭게 내려간다.
+    #   따라서 '시작각'만 바꾸면(neutral_pitch_deg) 쉬는자세+위쪽한계가 함께 내려간다.
+    cap_pitch_to_start: true
+
+    # ★pitch 가 이 각도 이하(깊이 아래를 봄)면 yaw 를 0°(정면)으로 고정.
+    #   발밑/정면 바닥에서 공 찾을 때 좌우로 안 흔들리게. 끄려면 -71 등 pitch_min 아래로.
+    yaw_lock_pitch_deg: -40.0
+
+    # --- 분실/중립 복귀 ---
+    lost_timeout_sec: 0.5    # 이 시간 공 미검출이면 분실 판정 시작
+    # ★분실 후 바로 중립 복귀 말고, 이 시간 동안 마지막 목 위치 유지(마진).
+    #   짧은 검출 끊김에 목이 휙 돌아가 공을 더 못 보는 걸 방지. 유지 후에도 없으면 복귀.
+    lost_hold_sec: 2.0
+    neutral_yaw_deg: 0.0     # 중립 yaw(정면)
+    # ★시작/쉬는 pitch[deg] = '시작 목각도'. 음수일수록 더 아래(바닥 가까이)를 본다.
+    #   공을 못 찾으면 더 아래로(예 -35), 먼 공도 봐야 하면 덜 아래로(예 -20).
+    #   참고: 카메라 높이 h, 공거리 d 일 때 대략 -atan(h/d). d=1m≈-24°, d=0.5m≈-42°.
+    neutral_pitch_deg: -25.0
+    neutral_settle_deg: 0.5  # 중립 도달 판정 여유
+
+    # --- 발행 최적화 ---
+    publish_epsilon_deg: 0.05  # 명령 변화가 이값 미만이면 발행 생략
+    publish_debug: true        # 상태/오차 디버그 토픽 발행

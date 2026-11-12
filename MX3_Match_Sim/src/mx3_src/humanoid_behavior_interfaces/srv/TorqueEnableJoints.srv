@@ -1,0 +1,12 @@
+# 특정 조인트들만 토크 ON/OFF.
+# joint_names 가 비어 있으면 아무 동작도 하지 않고 success=false 반환.
+# 알 수 없는 조인트 이름은 무시 (응답 message 에 어떤 게 처리됐는지 기록).
+#
+# 사용 예 (pose_slider_gui 에서 체크박스로 손으로 잡고 싶은 관절만 OFF):
+#   ros2 service call /u2d2/torque_enable_joints humanoid_behavior_interfaces/srv/TorqueEnableJoints "{joint_names: ['r_shoulder_pitch_joint','l_shoulder_pitch_joint'], enable: false}"
+string[] joint_names
+bool enable
+---
+bool success
+string message
+string[] applied_joints   # 실제로 토크가 변경된 조인트 이름들

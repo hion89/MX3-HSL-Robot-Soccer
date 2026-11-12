@@ -1,0 +1,608 @@
+robo04@robo04-desktop:~$ timeout 20s ros2 topic echo \
+    /perception/detections_3d vision_msgs/msg/Detection3DArray \
+    --once --no-daemon --qos-profile sensor_data \
+    --filter "any(h.hypothesis.class_id == 'ball' for d in m.detections for h in d.results)"
+
+timeout 8s ros2 topic hz /perception/detections_3d
+header:
+  stamp:
+    sec: 1793777651
+    nanosec: 199046387
+  frame_id: camera_color_optical_frame
+detections:
+- header:
+    stamp:
+      sec: 1793777651
+      nanosec: 199046387
+    frame_id: camera_color_optical_frame
+  results:
+  - hypothesis:
+      class_id: ball
+      score: 0.8933094143867493
+    pose:
+      pose:
+        position:
+          x: 0.0014901650832645035
+          y: -0.0042713567945445825
+          z: 1.1280000000000001
+        orientation:
+          x: 0.0
+          y: 0.0
+          z: 0.0
+          w: 1.0
+      covariance:
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+  bbox:
+    center:
+      position:
+        x: 0.0014901650832645035
+        y: -0.0042713567945445825
+        z: 1.1280000000000001
+      orientation:
+        x: 0.0
+        y: 0.0
+        z: 0.0
+        w: 1.0
+    size:
+      x: 0.13761900999545323
+      y: 0.14998784616760585
+      z: 0.0
+  id: ''
+- header:
+    stamp:
+      sec: 1793777651
+      nanosec: 199046387
+    frame_id: camera_color_optical_frame
+  results:
+  - hypothesis:
+      class_id: T-Intersection
+      score: 0.8749375343322754
+    pose:
+      pose:
+        position:
+          x: 1.4686163554827747
+          y: -0.3372720483351049
+          z: 2.0420000000000003
+        orientation:
+          x: 0.0
+          y: 0.0
+          z: 0.0
+          w: 1.0
+      covariance:
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+  bbox:
+    center:
+      position:
+        x: 1.4686163554827747
+        y: -0.3372720483351049
+        z: 2.0420000000000003
+      orientation:
+        x: 0.0
+        y: 0.0
+        z: 0.0
+        w: 1.0
+    size:
+      x: 0.19297176597028662
+      y: 0.10881327523885179
+      z: 0.0
+  id: ''
+- header:
+    stamp:
+      sec: 1793777651
+      nanosec: 199046387
+    frame_id: camera_color_optical_frame
+  results:
+  - hypothesis:
+      class_id: L-Intersection
+      score: 0.8661319017410278
+    pose:
+      pose:
+        position:
+          x: 0.9456827045173688
+          y: -0.6635247853013942
+          z: 2.601
+        orientation:
+          x: 0.0
+          y: 0.0
+          z: 0.0
+          w: 1.0
+      covariance:
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+  bbox:
+    center:
+      position:
+        x: 0.9456827045173688
+        y: -0.6635247853013942
+        z: 2.601
+      orientation:
+        x: 0.0
+        y: 0.0
+        z: 0.0
+        w: 1.0
+    size:
+      x: 0.242509888639853
+      y: 0.13661123858424196
+      z: 0.0
+  id: ''
+- header:
+    stamp:
+      sec: 1793777651
+      nanosec: 199046387
+    frame_id: camera_color_optical_frame
+  results:
+  - hypothesis:
+      class_id: T-Intersection
+      score: 0.8539129495620728
+    pose:
+      pose:
+        position:
+          x: -0.9491960454300684
+          y: -0.14025787707478907
+          z: 1.681
+        orientation:
+          x: 0.0
+          y: 0.0
+          z: 0.0
+          w: 1.0
+      covariance:
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+  bbox:
+    center:
+      position:
+        x: -0.9491960454300684
+        y: -0.14025787707478907
+        z: 1.681
+      orientation:
+        x: 0.0
+        y: 0.0
+        z: 0.0
+        w: 1.0
+    size:
+      x: 0.1337973925794311
+      y: 0.09944224631995338
+      z: 0.0
+  id: ''
+- header:
+    stamp:
+      sec: 1793777651
+      nanosec: 199046387
+    frame_id: camera_color_optical_frame
+  results:
+  - hypothesis:
+      class_id: L-Intersection
+      score: 0.7969253063201904
+    pose:
+      pose:
+        position:
+          x: -0.4604016165173553
+          y: 0.28374303605194334
+          z: 0.725
+        orientation:
+          x: 0.0
+          y: 0.0
+          z: 0.0
+          w: 1.0
+      covariance:
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+  bbox:
+    center:
+      position:
+        x: -0.4604016165173553
+        y: 0.28374303605194334
+        z: 0.725
+      orientation:
+        x: 0.0
+        y: 0.0
+        z: 0.0
+        w: 1.0
+    size:
+      x: 0.05969425305388499
+      y: 0.040704687372146574
+      z: 0.0
+  id: ''
+- header:
+    stamp:
+      sec: 1793777651
+      nanosec: 199046387
+    frame_id: camera_color_optical_frame
+  results:
+  - hypothesis:
+      class_id: X-Intersection
+      score: 0.7074048519134521
+    pose:
+      pose:
+        position:
+          x: 0.6231570598153472
+          y: -0.25293522121369033
+          z: 1.858
+        orientation:
+          x: 0.0
+          y: 0.0
+          z: 0.0
+          w: 1.0
+      covariance:
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+  bbox:
+    center:
+      position:
+        x: 0.6231570598153472
+        y: -0.25293522121369033
+        z: 1.858
+      orientation:
+        x: 0.0
+        y: 0.0
+        z: 0.0
+        w: 1.0
+    size:
+      x: 0.16552363205402465
+      y: 0.09692061978441724
+      z: 0.0
+  id: ''
+- header:
+    stamp:
+      sec: 1793777651
+      nanosec: 199046387
+    frame_id: camera_color_optical_frame
+  results:
+  - hypothesis:
+      class_id: L-Intersection
+      score: 0.3081900179386139
+    pose:
+      pose:
+        position:
+          x: -1.0198147497522339
+          y: -0.606066259833327
+          z: 2.686
+        orientation:
+          x: 0.0
+          y: 0.0
+          z: 0.0
+          w: 1.0
+      covariance:
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+  bbox:
+    center:
+      position:
+        x: -1.0198147497522339
+        y: -0.606066259833327
+        z: 2.686
+      orientation:
+        x: 0.0
+        y: 0.0
+        z: 0.0
+        w: 1.0
+    size:
+      x: 0.24345187744716182
+      y: 0.14743276850707937
+      z: 0.0
+  id: ''
+- header:
+    stamp:
+      sec: 1793777651
+      nanosec: 199046387
+    frame_id: camera_color_optical_frame
+  results:
+  - hypothesis:
+      class_id: X-Intersection
+      score: 0.2720247507095337
+    pose:
+      pose:
+        position:
+          x: 0.6295805853091463
+          y: 0.27595327703324873
+          z: 0.772
+        orientation:
+          x: 0.0
+          y: 0.0
+          z: 0.0
+          w: 1.0
+      covariance:
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+  bbox:
+    center:
+      position:
+        x: 0.6295805853091463
+        y: 0.27595327703324873
+        z: 0.772
+      orientation:
+        x: 0.0
+        y: 0.0
+        z: 0.0
+        w: 1.0
+    size:
+      x: 0.07199755517624347
+      y: 0.043980232314495056
+      z: 0.0
+  id: ''
+---
+WARNING: topic [/perception/detections_3d] does not appear to be published yet
+average rate: 30.052
+        min: 0.032s max: 0.035s std dev: 0.00042s window: 32
+average rate: 30.016
+        min: 0.032s max: 0.035s std dev: 0.00040s window: 62
+average rate: 29.691
+        min: 0.032s max: 0.066s std dev: 0.00345s window: 92
+average rate: 29.033
+        min: 0.032s max: 0.067s std dev: 0.00603s window: 119
+average rate: 29.220
+        min: 0.032s max: 0.067s std dev: 0.00541s window: 149

@@ -1,0 +1,3537 @@
+{
+  "database": "C:\\Users\\jes\\Desktop\\isaac_ws\\sim2real_evidence\\walk_20261007_161217\\walk_20261007_161217_0.db3",
+  "input_sha256": "787a5cd2840a0bd7b210a7877f52be093f14f946b6f5d57e72ec7845e0d65ff8",
+  "sqlite_quick_check": "ok",
+  "bag_duration_s": 422.145327413,
+  "bag_message_count": 120364,
+  "goal_start_record_ns": 1791357549265500157,
+  "goal_start_header_ns": 1791357549265054924,
+  "goal_offset_from_bag_start_s": 411.389013304,
+  "goal_count": 126,
+  "goal_duration_s": 2.498708477,
+  "goal_interval_ms": {
+    "min": 19.19378,
+    "p50": 19.976145,
+    "p99": 20.35727184,
+    "max": 20.776335
+  },
+  "goal_gaps_over_40ms": 0,
+  "first_goal_step_over_0041_rad_s": 2.079441115,
+  "joint_feedback_interval_ms": {
+    "min": 5.813115,
+    "p50": 20.000273999999997,
+    "p99": 41.425857310000005,
+    "max": 57.455319
+  },
+  "largest_feedback_gap_start_s": 0.893069238,
+  "preview_equal_to_goals_by_sequence": true,
+  "prestart_tilt_stats_deg": {
+    "min": 2.6562105892048167,
+    "p50": 2.7626236822295054,
+    "p99": 2.851730217332278,
+    "max": 2.8764103625927144
+  },
+  "threshold_first_crossings_s": {
+    "5": 1.005196251,
+    "10": 1.335153943,
+    "15": 2.075192539,
+    "20": 2.270174835,
+    "30": 2.315177684,
+    "45": 2.410194931,
+    "55": 2.450172343
+  },
+  "state_events": [
+    {
+      "t": -403.36227081,
+      "mode": "IDLE",
+      "running": false,
+      "publish_joint_goals": true,
+      "error": ""
+    },
+    {
+      "t": 0.039616343,
+      "mode": "WALK",
+      "running": true,
+      "publish_joint_goals": true,
+      "error": ""
+    },
+    {
+      "t": 2.239244805,
+      "mode": "RECOVERY",
+      "running": true,
+      "publish_joint_goals": true,
+      "error": ""
+    },
+    {
+      "t": 2.637695766,
+      "mode": "FAULT",
+      "running": false,
+      "publish_joint_goals": true,
+      "error": "Recovery tilt limit or timeout reached; explicit restart required"
+    },
+    {
+      "t": 6.237689069,
+      "mode": "IDLE",
+      "running": false,
+      "publish_joint_goals": true,
+      "error": "Recovery tilt limit or timeout reached; explicit restart required"
+    }
+  ],
+  "torque_events": [
+    {
+      "t": -411.385650317,
+      "value": false
+    },
+    {
+      "t": -68.575086799,
+      "value": true
+    }
+  ],
+  "stop_events": [
+    {
+      "t": -411.38027899,
+      "value": false
+    }
+  ],
+  "behavior_events": [
+    {
+      "t": -411.36339509,
+      "value": {
+        "behavior": "none",
+        "active": false,
+        "phase": "",
+        "phase_idx": -1,
+        "total_phases": -1
+      }
+    }
+  ],
+  "command_max_abs_in_window": [
+    0.0,
+    0.0,
+    0.0
+  ],
+  "header_to_recorder_ms": {
+    "/joint_goals": {
+      "min": 0.240298,
+      "p50": 0.2667625,
+      "p99": 0.43904075,
+      "max": 0.479666
+    },
+    "/joint_states": {
+      "min": 3.173016,
+      "p50": 3.622344,
+      "p99": 4.0777890999999995,
+      "max": 4.900152
+    },
+    "/imu/data": {
+      "min": 0.15831,
+      "p50": 0.21279199999999998,
+      "p99": 0.34107156,
+      "max": 1.2764
+    }
+  },
+  "feedback_age_at_goal_ms": {
+    "min": 2.312919,
+    "p50": 5.458622,
+    "p99": 25.57258,
+    "max": 45.442226
+  },
+  "imu_age_at_goal_ms": {
+    "min": 2.973648,
+    "p50": 3.370095,
+    "p99": 4.1211952499999995,
+    "max": 4.529323
+  },
+  "joint_metrics": {
+    "l_pelvis_pitch_joint": {
+      "prestart_median_rad": -0.6320000846088841,
+      "first_goal_rad": -0.6310420036315918,
+      "last_goal_rad": -1.3384692668914795,
+      "max_goal_step_rad": 0.08000004291534424,
+      "first_feedback_rad": -0.6320000846088841,
+      "last_feedback_rad": -1.2287186110963986,
+      "early_0_1": {
+        "max_abs_error_rad": 0.06363379935841595,
+        "rmse_rad": 0.03198785316698102,
+        "max_abs_error_t": 0.918535927,
+        "max_abs_goal_change_from_start_rad": 0.12710291147232056
+      },
+      "before_2s": {
+        "max_abs_error_rad": 0.11632976629345548,
+        "rmse_rad": 0.047059550793507834,
+        "max_abs_error_t": 1.618511926,
+        "max_abs_goal_change_from_start_rad": 0.4205484688282013
+      },
+      "before15deg": {
+        "max_abs_error_rad": 0.11632976629345548,
+        "rmse_rad": 0.04653174898051724,
+        "max_abs_error_t": 1.618511926,
+        "max_abs_goal_change_from_start_rad": 0.4205484688282013
+      },
+      "before20deg": {
+        "max_abs_error_rad": 0.41349790333799546,
+        "rmse_rad": 0.07834114995526857,
+        "max_abs_error_t": 2.258493659,
+        "max_abs_goal_change_from_start_rad": 0.42591066658496857
+      },
+      "all_goals": {
+        "max_abs_error_rad": 0.5248765090329909,
+        "rmse_rad": 0.1346601214094787,
+        "max_abs_error_t": 2.338481763,
+        "max_abs_goal_change_from_start_rad": 0.7074272632598877
+      }
+    },
+    "r_pelvis_pitch_joint": {
+      "prestart_median_rad": 0.6289321230331129,
+      "first_goal_rad": 0.628761887550354,
+      "last_goal_rad": 1.2954332828521729,
+      "max_goal_step_rad": 0.08000004291534424,
+      "first_feedback_rad": 0.6289321230331129,
+      "last_feedback_rad": 1.1826991874598294,
+      "early_0_1": {
+        "max_abs_error_rad": 0.05331982948842573,
+        "rmse_rad": 0.018726501042832074,
+        "max_abs_error_t": 0.738532402,
+        "max_abs_goal_change_from_start_rad": 0.060318052768707275
+      },
+      "before_2s": {
+        "max_abs_error_rad": 0.17487227092062052,
+        "rmse_rad": 0.04142758787157367,
+        "max_abs_error_t": 1.518480217,
+        "max_abs_goal_change_from_start_rad": 0.24620631337165833
+      },
+      "before15deg": {
+        "max_abs_error_rad": 0.17487227092062052,
+        "rmse_rad": 0.04254990254139295,
+        "max_abs_error_t": 1.518480217,
+        "max_abs_goal_change_from_start_rad": 0.24620631337165833
+      },
+      "before20deg": {
+        "max_abs_error_rad": 0.17487227092062052,
+        "rmse_rad": 0.05354602161902976,
+        "max_abs_error_t": 1.518480217,
+        "max_abs_goal_change_from_start_rad": 0.24620631337165833
+      },
+      "all_goals": {
+        "max_abs_error_rad": 0.31360348866323673,
+        "rmse_rad": 0.07589614023161577,
+        "max_abs_error_t": 2.418707572,
+        "max_abs_goal_change_from_start_rad": 0.6666713953018188
+      }
+    },
+    "l_pelvis_roll_joint": {
+      "prestart_median_rad": 0.006135923151542565,
+      "first_goal_rad": 0.006310861092060804,
+      "last_goal_rad": -0.06884437054395676,
+      "max_goal_step_rad": 0.08000001311302185,
+      "first_feedback_rad": 0.006135923151542565,
+      "last_feedback_rad": -0.05829126993965436,
+      "early_0_1": {
+        "max_abs_error_rad": 0.041780953543860994,
+        "rmse_rad": 0.015287906134384502,
+        "max_abs_error_t": 0.978567567,
+        "max_abs_goal_change_from_start_rad": 0.02354812202975154
+      },
+      "before_2s": {
+        "max_abs_error_rad": 0.06778944959318305,
+        "rmse_rad": 0.02475485711145311,
+        "max_abs_error_t": 1.87850717,
+        "max_abs_goal_change_from_start_rad": 0.04495467571541667
+      },
+      "before15deg": {
+        "max_abs_error_rad": 0.06778944959318305,
+        "rmse_rad": 0.024736340297807774,
+        "max_abs_error_t": 1.87850717,
+        "max_abs_goal_change_from_start_rad": 0.04495467571541667
+      },
+      "before20deg": {
+        "max_abs_error_rad": 0.17861960708009744,
+        "rmse_rad": 0.03807121895254798,
+        "max_abs_error_t": 2.178463313,
+        "max_abs_goal_change_from_start_rad": 0.27585140941664577
+      },
+      "all_goals": {
+        "max_abs_error_rad": 0.2177294352012875,
+        "rmse_rad": 0.05188251537411871,
+        "max_abs_error_t": 2.378782035,
+        "max_abs_goal_change_from_start_rad": 0.3009123611263931
+      }
+    },
+    "r_pelvis_roll_joint": {
+      "prestart_median_rad": -0.007669903939428206,
+      "first_goal_rad": -0.007404953707009554,
+      "last_goal_rad": -0.08361399173736572,
+      "max_goal_step_rad": 0.07999999821186066,
+      "first_feedback_rad": -0.007669903939428206,
+      "last_feedback_rad": -0.19941750242513334,
+      "early_0_1": {
+        "max_abs_error_rad": 0.07637344050841513,
+        "rmse_rad": 0.02846305186624314,
+        "max_abs_error_t": 0.698553198,
+        "max_abs_goal_change_from_start_rad": 0.08113851444795728
+      },
+      "before_2s": {
+        "max_abs_error_rad": 0.15712065865128674,
+        "rmse_rad": 0.0539351512245451,
+        "max_abs_error_t": 1.278565313,
+        "max_abs_goal_change_from_start_rad": 0.17405960010364652
+      },
+      "before15deg": {
+        "max_abs_error_rad": 0.15712065865128674,
+        "rmse_rad": 0.05696246328108602,
+        "max_abs_error_t": 1.278565313,
+        "max_abs_goal_change_from_start_rad": 0.17405960010364652
+      },
+      "before20deg": {
+        "max_abs_error_rad": 0.28881751509599557,
+        "rmse_rad": 0.07228873684877236,
+        "max_abs_error_t": 2.238821621,
+        "max_abs_goal_change_from_start_rad": 0.2216610456816852
+      },
+      "all_goals": {
+        "max_abs_error_rad": 0.28881751509599557,
+        "rmse_rad": 0.07356878779609091,
+        "max_abs_error_t": 2.238821621,
+        "max_abs_goal_change_from_start_rad": 0.2495168442837894
+      }
+    },
+    "l_pelvis_yaw_joint": {
+      "prestart_median_rad": -0.0030679615757712823,
+      "first_goal_rad": -0.003140402026474476,
+      "last_goal_rad": -0.15987926721572876,
+      "max_goal_step_rad": 0.08000000566244125,
+      "first_feedback_rad": -0.0030679615757712823,
+      "last_feedback_rad": 0.09817477042468103,
+      "early_0_1": {
+        "max_abs_error_rad": 0.02078660232168888,
+        "rmse_rad": 0.008433688253607333,
+        "max_abs_error_t": 0.998594626,
+        "max_abs_goal_change_from_start_rad": 0.008587196469306946
+      },
+      "before_2s": {
+        "max_abs_error_rad": 0.030907752252322354,
+        "rmse_rad": 0.010718652668686879,
+        "max_abs_error_t": 1.678562094,
+        "max_abs_goal_change_from_start_rad": 0.016486038453876972
+      },
+      "before15deg": {
+        "max_abs_error_rad": 0.030907752252322354,
+        "rmse_rad": 0.010682260101624588,
+        "max_abs_error_t": 1.678562094,
+        "max_abs_goal_change_from_start_rad": 0.016486038453876972
+      },
+      "before20deg": {
+        "max_abs_error_rad": 0.22828186557940713,
+        "rmse_rad": 0.03496507806037819,
+        "max_abs_error_t": 2.11876327,
+        "max_abs_goal_change_from_start_rad": 0.24968515615910292
+      },
+      "all_goals": {
+        "max_abs_error_rad": 0.3253492015102676,
+        "rmse_rad": 0.07149328313471343,
+        "max_abs_error_t": 2.318753243,
+        "max_abs_goal_change_from_start_rad": 0.2521342905238271
+      }
+    },
+    "r_pelvis_yaw_joint": {
+      "prestart_median_rad": -0.0015339807878856412,
+      "first_goal_rad": -0.001497696852311492,
+      "last_goal_rad": -0.47527939081192017,
+      "max_goal_step_rad": 0.08000000566244125,
+      "first_feedback_rad": -0.0015339807878856412,
+      "last_feedback_rad": -0.3650874275167826,
+      "early_0_1": {
+        "max_abs_error_rad": 0.017845474183559418,
+        "rmse_rad": 0.006955651306219016,
+        "max_abs_error_t": 0.638510261,
+        "max_abs_goal_change_from_start_rad": 0.016347777331247926
+      },
+      "before_2s": {
+        "max_abs_error_rad": 0.053204727052557015,
+        "rmse_rad": 0.0156858875407737,
+        "max_abs_error_t": 1.418568609,
+        "max_abs_goal_change_from_start_rad": 0.053241010988131166
+      },
+      "before15deg": {
+        "max_abs_error_rad": 0.053204727052557015,
+        "rmse_rad": 0.016038550788703854,
+        "max_abs_error_t": 1.418568609,
+        "max_abs_goal_change_from_start_rad": 0.053241010988131166
+      },
+      "before20deg": {
+        "max_abs_error_rad": 0.2967954242328824,
+        "rmse_rad": 0.0587792839050559,
+        "max_abs_error_t": 2.258493659,
+        "max_abs_goal_change_from_start_rad": 0.3011948575731367
+      },
+      "all_goals": {
+        "max_abs_error_rad": 0.3402128733267144,
+        "rmse_rad": 0.08577862710430599,
+        "max_abs_error_t": 2.298722376,
+        "max_abs_goal_change_from_start_rad": 0.4737816939596087
+      }
+    },
+    "l_knee_pitch_joint": {
+      "prestart_median_rad": -1.2302525918842842,
+      "first_goal_rad": -1.2290951013565063,
+      "last_goal_rad": -1.2034730911254883,
+      "max_goal_step_rad": 0.08000004291534424,
+      "first_feedback_rad": -1.2302525918842842,
+      "last_feedback_rad": -1.2839419194602817,
+      "early_0_1": {
+        "max_abs_error_rad": 0.1294097200491986,
+        "rmse_rad": 0.057428474278920415,
+        "max_abs_error_t": 0.818623998,
+        "max_abs_goal_change_from_start_rad": 0.23948967456817627
+      },
+      "before_2s": {
+        "max_abs_error_rad": 0.1397550657540234,
+        "rmse_rad": 0.06329906194378984,
+        "max_abs_error_t": 1.678562094,
+        "max_abs_goal_change_from_start_rad": 0.6323118209838867
+      },
+      "before15deg": {
+        "max_abs_error_rad": 0.1397550657540234,
+        "rmse_rad": 0.06445198979845422,
+        "max_abs_error_t": 1.678562094,
+        "max_abs_goal_change_from_start_rad": 0.6323118209838867
+      },
+      "before20deg": {
+        "max_abs_error_rad": 0.36587487131575536,
+        "rmse_rad": 0.09668431844199622,
+        "max_abs_error_t": 2.258493659,
+        "max_abs_goal_change_from_start_rad": 0.6323118209838867
+      },
+      "all_goals": {
+        "max_abs_error_rad": 0.36587487131575536,
+        "rmse_rad": 0.11295017262700958,
+        "max_abs_error_t": 2.258493659,
+        "max_abs_goal_change_from_start_rad": 0.6323118209838867
+      }
+    },
+    "r_knee_pitch_joint": {
+      "prestart_median_rad": 1.2287186110963986,
+      "first_goal_rad": 1.2276383638381958,
+      "last_goal_rad": 1.7617554664611816,
+      "max_goal_step_rad": 0.08000004291534424,
+      "first_feedback_rad": 1.2287186110963986,
+      "last_feedback_rad": 1.6336895390982078,
+      "early_0_1": {
+        "max_abs_error_rad": 0.12459420859714898,
+        "rmse_rad": 0.05427880615941156,
+        "max_abs_error_t": 0.738532402,
+        "max_abs_goal_change_from_start_rad": 0.17413532733917236
+      },
+      "before_2s": {
+        "max_abs_error_rad": 0.18522705783740134,
+        "rmse_rad": 0.07282444530360642,
+        "max_abs_error_t": 1.458655177,
+        "max_abs_goal_change_from_start_rad": 0.3724184036254883
+      },
+      "before15deg": {
+        "max_abs_error_rad": 0.18522705783740134,
+        "rmse_rad": 0.07587288369912477,
+        "max_abs_error_t": 1.458655177,
+        "max_abs_goal_change_from_start_rad": 0.4646044969558716
+      },
+      "before20deg": {
+        "max_abs_error_rad": 0.3658300364398043,
+        "rmse_rad": 0.10387193832520962,
+        "max_abs_error_t": 2.198544902,
+        "max_abs_goal_change_from_start_rad": 0.4646044969558716
+      },
+      "all_goals": {
+        "max_abs_error_rad": 0.3658300364398043,
+        "rmse_rad": 0.10857351212081878,
+        "max_abs_error_t": 2.198544902,
+        "max_abs_goal_change_from_start_rad": 0.5502147674560547
+      }
+    },
+    "l_ankle_pitch_joint": {
+      "prestart_median_rad": -0.6304661038209985,
+      "first_goal_rad": -0.6311601996421814,
+      "last_goal_rad": -1.1863596439361572,
+      "max_goal_step_rad": 0.07999999821186066,
+      "first_feedback_rad": -0.6304661038209985,
+      "last_feedback_rad": -0.9740778003073821,
+      "early_0_1": {
+        "max_abs_error_rad": 0.08052643049690611,
+        "rmse_rad": 0.03572447849120221,
+        "max_abs_error_t": 0.8386156,
+        "max_abs_goal_change_from_start_rad": 0.1186947226524353
+      },
+      "before_2s": {
+        "max_abs_error_rad": 0.18830369375225003,
+        "rmse_rad": 0.06085944056621317,
+        "max_abs_error_t": 1.978444571,
+        "max_abs_goal_change_from_start_rad": 0.4326442778110504
+      },
+      "before15deg": {
+        "max_abs_error_rad": 0.18830369375225003,
+        "rmse_rad": 0.06136013950799798,
+        "max_abs_error_t": 1.978444571,
+        "max_abs_goal_change_from_start_rad": 0.4326442778110504
+      },
+      "before20deg": {
+        "max_abs_error_rad": 0.341991573296757,
+        "rmse_rad": 0.08551145853976078,
+        "max_abs_error_t": 2.258493659,
+        "max_abs_goal_change_from_start_rad": 0.6326442956924438
+      },
+      "all_goals": {
+        "max_abs_error_rad": 0.37797207844006514,
+        "rmse_rad": 0.11797184938745618,
+        "max_abs_error_t": 2.318753243,
+        "max_abs_goal_change_from_start_rad": 0.6326442956924438
+      }
+    },
+    "r_ankle_pitch_joint": {
+      "prestart_median_rad": 0.6335340653967698,
+      "first_goal_rad": 0.6338366270065308,
+      "last_goal_rad": 1.0196959972381592,
+      "max_goal_step_rad": 0.08000004291534424,
+      "first_feedback_rad": 0.6335340653967698,
+      "last_feedback_rad": 1.1244079175201749,
+      "early_0_1": {
+        "max_abs_error_rad": 0.04213903621173787,
+        "rmse_rad": 0.01699443760199414,
+        "max_abs_error_t": 0.618517475,
+        "max_abs_goal_change_from_start_rad": 0.04857528209686279
+      },
+      "before_2s": {
+        "max_abs_error_rad": 0.1183155194657094,
+        "rmse_rad": 0.03446019189514249,
+        "max_abs_error_t": 1.498707759,
+        "max_abs_goal_change_from_start_rad": 0.17045432329177856
+      },
+      "before15deg": {
+        "max_abs_error_rad": 0.1336407106947064,
+        "rmse_rad": 0.03925508370009664,
+        "max_abs_error_t": 2.038816575,
+        "max_abs_goal_change_from_start_rad": 0.20143842697143555
+      },
+      "before20deg": {
+        "max_abs_error_rad": 0.28830405070951454,
+        "rmse_rad": 0.06798094977615253,
+        "max_abs_error_t": 2.238821621,
+        "max_abs_goal_change_from_start_rad": 0.3561343550682068
+      },
+      "all_goals": {
+        "max_abs_error_rad": 0.28830405070951454,
+        "rmse_rad": 0.0823150709248113,
+        "max_abs_error_t": 2.238821621,
+        "max_abs_goal_change_from_start_rad": 0.5711832046508789
+      }
+    },
+    "l_ankle_roll_joint": {
+      "prestart_median_rad": -0.0046019423636569235,
+      "first_goal_rad": -0.005565091967582703,
+      "last_goal_rad": 0.3036707043647766,
+      "max_goal_step_rad": 0.08000000566244125,
+      "first_feedback_rad": -0.0046019423636569235,
+      "last_feedback_rad": 0.3574175235773544,
+      "early_0_1": {
+        "max_abs_error_rad": 0.041850258336263976,
+        "rmse_rad": 0.020859847783552408,
+        "max_abs_error_t": 0.858643812,
+        "max_abs_goal_change_from_start_rad": 0.07833825051784515
+      },
+      "before_2s": {
+        "max_abs_error_rad": 0.13753776437369722,
+        "rmse_rad": 0.04612768982500931,
+        "max_abs_error_t": 1.198504661,
+        "max_abs_goal_change_from_start_rad": 0.147233784198761
+      },
+      "before15deg": {
+        "max_abs_error_rad": 0.14485315987843383,
+        "rmse_rad": 0.04868829569178613,
+        "max_abs_error_t": 2.018721898,
+        "max_abs_goal_change_from_start_rad": 0.1872337907552719
+      },
+      "before20deg": {
+        "max_abs_error_rad": 0.27244891355493756,
+        "rmse_rad": 0.07130805121284767,
+        "max_abs_error_t": 2.218557977,
+        "max_abs_goal_change_from_start_rad": 0.3497564047574997
+      },
+      "all_goals": {
+        "max_abs_error_rad": 0.2979873601153942,
+        "rmse_rad": 0.09175516962468296,
+        "max_abs_error_t": 2.418707572,
+        "max_abs_goal_change_from_start_rad": 0.43877793848514557
+      }
+    },
+    "r_ankle_roll_joint": {
+      "prestart_median_rad": 0.006135923151542565,
+      "first_goal_rad": 0.0061248051933944225,
+      "last_goal_rad": 0.4568600654602051,
+      "max_goal_step_rad": 0.08000001311302185,
+      "first_feedback_rad": 0.006135923151542565,
+      "last_feedback_rad": 0.3620194659410113,
+      "early_0_1": {
+        "max_abs_error_rad": 0.04043042428486743,
+        "rmse_rad": 0.017276203202578628,
+        "max_abs_error_t": 0.738532402,
+        "max_abs_goal_change_from_start_rad": 0.10180077375844121
+      },
+      "before_2s": {
+        "max_abs_error_rad": 0.11974049623439888,
+        "rmse_rad": 0.0376422801542507,
+        "max_abs_error_t": 1.238450904,
+        "max_abs_goal_change_from_start_rad": 0.2576920879073441
+      },
+      "before15deg": {
+        "max_abs_error_rad": 0.12760366767962011,
+        "rmse_rad": 0.0424481041279015,
+        "max_abs_error_t": 2.05866478,
+        "max_abs_goal_change_from_start_rad": 0.2576920879073441
+      },
+      "before20deg": {
+        "max_abs_error_rad": 0.1963723579578352,
+        "rmse_rad": 0.049962862339612384,
+        "max_abs_error_t": 2.158538914,
+        "max_abs_goal_change_from_start_rad": 0.3777966690249741
+      },
+      "all_goals": {
+        "max_abs_error_rad": 0.1963723579578352,
+        "rmse_rad": 0.060308379813026294,
+        "max_abs_error_t": 2.158538914,
+        "max_abs_goal_change_from_start_rad": 0.45073526026681066
+      }
+    }
+  },
+  "snapshots": [
+    {
+      "t": 0,
+      "tilt_deg": 2.8289345454827894,
+      "roll_deg": -0.26599346969195853,
+      "pitch_deg": 2.8164117475808577,
+      "l_knee_pitch_joint": {
+        "goal": -1.2290951013565063,
+        "real": -1.2302525918842842
+      },
+      "r_knee_pitch_joint": {
+        "goal": 1.2276383638381958,
+        "real": 1.2287186110963986
+      },
+      "l_ankle_pitch_joint": {
+        "goal": -0.6311601996421814,
+        "real": -0.6304661038209985
+      },
+      "r_ankle_pitch_joint": {
+        "goal": 0.6338366270065308,
+        "real": 0.6335340653967698
+      }
+    },
+    {
+      "t": 0.25,
+      "tilt_deg": 2.9412888746147074,
+      "roll_deg": -0.3424769383267199,
+      "pitch_deg": 2.921299615700328,
+      "l_knee_pitch_joint": {
+        "goal": -1.1980247497558594,
+        "real": -1.2425244381873692
+      },
+      "r_knee_pitch_joint": {
+        "goal": 1.2320101261138916,
+        "real": 1.2409904573994837
+      },
+      "l_ankle_pitch_joint": {
+        "goal": -0.6210348606109619,
+        "real": -0.6366020269725411
+      },
+      "r_ankle_pitch_joint": {
+        "goal": 0.6312726736068726,
+        "real": 0.641203969336198
+      }
+    },
+    {
+      "t": 0.5,
+      "tilt_deg": 3.029163653354137,
+      "roll_deg": -0.7768761322490098,
+      "pitch_deg": 2.927938075928933,
+      "l_knee_pitch_joint": {
+        "goal": -1.2002631425857544,
+        "real": -1.23178657267217
+      },
+      "r_knee_pitch_joint": {
+        "goal": 1.191716194152832,
+        "real": 1.2333205534600555
+      },
+      "l_ankle_pitch_joint": {
+        "goal": -0.6182061433792114,
+        "real": -0.6289321230331129
+      },
+      "r_ankle_pitch_joint": {
+        "goal": 0.6425740718841553,
+        "real": 0.6381360077604268
+      }
+    },
+    {
+      "t": 0.75,
+      "tilt_deg": 3.710576740320849,
+      "roll_deg": 0.8401887470731685,
+      "pitch_deg": 3.61433247477292,
+      "l_knee_pitch_joint": {
+        "goal": -1.1733455657958984,
+        "real": -1.1980389953386859
+      },
+      "r_knee_pitch_joint": {
+        "goal": 1.0535030364990234,
+        "real": 1.1780972450961724
+      },
+      "l_ankle_pitch_joint": {
+        "goal": -0.6062236428260803,
+        "real": -0.6289321230331129
+      },
+      "r_ankle_pitch_joint": {
+        "goal": 0.5934409499168396,
+        "real": 0.6151262959421421
+      }
+    },
+    {
+      "t": 1,
+      "tilt_deg": 4.908481321313858,
+      "roll_deg": 0.4604050698937513,
+      "pitch_deg": 4.886893729591898,
+      "l_knee_pitch_joint": {
+        "goal": -0.9896054267883301,
+        "real": -1.0492428589137786
+      },
+      "r_knee_pitch_joint": {
+        "goal": 1.166711449623108,
+        "real": 1.1336118022474888
+      },
+      "l_ankle_pitch_joint": {
+        "goal": -0.5289806127548218,
+        "real": -0.5614369683661447
+      },
+      "r_ankle_pitch_joint": {
+        "goal": 0.585261344909668,
+        "real": 0.5951845456996288
+      }
+    },
+    {
+      "t": 1.25,
+      "tilt_deg": 8.844636568757323,
+      "roll_deg": 5.810241171538259,
+      "pitch_deg": 6.679962140337551,
+      "l_knee_pitch_joint": {
+        "goal": -1.057509422302246,
+        "real": -0.9802137234589247
+      },
+      "r_knee_pitch_joint": {
+        "goal": 1.0434848070144653,
+        "real": 1.1903690913992575
+      },
+      "l_ankle_pitch_joint": {
+        "goal": -0.5437631011009216,
+        "real": -0.5200194870932323
+      },
+      "r_ankle_pitch_joint": {
+        "goal": 0.6001254320144653,
+        "real": 0.6335340653967698
+      }
+    },
+    {
+      "t": 1.5,
+      "tilt_deg": 11.28444879298705,
+      "roll_deg": 8.447956691540154,
+      "pitch_deg": 7.508691043527892,
+      "l_knee_pitch_joint": {
+        "goal": -0.9743435382843018,
+        "real": -0.9878836273983529
+      },
+      "r_knee_pitch_joint": {
+        "goal": 0.8969719409942627,
+        "real": 1.0661166475805206
+      },
+      "l_ankle_pitch_joint": {
+        "goal": -0.5546345710754395,
+        "real": -0.5414952181236313
+      },
+      "r_ankle_pitch_joint": {
+        "goal": 0.49067485332489014,
+        "real": 0.6089903727905995
+      }
+    },
+    {
+      "t": 1.75,
+      "tilt_deg": 9.883986835828374,
+      "roll_deg": 4.095794039475816,
+      "pitch_deg": 9.00311114006584,
+      "l_knee_pitch_joint": {
+        "goal": -0.6236723065376282,
+        "real": -0.6964272777000811
+      },
+      "r_knee_pitch_joint": {
+        "goal": 0.959347128868103,
+        "real": 0.9418642037617837
+      },
+      "l_ankle_pitch_joint": {
+        "goal": -0.3167670667171478,
+        "real": -0.42184471666855133
+      },
+      "r_ankle_pitch_joint": {
+        "goal": 0.5207346677780151,
+        "real": 0.5384272565478601
+      }
+    },
+    {
+      "t": 2,
+      "tilt_deg": 12.5032640550508,
+      "roll_deg": 4.352425228061734,
+      "pitch_deg": 11.732588378281815,
+      "l_knee_pitch_joint": {
+        "goal": -0.6853962540626526,
+        "real": -0.5936505649117432
+      },
+      "r_knee_pitch_joint": {
+        "goal": 0.8763927221298218,
+        "real": 0.9955535313377811
+      },
+      "l_ankle_pitch_joint": {
+        "goal": -0.19851592183113098,
+        "real": -0.380427235395639
+      },
+      "r_ankle_pitch_joint": {
+        "goal": 0.5123981833457947,
+        "real": 0.5614369683661447
+      }
+    },
+    {
+      "t": 2.1,
+      "tilt_deg": 16.049836990958912,
+      "roll_deg": 9.3202661928708,
+      "pitch_deg": 13.124682535878934,
+      "l_knee_pitch_joint": {
+        "goal": -0.8818369507789612,
+        "real": -0.6550097964271688
+      },
+      "r_knee_pitch_joint": {
+        "goal": 0.9230338335037231,
+        "real": 0.8436894333371027
+      },
+      "l_ankle_pitch_joint": {
+        "goal": -0.15851590037345886,
+        "real": -0.30679615757712825
+      },
+      "r_ankle_pitch_joint": {
+        "goal": 0.35770225524902344,
+        "real": 0.5384272565478601
+      }
+    },
+    {
+      "t": 2.25,
+      "tilt_deg": 17.992592835222425,
+      "roll_deg": 5.975481468549856,
+      "pitch_deg": 17.002413515985907,
+      "l_knee_pitch_joint": {
+        "goal": -0.8018370270729065,
+        "real": -1.0921943209745766
+      },
+      "r_knee_pitch_joint": {
+        "goal": 1.4354336261749268,
+        "real": 1.1198059751565181
+      },
+      "l_ankle_pitch_joint": {
+        "goal": -0.39851588010787964,
+        "real": -0.08743690490948154
+      },
+      "r_ankle_pitch_joint": {
+        "goal": 0.7577021718025208,
+        "real": 0.4693981210930062
+      }
+    },
+    {
+      "t": 2.498708477,
+      "tilt_deg": 66.18464994317672,
+      "roll_deg": 57.0721379216368,
+      "pitch_deg": 42.02681117868403,
+      "l_knee_pitch_joint": {
+        "goal": -1.2034730911254883,
+        "real": -1.2839419194602817
+      },
+      "r_knee_pitch_joint": {
+        "goal": 1.7617554664611816,
+        "real": 1.6336895390982078
+      },
+      "l_ankle_pitch_joint": {
+        "goal": -1.1863596439361572,
+        "real": -0.9740778003073821
+      },
+      "r_ankle_pitch_joint": {
+        "goal": 1.0196959972381592,
+        "real": 1.1244079175201749
+      }
+    },
+    {
+      "t": 3,
+      "tilt_deg": 112.47953118355632,
+      "roll_deg": -148.232658984952,
+      "pitch_deg": 63.27393265090534,
+      "l_knee_pitch_joint": {
+        "goal": -1.2034730911254883,
+        "real": -1.2287186110963986
+      },
+      "r_knee_pitch_joint": {
+        "goal": 1.7617554664611816,
+        "real": 1.761009944492716
+      },
+      "l_ankle_pitch_joint": {
+        "goal": -1.1863596439361572,
+        "real": -1.205708899278114
+      },
+      "r_ankle_pitch_joint": {
+        "goal": 1.0196959972381592,
+        "real": 1.01702926236818
+      }
+    },
+    {
+      "t": 4,
+      "tilt_deg": 108.57455699496698,
+      "roll_deg": 150.56821459860782,
+      "pitch_deg": 68.54684665680887,
+      "l_knee_pitch_joint": {
+        "goal": -1.2034730911254883,
+        "real": -1.2164467647933135
+      },
+      "r_knee_pitch_joint": {
+        "goal": 1.7617554664611816,
+        "real": 1.765611886856373
+      },
+      "l_ankle_pitch_joint": {
+        "goal": -1.1863596439361572,
+        "real": -1.2087768608538851
+      },
+      "r_ankle_pitch_joint": {
+        "goal": 1.0196959972381592,
+        "real": 1.021631204731837
+      }
+    }
+  ],
+  "active_diag_voltage_v": {
+    "min": 11.6,
+    "p50": 11.9,
+    "p99": 12.0,
+    "max": 12.0
+  },
+  "active_diag_temperature_c": {
+    "min": 35.0,
+    "p50": 37.0,
+    "p99": 44.41,
+    "max": 45.0
+  },
+  "active_diag_max_abs_current_ma": 2362.1,
+  "active_diag_nonzero_hw_error": [],
+  "diagnostics": [
+    {
+      "t": -1.787017019,
+      "id": 1,
+      "name": "l_ankle_roll_joint",
+      "pwm": 18,
+      "current_ma": 94.1,
+      "voltage_v": 11.9,
+      "temp_c": 36,
+      "hw_error": 0
+    },
+    {
+      "t": -1.787017019,
+      "id": 2,
+      "name": "r_ankle_roll_joint",
+      "pwm": -25,
+      "current_ma": -154.6,
+      "voltage_v": 12.0,
+      "temp_c": 35,
+      "hw_error": 0
+    },
+    {
+      "t": -1.787017019,
+      "id": 3,
+      "name": "l_ankle_pitch_joint",
+      "pwm": 37,
+      "current_ma": 282.2,
+      "voltage_v": 11.9,
+      "temp_c": 37,
+      "hw_error": 0
+    },
+    {
+      "t": -1.787017019,
+      "id": 4,
+      "name": "r_ankle_pitch_joint",
+      "pwm": -57,
+      "current_ma": -413.3,
+      "voltage_v": 11.9,
+      "temp_c": 39,
+      "hw_error": 0
+    },
+    {
+      "t": -1.787017019,
+      "id": 5,
+      "name": "l_knee_pitch_joint",
+      "pwm": 118,
+      "current_ma": 856.8,
+      "voltage_v": 12.0,
+      "temp_c": 44,
+      "hw_error": 0
+    },
+    {
+      "t": -1.787017019,
+      "id": 6,
+      "name": "r_knee_pitch_joint",
+      "pwm": -119,
+      "current_ma": -883.7,
+      "voltage_v": 11.9,
+      "temp_c": 44,
+      "hw_error": 0
+    },
+    {
+      "t": -1.787017019,
+      "id": 7,
+      "name": "l_pelvis_yaw_joint",
+      "pwm": 18,
+      "current_ma": 67.2,
+      "voltage_v": 11.9,
+      "temp_c": 37,
+      "hw_error": 0
+    },
+    {
+      "t": -1.787017019,
+      "id": 8,
+      "name": "r_pelvis_yaw_joint",
+      "pwm": 6,
+      "current_ma": 0.0,
+      "voltage_v": 12.0,
+      "temp_c": 36,
+      "hw_error": 0
+    },
+    {
+      "t": -1.787017019,
+      "id": 9,
+      "name": "l_pelvis_roll_joint",
+      "pwm": -25,
+      "current_ma": -151.2,
+      "voltage_v": 11.8,
+      "temp_c": 36,
+      "hw_error": 0
+    },
+    {
+      "t": -1.787017019,
+      "id": 10,
+      "name": "r_pelvis_roll_joint",
+      "pwm": 31,
+      "current_ma": 215.0,
+      "voltage_v": 11.9,
+      "temp_c": 36,
+      "hw_error": 0
+    },
+    {
+      "t": -1.787017019,
+      "id": 11,
+      "name": "l_pelvis_pitch_joint",
+      "pwm": 43,
+      "current_ma": 309.1,
+      "voltage_v": 11.9,
+      "temp_c": 37,
+      "hw_error": 0
+    },
+    {
+      "t": -1.787017019,
+      "id": 12,
+      "name": "r_pelvis_pitch_joint",
+      "pwm": -38,
+      "current_ma": -272.2,
+      "voltage_v": 12.0,
+      "temp_c": 37,
+      "hw_error": 0
+    },
+    {
+      "t": -1.787017019,
+      "id": 13,
+      "name": "l_shoulder_pitch_joint",
+      "pwm": -13,
+      "current_ma": -47.0,
+      "voltage_v": 11.9,
+      "temp_c": 37,
+      "hw_error": 0
+    },
+    {
+      "t": -1.787017019,
+      "id": 14,
+      "name": "r_shoulder_pitch_joint",
+      "pwm": 12,
+      "current_ma": 37.0,
+      "voltage_v": 11.8,
+      "temp_c": 35,
+      "hw_error": 0
+    },
+    {
+      "t": -1.787017019,
+      "id": 15,
+      "name": "l_shoulder_roll_joint",
+      "pwm": -13,
+      "current_ma": -23.5,
+      "voltage_v": 12.0,
+      "temp_c": 34,
+      "hw_error": 0
+    },
+    {
+      "t": -1.787017019,
+      "id": 16,
+      "name": "r_shoulder_roll_joint",
+      "pwm": 12,
+      "current_ma": 37.0,
+      "voltage_v": 11.9,
+      "temp_c": 34,
+      "hw_error": 0
+    },
+    {
+      "t": -1.787017019,
+      "id": 17,
+      "name": "l_elbow_pitch_joint",
+      "pwm": -13,
+      "current_ma": -57.1,
+      "voltage_v": 11.8,
+      "temp_c": 35,
+      "hw_error": 0
+    },
+    {
+      "t": -1.787017019,
+      "id": 18,
+      "name": "r_elbow_pitch_joint",
+      "pwm": 31,
+      "current_ma": 208.3,
+      "voltage_v": 11.9,
+      "temp_c": 36,
+      "hw_error": 0
+    },
+    {
+      "t": -1.787017019,
+      "id": 19,
+      "name": "neck_yaw_joint",
+      "pwm": 28,
+      "current_ma": 6.7,
+      "voltage_v": 11.8,
+      "temp_c": 42,
+      "hw_error": 0
+    },
+    {
+      "t": -1.787017019,
+      "id": 20,
+      "name": "neck_pitch_joint",
+      "pwm": -7,
+      "current_ma": 0.0,
+      "voltage_v": 11.8,
+      "temp_c": 41,
+      "hw_error": 0
+    },
+    {
+      "t": -1.287129261,
+      "id": 1,
+      "name": "l_ankle_roll_joint",
+      "pwm": 18,
+      "current_ma": 94.1,
+      "voltage_v": 11.9,
+      "temp_c": 36,
+      "hw_error": 0
+    },
+    {
+      "t": -1.287129261,
+      "id": 2,
+      "name": "r_ankle_roll_joint",
+      "pwm": -25,
+      "current_ma": -144.5,
+      "voltage_v": 11.9,
+      "temp_c": 36,
+      "hw_error": 0
+    },
+    {
+      "t": -1.287129261,
+      "id": 3,
+      "name": "l_ankle_pitch_joint",
+      "pwm": 37,
+      "current_ma": 268.8,
+      "voltage_v": 11.9,
+      "temp_c": 37,
+      "hw_error": 0
+    },
+    {
+      "t": -1.287129261,
+      "id": 4,
+      "name": "r_ankle_pitch_joint",
+      "pwm": -57,
+      "current_ma": -403.2,
+      "voltage_v": 11.9,
+      "temp_c": 39,
+      "hw_error": 0
+    },
+    {
+      "t": -1.287129261,
+      "id": 5,
+      "name": "l_knee_pitch_joint",
+      "pwm": 118,
+      "current_ma": 853.4,
+      "voltage_v": 11.8,
+      "temp_c": 44,
+      "hw_error": 0
+    },
+    {
+      "t": -1.287129261,
+      "id": 6,
+      "name": "r_knee_pitch_joint",
+      "pwm": -119,
+      "current_ma": -883.7,
+      "voltage_v": 11.9,
+      "temp_c": 44,
+      "hw_error": 0
+    },
+    {
+      "t": -1.287129261,
+      "id": 7,
+      "name": "l_pelvis_yaw_joint",
+      "pwm": 12,
+      "current_ma": 53.8,
+      "voltage_v": 11.9,
+      "temp_c": 37,
+      "hw_error": 0
+    },
+    {
+      "t": -1.287129261,
+      "id": 8,
+      "name": "r_pelvis_yaw_joint",
+      "pwm": 6,
+      "current_ma": 0.0,
+      "voltage_v": 12.0,
+      "temp_c": 36,
+      "hw_error": 0
+    },
+    {
+      "t": -1.287129261,
+      "id": 9,
+      "name": "l_pelvis_roll_joint",
+      "pwm": -25,
+      "current_ma": -151.2,
+      "voltage_v": 11.8,
+      "temp_c": 36,
+      "hw_error": 0
+    },
+    {
+      "t": -1.287129261,
+      "id": 10,
+      "name": "r_pelvis_roll_joint",
+      "pwm": 31,
+      "current_ma": 215.0,
+      "voltage_v": 11.9,
+      "temp_c": 35,
+      "hw_error": 0
+    },
+    {
+      "t": -1.287129261,
+      "id": 11,
+      "name": "l_pelvis_pitch_joint",
+      "pwm": 43,
+      "current_ma": 309.1,
+      "voltage_v": 11.9,
+      "temp_c": 37,
+      "hw_error": 0
+    },
+    {
+      "t": -1.287129261,
+      "id": 12,
+      "name": "r_pelvis_pitch_joint",
+      "pwm": -38,
+      "current_ma": -272.2,
+      "voltage_v": 11.9,
+      "temp_c": 37,
+      "hw_error": 0
+    },
+    {
+      "t": -1.287129261,
+      "id": 13,
+      "name": "l_shoulder_pitch_joint",
+      "pwm": -13,
+      "current_ma": -50.4,
+      "voltage_v": 11.9,
+      "temp_c": 37,
+      "hw_error": 0
+    },
+    {
+      "t": -1.287129261,
+      "id": 14,
+      "name": "r_shoulder_pitch_joint",
+      "pwm": 12,
+      "current_ma": 37.0,
+      "voltage_v": 11.8,
+      "temp_c": 36,
+      "hw_error": 0
+    },
+    {
+      "t": -1.287129261,
+      "id": 15,
+      "name": "l_shoulder_roll_joint",
+      "pwm": -7,
+      "current_ma": -20.2,
+      "voltage_v": 12.0,
+      "temp_c": 34,
+      "hw_error": 0
+    },
+    {
+      "t": -1.287129261,
+      "id": 16,
+      "name": "r_shoulder_roll_joint",
+      "pwm": 12,
+      "current_ma": 40.3,
+      "voltage_v": 11.9,
+      "temp_c": 34,
+      "hw_error": 0
+    },
+    {
+      "t": -1.287129261,
+      "id": 17,
+      "name": "l_elbow_pitch_joint",
+      "pwm": -13,
+      "current_ma": -60.5,
+      "voltage_v": 11.8,
+      "temp_c": 35,
+      "hw_error": 0
+    },
+    {
+      "t": -1.287129261,
+      "id": 18,
+      "name": "r_elbow_pitch_joint",
+      "pwm": 31,
+      "current_ma": 208.3,
+      "voltage_v": 11.9,
+      "temp_c": 36,
+      "hw_error": 0
+    },
+    {
+      "t": -1.287129261,
+      "id": 19,
+      "name": "neck_yaw_joint",
+      "pwm": 28,
+      "current_ma": 6.7,
+      "voltage_v": 11.8,
+      "temp_c": 41,
+      "hw_error": 0
+    },
+    {
+      "t": -1.287129261,
+      "id": 20,
+      "name": "neck_pitch_joint",
+      "pwm": -7,
+      "current_ma": 0.0,
+      "voltage_v": 11.8,
+      "temp_c": 41,
+      "hw_error": 0
+    },
+    {
+      "t": -0.787195552,
+      "id": 1,
+      "name": "l_ankle_roll_joint",
+      "pwm": 18,
+      "current_ma": 87.4,
+      "voltage_v": 11.9,
+      "temp_c": 36,
+      "hw_error": 0
+    },
+    {
+      "t": -0.787195552,
+      "id": 2,
+      "name": "r_ankle_roll_joint",
+      "pwm": -25,
+      "current_ma": -154.6,
+      "voltage_v": 11.9,
+      "temp_c": 36,
+      "hw_error": 0
+    },
+    {
+      "t": -0.787195552,
+      "id": 3,
+      "name": "l_ankle_pitch_joint",
+      "pwm": 37,
+      "current_ma": 272.2,
+      "voltage_v": 11.9,
+      "temp_c": 37,
+      "hw_error": 0
+    },
+    {
+      "t": -0.787195552,
+      "id": 4,
+      "name": "r_ankle_pitch_joint",
+      "pwm": -57,
+      "current_ma": -399.8,
+      "voltage_v": 11.9,
+      "temp_c": 39,
+      "hw_error": 0
+    },
+    {
+      "t": -0.787195552,
+      "id": 5,
+      "name": "l_knee_pitch_joint",
+      "pwm": 118,
+      "current_ma": 856.8,
+      "voltage_v": 11.9,
+      "temp_c": 44,
+      "hw_error": 0
+    },
+    {
+      "t": -0.787195552,
+      "id": 6,
+      "name": "r_knee_pitch_joint",
+      "pwm": -119,
+      "current_ma": -890.4,
+      "voltage_v": 11.8,
+      "temp_c": 44,
+      "hw_error": 0
+    },
+    {
+      "t": -0.787195552,
+      "id": 7,
+      "name": "l_pelvis_yaw_joint",
+      "pwm": 18,
+      "current_ma": 53.8,
+      "voltage_v": 11.9,
+      "temp_c": 37,
+      "hw_error": 0
+    },
+    {
+      "t": -0.787195552,
+      "id": 8,
+      "name": "r_pelvis_yaw_joint",
+      "pwm": 6,
+      "current_ma": 0.0,
+      "voltage_v": 12.0,
+      "temp_c": 36,
+      "hw_error": 0
+    },
+    {
+      "t": -0.787195552,
+      "id": 9,
+      "name": "l_pelvis_roll_joint",
+      "pwm": -25,
+      "current_ma": -154.6,
+      "voltage_v": 11.8,
+      "temp_c": 36,
+      "hw_error": 0
+    },
+    {
+      "t": -0.787195552,
+      "id": 10,
+      "name": "r_pelvis_roll_joint",
+      "pwm": 31,
+      "current_ma": 218.4,
+      "voltage_v": 11.9,
+      "temp_c": 36,
+      "hw_error": 0
+    },
+    {
+      "t": -0.787195552,
+      "id": 11,
+      "name": "l_pelvis_pitch_joint",
+      "pwm": 43,
+      "current_ma": 309.1,
+      "voltage_v": 11.9,
+      "temp_c": 37,
+      "hw_error": 0
+    },
+    {
+      "t": -0.787195552,
+      "id": 12,
+      "name": "r_pelvis_pitch_joint",
+      "pwm": -38,
+      "current_ma": -272.2,
+      "voltage_v": 12.0,
+      "temp_c": 36,
+      "hw_error": 0
+    },
+    {
+      "t": -0.787195552,
+      "id": 13,
+      "name": "l_shoulder_pitch_joint",
+      "pwm": -13,
+      "current_ma": -53.8,
+      "voltage_v": 11.9,
+      "temp_c": 36,
+      "hw_error": 0
+    },
+    {
+      "t": -0.787195552,
+      "id": 14,
+      "name": "r_shoulder_pitch_joint",
+      "pwm": 12,
+      "current_ma": 33.6,
+      "voltage_v": 11.8,
+      "temp_c": 35,
+      "hw_error": 0
+    },
+    {
+      "t": -0.787195552,
+      "id": 15,
+      "name": "l_shoulder_roll_joint",
+      "pwm": -7,
+      "current_ma": -23.5,
+      "voltage_v": 12.0,
+      "temp_c": 35,
+      "hw_error": 0
+    },
+    {
+      "t": -0.787195552,
+      "id": 16,
+      "name": "r_shoulder_roll_joint",
+      "pwm": 12,
+      "current_ma": 23.5,
+      "voltage_v": 11.9,
+      "temp_c": 34,
+      "hw_error": 0
+    },
+    {
+      "t": -0.787195552,
+      "id": 17,
+      "name": "l_elbow_pitch_joint",
+      "pwm": -13,
+      "current_ma": -60.5,
+      "voltage_v": 11.8,
+      "temp_c": 35,
+      "hw_error": 0
+    },
+    {
+      "t": -0.787195552,
+      "id": 18,
+      "name": "r_elbow_pitch_joint",
+      "pwm": 31,
+      "current_ma": 208.3,
+      "voltage_v": 11.9,
+      "temp_c": 36,
+      "hw_error": 0
+    },
+    {
+      "t": -0.787195552,
+      "id": 19,
+      "name": "neck_yaw_joint",
+      "pwm": 28,
+      "current_ma": 6.7,
+      "voltage_v": 11.8,
+      "temp_c": 41,
+      "hw_error": 0
+    },
+    {
+      "t": -0.787195552,
+      "id": 20,
+      "name": "neck_pitch_joint",
+      "pwm": -4,
+      "current_ma": 3.4,
+      "voltage_v": 11.8,
+      "temp_c": 41,
+      "hw_error": 0
+    },
+    {
+      "t": -0.286144329,
+      "id": 1,
+      "name": "l_ankle_roll_joint",
+      "pwm": 18,
+      "current_ma": 94.1,
+      "voltage_v": 11.9,
+      "temp_c": 36,
+      "hw_error": 0
+    },
+    {
+      "t": -0.286144329,
+      "id": 2,
+      "name": "r_ankle_roll_joint",
+      "pwm": -25,
+      "current_ma": -154.6,
+      "voltage_v": 11.9,
+      "temp_c": 36,
+      "hw_error": 0
+    },
+    {
+      "t": -0.286144329,
+      "id": 3,
+      "name": "l_ankle_pitch_joint",
+      "pwm": 37,
+      "current_ma": 255.4,
+      "voltage_v": 11.9,
+      "temp_c": 37,
+      "hw_error": 0
+    },
+    {
+      "t": -0.286144329,
+      "id": 4,
+      "name": "r_ankle_pitch_joint",
+      "pwm": -57,
+      "current_ma": -406.6,
+      "voltage_v": 11.9,
+      "temp_c": 39,
+      "hw_error": 0
+    },
+    {
+      "t": -0.286144329,
+      "id": 5,
+      "name": "l_knee_pitch_joint",
+      "pwm": 118,
+      "current_ma": 853.4,
+      "voltage_v": 11.9,
+      "temp_c": 45,
+      "hw_error": 0
+    },
+    {
+      "t": -0.286144329,
+      "id": 6,
+      "name": "r_knee_pitch_joint",
+      "pwm": -119,
+      "current_ma": -883.7,
+      "voltage_v": 11.9,
+      "temp_c": 44,
+      "hw_error": 0
+    },
+    {
+      "t": -0.286144329,
+      "id": 7,
+      "name": "l_pelvis_yaw_joint",
+      "pwm": 12,
+      "current_ma": 60.5,
+      "voltage_v": 11.9,
+      "temp_c": 37,
+      "hw_error": 0
+    },
+    {
+      "t": -0.286144329,
+      "id": 8,
+      "name": "r_pelvis_yaw_joint",
+      "pwm": 6,
+      "current_ma": 0.0,
+      "voltage_v": 12.0,
+      "temp_c": 36,
+      "hw_error": 0
+    },
+    {
+      "t": -0.286144329,
+      "id": 9,
+      "name": "l_pelvis_roll_joint",
+      "pwm": -25,
+      "current_ma": -151.2,
+      "voltage_v": 11.8,
+      "temp_c": 37,
+      "hw_error": 0
+    },
+    {
+      "t": -0.286144329,
+      "id": 10,
+      "name": "r_pelvis_roll_joint",
+      "pwm": 31,
+      "current_ma": 211.7,
+      "voltage_v": 11.9,
+      "temp_c": 36,
+      "hw_error": 0
+    },
+    {
+      "t": -0.286144329,
+      "id": 11,
+      "name": "l_pelvis_pitch_joint",
+      "pwm": 43,
+      "current_ma": 309.1,
+      "voltage_v": 11.9,
+      "temp_c": 37,
+      "hw_error": 0
+    },
+    {
+      "t": -0.286144329,
+      "id": 12,
+      "name": "r_pelvis_pitch_joint",
+      "pwm": -38,
+      "current_ma": -272.2,
+      "voltage_v": 12.0,
+      "temp_c": 37,
+      "hw_error": 0
+    },
+    {
+      "t": -0.286144329,
+      "id": 13,
+      "name": "l_shoulder_pitch_joint",
+      "pwm": -13,
+      "current_ma": -57.1,
+      "voltage_v": 11.9,
+      "temp_c": 37,
+      "hw_error": 0
+    },
+    {
+      "t": -0.286144329,
+      "id": 14,
+      "name": "r_shoulder_pitch_joint",
+      "pwm": 12,
+      "current_ma": 37.0,
+      "voltage_v": 11.8,
+      "temp_c": 35,
+      "hw_error": 0
+    },
+    {
+      "t": -0.286144329,
+      "id": 15,
+      "name": "l_shoulder_roll_joint",
+      "pwm": -7,
+      "current_ma": -13.4,
+      "voltage_v": 12.0,
+      "temp_c": 34,
+      "hw_error": 0
+    },
+    {
+      "t": -0.286144329,
+      "id": 16,
+      "name": "r_shoulder_roll_joint",
+      "pwm": 12,
+      "current_ma": 26.9,
+      "voltage_v": 11.9,
+      "temp_c": 34,
+      "hw_error": 0
+    },
+    {
+      "t": -0.286144329,
+      "id": 17,
+      "name": "l_elbow_pitch_joint",
+      "pwm": -13,
+      "current_ma": -57.1,
+      "voltage_v": 11.8,
+      "temp_c": 35,
+      "hw_error": 0
+    },
+    {
+      "t": -0.286144329,
+      "id": 18,
+      "name": "r_elbow_pitch_joint",
+      "pwm": 31,
+      "current_ma": 205.0,
+      "voltage_v": 11.9,
+      "temp_c": 36,
+      "hw_error": 0
+    },
+    {
+      "t": -0.286144329,
+      "id": 19,
+      "name": "neck_yaw_joint",
+      "pwm": 28,
+      "current_ma": 6.7,
+      "voltage_v": 11.8,
+      "temp_c": 41,
+      "hw_error": 0
+    },
+    {
+      "t": -0.286144329,
+      "id": 20,
+      "name": "neck_pitch_joint",
+      "pwm": -7,
+      "current_ma": 0.0,
+      "voltage_v": 11.8,
+      "temp_c": 41,
+      "hw_error": 0
+    },
+    {
+      "t": 0.212778266,
+      "id": 1,
+      "name": "l_ankle_roll_joint",
+      "pwm": -19,
+      "current_ma": -3.4,
+      "voltage_v": 11.9,
+      "temp_c": 36,
+      "hw_error": 0
+    },
+    {
+      "t": 0.212778266,
+      "id": 2,
+      "name": "r_ankle_roll_joint",
+      "pwm": -7,
+      "current_ma": -33.6,
+      "voltage_v": 11.9,
+      "temp_c": 36,
+      "hw_error": 0
+    },
+    {
+      "t": 0.212778266,
+      "id": 3,
+      "name": "l_ankle_pitch_joint",
+      "pwm": 56,
+      "current_ma": 406.6,
+      "voltage_v": 11.9,
+      "temp_c": 37,
+      "hw_error": 0
+    },
+    {
+      "t": 0.212778266,
+      "id": 4,
+      "name": "r_ankle_pitch_joint",
+      "pwm": -32,
+      "current_ma": -208.3,
+      "voltage_v": 11.9,
+      "temp_c": 39,
+      "hw_error": 0
+    },
+    {
+      "t": 0.212778266,
+      "id": 5,
+      "name": "l_knee_pitch_joint",
+      "pwm": 143,
+      "current_ma": 1034.9,
+      "voltage_v": 11.8,
+      "temp_c": 45,
+      "hw_error": 0
+    },
+    {
+      "t": 0.212778266,
+      "id": 6,
+      "name": "r_knee_pitch_joint",
+      "pwm": -57,
+      "current_ma": -446.9,
+      "voltage_v": 11.9,
+      "temp_c": 44,
+      "hw_error": 0
+    },
+    {
+      "t": 0.212778266,
+      "id": 7,
+      "name": "l_pelvis_yaw_joint",
+      "pwm": 18,
+      "current_ma": 94.1,
+      "voltage_v": 11.9,
+      "temp_c": 37,
+      "hw_error": 0
+    },
+    {
+      "t": 0.212778266,
+      "id": 8,
+      "name": "r_pelvis_yaw_joint",
+      "pwm": 6,
+      "current_ma": 0.0,
+      "voltage_v": 12.0,
+      "temp_c": 36,
+      "hw_error": 0
+    },
+    {
+      "t": 0.212778266,
+      "id": 9,
+      "name": "l_pelvis_roll_joint",
+      "pwm": -25,
+      "current_ma": -144.5,
+      "voltage_v": 11.9,
+      "temp_c": 36,
+      "hw_error": 0
+    },
+    {
+      "t": 0.212778266,
+      "id": 10,
+      "name": "r_pelvis_roll_joint",
+      "pwm": 12,
+      "current_ma": 43.7,
+      "voltage_v": 11.9,
+      "temp_c": 36,
+      "hw_error": 0
+    },
+    {
+      "t": 0.212778266,
+      "id": 11,
+      "name": "l_pelvis_pitch_joint",
+      "pwm": 56,
+      "current_ma": 430.1,
+      "voltage_v": 11.9,
+      "temp_c": 37,
+      "hw_error": 0
+    },
+    {
+      "t": 0.212778266,
+      "id": 12,
+      "name": "r_pelvis_pitch_joint",
+      "pwm": -19,
+      "current_ma": -141.1,
+      "voltage_v": 12.0,
+      "temp_c": 37,
+      "hw_error": 0
+    },
+    {
+      "t": 0.212778266,
+      "id": 13,
+      "name": "l_shoulder_pitch_joint",
+      "pwm": -7,
+      "current_ma": -33.6,
+      "voltage_v": 11.9,
+      "temp_c": 37,
+      "hw_error": 0
+    },
+    {
+      "t": 0.212778266,
+      "id": 14,
+      "name": "r_shoulder_pitch_joint",
+      "pwm": 6,
+      "current_ma": 6.7,
+      "voltage_v": 11.8,
+      "temp_c": 35,
+      "hw_error": 0
+    },
+    {
+      "t": 0.212778266,
+      "id": 15,
+      "name": "l_shoulder_roll_joint",
+      "pwm": 0,
+      "current_ma": -3.4,
+      "voltage_v": 12.0,
+      "temp_c": 34,
+      "hw_error": 0
+    },
+    {
+      "t": 0.212778266,
+      "id": 16,
+      "name": "r_shoulder_roll_joint",
+      "pwm": 0,
+      "current_ma": 0.0,
+      "voltage_v": 11.9,
+      "temp_c": 34,
+      "hw_error": 0
+    },
+    {
+      "t": 0.212778266,
+      "id": 17,
+      "name": "l_elbow_pitch_joint",
+      "pwm": 12,
+      "current_ma": 0.0,
+      "voltage_v": 11.8,
+      "temp_c": 35,
+      "hw_error": 0
+    },
+    {
+      "t": 0.212778266,
+      "id": 18,
+      "name": "r_elbow_pitch_joint",
+      "pwm": -13,
+      "current_ma": -26.9,
+      "voltage_v": 11.9,
+      "temp_c": 36,
+      "hw_error": 0
+    },
+    {
+      "t": 0.212778266,
+      "id": 19,
+      "name": "neck_yaw_joint",
+      "pwm": -4,
+      "current_ma": 0.0,
+      "voltage_v": 11.8,
+      "temp_c": 41,
+      "hw_error": 0
+    },
+    {
+      "t": 0.212778266,
+      "id": 20,
+      "name": "neck_pitch_joint",
+      "pwm": 59,
+      "current_ma": 3.4,
+      "voltage_v": 11.8,
+      "temp_c": 41,
+      "hw_error": 0
+    },
+    {
+      "t": 0.712741637,
+      "id": 1,
+      "name": "l_ankle_roll_joint",
+      "pwm": -44,
+      "current_ma": 100.8,
+      "voltage_v": 11.9,
+      "temp_c": 35,
+      "hw_error": 0
+    },
+    {
+      "t": 0.712741637,
+      "id": 2,
+      "name": "r_ankle_roll_joint",
+      "pwm": 93,
+      "current_ma": 305.8,
+      "voltage_v": 11.9,
+      "temp_c": 36,
+      "hw_error": 0
+    },
+    {
+      "t": 0.712741637,
+      "id": 3,
+      "name": "l_ankle_pitch_joint",
+      "pwm": -63,
+      "current_ma": 131.0,
+      "voltage_v": 11.8,
+      "temp_c": 36,
+      "hw_error": 0
+    },
+    {
+      "t": 0.712741637,
+      "id": 4,
+      "name": "r_ankle_pitch_joint",
+      "pwm": -88,
+      "current_ma": -567.8,
+      "voltage_v": 11.8,
+      "temp_c": 39,
+      "hw_error": 0
+    },
+    {
+      "t": 0.712741637,
+      "id": 5,
+      "name": "l_knee_pitch_joint",
+      "pwm": -19,
+      "current_ma": 0.0,
+      "voltage_v": 11.9,
+      "temp_c": 44,
+      "hw_error": 0
+    },
+    {
+      "t": 0.712741637,
+      "id": 6,
+      "name": "r_knee_pitch_joint",
+      "pwm": -282,
+      "current_ma": -1814.4,
+      "voltage_v": 11.8,
+      "temp_c": 44,
+      "hw_error": 0
+    },
+    {
+      "t": 0.712741637,
+      "id": 7,
+      "name": "l_pelvis_yaw_joint",
+      "pwm": -13,
+      "current_ma": 0.0,
+      "voltage_v": 11.9,
+      "temp_c": 37,
+      "hw_error": 0
+    },
+    {
+      "t": 0.712741637,
+      "id": 8,
+      "name": "r_pelvis_yaw_joint",
+      "pwm": -69,
+      "current_ma": -544.3,
+      "voltage_v": 11.9,
+      "temp_c": 36,
+      "hw_error": 0
+    },
+    {
+      "t": 0.712741637,
+      "id": 9,
+      "name": "l_pelvis_roll_joint",
+      "pwm": 0,
+      "current_ma": 70.6,
+      "voltage_v": 11.8,
+      "temp_c": 36,
+      "hw_error": 0
+    },
+    {
+      "t": 0.712741637,
+      "id": 10,
+      "name": "r_pelvis_roll_joint",
+      "pwm": 231,
+      "current_ma": 1495.2,
+      "voltage_v": 11.8,
+      "temp_c": 36,
+      "hw_error": 0
+    },
+    {
+      "t": 0.712741637,
+      "id": 11,
+      "name": "l_pelvis_pitch_joint",
+      "pwm": 112,
+      "current_ma": 524.2,
+      "voltage_v": 11.8,
+      "temp_c": 37,
+      "hw_error": 0
+    },
+    {
+      "t": 0.712741637,
+      "id": 12,
+      "name": "r_pelvis_pitch_joint",
+      "pwm": -107,
+      "current_ma": -621.6,
+      "voltage_v": 11.9,
+      "temp_c": 37,
+      "hw_error": 0
+    },
+    {
+      "t": 0.712741637,
+      "id": 13,
+      "name": "l_shoulder_pitch_joint",
+      "pwm": -7,
+      "current_ma": -37.0,
+      "voltage_v": 11.9,
+      "temp_c": 37,
+      "hw_error": 0
+    },
+    {
+      "t": 0.712741637,
+      "id": 14,
+      "name": "r_shoulder_pitch_joint",
+      "pwm": 6,
+      "current_ma": 0.0,
+      "voltage_v": 11.8,
+      "temp_c": 35,
+      "hw_error": 0
+    },
+    {
+      "t": 0.712741637,
+      "id": 15,
+      "name": "l_shoulder_roll_joint",
+      "pwm": -7,
+      "current_ma": -13.4,
+      "voltage_v": 11.9,
+      "temp_c": 35,
+      "hw_error": 0
+    },
+    {
+      "t": 0.712741637,
+      "id": 16,
+      "name": "r_shoulder_roll_joint",
+      "pwm": 6,
+      "current_ma": 0.0,
+      "voltage_v": 11.9,
+      "temp_c": 34,
+      "hw_error": 0
+    },
+    {
+      "t": 0.712741637,
+      "id": 17,
+      "name": "l_elbow_pitch_joint",
+      "pwm": 12,
+      "current_ma": -10.1,
+      "voltage_v": 11.8,
+      "temp_c": 35,
+      "hw_error": 0
+    },
+    {
+      "t": 0.712741637,
+      "id": 18,
+      "name": "r_elbow_pitch_joint",
+      "pwm": -19,
+      "current_ma": -40.3,
+      "voltage_v": 11.9,
+      "temp_c": 36,
+      "hw_error": 0
+    },
+    {
+      "t": 0.712741637,
+      "id": 19,
+      "name": "neck_yaw_joint",
+      "pwm": 3,
+      "current_ma": 0.0,
+      "voltage_v": 11.8,
+      "temp_c": 42,
+      "hw_error": 0
+    },
+    {
+      "t": 0.712741637,
+      "id": 20,
+      "name": "neck_pitch_joint",
+      "pwm": 50,
+      "current_ma": 0.0,
+      "voltage_v": 11.8,
+      "temp_c": 41,
+      "hw_error": 0
+    },
+    {
+      "t": 1.21272907,
+      "id": 1,
+      "name": "l_ankle_roll_joint",
+      "pwm": 155,
+      "current_ma": -198.2,
+      "voltage_v": 11.9,
+      "temp_c": 35,
+      "hw_error": 0
+    },
+    {
+      "t": 1.21272907,
+      "id": 2,
+      "name": "r_ankle_roll_joint",
+      "pwm": 12,
+      "current_ma": -282.2,
+      "voltage_v": 11.9,
+      "temp_c": 35,
+      "hw_error": 0
+    },
+    {
+      "t": 1.21272907,
+      "id": 3,
+      "name": "l_ankle_pitch_joint",
+      "pwm": 149,
+      "current_ma": 638.4,
+      "voltage_v": 11.8,
+      "temp_c": 37,
+      "hw_error": 0
+    },
+    {
+      "t": 1.21272907,
+      "id": 4,
+      "name": "r_ankle_pitch_joint",
+      "pwm": -50,
+      "current_ma": -756.0,
+      "voltage_v": 11.9,
+      "temp_c": 39,
+      "hw_error": 0
+    },
+    {
+      "t": 1.21272907,
+      "id": 5,
+      "name": "l_knee_pitch_joint",
+      "pwm": 93,
+      "current_ma": 285.6,
+      "voltage_v": 11.9,
+      "temp_c": 44,
+      "hw_error": 0
+    },
+    {
+      "t": 1.21272907,
+      "id": 6,
+      "name": "r_knee_pitch_joint",
+      "pwm": -119,
+      "current_ma": -866.9,
+      "voltage_v": 11.8,
+      "temp_c": 44,
+      "hw_error": 0
+    },
+    {
+      "t": 1.21272907,
+      "id": 7,
+      "name": "l_pelvis_yaw_joint",
+      "pwm": 43,
+      "current_ma": 225.1,
+      "voltage_v": 11.9,
+      "temp_c": 37,
+      "hw_error": 0
+    },
+    {
+      "t": 1.21272907,
+      "id": 8,
+      "name": "r_pelvis_yaw_joint",
+      "pwm": -13,
+      "current_ma": -67.2,
+      "voltage_v": 11.9,
+      "temp_c": 37,
+      "hw_error": 0
+    },
+    {
+      "t": 1.21272907,
+      "id": 9,
+      "name": "l_pelvis_roll_joint",
+      "pwm": -19,
+      "current_ma": -77.3,
+      "voltage_v": 11.8,
+      "temp_c": 36,
+      "hw_error": 0
+    },
+    {
+      "t": 1.21272907,
+      "id": 10,
+      "name": "r_pelvis_roll_joint",
+      "pwm": 25,
+      "current_ma": 450.2,
+      "voltage_v": 11.9,
+      "temp_c": 36,
+      "hw_error": 0
+    },
+    {
+      "t": 1.21272907,
+      "id": 11,
+      "name": "l_pelvis_pitch_joint",
+      "pwm": 112,
+      "current_ma": 534.2,
+      "voltage_v": 11.9,
+      "temp_c": 37,
+      "hw_error": 0
+    },
+    {
+      "t": 1.21272907,
+      "id": 12,
+      "name": "r_pelvis_pitch_joint",
+      "pwm": -38,
+      "current_ma": -413.3,
+      "voltage_v": 12.0,
+      "temp_c": 37,
+      "hw_error": 0
+    },
+    {
+      "t": 1.21272907,
+      "id": 13,
+      "name": "l_shoulder_pitch_joint",
+      "pwm": -13,
+      "current_ma": -26.9,
+      "voltage_v": 11.9,
+      "temp_c": 36,
+      "hw_error": 0
+    },
+    {
+      "t": 1.21272907,
+      "id": 14,
+      "name": "r_shoulder_pitch_joint",
+      "pwm": 12,
+      "current_ma": 23.5,
+      "voltage_v": 11.8,
+      "temp_c": 35,
+      "hw_error": 0
+    },
+    {
+      "t": 1.21272907,
+      "id": 15,
+      "name": "l_shoulder_roll_joint",
+      "pwm": 0,
+      "current_ma": -16.8,
+      "voltage_v": 11.9,
+      "temp_c": 34,
+      "hw_error": 0
+    },
+    {
+      "t": 1.21272907,
+      "id": 16,
+      "name": "r_shoulder_roll_joint",
+      "pwm": 6,
+      "current_ma": 0.0,
+      "voltage_v": 11.9,
+      "temp_c": 34,
+      "hw_error": 0
+    },
+    {
+      "t": 1.21272907,
+      "id": 17,
+      "name": "l_elbow_pitch_joint",
+      "pwm": 12,
+      "current_ma": 20.2,
+      "voltage_v": 11.8,
+      "temp_c": 35,
+      "hw_error": 0
+    },
+    {
+      "t": 1.21272907,
+      "id": 18,
+      "name": "r_elbow_pitch_joint",
+      "pwm": -7,
+      "current_ma": 3.4,
+      "voltage_v": 11.9,
+      "temp_c": 36,
+      "hw_error": 0
+    },
+    {
+      "t": 1.21272907,
+      "id": 19,
+      "name": "neck_yaw_joint",
+      "pwm": 6,
+      "current_ma": 0.0,
+      "voltage_v": 11.8,
+      "temp_c": 42,
+      "hw_error": 0
+    },
+    {
+      "t": 1.21272907,
+      "id": 20,
+      "name": "neck_pitch_joint",
+      "pwm": 53,
+      "current_ma": 0.0,
+      "voltage_v": 11.8,
+      "temp_c": 41,
+      "hw_error": 0
+    },
+    {
+      "t": 1.712691254,
+      "id": 1,
+      "name": "l_ankle_roll_joint",
+      "pwm": -113,
+      "current_ma": -50.4,
+      "voltage_v": 11.8,
+      "temp_c": 36,
+      "hw_error": 0
+    },
+    {
+      "t": 1.712691254,
+      "id": 2,
+      "name": "r_ankle_roll_joint",
+      "pwm": -107,
+      "current_ma": 191.5,
+      "voltage_v": 11.9,
+      "temp_c": 36,
+      "hw_error": 0
+    },
+    {
+      "t": 1.712691254,
+      "id": 3,
+      "name": "l_ankle_pitch_joint",
+      "pwm": 343,
+      "current_ma": 2362.1,
+      "voltage_v": 11.6,
+      "temp_c": 37,
+      "hw_error": 0
+    },
+    {
+      "t": 1.712691254,
+      "id": 4,
+      "name": "r_ankle_pitch_joint",
+      "pwm": -69,
+      "current_ma": -450.2,
+      "voltage_v": 11.8,
+      "temp_c": 39,
+      "hw_error": 0
+    },
+    {
+      "t": 1.712691254,
+      "id": 5,
+      "name": "l_knee_pitch_joint",
+      "pwm": 318,
+      "current_ma": 329.3,
+      "voltage_v": 11.7,
+      "temp_c": 44,
+      "hw_error": 0
+    },
+    {
+      "t": 1.712691254,
+      "id": 6,
+      "name": "r_knee_pitch_joint",
+      "pwm": 212,
+      "current_ma": 258.7,
+      "voltage_v": 11.8,
+      "temp_c": 44,
+      "hw_error": 0
+    },
+    {
+      "t": 1.712691254,
+      "id": 7,
+      "name": "l_pelvis_yaw_joint",
+      "pwm": 100,
+      "current_ma": 446.9,
+      "voltage_v": 11.8,
+      "temp_c": 37,
+      "hw_error": 0
+    },
+    {
+      "t": 1.712691254,
+      "id": 8,
+      "name": "r_pelvis_yaw_joint",
+      "pwm": 0,
+      "current_ma": 47.0,
+      "voltage_v": 11.9,
+      "temp_c": 36,
+      "hw_error": 0
+    },
+    {
+      "t": 1.712691254,
+      "id": 9,
+      "name": "l_pelvis_roll_joint",
+      "pwm": -57,
+      "current_ma": -618.2,
+      "voltage_v": 11.7,
+      "temp_c": 36,
+      "hw_error": 0
+    },
+    {
+      "t": 1.712691254,
+      "id": 10,
+      "name": "r_pelvis_roll_joint",
+      "pwm": -19,
+      "current_ma": 154.6,
+      "voltage_v": 11.8,
+      "temp_c": 36,
+      "hw_error": 0
+    },
+    {
+      "t": 1.712691254,
+      "id": 11,
+      "name": "l_pelvis_pitch_joint",
+      "pwm": 181,
+      "current_ma": 1310.4,
+      "voltage_v": 11.9,
+      "temp_c": 37,
+      "hw_error": 0
+    },
+    {
+      "t": 1.712691254,
+      "id": 12,
+      "name": "r_pelvis_pitch_joint",
+      "pwm": -88,
+      "current_ma": -114.2,
+      "voltage_v": 11.9,
+      "temp_c": 37,
+      "hw_error": 0
+    },
+    {
+      "t": 1.712691254,
+      "id": 13,
+      "name": "l_shoulder_pitch_joint",
+      "pwm": -13,
+      "current_ma": -47.0,
+      "voltage_v": 11.9,
+      "temp_c": 37,
+      "hw_error": 0
+    },
+    {
+      "t": 1.712691254,
+      "id": 14,
+      "name": "r_shoulder_pitch_joint",
+      "pwm": 25,
+      "current_ma": 77.3,
+      "voltage_v": 11.8,
+      "temp_c": 35,
+      "hw_error": 0
+    },
+    {
+      "t": 1.712691254,
+      "id": 15,
+      "name": "l_shoulder_roll_joint",
+      "pwm": -7,
+      "current_ma": 0.0,
+      "voltage_v": 11.9,
+      "temp_c": 35,
+      "hw_error": 0
+    },
+    {
+      "t": 1.712691254,
+      "id": 16,
+      "name": "r_shoulder_roll_joint",
+      "pwm": 0,
+      "current_ma": 0.0,
+      "voltage_v": 11.9,
+      "temp_c": 34,
+      "hw_error": 0
+    },
+    {
+      "t": 1.712691254,
+      "id": 17,
+      "name": "l_elbow_pitch_joint",
+      "pwm": 0,
+      "current_ma": -26.9,
+      "voltage_v": 11.8,
+      "temp_c": 35,
+      "hw_error": 0
+    },
+    {
+      "t": 1.712691254,
+      "id": 18,
+      "name": "r_elbow_pitch_joint",
+      "pwm": -13,
+      "current_ma": 0.0,
+      "voltage_v": 11.9,
+      "temp_c": 36,
+      "hw_error": 0
+    },
+    {
+      "t": 1.712691254,
+      "id": 19,
+      "name": "neck_yaw_joint",
+      "pwm": 6,
+      "current_ma": 0.0,
+      "voltage_v": 11.8,
+      "temp_c": 42,
+      "hw_error": 0
+    },
+    {
+      "t": 1.712691254,
+      "id": 20,
+      "name": "neck_pitch_joint",
+      "pwm": 53,
+      "current_ma": 0.0,
+      "voltage_v": 11.7,
+      "temp_c": 41,
+      "hw_error": 0
+    },
+    {
+      "t": 2.212691324,
+      "id": 1,
+      "name": "l_ankle_roll_joint",
+      "pwm": -332,
+      "current_ma": -645.1,
+      "voltage_v": 11.9,
+      "temp_c": 35,
+      "hw_error": 0
+    },
+    {
+      "t": 2.212691324,
+      "id": 2,
+      "name": "r_ankle_roll_joint",
+      "pwm": 449,
+      "current_ma": -77.3,
+      "voltage_v": 11.8,
+      "temp_c": 36,
+      "hw_error": 0
+    },
+    {
+      "t": 2.212691324,
+      "id": 3,
+      "name": "l_ankle_pitch_joint",
+      "pwm": 49,
+      "current_ma": -937.4,
+      "voltage_v": 11.7,
+      "temp_c": 37,
+      "hw_error": 0
+    },
+    {
+      "t": 2.212691324,
+      "id": 4,
+      "name": "r_ankle_pitch_joint",
+      "pwm": -26,
+      "current_ma": -601.4,
+      "voltage_v": 11.8,
+      "temp_c": 39,
+      "hw_error": 0
+    },
+    {
+      "t": 2.212691324,
+      "id": 5,
+      "name": "l_knee_pitch_joint",
+      "pwm": -707,
+      "current_ma": -295.7,
+      "voltage_v": 11.7,
+      "temp_c": 44,
+      "hw_error": 0
+    },
+    {
+      "t": 2.212691324,
+      "id": 6,
+      "name": "r_knee_pitch_joint",
+      "pwm": 587,
+      "current_ma": 53.8,
+      "voltage_v": 11.8,
+      "temp_c": 44,
+      "hw_error": 0
+    },
+    {
+      "t": 2.212691324,
+      "id": 7,
+      "name": "l_pelvis_yaw_joint",
+      "pwm": 187,
+      "current_ma": 594.7,
+      "voltage_v": 11.8,
+      "temp_c": 37,
+      "hw_error": 0
+    },
+    {
+      "t": 2.212691324,
+      "id": 8,
+      "name": "r_pelvis_yaw_joint",
+      "pwm": 161,
+      "current_ma": -806.4,
+      "voltage_v": 11.8,
+      "temp_c": 36,
+      "hw_error": 0
+    },
+    {
+      "t": 2.212691324,
+      "id": 9,
+      "name": "l_pelvis_roll_joint",
+      "pwm": -264,
+      "current_ma": -80.6,
+      "voltage_v": 11.8,
+      "temp_c": 36,
+      "hw_error": 0
+    },
+    {
+      "t": 2.212691324,
+      "id": 10,
+      "name": "r_pelvis_roll_joint",
+      "pwm": -482,
+      "current_ma": -638.4,
+      "voltage_v": 11.8,
+      "temp_c": 36,
+      "hw_error": 0
+    },
+    {
+      "t": 2.212691324,
+      "id": 11,
+      "name": "l_pelvis_pitch_joint",
+      "pwm": -195,
+      "current_ma": -823.2,
+      "voltage_v": 11.8,
+      "temp_c": 37,
+      "hw_error": 0
+    },
+    {
+      "t": 2.212691324,
+      "id": 12,
+      "name": "r_pelvis_pitch_joint",
+      "pwm": 68,
+      "current_ma": -866.9,
+      "voltage_v": 11.9,
+      "temp_c": 37,
+      "hw_error": 0
+    },
+    {
+      "t": 2.212691324,
+      "id": 13,
+      "name": "l_shoulder_pitch_joint",
+      "pwm": 50,
+      "current_ma": 231.8,
+      "voltage_v": 11.8,
+      "temp_c": 37,
+      "hw_error": 0
+    },
+    {
+      "t": 2.212691324,
+      "id": 14,
+      "name": "r_shoulder_pitch_joint",
+      "pwm": -50,
+      "current_ma": -53.8,
+      "voltage_v": 11.8,
+      "temp_c": 35,
+      "hw_error": 0
+    },
+    {
+      "t": 2.212691324,
+      "id": 15,
+      "name": "l_shoulder_roll_joint",
+      "pwm": -50,
+      "current_ma": 0.0,
+      "voltage_v": 11.9,
+      "temp_c": 35,
+      "hw_error": 0
+    },
+    {
+      "t": 2.212691324,
+      "id": 16,
+      "name": "r_shoulder_roll_joint",
+      "pwm": 50,
+      "current_ma": 0.0,
+      "voltage_v": 11.8,
+      "temp_c": 34,
+      "hw_error": 0
+    },
+    {
+      "t": 2.212691324,
+      "id": 17,
+      "name": "l_elbow_pitch_joint",
+      "pwm": 50,
+      "current_ma": 26.9,
+      "voltage_v": 11.7,
+      "temp_c": 35,
+      "hw_error": 0
+    },
+    {
+      "t": 2.212691324,
+      "id": 18,
+      "name": "r_elbow_pitch_joint",
+      "pwm": 50,
+      "current_ma": 198.2,
+      "voltage_v": 11.8,
+      "temp_c": 36,
+      "hw_error": 0
+    },
+    {
+      "t": 2.212691324,
+      "id": 19,
+      "name": "neck_yaw_joint",
+      "pwm": -4,
+      "current_ma": 0.0,
+      "voltage_v": 11.7,
+      "temp_c": 42,
+      "hw_error": 0
+    },
+    {
+      "t": 2.212691324,
+      "id": 20,
+      "name": "neck_pitch_joint",
+      "pwm": 21,
+      "current_ma": 3.4,
+      "voltage_v": 11.7,
+      "temp_c": 41,
+      "hw_error": 0
+    },
+    {
+      "t": 2.712632256,
+      "id": 1,
+      "name": "l_ankle_roll_joint",
+      "pwm": 12,
+      "current_ma": 50.4,
+      "voltage_v": 11.9,
+      "temp_c": 35,
+      "hw_error": 0
+    },
+    {
+      "t": 2.712632256,
+      "id": 2,
+      "name": "r_ankle_roll_joint",
+      "pwm": 12,
+      "current_ma": 16.8,
+      "voltage_v": 11.9,
+      "temp_c": 36,
+      "hw_error": 0
+    },
+    {
+      "t": 2.712632256,
+      "id": 3,
+      "name": "l_ankle_pitch_joint",
+      "pwm": 12,
+      "current_ma": 60.5,
+      "voltage_v": 11.9,
+      "temp_c": 36,
+      "hw_error": 0
+    },
+    {
+      "t": 2.712632256,
+      "id": 4,
+      "name": "r_ankle_pitch_joint",
+      "pwm": -7,
+      "current_ma": 90.7,
+      "voltage_v": 11.9,
+      "temp_c": 38,
+      "hw_error": 0
+    },
+    {
+      "t": 2.712632256,
+      "id": 5,
+      "name": "l_knee_pitch_joint",
+      "pwm": -32,
+      "current_ma": -211.7,
+      "voltage_v": 11.9,
+      "temp_c": 45,
+      "hw_error": 0
+    },
+    {
+      "t": 2.712632256,
+      "id": 6,
+      "name": "r_knee_pitch_joint",
+      "pwm": -13,
+      "current_ma": -231.8,
+      "voltage_v": 11.8,
+      "temp_c": 44,
+      "hw_error": 0
+    },
+    {
+      "t": 2.712632256,
+      "id": 7,
+      "name": "l_pelvis_yaw_joint",
+      "pwm": -25,
+      "current_ma": -530.9,
+      "voltage_v": 11.9,
+      "temp_c": 37,
+      "hw_error": 0
+    },
+    {
+      "t": 2.712632256,
+      "id": 8,
+      "name": "r_pelvis_yaw_joint",
+      "pwm": 0,
+      "current_ma": -470.4,
+      "voltage_v": 11.9,
+      "temp_c": 36,
+      "hw_error": 0
+    },
+    {
+      "t": 2.712632256,
+      "id": 9,
+      "name": "l_pelvis_roll_joint",
+      "pwm": 37,
+      "current_ma": 1387.7,
+      "voltage_v": 11.9,
+      "temp_c": 36,
+      "hw_error": 0
+    },
+    {
+      "t": 2.712632256,
+      "id": 10,
+      "name": "r_pelvis_roll_joint",
+      "pwm": -25,
+      "current_ma": -396.5,
+      "voltage_v": 11.9,
+      "temp_c": 36,
+      "hw_error": 0
+    },
+    {
+      "t": 2.712632256,
+      "id": 11,
+      "name": "l_pelvis_pitch_joint",
+      "pwm": 25,
+      "current_ma": -60.5,
+      "voltage_v": 11.9,
+      "temp_c": 37,
+      "hw_error": 0
+    },
+    {
+      "t": 2.712632256,
+      "id": 12,
+      "name": "r_pelvis_pitch_joint",
+      "pwm": 18,
+      "current_ma": 715.7,
+      "voltage_v": 12.0,
+      "temp_c": 37,
+      "hw_error": 0
+    },
+    {
+      "t": 2.712632256,
+      "id": 13,
+      "name": "l_shoulder_pitch_joint",
+      "pwm": 50,
+      "current_ma": 171.4,
+      "voltage_v": 11.9,
+      "temp_c": 37,
+      "hw_error": 0
+    },
+    {
+      "t": 2.712632256,
+      "id": 14,
+      "name": "r_shoulder_pitch_joint",
+      "pwm": 50,
+      "current_ma": -43.7,
+      "voltage_v": 11.8,
+      "temp_c": 35,
+      "hw_error": 0
+    },
+    {
+      "t": 2.712632256,
+      "id": 15,
+      "name": "l_shoulder_roll_joint",
+      "pwm": 50,
+      "current_ma": -40.3,
+      "voltage_v": 11.9,
+      "temp_c": 34,
+      "hw_error": 0
+    },
+    {
+      "t": 2.712632256,
+      "id": 16,
+      "name": "r_shoulder_roll_joint",
+      "pwm": 50,
+      "current_ma": -131.0,
+      "voltage_v": 11.9,
+      "temp_c": 34,
+      "hw_error": 0
+    },
+    {
+      "t": 2.712632256,
+      "id": 17,
+      "name": "l_elbow_pitch_joint",
+      "pwm": 50,
+      "current_ma": -6.7,
+      "voltage_v": 11.8,
+      "temp_c": 35,
+      "hw_error": 0
+    },
+    {
+      "t": 2.712632256,
+      "id": 18,
+      "name": "r_elbow_pitch_joint",
+      "pwm": -50,
+      "current_ma": -87.4,
+      "voltage_v": 11.9,
+      "temp_c": 36,
+      "hw_error": 0
+    },
+    {
+      "t": 2.712632256,
+      "id": 19,
+      "name": "neck_yaw_joint",
+      "pwm": 8,
+      "current_ma": 0.0,
+      "voltage_v": 11.8,
+      "temp_c": 42,
+      "hw_error": 0
+    },
+    {
+      "t": 2.712632256,
+      "id": 20,
+      "name": "neck_pitch_joint",
+      "pwm": -4,
+      "current_ma": 0.0,
+      "voltage_v": 11.8,
+      "temp_c": 41,
+      "hw_error": 0
+    },
+    {
+      "t": 3.212615747,
+      "id": 1,
+      "name": "l_ankle_roll_joint",
+      "pwm": -19,
+      "current_ma": -47.0,
+      "voltage_v": 11.9,
+      "temp_c": 35,
+      "hw_error": 0
+    },
+    {
+      "t": 3.212615747,
+      "id": 2,
+      "name": "r_ankle_roll_joint",
+      "pwm": -25,
+      "current_ma": -33.6,
+      "voltage_v": 11.9,
+      "temp_c": 36,
+      "hw_error": 0
+    },
+    {
+      "t": 3.212615747,
+      "id": 3,
+      "name": "l_ankle_pitch_joint",
+      "pwm": 68,
+      "current_ma": 174.7,
+      "voltage_v": 11.9,
+      "temp_c": 37,
+      "hw_error": 0
+    },
+    {
+      "t": 3.212615747,
+      "id": 4,
+      "name": "r_ankle_pitch_joint",
+      "pwm": -38,
+      "current_ma": -198.2,
+      "voltage_v": 11.9,
+      "temp_c": 39,
+      "hw_error": 0
+    },
+    {
+      "t": 3.212615747,
+      "id": 5,
+      "name": "l_knee_pitch_joint",
+      "pwm": 18,
+      "current_ma": -10.1,
+      "voltage_v": 11.9,
+      "temp_c": 45,
+      "hw_error": 0
+    },
+    {
+      "t": 3.212615747,
+      "id": 6,
+      "name": "r_knee_pitch_joint",
+      "pwm": 12,
+      "current_ma": 94.1,
+      "voltage_v": 11.8,
+      "temp_c": 44,
+      "hw_error": 0
+    },
+    {
+      "t": 3.212615747,
+      "id": 7,
+      "name": "l_pelvis_yaw_joint",
+      "pwm": 18,
+      "current_ma": 100.8,
+      "voltage_v": 11.9,
+      "temp_c": 36,
+      "hw_error": 0
+    },
+    {
+      "t": 3.212615747,
+      "id": 8,
+      "name": "r_pelvis_yaw_joint",
+      "pwm": -38,
+      "current_ma": -473.8,
+      "voltage_v": 11.9,
+      "temp_c": 36,
+      "hw_error": 0
+    },
+    {
+      "t": 3.212615747,
+      "id": 9,
+      "name": "l_pelvis_roll_joint",
+      "pwm": -69,
+      "current_ma": 16.8,
+      "voltage_v": 11.8,
+      "temp_c": 37,
+      "hw_error": 0
+    },
+    {
+      "t": 3.212615747,
+      "id": 10,
+      "name": "r_pelvis_roll_joint",
+      "pwm": 56,
+      "current_ma": 211.7,
+      "voltage_v": 11.9,
+      "temp_c": 36,
+      "hw_error": 0
+    },
+    {
+      "t": 3.212615747,
+      "id": 11,
+      "name": "l_pelvis_pitch_joint",
+      "pwm": -63,
+      "current_ma": 30.2,
+      "voltage_v": 11.9,
+      "temp_c": 37,
+      "hw_error": 0
+    },
+    {
+      "t": 3.212615747,
+      "id": 12,
+      "name": "r_pelvis_pitch_joint",
+      "pwm": 12,
+      "current_ma": 157.9,
+      "voltage_v": 11.9,
+      "temp_c": 37,
+      "hw_error": 0
+    },
+    {
+      "t": 3.212615747,
+      "id": 13,
+      "name": "l_shoulder_pitch_joint",
+      "pwm": 50,
+      "current_ma": 26.9,
+      "voltage_v": 11.9,
+      "temp_c": 36,
+      "hw_error": 0
+    },
+    {
+      "t": 3.212615747,
+      "id": 14,
+      "name": "r_shoulder_pitch_joint",
+      "pwm": -1,
+      "current_ma": 23.5,
+      "voltage_v": 11.8,
+      "temp_c": 35,
+      "hw_error": 0
+    },
+    {
+      "t": 3.212615747,
+      "id": 15,
+      "name": "l_shoulder_roll_joint",
+      "pwm": 50,
+      "current_ma": -57.1,
+      "voltage_v": 11.9,
+      "temp_c": 34,
+      "hw_error": 0
+    },
+    {
+      "t": 3.212615747,
+      "id": 16,
+      "name": "r_shoulder_roll_joint",
+      "pwm": 50,
+      "current_ma": -94.1,
+      "voltage_v": 11.9,
+      "temp_c": 34,
+      "hw_error": 0
+    },
+    {
+      "t": 3.212615747,
+      "id": 17,
+      "name": "l_elbow_pitch_joint",
+      "pwm": 50,
+      "current_ma": -6.7,
+      "voltage_v": 11.8,
+      "temp_c": 34,
+      "hw_error": 0
+    },
+    {
+      "t": 3.212615747,
+      "id": 18,
+      "name": "r_elbow_pitch_joint",
+      "pwm": -50,
+      "current_ma": -994.6,
+      "voltage_v": 11.9,
+      "temp_c": 36,
+      "hw_error": 0
+    },
+    {
+      "t": 3.212615747,
+      "id": 19,
+      "name": "neck_yaw_joint",
+      "pwm": 21,
+      "current_ma": 10.1,
+      "voltage_v": 11.8,
+      "temp_c": 41,
+      "hw_error": 0
+    },
+    {
+      "t": 3.212615747,
+      "id": 20,
+      "name": "neck_pitch_joint",
+      "pwm": 0,
+      "current_ma": 0.0,
+      "voltage_v": 11.8,
+      "temp_c": 41,
+      "hw_error": 0
+    },
+    {
+      "t": 3.712598309,
+      "id": 1,
+      "name": "l_ankle_roll_joint",
+      "pwm": -19,
+      "current_ma": -110.9,
+      "voltage_v": 11.9,
+      "temp_c": 36,
+      "hw_error": 0
+    },
+    {
+      "t": 3.712598309,
+      "id": 2,
+      "name": "r_ankle_roll_joint",
+      "pwm": -13,
+      "current_ma": -33.6,
+      "voltage_v": 11.9,
+      "temp_c": 35,
+      "hw_error": 0
+    },
+    {
+      "t": 3.712598309,
+      "id": 3,
+      "name": "l_ankle_pitch_joint",
+      "pwm": 87,
+      "current_ma": 698.9,
+      "voltage_v": 11.9,
+      "temp_c": 36,
+      "hw_error": 0
+    },
+    {
+      "t": 3.712598309,
+      "id": 4,
+      "name": "r_ankle_pitch_joint",
+      "pwm": -13,
+      "current_ma": -16.8,
+      "voltage_v": 11.9,
+      "temp_c": 39,
+      "hw_error": 0
+    },
+    {
+      "t": 3.712598309,
+      "id": 5,
+      "name": "l_knee_pitch_joint",
+      "pwm": 56,
+      "current_ma": 362.9,
+      "voltage_v": 11.9,
+      "temp_c": 45,
+      "hw_error": 0
+    },
+    {
+      "t": 3.712598309,
+      "id": 6,
+      "name": "r_knee_pitch_joint",
+      "pwm": -19,
+      "current_ma": -84.0,
+      "voltage_v": 11.9,
+      "temp_c": 44,
+      "hw_error": 0
+    },
+    {
+      "t": 3.712598309,
+      "id": 7,
+      "name": "l_pelvis_yaw_joint",
+      "pwm": 6,
+      "current_ma": 0.0,
+      "voltage_v": 11.9,
+      "temp_c": 36,
+      "hw_error": 0
+    },
+    {
+      "t": 3.712598309,
+      "id": 8,
+      "name": "r_pelvis_yaw_joint",
+      "pwm": -13,
+      "current_ma": -57.1,
+      "voltage_v": 12.0,
+      "temp_c": 36,
+      "hw_error": 0
+    },
+    {
+      "t": 3.712598309,
+      "id": 9,
+      "name": "l_pelvis_roll_joint",
+      "pwm": -25,
+      "current_ma": -174.7,
+      "voltage_v": 11.9,
+      "temp_c": 36,
+      "hw_error": 0
+    },
+    {
+      "t": 3.712598309,
+      "id": 10,
+      "name": "r_pelvis_roll_joint",
+      "pwm": 6,
+      "current_ma": 0.0,
+      "voltage_v": 11.9,
+      "temp_c": 36,
+      "hw_error": 0
+    },
+    {
+      "t": 3.712598309,
+      "id": 11,
+      "name": "l_pelvis_pitch_joint",
+      "pwm": -57,
+      "current_ma": -423.4,
+      "voltage_v": 11.9,
+      "temp_c": 37,
+      "hw_error": 0
+    },
+    {
+      "t": 3.712598309,
+      "id": 12,
+      "name": "r_pelvis_pitch_joint",
+      "pwm": 6,
+      "current_ma": 0.0,
+      "voltage_v": 11.9,
+      "temp_c": 37,
+      "hw_error": 0
+    },
+    {
+      "t": 3.712598309,
+      "id": 13,
+      "name": "l_shoulder_pitch_joint",
+      "pwm": 50,
+      "current_ma": 245.3,
+      "voltage_v": 11.9,
+      "temp_c": 36,
+      "hw_error": 0
+    },
+    {
+      "t": 3.712598309,
+      "id": 14,
+      "name": "r_shoulder_pitch_joint",
+      "pwm": -13,
+      "current_ma": -43.7,
+      "voltage_v": 11.8,
+      "temp_c": 35,
+      "hw_error": 0
+    },
+    {
+      "t": 3.712598309,
+      "id": 15,
+      "name": "l_shoulder_roll_joint",
+      "pwm": -7,
+      "current_ma": -10.1,
+      "voltage_v": 11.9,
+      "temp_c": 34,
+      "hw_error": 0
+    },
+    {
+      "t": 3.712598309,
+      "id": 16,
+      "name": "r_shoulder_roll_joint",
+      "pwm": -13,
+      "current_ma": -23.5,
+      "voltage_v": 11.9,
+      "temp_c": 34,
+      "hw_error": 0
+    },
+    {
+      "t": 3.712598309,
+      "id": 17,
+      "name": "l_elbow_pitch_joint",
+      "pwm": 50,
+      "current_ma": -3.4,
+      "voltage_v": 11.8,
+      "temp_c": 35,
+      "hw_error": 0
+    },
+    {
+      "t": 3.712598309,
+      "id": 18,
+      "name": "r_elbow_pitch_joint",
+      "pwm": -50,
+      "current_ma": -245.3,
+      "voltage_v": 11.9,
+      "temp_c": 36,
+      "hw_error": 0
+    },
+    {
+      "t": 3.712598309,
+      "id": 19,
+      "name": "neck_yaw_joint",
+      "pwm": 21,
+      "current_ma": 37.0,
+      "voltage_v": 11.8,
+      "temp_c": 42,
+      "hw_error": 0
+    },
+    {
+      "t": 3.712598309,
+      "id": 20,
+      "name": "neck_pitch_joint",
+      "pwm": 0,
+      "current_ma": 0.0,
+      "voltage_v": 11.8,
+      "temp_c": 41,
+      "hw_error": 0
+    },
+    {
+      "t": 4.212570437,
+      "id": 1,
+      "name": "l_ankle_roll_joint",
+      "pwm": -19,
+      "current_ma": -110.9,
+      "voltage_v": 11.9,
+      "temp_c": 36,
+      "hw_error": 0
+    },
+    {
+      "t": 4.212570437,
+      "id": 2,
+      "name": "r_ankle_roll_joint",
+      "pwm": -13,
+      "current_ma": -40.3,
+      "voltage_v": 11.9,
+      "temp_c": 35,
+      "hw_error": 0
+    },
+    {
+      "t": 4.212570437,
+      "id": 3,
+      "name": "l_ankle_pitch_joint",
+      "pwm": 87,
+      "current_ma": 702.2,
+      "voltage_v": 11.9,
+      "temp_c": 37,
+      "hw_error": 0
+    },
+    {
+      "t": 4.212570437,
+      "id": 4,
+      "name": "r_ankle_pitch_joint",
+      "pwm": -13,
+      "current_ma": -53.8,
+      "voltage_v": 11.9,
+      "temp_c": 39,
+      "hw_error": 0
+    },
+    {
+      "t": 4.212570437,
+      "id": 5,
+      "name": "l_knee_pitch_joint",
+      "pwm": 50,
+      "current_ma": 342.7,
+      "voltage_v": 11.9,
+      "temp_c": 44,
+      "hw_error": 0
+    },
+    {
+      "t": 4.212570437,
+      "id": 6,
+      "name": "r_knee_pitch_joint",
+      "pwm": -19,
+      "current_ma": -97.4,
+      "voltage_v": 11.9,
+      "temp_c": 44,
+      "hw_error": 0
+    },
+    {
+      "t": 4.212570437,
+      "id": 7,
+      "name": "l_pelvis_yaw_joint",
+      "pwm": 0,
+      "current_ma": 0.0,
+      "voltage_v": 11.9,
+      "temp_c": 36,
+      "hw_error": 0
+    },
+    {
+      "t": 4.212570437,
+      "id": 8,
+      "name": "r_pelvis_yaw_joint",
+      "pwm": -13,
+      "current_ma": -30.2,
+      "voltage_v": 12.0,
+      "temp_c": 37,
+      "hw_error": 0
+    },
+    {
+      "t": 4.212570437,
+      "id": 9,
+      "name": "l_pelvis_roll_joint",
+      "pwm": -19,
+      "current_ma": -121.0,
+      "voltage_v": 11.9,
+      "temp_c": 37,
+      "hw_error": 0
+    },
+    {
+      "t": 4.212570437,
+      "id": 10,
+      "name": "r_pelvis_roll_joint",
+      "pwm": 12,
+      "current_ma": 67.2,
+      "voltage_v": 11.9,
+      "temp_c": 37,
+      "hw_error": 0
+    },
+    {
+      "t": 4.212570437,
+      "id": 11,
+      "name": "l_pelvis_pitch_joint",
+      "pwm": -57,
+      "current_ma": -420.0,
+      "voltage_v": 11.9,
+      "temp_c": 36,
+      "hw_error": 0
+    },
+    {
+      "t": 4.212570437,
+      "id": 12,
+      "name": "r_pelvis_pitch_joint",
+      "pwm": 12,
+      "current_ma": 26.9,
+      "voltage_v": 11.9,
+      "temp_c": 37,
+      "hw_error": 0
+    },
+    {
+      "t": 4.212570437,
+      "id": 13,
+      "name": "l_shoulder_pitch_joint",
+      "pwm": 50,
+      "current_ma": 241.9,
+      "voltage_v": 11.9,
+      "temp_c": 37,
+      "hw_error": 0
+    },
+    {
+      "t": 4.212570437,
+      "id": 14,
+      "name": "r_shoulder_pitch_joint",
+      "pwm": -7,
+      "current_ma": -23.5,
+      "voltage_v": 11.8,
+      "temp_c": 35,
+      "hw_error": 0
+    },
+    {
+      "t": 4.212570437,
+      "id": 15,
+      "name": "l_shoulder_roll_joint",
+      "pwm": -7,
+      "current_ma": -10.1,
+      "voltage_v": 11.9,
+      "temp_c": 34,
+      "hw_error": 0
+    },
+    {
+      "t": 4.212570437,
+      "id": 16,
+      "name": "r_shoulder_roll_joint",
+      "pwm": -7,
+      "current_ma": -33.6,
+      "voltage_v": 11.9,
+      "temp_c": 34,
+      "hw_error": 0
+    },
+    {
+      "t": 4.212570437,
+      "id": 17,
+      "name": "l_elbow_pitch_joint",
+      "pwm": 50,
+      "current_ma": 0.0,
+      "voltage_v": 11.8,
+      "temp_c": 35,
+      "hw_error": 0
+    },
+    {
+      "t": 4.212570437,
+      "id": 18,
+      "name": "r_elbow_pitch_joint",
+      "pwm": -50,
+      "current_ma": -245.3,
+      "voltage_v": 11.9,
+      "temp_c": 36,
+      "hw_error": 0
+    },
+    {
+      "t": 4.212570437,
+      "id": 19,
+      "name": "neck_yaw_joint",
+      "pwm": 21,
+      "current_ma": 37.0,
+      "voltage_v": 11.8,
+      "temp_c": 42,
+      "hw_error": 0
+    },
+    {
+      "t": 4.212570437,
+      "id": 20,
+      "name": "neck_pitch_joint",
+      "pwm": -4,
+      "current_ma": 6.7,
+      "voltage_v": 11.8,
+      "temp_c": 41,
+      "hw_error": 0
+    }
+  ],
+  "limitations": [
+    "Joint errors are simultaneous comparisons, not transport-delay-corrected actuator errors.",
+    "5Hz state messages bound but do not timestamp internal policy transitions exactly.",
+    "2Hz diagnostics cannot rule out short transients or infer motor torque directly.",
+    "Raw actor output, pre-limiter target, motor internal trajectory, and model identity at recording are absent.",
+    "Recorder/header differences do not measure sensor acquisition-to-policy delay in full."
+  ],
+  "source_unchanged_after_analysis": true
+}

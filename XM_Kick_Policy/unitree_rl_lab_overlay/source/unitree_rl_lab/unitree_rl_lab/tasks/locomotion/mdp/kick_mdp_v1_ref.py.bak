@@ -1,0 +1,364 @@
+"""Ball-kick MDP terms: observations, rewards, and target sampling events.
+
+Lives in its own module so the kick task can be tuned independently of
+the velocity-tracking locomotion task.
+
+Per-env state attached to `env`:
+    env.kick_target_pos_w : (N, 3)  world-frame target the ball must reach
+    env.kick_target_dir_w : (N, 3)  unit vector from current ball pos → target (z=0)
+"""
+
+from __future__ import annotations
+
+import torch
+from typing import TYPE_CHECKING
+
+try:
+    from isaaclab.utils.math import quat_apply_inverse
+except ImportError:
+    from isaaclab.utils.math import quat_rotate_inverse as quat_apply_inverse
+from isaaclab.utils.math import euler_xyz_from_quat
+
+from isaaclab.assets import Articulation, RigidObject
+from isaaclab.managers import SceneEntityCfg
+
+if TYPE_CHECKING:
+    from isaaclab.envs import ManagerBasedRLEnv
+
+
+# ----------------------------------------------------------------------
+# Helpers
+# ----------------------------------------------------------------------
+def _ensure_target_buffers(env: ManagerBasedRLEnv) -> None:
+    """Lazily create per-env target buffers on first access."""
+    if not hasattr(env, "kick_target_pos_w"):
+        env.kick_target_pos_w = torch.zeros(env.num_envs, 3, device=env.device)
+    if not hasattr(env, "kick_target_dir_w"):
+        env.kick_target_dir_w = torch.zeros(env.num_envs, 3, device=env.device)
+        env.kick_target_dir_w[:, 0] = 1.0  # default: +x
+
+
+def _update_target_dir(
+    env: ManagerBasedRLEnv,
+    env_ids: torch.Tensor | None = None,
+    ball_cfg: SceneEntityCfg = SceneEntityCfg("ball"),
+) -> None:
+    """Recompute kick_target_dir_w from current ball pos → target pos (xy plane)."""
+    _ensure_target_buffers(env)
+    ball: RigidObject = env.scene[ball_cfg.name]
+    if env_ids is None:
+        env_ids = slice(None)
+    ball_pos = ball.data.root_pos_w[env_ids]
+    target_pos = env.kick_target_pos_w[env_ids]
+    delta = target_pos - ball_pos
+    delta[:, 2] = 0.0
+    norm = torch.norm(delta, dim=-1, keepdim=True).clamp(min=1e-6)
+    env.kick_target_dir_w[env_ids] = delta / norm
+
+
+# ----------------------------------------------------------------------
+# Events  (reset-mode)
+# ----------------------------------------------------------------------
+def reset_ball_around_robot(
+    env: ManagerBasedRLEnv,
+    env_ids: torch.Tensor,
+    radius_range: tuple[float, float] = (0.4, 1.2),
+    front_angle_range: tuple[float, float] = (-torch.pi, torch.pi),
+    height: float = 0.065,
+    ball_cfg: SceneEntityCfg = SceneEntityCfg("ball"),
+    robot_cfg: SceneEntityCfg = SceneEntityCfg("robot"),
+) -> None:
+    """Spawn the ball at a random angle/distance around the robot's reset position.
+
+    Args:
+        radius_range: ball spawn distance from robot (xy plane), uniform.
+        front_angle_range: angle relative to robot's CURRENT front direction,
+            radians. Default (-π, π) spawns 360° around. Use e.g. (-π/3, π/3)
+            to restrict to a ±60° cone in front of the robot. This is sampled
+            AFTER the robot reset event, so the robot's actual yaw at reset is
+            honoured (i.e. "front" tracks the randomized robot yaw).
+        height: ball z position (typically the ball radius).
+    """
+    ball: RigidObject = env.scene[ball_cfg.name]
+    robot: Articulation = env.scene[robot_cfg.name]
+
+    n = len(env_ids)
+    device = env.device
+
+    # Polar sample, with theta relative to robot's current yaw
+    r = torch.empty(n, device=device).uniform_(radius_range[0], radius_range[1])
+    rel_theta = torch.empty(n, device=device).uniform_(
+        front_angle_range[0], front_angle_range[1]
+    )
+    _, _, robot_yaw = euler_xyz_from_quat(robot.data.root_quat_w[env_ids])
+    theta = robot_yaw + rel_theta  # world-frame angle
+
+    robot_xy = robot.data.root_pos_w[env_ids, :2]
+    ball_x = robot_xy[:, 0] + r * torch.cos(theta)
+    ball_y = robot_xy[:, 1] + r * torch.sin(theta)
+    ball_z = torch.full((n,), height, device=device)
+
+    pos = torch.stack([ball_x, ball_y, ball_z], dim=-1)
+    quat = torch.zeros(n, 4, device=device)
+    quat[:, 0] = 1.0
+    vel = torch.zeros(n, 6, device=device)
+
+    ball.write_root_pose_to_sim(torch.cat([pos, quat], dim=-1), env_ids=env_ids)
+    ball.write_root_velocity_to_sim(vel, env_ids=env_ids)
+
+
+def reset_kick_target(
+    env: ManagerBasedRLEnv,
+    env_ids: torch.Tensor,
+    distance_range: tuple[float, float] = (2.0, 4.0),
+    ball_cfg: SceneEntityCfg = SceneEntityCfg("ball"),
+) -> None:
+    """Pick a random target point beyond the ball (in xy plane)."""
+    _ensure_target_buffers(env)
+    ball: RigidObject = env.scene[ball_cfg.name]
+    device = env.device
+    n = len(env_ids)
+
+    r = torch.empty(n, device=device).uniform_(distance_range[0], distance_range[1])
+    theta = torch.empty(n, device=device).uniform_(-torch.pi, torch.pi)
+
+    ball_xy = ball.data.root_pos_w[env_ids, :2]
+    tx = ball_xy[:, 0] + r * torch.cos(theta)
+    ty = ball_xy[:, 1] + r * torch.sin(theta)
+    tz = torch.zeros(n, device=device)
+
+    env.kick_target_pos_w[env_ids] = torch.stack([tx, ty, tz], dim=-1)
+    _update_target_dir(env, env_ids=env_ids, ball_cfg=ball_cfg)
+
+
+# ----------------------------------------------------------------------
+# Observations
+# ----------------------------------------------------------------------
+def ball_pos_in_robot_frame(
+    env: ManagerBasedRLEnv,
+    ball_cfg: SceneEntityCfg = SceneEntityCfg("ball"),
+    robot_cfg: SceneEntityCfg = SceneEntityCfg("robot"),
+) -> torch.Tensor:
+    """Ball position expressed in the robot torso frame (x_fwd, y_left, z_up)."""
+    ball: RigidObject = env.scene[ball_cfg.name]
+    robot: Articulation = env.scene[robot_cfg.name]
+    rel_w = ball.data.root_pos_w - robot.data.root_pos_w  # (N, 3)
+    return quat_apply_inverse(robot.data.root_quat_w, rel_w)
+
+
+def target_dir_in_robot_frame(
+    env: ManagerBasedRLEnv,
+    ball_cfg: SceneEntityCfg = SceneEntityCfg("ball"),
+    robot_cfg: SceneEntityCfg = SceneEntityCfg("robot"),
+) -> torch.Tensor:
+    """Unit vector (in robot torso frame) pointing where the ball should go."""
+    _ensure_target_buffers(env)
+    _update_target_dir(env, ball_cfg=ball_cfg)  # refresh every step
+    robot: Articulation = env.scene[robot_cfg.name]
+    return quat_apply_inverse(robot.data.root_quat_w, env.kick_target_dir_w)
+
+
+def ball_lin_vel_in_robot_frame(
+    env: ManagerBasedRLEnv,
+    ball_cfg: SceneEntityCfg = SceneEntityCfg("ball"),
+    robot_cfg: SceneEntityCfg = SceneEntityCfg("robot"),
+) -> torch.Tensor:
+    """Optional richer obs — ball linear velocity in robot torso frame."""
+    ball: RigidObject = env.scene[ball_cfg.name]
+    robot: Articulation = env.scene[robot_cfg.name]
+    return quat_apply_inverse(robot.data.root_quat_w, ball.data.root_lin_vel_w)
+
+
+# ----------------------------------------------------------------------
+# Rewards
+# ----------------------------------------------------------------------
+def robot_to_ball_closeness(
+    env: ManagerBasedRLEnv,
+    std: float = 0.5,
+    motion_threshold: float = 0.5,
+    ball_cfg: SceneEntityCfg = SceneEntityCfg("ball"),
+    robot_cfg: SceneEntityCfg = SceneEntityCfg("robot"),
+) -> torch.Tensor:
+    """Gaussian reward that peaks (1.0) when the robot is right next to the ball.
+
+    When the ball is moving (speed > motion_threshold) the reward is frozen
+    at its max (1.0) so the act of kicking the ball away does NOT punish the
+    robot via a dropping approach reward. Once the ball stops, the regular
+    distance-based reward resumes — giving the robot an incentive to walk
+    back toward the (now distant) ball for the next kick.
+    """
+    ball: RigidObject = env.scene[ball_cfg.name]
+    robot: Articulation = env.scene[robot_cfg.name]
+    d = torch.norm(ball.data.root_pos_w[:, :2] - robot.data.root_pos_w[:, :2], dim=-1)
+    closeness = torch.exp(-d / std)
+
+    ball_speed = torch.norm(ball.data.root_lin_vel_w[:, :2], dim=-1)
+    is_moving = ball_speed > motion_threshold
+    return torch.where(is_moving, torch.ones_like(closeness), closeness)
+
+
+def ball_to_target_closeness(
+    env: ManagerBasedRLEnv,
+    std: float = 0.5,
+    ball_cfg: SceneEntityCfg = SceneEntityCfg("ball"),
+) -> torch.Tensor:
+    """Gaussian reward that peaks when the ball reaches the target (in xy)."""
+    _ensure_target_buffers(env)
+    ball: RigidObject = env.scene[ball_cfg.name]
+    d = torch.norm(
+        env.kick_target_pos_w[:, :2] - ball.data.root_pos_w[:, :2], dim=-1
+    )
+    return torch.exp(-d / std)
+
+
+def ball_velocity_toward_target(
+    env: ManagerBasedRLEnv,
+    max_speed: float = 3.0,
+    ball_cfg: SceneEntityCfg = SceneEntityCfg("ball"),
+) -> torch.Tensor:
+    """Reward proportional to ball's xy velocity projected onto target direction.
+
+    Clamped to [0, max_speed] so a kick away from the target is not rewarded
+    (also not punished — `ball_to_target_closeness` handles that side).
+    """
+    _ensure_target_buffers(env)
+    ball: RigidObject = env.scene[ball_cfg.name]
+    v_xy = ball.data.root_lin_vel_w[:, :2]
+    dir_xy = env.kick_target_dir_w[:, :2]
+    proj = (v_xy * dir_xy).sum(dim=-1)
+    return torch.clamp(proj, min=0.0, max=max_speed)
+
+
+# ----------------------------------------------------------------------
+# Kick-then-stand success bonus + termination
+# ----------------------------------------------------------------------
+def _ensure_kick_state(env: ManagerBasedRLEnv) -> None:
+    if not hasattr(env, "kick_time_s"):
+        env.kick_time_s = torch.full(
+            (env.num_envs,), -1.0, device=env.device, dtype=torch.float
+        )
+
+
+def _maybe_record_kick(
+    env: ManagerBasedRLEnv,
+    ball_cfg: SceneEntityCfg,
+    speed_threshold: float,
+) -> None:
+    """Latch the time of the first frame where ball speed exceeds threshold."""
+    _ensure_kick_state(env)
+    ball: RigidObject = env.scene[ball_cfg.name]
+    ball_speed = torch.norm(ball.data.root_lin_vel_w[:, :2], dim=-1)
+    not_yet = env.kick_time_s < 0
+    just_kicked = (ball_speed > speed_threshold) & not_yet
+    current_t = env.episode_length_buf.float() * env.step_dt
+    env.kick_time_s = torch.where(just_kicked, current_t, env.kick_time_s)
+
+
+def reset_kick_state(
+    env: ManagerBasedRLEnv,
+    env_ids: torch.Tensor,
+    walk_speed: float = 0.3,
+    margin_s: float = 1.0,
+    ball_cfg: SceneEntityCfg = SceneEntityCfg("ball"),
+    robot_cfg: SceneEntityCfg = SceneEntityCfg("robot"),
+) -> None:
+    """Reset event: clear kick_time and compute per-env no-kick deadline.
+
+    The deadline is distance-aware:
+        deadline = (initial robot↔ball xy distance) / walk_speed + margin_s
+
+    so close-spawn balls don't get an unfairly long farming window and
+    far-spawn balls get enough time for the robot to actually walk over.
+    Must run AFTER the robot and ball reset events (declaration order).
+    """
+    _ensure_kick_state(env)
+    env.kick_time_s[env_ids] = -1.0
+
+    if not hasattr(env, "kick_deadline_s"):
+        env.kick_deadline_s = torch.zeros(env.num_envs, device=env.device)
+
+    ball: RigidObject = env.scene[ball_cfg.name]
+    robot: Articulation = env.scene[robot_cfg.name]
+    d = torch.norm(
+        ball.data.root_pos_w[env_ids, :2] - robot.data.root_pos_w[env_ids, :2],
+        dim=-1,
+    )
+    env.kick_deadline_s[env_ids] = d / max(walk_speed, 1e-3) + margin_s
+
+
+def kick_then_stand_bonus(
+    env: ManagerBasedRLEnv,
+    hold_time_s: float = 1.0,
+    speed_threshold: float = 1.0,
+    ball_cfg: SceneEntityCfg = SceneEntityCfg("ball"),
+) -> torch.Tensor:
+    """Sparse +1 at the single step that completes (kick + hold_time_s).
+
+    Combined with the existing fall terminations (base_height, bad_orientation),
+    this fires only if the robot survives the post-kick window. The matching
+    `kick_resolved_termination` ends the episode at that same step so the
+    policy can't accumulate further reward by kicking endlessly.
+    """
+    _maybe_record_kick(env, ball_cfg, speed_threshold)
+    current_t = env.episode_length_buf.float() * env.step_dt
+    elapsed = current_t - env.kick_time_s
+    # fire exactly once: in the step where elapsed first crosses hold_time
+    just_reached = (
+        (env.kick_time_s >= 0)
+        & (elapsed >= hold_time_s)
+        & (elapsed < hold_time_s + env.step_dt + 1e-6)
+    )
+    return just_reached.float()
+
+
+def kick_resolved_termination(
+    env: ManagerBasedRLEnv,
+    hold_time_s: float = 1.0,
+    speed_threshold: float = 1.0,
+    ball_cfg: SceneEntityCfg = SceneEntityCfg("ball"),
+) -> torch.Tensor:
+    """Terminate the episode once the (kick + hold_time_s) window has elapsed."""
+    _maybe_record_kick(env, ball_cfg, speed_threshold)
+    current_t = env.episode_length_buf.float() * env.step_dt
+    return (env.kick_time_s >= 0) & ((current_t - env.kick_time_s) >= hold_time_s)
+
+
+def track_forward_velocity_exp(
+    env: ManagerBasedRLEnv,
+    target_vx: float = 0.3,
+    std: float = 0.387,
+    asset_cfg: SceneEntityCfg = SceneEntityCfg("robot"),
+) -> torch.Tensor:
+    """Gaussian reward for tracking a fixed forward (body-frame x) velocity.
+
+    Peaks at 1.0 when vx_body == target_vx; falls off with std. Replaces the
+    command-driven `track_lin_vel_xy_hold_aware` (which needs a velocity
+    command — kick task has none).
+
+    Default std=0.387 ≈ sqrt(0.15) to match the velocity task's std² of 0.15.
+    """
+    asset: Articulation = env.scene[asset_cfg.name]
+    vx_b = asset.data.root_lin_vel_b[:, 0]
+    err = vx_b - target_vx
+    return torch.exp(-torch.square(err) / (std * std))
+
+
+def no_kick_timeout_termination(
+    env: ManagerBasedRLEnv,
+    fallback_s: float = 5.0,
+) -> torch.Tensor:
+    """Failure termination: end the episode if no kick was recorded by the
+    per-env deadline computed in `reset_kick_state`.
+
+    The deadline lives on `env.kick_deadline_s` (distance-aware: longer for
+    far-spawn balls). If the buffer is missing (e.g. reset event misordered),
+    falls back to a flat `fallback_s` so training never gets stuck.
+    """
+    _ensure_kick_state(env)
+    current_t = env.episode_length_buf.float() * env.step_dt
+    no_kick = env.kick_time_s < 0
+    if hasattr(env, "kick_deadline_s"):
+        deadline_passed = current_t >= env.kick_deadline_s
+    else:
+        deadline_passed = current_t >= fallback_s
+    return no_kick & deadline_passed

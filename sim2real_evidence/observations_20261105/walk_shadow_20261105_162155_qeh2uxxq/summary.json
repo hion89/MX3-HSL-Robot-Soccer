@@ -1,0 +1,68 @@
+{
+  "status": "RUNTIME_CHECK_PASSED",
+  "failure": null,
+  "real_joint_messages": 960,
+  "real_imu_messages": 3952,
+  "goal_messages": 906,
+  "goal_receive_hz": 47.999486207559606,
+  "goal_interval_ms": {
+    "p99": 45.01132699988375,
+    "max": 48.52244399990013
+  },
+  "max_target_minus_current_rad": 0.4286175934996115,
+  "max_delta_joint": "l_knee_pitch_joint",
+  "runtime_outputs": [
+    [
+      "/hsl/shadow/walk/gait/effective_frequency",
+      [
+        "std_msgs/msg/Float32"
+      ]
+    ],
+    [
+      "/hsl/shadow/walk/gait/phase",
+      [
+        "std_msgs/msg/Float32"
+      ]
+    ],
+    [
+      "/hsl/shadow/walk/gait/state",
+      [
+        "std_msgs/msg/String"
+      ]
+    ],
+    [
+      "/hsl/shadow/walk/joint_goals",
+      [
+        "sensor_msgs/msg/JointState"
+      ]
+    ],
+    [
+      "/hsl/shadow/walk/kick_done",
+      [
+        "std_msgs/msg/Bool"
+      ]
+    ],
+    [
+      "/parameter_events",
+      [
+        "rcl_interfaces/msg/ParameterEvent"
+      ]
+    ],
+    [
+      "/rosout",
+      [
+        "rcl_interfaces/msg/Log"
+      ]
+    ]
+  ],
+  "csv_files": [
+    "/home/robo04/sim2real_ws/runtime_logs/walk_shadow_20261105_162155_qeh2uxxq/v0_2_log_20261105_162156.csv"
+  ],
+  "log_directory": "/home/robo04/sim2real_ws/runtime_logs/walk_shadow_20261105_162155_qeh2uxxq",
+  "inference_rows": 859,
+  "inference_ms": {
+    "median": 0.29,
+    "p99": 2.194,
+    "max": 6.429
+  }
+}
