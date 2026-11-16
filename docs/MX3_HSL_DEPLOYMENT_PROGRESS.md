@@ -747,3 +747,5 @@ practice 자기위치 노드도 실제 관측을 사용하며 20초간 30Hz 정�
 - 사용자 요청으로 `sim2real_evidence/PROJECT_HANDOFF_KO.md`에 목표, 로봇/학습 서버 접속 정보, 환경/소스/정책 경로, 실행 흐름/명령, 지도/초기 위치, 킥 튜닝/재학습 계획, 검증 범위와 미완료 작업을 통합했다. README와 양쪽 작업 공간의 AGENTS.md에서 찾을 수 있게 했다.
 - 학습 서버 `bami122@163.180.145.122`, `/home/bami122/isaac_ws`, Conda env_isaaclab은 기존 XM540_END_TO_END_MANUAL 기록에서 가져왔다. 서버 GPU/정확한 OS/현재 라이브러리 버전은 미확인으로 명시했고, 제공된 정책 README의 학습 환경과 구분했다.
 - 최신 지도/초기 위치 배포 성공 보고는 아직 없으며 11월16일 실제 토크/전원/노드 상태도 조회하지 않았다. 문서 작성만 했고 로봇 동작·서버 설치·새 학습은 실행하지 않았다.
+- 후속 요청으로 인수인계 16절에 프로젝트 GitHub 목록을 추가했다. 본인 실물/기존 학습/비전 실험 저장소(MX3-HSL-Robot-Soccer, Isaac-work-space, CV-robocup)와 외부 B-Human/unitree/IsaacLab 및 tf2/TensorRT/초기 정정 링크를 역할별로 구분했다. CV-robocup README는 GitHub로 확인했으며 실물 HSL에 통합됐다고 주장하지 않는다.
+- 11월16일 GitHub 조회에서 새 실물 저장소는 공개, 기존 Isaac-work-space와 CV-robocup은 비공개로 확인됐다. 현재 상태/README/인수인계의 이전 비공개 안내를 정정했으며 저장소 visibility 설정 자체는 변경하지 않았다. 본 프로젝트와 관련 없는 계정의 다른 저장소는 목록에서 제외했다.

@@ -70,7 +70,7 @@
 ### 현재 기준 GitHub
 
 - URL: https://github.com/hion89/MX3-HSL-Robot-Soccer
-- 소유자 `hion89`, 비공개, 브랜치 `main`. 본인 계정 또는 접근 권한으로 인증해야 한다.
+- 소유자 `hion89`, 브랜치 `main`. 처음에는 비공개로 생성했으나 **2026-11-16 GitHub 조회에서는 공개(public)** 상태다. 다운로드는 공개 접근 가능하고 push에는 쓰기 인증이 필요하다. 전체 GitHub 구분은 16절을 참고한다.
 - 로컬 Git 루트: `C:/Users/jes/Desktop/MX3_Match_Sim`.
 - 실제 소스 하위 루트: `C:/Users/jes/Desktop/MX3_Match_Sim/MX3_Match_Sim`.
 - 따라서 실물 소스는 `MX3_Match_Sim/src/mx3_src`, `MX3_Match_Sim/src/hsl_src`이며, 원격 로봇에서는 `/home/robo04/sim2real_ws/src/mx3_src`, `src/hsl_src`다.
@@ -350,4 +350,84 @@ python scripts/verify_checkout.py
 - `sim2real_evidence/patches/hsl_field_20261112/`: 지도·RViz 적용/검증 소스.
 - `Manual/MX3_HSL_로봇운영매뉴얼_20261109.docx` 및 PDF: 운영 매뉴얼. 최신 시작 위치는 이 인수인계 문서를 우선한다.
 
-장비 접속 정보와 내부 경로가 포함된 문서다. 비공개 저장소에서 보관하며, 외부 공유 시 공개 범위를 검토한다. 비밀번호/토큰은 포함하지 않는다.
+## 16. 사용하는 GitHub 저장소와 각각의 역할
+
+2026-11-16 기준 로컬 Git remote, 연결된 GitHub 조회, 기존 프로젝트 문서로 확인했다. 이 목록은 **로봇 프로젝트에 관련된 저장소**다. 계정에 있는 의료·기타 프로젝트를 현재 로봇의 의존성으로 섞지 않는다. 공개 상태와 브랜치는 바뀔 수 있으므로 작업 시 다시 확인한다.
+
+### 16-1. 현재 실물 통합과 작업 기록 — hion89/MX3-HSL-Robot-Soccer
+
+- 주소: https://github.com/hion89/MX3-HSL-Robot-Soccer
+- 현재 공개(public), 기본 브랜치 main. 11월12일 비공개 생성 기록과 11월16일 현재 상태를 구분한다. 이번 문서 수정으로 공개 설정을 변경한 것은 아니다.
+- 앞으로 이 로봇 프로젝트의 변경·검증 기록을 commit/push하는 **기준 저장소**다.
+- 실물용 MX3/HSL 소스, 보행·킥·기상 모델과 학습 패키지, 배포 스크립트, RViz/지도 수정, 분석 결과, 매뉴얼, 인수인계가 함께 있다.
+- 로컬 루트 `C:/Users/jes/Desktop/MX3_Match_Sim`. 로컬 remote 이름 origin.
+- 정책 자료는 포함하지만 Isaac Sim/Isaac Lab 전체 설치본, 원본 bag/영상, 가상환경과 빌드 결과를 모두 포함한 환경 이미지는 아니다.
+- 복제: `git clone https://github.com/hion89/MX3-HSL-Robot-Soccer.git`.
+- 새 AI의 작업 결과는 이곳에 올린다. push가 로봇 설치/재시작이나 학습 서버 pull을 자동 실행하지는 않는다.
+
+### 16-2. 이전 자체 학습·sim2real 작업 — hion89/Isaac-work-space
+
+- 주소: https://github.com/hion89/Isaac-work-space
+- 현재 비공개(private), 기본 브랜치 main. 다운로드에도 계정 권한/인증이 필요하다.
+- 로컬 루트 `C:/Users/jes/Desktop/isaac_ws/isaac_ws`. 이곳도 remote 이름이 origin이므로 현재 작업 디렉터리를 확인해야 한다.
+- 이전 XM540 자체 강화학습, robotmodel/XM540_robot, unitree_rl_lab 기반 학습 작업과 예전 sim2real 경로의 기록이 있다.
+- 서버의 기존 작업 경로 `/home/bami122/isaac_ws`와 관련된 과거 저장소다. 서버가 지금 어떤 remote/커밋을 쓰는지는 직접 조회하지 않았다.
+- 이전 RL_walk/RL_fall_after_walk TensorRT 경로와 현재 MX3 ONNX 경로를 비교·복구할 때 참고한다.
+- 이 저장소의 코드가 모두 새 실물 통합 저장소로 이동했다고 가정하지 않는다. 로컬에 기존 미커밋 변경이 있으므로 무관한 파일을 함께 commit하거나 reset/clean하지 않는다.
+- 새 학습 계획을 실행할 때도 먼저 서버 git remote/status/커밋을 확인하고 별도 작업공간에 필요한 overlay를 적용한다. 새 실물 저장소를 기존 서버 폴더에 무조건 덮어쓰지 않는다.
+
+### 16-3. 별도 비전·위치보정 실험 — hion89/CV-robocup
+
+- 주소: https://github.com/hion89/CV-robocup
+- 현재 비공개(private), 기본 브랜치 main.
+- 연결된 GitHub에서 README를 확인했다. Gazebo Classic + ROS 2 Humble에서 RGB/Depth, YOLO 검출·세그멘테이션, 랜드마크 위치보정, topological grid/loop 후보, Nav2 목표 이동을 실험하는 저장소다.
+- README의 작업 루트는 `CV-robocup/ros2_ws`. 이번 대화에서 대응되는 로컬 clone 경로나 별도 서버 접속 주소를 확인한 것은 아니다.
+- **현재 실물 HSL 자기위치/행동 스택과 별도의 실험 저장소**다. 여기의 RTAB-Map/Nav2/TF 구성이나 실행 명령을 현재 MX3 base의 구성으로 그대로 설명하지 않는다.
+- 비전 개선을 검토할 때 비교 후보로 참고할 수 있지만, 현재 MX3 소스에 통합됐다는 증거는 없다.
+
+### 16-4. 상위 전략·측위 방식 참고 원본 — bhuman/BHumanCodeRelease
+
+- 주소: https://github.com/bhuman/BHumanCodeRelease
+- 사용자 지정 B-Human 원본이다. 역할/전략/스킬, UKF 자기위치 추정, 팀 공·메시지 등의 알고리즘 대응을 검토했다.
+- 기존 감사에서 대조한 고정 커밋: `2e3374ba896da8288607f9a1881b876642fe18b8`. 이는 대조 근거이며 원본 전체를 그 커밋 그대로 배포했다는 뜻은 아니다.
+- 로컬 구현은 MX3 ROS 2에 맞춘 이식/재구현/통합을 구분해야 한다. 원본 B-Human을 clone한 것만으로 Jetson+XM540 실물이 동작하지 않는다.
+- 근거: `sim2real_evidence/manuals/BHUMAN_PORT_AUDIT_KO_20261109.md`, `BHUMAN_OFFICIAL_REVIEW_20261109.json`.
+- 이 외부 저장소에 프로젝트 변경을 push하지 않는다. 개선은 현재 본인 실물 통합 저장소에서 관리한다.
+
+### 16-5. 학습 코드 기반 — unitreerobotics/unitree_rl_lab
+
+- 주소: https://github.com/unitreerobotics/unitree_rl_lab
+- Unitree 계열 Isaac Lab/RSL-RL 학습 태스크 구조가 기반이다. 기존 XM540 README/출처 고지와 제공된 MX3 정책 패키지에 관련 기록이 있다.
+- MX3 사용자 정의 태스크/자산은 원본 기본 태스크와 별개다. 제공 패키지의 unitree_rl_lab_overlay와 rsl_rl_patch를 해당 환경에 맞게 적용해야 한다.
+- 기존 로컬 자료의 기본 unitree 태스크만으로 새 MX3 학습이 바로 재현된다고 가정하지 않는다.
+- 각 정책 overlay는 공유 파일과 등록이 다르므로 세 패키지를 같은 폴더에 순서대로 덮어써서는 안 된다.
+- upstream의 최신 main으로 무조건 갱신하면 학습 계약/호환성이 달라질 수 있다. 기존 커밋·로컬 수정·설치 버전을 먼저 보존한다.
+
+### 16-6. 학습 시뮬레이션 프레임워크 — isaac-sim/IsaacLab
+
+- 주소: https://github.com/isaac-sim/IsaacLab
+- 환경·관측·액션·보상·종료·도메인 랜덤화를 구성하는 프레임워크다. 로봇에서 실행하는 ROS ONNX 러너와 역할이 다르다.
+- 학습 서버의 실제 설치 경로/버전을 조회한 다음 제공 패키지의 기록과 맞춰야 한다. 최신 release를 설치하는 것이 기존 학습 재현과 같지 않다.
+- Isaac Sim, Isaac Lab, unitree_rl_lab, RSL-RL은 서로 구분되는 구성요소다. 제공 패키지의 rsl_rl_patch는 별도 설치 패키지 수정분이며 원본 학습 저장소 전체를 대체하지 않는다.
+
+### 16-7. 구현 확인용 외부 참고
+
+- https://github.com/ros2/geometry2 : tf2/TF 변환과 수신 처리의 원리·구현 확인에 사용한 참고다. 사용 중인 ROS 2 Humble 설치 버전과 원본 최신 main을 동일하게 보지 않는다.
+- https://github.com/NVIDIA/TensorRT : 이전 TensorRT 변환/엔진 경로 관련 참고다. 현재 ONNX 러너가 TensorRT provider를 사용한다는 증거는 아니다.
+- https://github.com/roboeireann/RoboEireannCodeRelease : 초반 제시된 링크이며 사용자가 이후 B-Human으로 정정했다. 현재 채택 기준이나 실물 통합 원본으로 취급하지 않는다.
+
+### 16-8. 새 AI가 Git 작업 전에 확인할 것
+
+PC의 새 실물 저장소에서:
+
+```powershell
+cd C:\Users\jes\Desktop\MX3_Match_Sim
+git remote -v
+git branch --show-current
+git status --short
+git log -3 --oneline
+```
+
+여기서 origin이 `hion89/MX3-HSL-Robot-Soccer.git`인지 확인한다. 예전 폴더의 origin은 Isaac-work-space이므로 이름만 보고 push하면 안 된다. 서버의 실제 remote/브랜치/수정 여부는 서버에서 따로 확인한다. README의 clone 예시는 자동 동기화 설정이 아니다.
+
+장비 접속 정보와 내부 경로가 포함된 문서다. 현재 실물 저장소는 공개로 조회되므로 추가하는 정보의 공개 범위를 고려하며, 비밀번호/토큰/개인키는 포함하지 않는다.

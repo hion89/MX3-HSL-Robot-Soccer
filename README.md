@@ -11,7 +11,7 @@ git clone https://github.com/hion89/MX3-HSL-Robot-Soccer.git
 cd MX3-HSL-Robot-Soccer
 ```
 
-비공개 저장소이므로 접근 권한이 있는 GitHub 계정으로 인증해야 합니다. GitHub의 Code → Download ZIP으로도 받을 수 있습니다. 이후 갱신은 작업 파일을 먼저 커밋하거나 보관한 뒤 `git pull --ff-only`로 받습니다.
+2026-11-16 조회 기준 공개 저장소이며 GitHub의 Code → Download ZIP으로도 받을 수 있습니다. 쓰기 작업에는 GitHub 인증이 필요합니다. 이후 갱신은 작업 파일을 먼저 커밋하거나 보관한 뒤 `git pull --ff-only`로 받습니다. 프로젝트별 GitHub 역할은 인수인계 문서 16절에 정리했습니다.
 
 ## 들어 있는 것
 

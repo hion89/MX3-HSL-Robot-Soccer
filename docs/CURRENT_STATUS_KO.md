@@ -27,7 +27,7 @@
 
 ## GitHub 반영 원칙
 
-저장소: https://github.com/hion89/MX3-HSL-Robot-Soccer (비공개). 로컬 작업 루트는 `C:/Users/jes/Desktop/MX3_Match_Sim`입니다.
+저장소: https://github.com/hion89/MX3-HSL-Robot-Soccer . 처음 비공개로 생성했으나 2026-11-16 GitHub 조회에서는 공개(public)입니다. 로컬 작업 루트는 `C:/Users/jes/Desktop/MX3_Match_Sim`입니다.
 
 첫 소스 커밋 `4748fd2`의 GitHub 업로드와 별도 폴더 clone 복원을 확인했습니다. 복원한 사본에서 정책 해시/초기 위치/지도 및 지도·RViz 검사 10개가 통과했습니다. 로봇 배포 검증과는 별개입니다.
 
