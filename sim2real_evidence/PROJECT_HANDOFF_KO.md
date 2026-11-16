@@ -286,6 +286,7 @@ F 킥은 같은 킥 정책을 호출한다. 수동 공 좌표와 motion_enabled 
 - 바닥 재질 하나의 문제가 아니다. 구동기 속도-토크, 관측 지연(러너 프레임 순서 포함), 미끄럼 마찰이 각각 크다. 22300은 세기 1에서 안정 여유가 작다. 비틀림을 낮추면 MuJoCo에서는 디딤발이 돌면서 오히려 덜 넘어지므로, 비틀림만 줄이는 학습은 근거가 약하다.
 - 태스크 `Unitree-MX3-WalkKick-V1-6A/B/C`(`XM_Kick_Policy/.../walk_kick_v1_6_env.py`, `mdp/kick_robust_mdp.py`). 입출력은 22300과 같아 ONNX만 교체하면 된다. 서버 절차, 체크포인트 선택, 배포 순서는 `XM_Kick_Policy/KICK_V1_6_KO.md`에 있다.
 - 체크포인트는 Isaac 지표가 아니라 `gate_checkpoints.py`(MuJoCo gate)로 고른다.
+- 서버 반영은 사용자 지정 흐름(PC → `hion89/Isaac-work-space` push → 서버 `~/isaac_ws` pull)을 쓴다. 학습 폴더는 `~/isaac_ws/unitree_rl_lab_kick16/`(Isaac-work-space `0965cb8`)이고, 기존 `unitree_rl_lab/`과 conda `env_isaaclab`은 그대로 둔다(복제 환경 `env_kick16`). 조립 방법은 `scripts/assemble_kick16_isaac_ws.py`, 서버 명령은 `XM_Kick_Policy/KICK_V1_6_KO.md` 3-0절에 있다.
 - 재학습 없는 제안(미적용, 실물 코드 변경): `kick_strength` launch 인자화와 0.5 시험, 킥 러너 history 순서 수정.
 - 로컬 분석 환경 `C:/Users/jes/Desktop/isaac_ws/sim2real_evidence/.mujoco_env`(mujoco 3.3.0, onnxruntime 1.23.0, numpy 1.26.4, torch 2.7.0 CPU, onnx 1.17.0). 저장소에는 포함하지 않는다. 이 PC의 GPU는 RTX 3080 10GB이지만 Isaac Sim/Lab은 설치돼 있지 않다.
 

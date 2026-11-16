@@ -52,6 +52,34 @@
 
 ## 3. 서버 실행 절차
 
+### 3-0. 기본 경로: Isaac-work-space push → 서버 pull (2026-11-16 사용자 지정)
+
+예전처럼 PC에서 `hion89/Isaac-work-space`에 push하고, 서버가 `~/isaac_ws`에서 pull해 학습한다.
+
+PC에서 할 일:
+- `python scripts/assemble_kick16_isaac_ws.py --isaac-repo C:/Users/jes/Desktop/isaac_ws/isaac_ws`로 `unitree_rl_lab_kick16/`을 만든다. 구성은 기존 `unitree_rl_lab` 커밋 파일 + 킥 overlay + 22300 체크포인트 + 설정 스크립트다.
+- 스크립트가 출력한 `git add` 명령으로 그 폴더만 스테이징한 뒤 commit·push한다. Isaac-work-space에 이미 있던 미커밋 변경은 함께 올리지 않는다.
+- 첫 반영은 Isaac-work-space `0965cb8`이다. GitHub에서 새로 받은 사본으로 체크포인트 SHA256, 실제 바이너리(LFS 포인터 아님), LF를 확인했다.
+- Isaac-work-space는 Git LFS를 쓰지 않으므로, 조립 폴더의 USD와 체크포인트는 일반 blob으로 저장했다.
+- 원본을 고친 뒤 다시 반영할 때도 같은 두 단계(조립 → 그 폴더만 commit·push)를 반복한다.
+
+서버에서 할 일:
+```bash
+cd ~/isaac_ws && git status --short | head && git pull --ff-only
+conda create -n env_kick16 --clone env_isaaclab      # 처음 한 번 (기존 env 는 그대로)
+conda activate env_kick16
+pip install -e ~/isaac_ws/unitree_rl_lab_kick16/source/unitree_rl_lab   # 처음 한 번
+cd ~/isaac_ws/unitree_rl_lab_kick16 && bash kick16_setup.sh             # KICK16_SETUP_DONE
+SMOKE=1 bash scripts/kick_v1_6/train_v16.sh C
+tmux new -s kick16 && bash scripts/kick_v1_6/train_v16.sh C
+```
+
+서버의 `~/isaac_ws`에 로컬 수정이 있으면 `git pull --ff-only`가 거부될 수 있다. 이때는 `git status` 출력을 보고 판단하고, reset으로 지우지 않는다.
+
+아래 3-1 이후는 MX3-HSL-Robot-Soccer를 서버에 직접 clone하는 대체 경로다.
+
+### 3-1. 대체 경로 (MX3 저장소 직접 clone)
+
 서버 정보(인수인계 기록 기준, 현재 상태 미확인): `ssh bami122@163.180.145.122`, `/home/bami122/isaac_ws`, conda `env_isaaclab`. 기존 `unitree_rl_lab` 폴더와 과거 XM540 작업은 덮어쓰지 않는다.
 
 1. 접속 후 상태를 기록한다.
