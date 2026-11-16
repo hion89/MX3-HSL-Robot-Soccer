@@ -6,6 +6,7 @@
 - 실물용 소스는 MX3_Match_Sim/src/mx3_src와 src/hsl_src다. 기존 Isaac-work-space 저장소에 무관한 변경을 함께 커밋하지 않는다.
 - 별도 isaac_ws/sim2real_evidence에서 작업했으면 scripts/sync_working_copy.py로 기록과 배포물을 가져온 다음, 변경 목록을 검토하고 관련 파일만 커밋한다.
 - 운영 기록은 docs/MX3_HSL_DEPLOYMENT_PROGRESS.md, 최신 상태는 docs/CURRENT_STATUS_KO.md를 확인한다. 이 파일들이 과거 매뉴얼의 시작 위치보다 우선한다.
+- AI 모델/새 채팅 인수인계는 sim2real_evidence/PROJECT_HANDOFF_KO.md를 먼저 읽는다. 장비/학습 서버 정보의 확인 시점과 미확인 항목을 구분한다.
 - 현재 연습장 수동 초기 위치는 x=-1.95, y=+0.8675, yaw=0. 실제 배치와 START 후에만 사용자가 초기값을 발행한다.
 - START의 임시 진입 시드는 라인 밖 0.10m로 잔디 안이다. 수동 골라인 초기 위치와 다르다.
 - 저장소 푸시 권한은 로봇 동작/원격 설치 권한과 별개다. GitHub 업데이트만으로 모터를 구동하거나 initialpose를 발행하지 않는다.
