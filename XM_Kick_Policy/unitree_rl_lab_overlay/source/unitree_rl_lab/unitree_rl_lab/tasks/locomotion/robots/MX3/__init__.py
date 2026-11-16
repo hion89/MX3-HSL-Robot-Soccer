@@ -56,3 +56,26 @@ gym.register(
         "rsl_rl_cfg_entry_point": "unitree_rl_lab.tasks.locomotion.agents.rsl_rl_ppo_sym_cfg:WalkKickPPORunnerCfg",
     },
 )
+
+
+# ── V1-6: 디딤발 강건화 (2026-11-16). v1_5b 22300 에서 resume. 설명: walk_kick_v1_6_env.py 머리말 ──
+#   A = 구동기 (DC 곡선·전압·β 커리큘럼) / B = A + 관측 지연 / C = 전체 (+ 바닥·러너 계약·디딤발 yaw 벌점)
+_V16 = "unitree_rl_lab.tasks.locomotion.robots.MX3.walk_kick_v1_6_env"
+_V16_AGENT = "unitree_rl_lab.tasks.locomotion.agents.rsl_rl_ppo_sym_cfg:WalkKickPPORunnerCfg"
+for _sfx, _train in (("A", "RobotV16AEnvCfg"), ("B", "RobotV16BEnvCfg"), ("C", "RobotV16CEnvCfg")):
+    gym.register(
+        id=f"Unitree-MX3-WalkKick-V1-6{_sfx}",
+        entry_point="isaaclab.envs:ManagerBasedRLEnv",
+        kwargs={
+            "env_cfg_entry_point": f"{_V16}:{_train}",
+            "play_env_cfg_entry_point": f"{_V16}:RobotV16PlayEnvCfg",
+            "rsl_rl_cfg_entry_point": _V16_AGENT,
+        },
+    )
+for _sfx, _play in (("", "RobotV16PlayEnvCfg"), ("-Turf", "RobotV16PlayTurfEnvCfg"),
+                    ("-IMU20", "RobotV16PlayIMU20EnvCfg"), ("-Volt106", "RobotV16PlayVolt106EnvCfg")):
+    gym.register(
+        id=f"Unitree-MX3-WalkKick-V1-6-Play{_sfx}",
+        entry_point="isaaclab.envs:ManagerBasedRLEnv",
+        kwargs={"env_cfg_entry_point": f"{_V16}:{_play}", "rsl_rl_cfg_entry_point": _V16_AGENT},
+    )

@@ -106,3 +106,10 @@ scripts/kick_v1_6/
   https://isaac-sim.github.io/IsaacLab/v2.0.1/source/api/lab/isaaclab.envs.mdp.html
 - DCMotor의 속도 의존 토크 포화와 Implicit 구동기의 차이:
   https://isaac-sim.github.io/IsaacLab/v2.1.1/source/api/lab/isaaclab.actuators.html
+
+## 2026-11-16 진행
+
+- 2단계(기준선 재생)는 Isaac 대신 MuJoCo sim2sim으로 먼저 수행했다: `sim2real_evidence/kick_robust_20261116/FINDINGS_KO.md`. 표면 외에 구동기 속도-토크와 관측 지연(실물 러너 프레임 순서 포함)이 같은 크기의 원인 후보로 확인돼 계획 범위를 넓혔다.
+- 계획한 파일 구성은 다음으로 구현했다: `mdp/kick_robust_mdp.py`(표면·지연·구동기·계약·보상을 한 파일에), `robots/MX3/walk_kick_v1_6_env.py`(A 구동기 / B +관측 지연 / C 전체), 서버 스크립트 `scripts/kick_v1_6/`, 평가 `sim2real_evidence/kick_robust_20261116/gate_checkpoints.py`. 이름은 계획의 `v1_6_turf` 대신 원인 범위를 반영한 `v1_6`이다.
+- 계획의 A(표면) / B(+지연) / C(+보상) 순서는 측정 결과에 따라 A 구동기 / B +관측 지연 / C +표면·계약·보상으로 바꿨다.
+- 서버 실행과 새 학습은 아직 하지 않았다. 실행 절차는 `XM_Kick_Policy/KICK_V1_6_KO.md`에 있다.

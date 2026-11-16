@@ -11,9 +11,13 @@ SKIP_SUFFIXES = {'.pyc', '.pyo', '.db3', '.mcap', '.mp4', '.avi', '.pem', '.key'
 
 def copy_tree(source, destination):
     changed = 0
+    # Any virtual environment (has pyvenv.cfg), whatever its folder name, e.g. .mujoco_env.
+    venv_roots = {cfg.parent.relative_to(source).parts for cfg in source.rglob('pyvenv.cfg')}
     for path in sorted(source.rglob('*')):
         relative = path.relative_to(source)
         if any(part in SKIP_DIRS for part in relative.parts):
+            continue
+        if any(relative.parts[:len(root)] == root for root in venv_roots):
             continue
         if not path.is_file() or path.is_symlink() or path.suffix.lower() in SKIP_SUFFIXES:
             continue

@@ -278,7 +278,16 @@ F 킥은 같은 킥 정책을 호출한다. 수동 공 좌표와 motion_enabled 
 - 텍스처 무작위화와 접촉 마찰 무작위화는 다르다. 평지에서 표면을 우선 다루고 볼 높이 등이 고정된 상태에서 거친 지형을 무작정 켜지 않는다.
 - 학습 조건 hold .3/접근 .3/필터 없음과 현재 실물 hold .6/접근 .2/tau .02를 구분해 기준선을 평가한다.
 - 구체적 계획: `sim2real_evidence/policy_package_audit_20261112/RETRAINING_PLAN_KO.md`.
-- 서버 전송/새 태스크 구현/새 학습/새 정책 배포는 아직 하지 않았다.
+- 2026-11-16: 새 태스크 구현까지 진행했다. 서버 전송, 새 학습, 새 정책 배포는 아직 하지 않았다.
+
+### 2026-11-16 원인 분해와 V1-6 (로컬 완료, 서버/실물 미적용)
+
+- 평가기 `sim2real_evidence/kick_robust_20261116/mujoco_kick_stress.py`: ROS 없이 실물 러너 관측과 브리지 물리를 재현한다. 22300 기준값은 학습 순서 2.3%, 실물 러너 순서 13%, XM540 곡선 27~34%, IMU 10~20ms에서 22~44%, 미끄럼 0.4~0.6에서 23~67%다. 실물 유사 복합 조건은 78%이고, 같은 조건 세기 0.5에서는 0%다. 해석과 한계는 같은 폴더의 FINDINGS_KO.md에 있다.
+- 바닥 재질 하나의 문제가 아니다. 구동기 속도-토크, 관측 지연(러너 프레임 순서 포함), 미끄럼 마찰이 각각 크다. 22300은 세기 1에서 안정 여유가 작다. 비틀림을 낮추면 MuJoCo에서는 디딤발이 돌면서 오히려 덜 넘어지므로, 비틀림만 줄이는 학습은 근거가 약하다.
+- 태스크 `Unitree-MX3-WalkKick-V1-6A/B/C`(`XM_Kick_Policy/.../walk_kick_v1_6_env.py`, `mdp/kick_robust_mdp.py`). 입출력은 22300과 같아 ONNX만 교체하면 된다. 서버 절차, 체크포인트 선택, 배포 순서는 `XM_Kick_Policy/KICK_V1_6_KO.md`에 있다.
+- 체크포인트는 Isaac 지표가 아니라 `gate_checkpoints.py`(MuJoCo gate)로 고른다.
+- 재학습 없는 제안(미적용, 실물 코드 변경): `kick_strength` launch 인자화와 0.5 시험, 킥 러너 history 순서 수정.
+- 로컬 분석 환경 `C:/Users/jes/Desktop/isaac_ws/sim2real_evidence/.mujoco_env`(mujoco 3.3.0, onnxruntime 1.23.0, numpy 1.26.4, torch 2.7.0 CPU, onnx 1.17.0). 저장소에는 포함하지 않는다. 이 PC의 GPU는 RTX 3080 10GB이지만 Isaac Sim/Lab은 설치돼 있지 않다.
 
 ## 12. 진단·빌드에서 반복하지 말아야 할 실수
 

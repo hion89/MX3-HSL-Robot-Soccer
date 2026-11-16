@@ -1,0 +1,14 @@
+[stress] 1 policy x 11 cond x 300 = 3300 trials, 11 workers
+policy                cond                     n   fall%   ¡¾95  kick%     v  spin90  slip90
+policy.onnx           train_fresh_obs@s0.75  300     0.3   0.7  100.0  4.12     7.8     3.4
+policy.onnx           baseline@s0.75         300     4.3   2.3  100.0  4.19     7.3     3.8
+policy.onnx           deploy_contract@s0.75  300     0.0   0.0  100.0  4.17     7.2     3.8
+policy.onnx           volt_11.1_dc@s0.75     300     6.7   2.8  100.0  3.93     6.5     4.1
+policy.onnx           imu_delay_20ms@s0.75   300    20.0   4.5  100.0  4.11     7.9     4.4
+policy.onnx           act_delay_2@s0.75      300    16.7   4.2  100.0  3.99    13.1     4.2
+policy.onnx           mu_0.5@s0.75           300    15.7   4.1  100.0  4.19     5.7     3.6
+policy.onnx           torsion_0.1@s0.75      300     0.0   0.0  100.0  4.16    11.3     3.3
+policy.onnx           real_like@s0.75        300    29.0   5.1  100.0  4.01     9.1     3.7
+policy.onnx           real_like_low_mu@s0.75 300    57.0   5.6  100.0  3.99     8.3     3.5
+policy.onnx           real_like_strength_0.5@s0.75 300    29.0   5.1  100.0  4.01     9.1     3.7
+[stress] done 52s -> results_22300_gate_s0.75

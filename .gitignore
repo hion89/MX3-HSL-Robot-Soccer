@@ -1,6 +1,7 @@
 **/__pycache__/
 *.py[cod]
 **/.analysis_env/
+**/.mujoco_env/
 **/.venv/
 **/venv/
 **/build/
