@@ -47,6 +47,7 @@
 - OS 계열: Ubuntu/Linux 학습 서버. 정확한 OS 버전, GPU 종류·개수·VRAM, 현재 CUDA/드라이버는 미확인이다.
 - 작업 경로: `/home/bami122/isaac_ws`.
 - 기존 unitree 저장소 경로: `/home/bami122/isaac_ws/unitree_rl_lab`.
+- 2026-11-18 사용자가 지정한 새 킥 작업 경로: `/home/bami122/isaac_ws/unitree_rl_lab_kick16/logs/rsl_rl/unitree_mx3_walkkick_v1_6c`. 기존 22300 복사용 도구는 `sim2real_evidence/transfers/`에 있다. 자동 SSH 인증이 거부돼 전송 완료는 아직 확인되지 않았다.
 - 과거 자체 XM540 프로젝트: `/home/bami122/isaac_ws/robotmodel/XM540_robot`.
 - 과거 Conda 환경명: `env_isaaclab`.
 - 과거 문서의 IsaacLab 기본 후보 경로: `$HOME/IsaacLab`. 서버에서 실제 존재 여부를 확인해야 한다.

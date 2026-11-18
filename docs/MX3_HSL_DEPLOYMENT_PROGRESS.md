@@ -750,6 +750,12 @@ practice 자기위치 노드도 실제 관측을 사용하며 20초간 30Hz 정�
 - 후속 요청으로 인수인계 16절에 프로젝트 GitHub 목록을 추가했다. 본인 실물/기존 학습/비전 실험 저장소(MX3-HSL-Robot-Soccer, Isaac-work-space, CV-robocup)와 외부 B-Human/unitree/IsaacLab 및 tf2/TensorRT/초기 정정 링크를 역할별로 구분했다. CV-robocup README는 GitHub로 확인했으며 실물 HSL에 통합됐다고 주장하지 않는다.
 - 11월16일 GitHub 조회에서 새 실물 저장소는 공개, 기존 Isaac-work-space와 CV-robocup은 비공개로 확인됐다. 현재 상태/README/인수인계의 이전 비공개 안내를 정정했으며 저장소 visibility 설정 자체는 변경하지 않았다. 본 프로젝트와 관련 없는 계정의 다른 저장소는 목록에서 제외했다.
 
+### 2026-11-18: 기존 22300 정책의 새 학습 작업공간 복사 요청
+
+- 사용자가 `/home/bami122/isaac_ws/unitree_rl_lab_kick16/logs/rsl_rl/unitree_mx3_walkkick_v1_6c`로 현재 정책 복사를 요청했다. 기존 로그와 분리해 하위 `import_v1_5b_22300_20261118`에 보관하도록 준비했다.
+- 로컬 XM_Kick_Policy의 model_22300.pt/ONNX/TorchScript/deploy 및 원본 env/agent 설정 6개를 `sim2real_evidence/transfers/kick22300_20261118`에 준비했다. ONNX는 기존 실물 선택 해시와 같음을 확인했다. 설치 도구는 해시 검사/별도 디렉터리 복사/기존 파일 충돌 거부를 수행한다.
+- SSH BatchMode 접속이 Permission denied(publickey,password)로 거부됐다. 실제 전송은 아직 미완료이며 사용자 비밀번호 입력으로 실행할 PowerShell 스크립트와 README를 제공한다. 학습/로봇 동작은 실행하지 않았다. 기존 v1_5b 정책을 옮기는 것이며 v1_6c 학습 완료 모델이 아니다.
+
 ### 2026-11-16: 킥 후 디딤발 붕괴 원인 분해와 V1-6 이어 학습 태스크
 
 - 사용자 요청: 킥 후 반대발(디딤발)이 바닥 마찰로 버티지 못하고 돌아가며 무너지는 문제를, 바닥 재질에 국한하지 말고 여러 원인을 가정해 강화학습으로 개선한다. 현재 실물은 robo04 한 대다.

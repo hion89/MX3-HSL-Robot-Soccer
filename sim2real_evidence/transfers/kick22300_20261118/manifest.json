@@ -1,0 +1,12 @@
+{
+  "source_policy": "MX3 v1_5b 22300 (original weights, not v1_6c-trained)",
+  "target": "/home/bami122/isaac_ws/unitree_rl_lab_kick16/logs/rsl_rl/unitree_mx3_walkkick_v1_6c/import_v1_5b_22300_20261118",
+  "files": {
+    "model_22300.pt": "ed95206d06a208a31b6ffee41e2f38bea83147a2afc3ad080908157849649f5f",
+    "walkkick_v1_5b_22300.onnx": "f71c4db1ecc0db2dd3f40de4a8008c87d88106b1ed89881c30d2722f48c3779f",
+    "policy.pt": "5d03e7f553b45faf685db335703fb5180d28b988ab2b808e62b0ea90d566c089",
+    "deploy.yaml": "97dc5df78e02a3044071579b8905bcad40cfaf4c3f4ff32cf4155a90b1a0c766",
+    "params/env.yaml": "abdf926c88e1db4d630780607e3036f83365b7d129972bbd10b8272b8a2da930",
+    "params/agent.yaml": "d407c00b49d01a2a4070ecfe8917feaa4c138e49c4a1f89c60613bc5d649b3b2"
+  }
+}
