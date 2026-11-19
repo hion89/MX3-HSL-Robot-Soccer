@@ -1,0 +1,186 @@
+C:\Users\jes\Desktop\isaac_ws\sim2real_evidence\.mujoco_env\Scripts\python.exe C:\Users\jes\Desktop\MX3_Match_Sim\sim2real_evidence\kick_robust_20261116\mujoco_kick_stress.py --suite gate --trials 300 --workers 11 --out results_v16f_gate\stress --policy C:\Users\jes\Desktop\MX3_Match_Sim\XM_Kick_Policy\policy\policy.onnx --policy results_v16f_gate\onnx\ckpt_v16f__model_23000.onnx --policy results_v16f_gate\onnx\ckpt_v16f__model_23400.onnx --policy results_v16f_gate\onnx\ckpt_v16f__model_23500.onnx
+[stress] 4 policy x 11 cond x 300 = 13200 trials, 11 workers
+  100/13200  3s
+  200/13200  4s
+  300/13200  5s
+  400/13200  7s
+  500/13200  8s
+  600/13200  9s
+  700/13200  11s
+  800/13200  12s
+  900/13200  13s
+  1000/13200  15s
+  1100/13200  17s
+  1200/13200  18s
+  1300/13200  19s
+  1400/13200  21s
+  1500/13200  22s
+  1600/13200  23s
+  1700/13200  24s
+  1800/13200  26s
+  1900/13200  27s
+  2000/13200  28s
+  2100/13200  29s
+  2200/13200  31s
+  2300/13200  32s
+  2400/13200  33s
+  2500/13200  35s
+  2600/13200  36s
+  2700/13200  37s
+  2800/13200  39s
+  2900/13200  40s
+  3000/13200  41s
+  3100/13200  43s
+  3200/13200  45s
+  3300/13200  46s
+  3400/13200  48s
+  3500/13200  49s
+  3600/13200  51s
+  3700/13200  52s
+  3800/13200  53s
+  3900/13200  55s
+  4000/13200  56s
+  4100/13200  57s
+  4200/13200  59s
+  4300/13200  61s
+  4400/13200  62s
+  4500/13200  64s
+  4600/13200  65s
+  4700/13200  67s
+  4800/13200  68s
+  4900/13200  69s
+  5000/13200  71s
+  5100/13200  72s
+  5200/13200  73s
+  5300/13200  75s
+  5400/13200  76s
+  5500/13200  77s
+  5600/13200  79s
+  5700/13200  80s
+  5800/13200  82s
+  5900/13200  83s
+  6000/13200  85s
+  6100/13200  87s
+  6200/13200  88s
+  6300/13200  90s
+  6400/13200  91s
+  6500/13200  93s
+  6600/13200  95s
+  6700/13200  96s
+  6800/13200  98s
+  6900/13200  99s
+  7000/13200  100s
+  7100/13200  102s
+  7200/13200  103s
+  7300/13200  105s
+  7400/13200  106s
+  7500/13200  108s
+  7600/13200  109s
+  7700/13200  111s
+  7800/13200  112s
+  7900/13200  114s
+  8000/13200  115s
+  8100/13200  116s
+  8200/13200  118s
+  8300/13200  119s
+  8400/13200  120s
+  8500/13200  121s
+  8600/13200  123s
+  8700/13200  124s
+  8800/13200  125s
+  8900/13200  127s
+  9000/13200  128s
+  9100/13200  130s
+  9200/13200  131s
+  9300/13200  133s
+  9400/13200  134s
+  9500/13200  136s
+  9600/13200  137s
+  9700/13200  139s
+  9800/13200  141s
+  9900/13200  142s
+  10000/13200  143s
+  10100/13200  145s
+  10200/13200  146s
+  10300/13200  147s
+  10400/13200  149s
+  10500/13200  150s
+  10600/13200  152s
+  10700/13200  153s
+  10800/13200  155s
+  10900/13200  156s
+  11000/13200  158s
+  11100/13200  159s
+  11200/13200  161s
+  11300/13200  162s
+  11400/13200  164s
+  11500/13200  165s
+  11600/13200  167s
+  11700/13200  169s
+  11800/13200  170s
+  11900/13200  171s
+  12000/13200  173s
+  12100/13200  175s
+  12200/13200  176s
+  12300/13200  178s
+  12400/13200  179s
+  12500/13200  181s
+  12600/13200  183s
+  12700/13200  185s
+  12800/13200  186s
+  12900/13200  188s
+  13000/13200  190s
+  13100/13200  192s
+  13200/13200  193s
+policy                cond                     n   fall%   ¡¾95  kick%     v  spin90  slip90
+ckpt_v16f__model_2300 train_fresh_obs        300     5.0   2.5   59.3  3.95     5.5     2.7
+ckpt_v16f__model_2300 baseline               300     9.7   3.3   60.7  3.84     5.9     3.1
+ckpt_v16f__model_2300 deploy_contract        300     7.0   2.9   66.0  3.81     6.6     3.0
+ckpt_v16f__model_2300 volt_11.1_dc           300     4.7   2.4   60.0  3.50     6.3     3.5
+ckpt_v16f__model_2300 imu_delay_20ms         300    20.3   4.6   60.3  3.63     8.0     3.4
+ckpt_v16f__model_2300 act_delay_2            300    18.7   4.4   57.7  3.35     7.4     4.0
+ckpt_v16f__model_2300 mu_0.5                 300    17.0   4.3   60.0  3.67     6.3     3.1
+ckpt_v16f__model_2300 torsion_0.1            300    12.7   3.8   61.0  3.89    12.8     3.2
+ckpt_v16f__model_2300 real_like              300    11.3   3.6   65.7  3.53     9.8     2.8
+ckpt_v16f__model_2300 real_like_low_mu       300    17.7   4.3   65.0  3.55     8.5     3.2
+ckpt_v16f__model_2300 real_like_strength_0.5 300    15.3   4.1   72.3  3.48     9.9     2.9
+ckpt_v16f__model_2340 train_fresh_obs        300    14.3   4.0   65.7  3.90     9.6     3.2
+ckpt_v16f__model_2340 baseline               300    20.0   4.5   66.7  3.94     9.3     3.2
+ckpt_v16f__model_2340 deploy_contract        300    17.7   4.3   70.0  3.94     8.0     2.9
+ckpt_v16f__model_2340 volt_11.1_dc           300    24.7   4.9   66.3  3.59     9.0     3.6
+ckpt_v16f__model_2340 imu_delay_20ms         300    25.3   4.9   66.7  3.86     8.4     3.3
+ckpt_v16f__model_2340 act_delay_2            300    44.7   5.6   63.7  3.85     7.4     3.2
+ckpt_v16f__model_2340 mu_0.5                 300    26.7   5.0   65.3  3.89     7.5     4.4
+ckpt_v16f__model_2340 torsion_0.1            300    13.0   3.8   68.0  3.92    15.3     3.2
+ckpt_v16f__model_2340 real_like              300    40.3   5.6   70.0  3.64    10.7     3.0
+ckpt_v16f__model_2340 real_like_low_mu       300    45.7   5.6   69.3  3.67     8.9     3.4
+ckpt_v16f__model_2340 real_like_strength_0.5 300    46.0   5.6   79.7  3.62    11.1     3.1
+ckpt_v16f__model_2350 train_fresh_obs        300     1.3   1.3   64.7  3.89     8.3     3.1
+ckpt_v16f__model_2350 baseline               300     1.7   1.4   65.3  3.76     8.0     3.4
+ckpt_v16f__model_2350 deploy_contract        300     1.7   1.4   66.7  3.67     7.7     3.0
+ckpt_v16f__model_2350 volt_11.1_dc           300     3.7   2.1   65.0  3.66     7.5     3.1
+ckpt_v16f__model_2350 imu_delay_20ms         300     4.3   2.3   66.0  3.58     7.5     3.8
+ckpt_v16f__model_2350 act_delay_2            300    11.0   3.5   62.3  3.54     8.2     3.4
+ckpt_v16f__model_2350 mu_0.5                 300     1.7   1.4   64.3  3.66     6.2     3.8
+ckpt_v16f__model_2350 torsion_0.1            300     0.7   0.9   66.3  3.72    13.9     3.5
+ckpt_v16f__model_2350 real_like              300     1.0   1.1   66.7  3.40    10.4     3.3
+ckpt_v16f__model_2350 real_like_low_mu       300     4.0   2.2   67.3  3.35    10.3     3.9
+ckpt_v16f__model_2350 real_like_strength_0.5 300     2.0   1.6   76.0  3.36    10.1     3.1
+policy.onnx           train_fresh_obs        300     2.3   1.7  100.0  4.55     7.7     3.6
+policy.onnx           baseline               300    13.0   3.8  100.0  4.70     8.7     4.6
+policy.onnx           deploy_contract        300    10.0   3.4  100.0  4.69     8.2     4.3
+policy.onnx           volt_11.1_dc           300    33.7   5.3  100.0  4.21     7.6     4.1
+policy.onnx           imu_delay_20ms         300    44.0   5.6  100.0  4.66     7.7     4.5
+policy.onnx           act_delay_2            300    28.0   5.1  100.0  4.49    13.1     3.9
+policy.onnx           mu_0.5                 300    38.7   5.5  100.0  4.69     6.5     3.5
+policy.onnx           torsion_0.1            300     9.3   3.3  100.0  4.62    13.5     4.0
+policy.onnx           real_like              300    78.3   4.7  100.0  4.35     8.3     3.4
+policy.onnx           real_like_low_mu       300    89.0   3.5  100.0  4.36     6.0     3.1
+policy.onnx           real_like_strength_0.5 300     0.0   0.0  100.0  3.25     7.3     3.1
+[stress] done 194s -> results_v16f_gate\stress
+Traceback (most recent call last):
+  File "C:\Users\jes\Desktop\MX3_Match_Sim\sim2real_evidence\kick_robust_20261116\gate_checkpoints.py", line 124, in <module>
+    main()
+  File "C:\Users\jes\Desktop\MX3_Match_Sim\sim2real_evidence\kick_robust_20261116\gate_checkpoints.py", line 120, in main
+    print("\n".join(lines))
+UnicodeEncodeError: 'cp949' codec can't encode character '\u26a0' in position 295: illegal multibyte sequence

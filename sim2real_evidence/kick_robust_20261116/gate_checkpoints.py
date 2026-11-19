@@ -47,6 +47,8 @@ def export(ckpt: str, out: str):
 
 
 def main():
+    if hasattr(sys.stdout, "reconfigure"):  # Windows cp949 콘솔에서 ⚠ 출력 시 UnicodeEncodeError 방지
+        sys.stdout.reconfigure(encoding="utf-8", errors="replace")
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--ckpt", action="append", default=[])
     ap.add_argument("--ckpt-dir", action="append", default=[])

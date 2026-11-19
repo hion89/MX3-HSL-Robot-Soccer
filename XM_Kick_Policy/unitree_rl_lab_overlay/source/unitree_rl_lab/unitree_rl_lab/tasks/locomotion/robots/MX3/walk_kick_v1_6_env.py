@@ -419,3 +419,20 @@ class RobotV16FEnvCfg(v15.RobotV15BEnvCfg):
     def __post_init__(self):
         super().__post_init__()
         _apply_v1_6(self, act=False, obs=True, surf=True, ctr=True, rew=False)
+
+
+# ============================================================================
+# V1-6G (2026-11-19) — F + '안 차고 끝남' 벌점. model_23500 (F) 에서 이어 학습한다.
+#   F 결과: 넘어짐은 크게 줄었다 (MuJoCo real_like 78 → 1 %, 최악 89 → 11 %) 하지만 킥 100 → 65 %.
+#   안 찬 시행은 공이 옆 (방위 20° 밖) 이나 멀리 있을 때 몰렸다 → 어려운 배치를 건너뛰는 법을 배웠다.
+#   E 의 실패 (데드라인 벌점만 → 일찍 넘어져서 회피) 를 막으려고, 종료 원인과 상관없이 안 차고 끝나면 −4.
+#   −4 는 찬 뒤 넘어짐 (−6) 보다 작다: "차고 넘어짐" 보다는 "안 참" 이 덜 나쁘지만, 둘 다 공짜는 아니다.
+# ============================================================================
+W_END_NO_KICK_G = -200.0  # × dt 0.02 = −4 per episode
+
+
+@configclass
+class RobotV16GEnvCfg(RobotV16FEnvCfg):
+    def __post_init__(self):
+        super().__post_init__()
+        self.rewards.end_no_kick = RewTerm(func=kr.ended_without_kick_penalty, weight=W_END_NO_KICK_G)

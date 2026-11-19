@@ -458,3 +458,24 @@ def no_kick_penalty(env: "ManagerBasedRLEnv", exclude: tuple[str, ...] = ("whiff
             skip |= from_bank & (ep == kh.EP_NAMES[name])
         out = out & ~skip
     return out.float()
+
+
+def ended_without_kick_penalty(env: "ManagerBasedRLEnv", exclude: tuple[str, ...] = ("whiff", "duel")):
+    """에피소드가 공을 안 찬 채 끝나면 (데드라인·넘어짐·시간초과 무엇이든) 그 스텝에 1.0 (음수 weight).
+
+    V1-6E 는 데드라인에만 벌점을 줘서, 정책이 데드라인 전에 넘어져 벌점을 피했다 (넘어짐 4 → 27 %).
+    V1-6F 는 벌점이 없어 공이 옆·멀리 있으면 차기를 건너뛰었다 (MuJoCo 킥 65 %, 방위 20° 밖 56~61 %).
+    종료 원인과 상관없이 '안 차고 끝남' 에 같은 값을 매기면 일찍 넘어지는 탈출구가 없다.
+    리워드는 종료 판정 뒤·리셋 전에 계산되므로 termination_manager.dones 와 kick_time_s 가 이 스텝 값이다.
+    """
+    from . import kick_handoff_mdp as kh
+
+    out = env.termination_manager.dones & (env.kick_time_s < 0)
+    ep = getattr(env, "kick_episode_type", None)
+    from_bank = getattr(env, "kick_from_bank", None)
+    if ep is not None and from_bank is not None and exclude:
+        skip = torch.zeros_like(out)
+        for name in exclude:
+            skip |= from_bank & (ep == kh.EP_NAMES[name])
+        out = out & ~skip
+    return out.float()

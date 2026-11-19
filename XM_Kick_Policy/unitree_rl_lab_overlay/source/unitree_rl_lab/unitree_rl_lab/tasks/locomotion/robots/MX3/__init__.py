@@ -122,3 +122,14 @@ gym.register(
         "rsl_rl_cfg_entry_point": _V16_AGENT,
     },
 )
+
+# V1-6G (2026-11-19): F + 안 차고 끝남 (데드라인·넘어짐 무관) −4. F model_23500 에서 이어 학습. 재생·평가는 V1-6D-Play / -RealLike.
+gym.register(
+    id="Unitree-MX3-WalkKick-V1-6G",
+    entry_point="isaaclab.envs:ManagerBasedRLEnv",
+    kwargs={
+        "env_cfg_entry_point": f"{_V16}:RobotV16GEnvCfg",
+        "play_env_cfg_entry_point": f"{_V16}:RobotV16DPlayEnvCfg",
+        "rsl_rl_cfg_entry_point": _V16_AGENT,
+    },
+)
