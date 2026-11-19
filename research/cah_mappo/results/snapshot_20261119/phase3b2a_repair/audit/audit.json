@@ -1,0 +1,12 @@
+{
+  "status": "PASS",
+  "preserved_files": 1888,
+  "evaluation_logs_recomputed": 576,
+  "exact_feasibility_logs_recomputed": 9,
+  "agent_action_mappings_checked": 72192,
+  "reward_timing_transitions_checked": 18432,
+  "paired_scenario_ids": 27,
+  "checkpoint_replay_episodes": 96,
+  "sealed_holdout_scenarios": 400,
+  "holdout_outcomes_evaluated": 0
+}

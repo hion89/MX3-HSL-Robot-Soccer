@@ -1,0 +1,19 @@
+{
+  "status": "PASS",
+  "preserved_files": 868,
+  "split_scenarios": {
+    "train": 120,
+    "validation": 40,
+    "test": 60
+  },
+  "test_raw_logs_recomputed": 792,
+  "paired_scenario_ids": 60,
+  "checkpoint_evaluation_replays": 96,
+  "first_rollout_logp_errors": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+  ],
+  "selection_frozen_before_test": true
+}

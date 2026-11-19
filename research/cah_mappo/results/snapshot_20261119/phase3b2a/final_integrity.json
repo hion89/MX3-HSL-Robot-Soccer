@@ -1,0 +1,15 @@
+{
+  "status": "PASS",
+  "preserved_files": 868,
+  "new_python_files_compiled": 12,
+  "training_files_precede_selection_freeze": true,
+  "all_test_raw_logs_follow_selection_freeze": true,
+  "test_log_count": 792,
+  "paired_first_rollout_agent_steps": 1024,
+  "only_reward_differs_before_first_update": true,
+  "torch": "2.7.0+cpu",
+  "numpy": "1.26.4",
+  "cuda_runtime": null,
+  "new_dependencies_installed": false,
+  "korean_reports_and_svg_validated": true
+}

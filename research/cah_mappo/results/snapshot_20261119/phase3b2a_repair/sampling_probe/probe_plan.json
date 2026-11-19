@@ -1,0 +1,9 @@
+{
+  "status": "supplementary development diagnostic, not model selection",
+  "checkpoint": "C:\\Users\\jes\\Desktop\\MX3_Match_Sim\\research\\cah_mappo\\phase3b2a_outputs\\pilot_v1\\B3_weight2\\checkpoints\\step1024.pt",
+  "temperature": 0.5,
+  "baseline_temperature": 1.0,
+  "only_changed_condition": "sampling temperature",
+  "optimizer_steps": 0,
+  "holdout_evaluated": false
+}

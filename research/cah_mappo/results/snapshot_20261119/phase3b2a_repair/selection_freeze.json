@@ -1,0 +1,36 @@
+{
+  "arms": {
+    "identity": {
+      "augment": false,
+      "environment_steps": 8192,
+      "wall_seconds_including_intermediate_validation": 82.86563890054822,
+      "selected_checkpoint": "research\\cah_mappo\\phase3b2a_repair_outputs\\pilot_v1\\identity\\checkpoints\\step8192.pt",
+      "selected_validation_key": [
+        1.0,
+        1.0,
+        -0.27734375,
+        -7.777777777777778
+      ],
+      "episodes": 256
+    },
+    "augmented": {
+      "augment": true,
+      "environment_steps": 8192,
+      "wall_seconds_including_intermediate_validation": 82.7893951004371,
+      "selected_checkpoint": "research\\cah_mappo\\phase3b2a_repair_outputs\\pilot_v1\\augmented\\checkpoints\\step8192.pt",
+      "selected_validation_key": [
+        1.0,
+        1.0,
+        -0.3216145833333333,
+        -7.513888888888888
+      ],
+      "episodes": 256
+    }
+  },
+  "manifest_sha256": "363fa2f19a1dc399187d51bfcb63c38b30d371c8aeca498101f5a2d05b528cee",
+  "selected_checkpoint_hashes": {
+    "identity": "91de9b2f58a8a1978e9e3fdc0b057b6e0df7db8f3516ace272bbeaf2b86c8815",
+    "augmented": "ca259b3c06c8c4f08642a79f0d0599eb9720304d6d0cbe1c4fef4decf4715e42"
+  },
+  "final_holdout_evaluated": false
+}

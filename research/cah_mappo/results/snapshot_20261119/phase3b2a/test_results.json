@@ -1,0 +1,1225 @@
+{
+  "benchmarks": {
+    "A": {
+      "local_hold": {
+        "summary": {
+          "episodes": 12,
+          "task_success_rate": 0.0,
+          "deadline_compliance_rate": 0.0,
+          "coverage_gap_ratio": 0.0,
+          "response_time_mean_s": null,
+          "restricted_response_mean_s": 22.666666666666668,
+          "unresponded_rate": 1.0,
+          "all_tasks_makespan_mean_s_complete_only": null,
+          "completed_task_flow_time_sum_mean_s": 0,
+          "role_switch_count": 0,
+          "assignment_change_count": 0,
+          "requested_duplicate_rate": 0.0,
+          "mean_return": -1.27412109375
+        },
+        "omitted_episode_records": 12
+      },
+      "local_fixed": {
+        "summary": {
+          "episodes": 12,
+          "task_success_rate": 1.0,
+          "deadline_compliance_rate": 1.0,
+          "coverage_gap_ratio": 0.0,
+          "response_time_mean_s": 6.666666666666667,
+          "restricted_response_mean_s": 6.666666666666667,
+          "unresponded_rate": 0.0,
+          "all_tasks_makespan_mean_s_complete_only": 8.666666666666666,
+          "completed_task_flow_time_sum_mean_s": 8.666666666666666,
+          "role_switch_count": 0,
+          "assignment_change_count": 2,
+          "requested_duplicate_rate": 0.0,
+          "mean_return": 1.4904296875
+        },
+        "omitted_episode_records": 12
+      },
+      "local_eta": {
+        "summary": {
+          "episodes": 12,
+          "task_success_rate": 0.5833333333333334,
+          "deadline_compliance_rate": 0.5833333333333333,
+          "coverage_gap_ratio": 0.171875,
+          "response_time_mean_s": 3.857142857142857,
+          "restricted_response_mean_s": 11.583333333333334,
+          "unresponded_rate": 0.4166666666666667,
+          "all_tasks_makespan_mean_s_complete_only": 5.857142857142857,
+          "completed_task_flow_time_sum_mean_s": 3.4166666666666665,
+          "role_switch_count": 1.0833333333333333,
+          "assignment_change_count": 1.6666666666666667,
+          "requested_duplicate_rate": 0.0,
+          "mean_return": -0.03095703124999997
+        },
+        "omitted_episode_records": 12
+      },
+      "local_random": {
+        "summary": {
+          "episodes": 12,
+          "task_success_rate": 0.4166666666666667,
+          "deadline_compliance_rate": 0.41666666666666663,
+          "coverage_gap_ratio": 0.40625,
+          "response_time_mean_s": 11.222222222222221,
+          "restricted_response_mean_s": 14.083333333333334,
+          "unresponded_rate": 0.25,
+          "all_tasks_makespan_mean_s_complete_only": 11.4,
+          "completed_task_flow_time_sum_mean_s": 4.75,
+          "role_switch_count": 10.5,
+          "assignment_change_count": 26.833333333333332,
+          "requested_duplicate_rate": 0.19231360086207325,
+          "mean_return": -1.6314778645833332
+        },
+        "omitted_episode_records": 12
+      },
+      "central_fixed": {
+        "summary": {
+          "episodes": 12,
+          "task_success_rate": 1.0,
+          "deadline_compliance_rate": 1.0,
+          "coverage_gap_ratio": 0.0,
+          "response_time_mean_s": 6.666666666666667,
+          "restricted_response_mean_s": 6.666666666666667,
+          "unresponded_rate": 0.0,
+          "all_tasks_makespan_mean_s_complete_only": 8.666666666666666,
+          "completed_task_flow_time_sum_mean_s": 8.666666666666666,
+          "role_switch_count": 0,
+          "assignment_change_count": 2,
+          "requested_duplicate_rate": 0.0,
+          "mean_return": null
+        },
+        "omitted_episode_records": 12
+      },
+      "central_greedy": {
+        "summary": {
+          "episodes": 12,
+          "task_success_rate": 1.0,
+          "deadline_compliance_rate": 1.0,
+          "coverage_gap_ratio": 0.09375,
+          "response_time_mean_s": 4.166666666666667,
+          "restricted_response_mean_s": 4.166666666666667,
+          "unresponded_rate": 0.0,
+          "all_tasks_makespan_mean_s_complete_only": 6.166666666666667,
+          "completed_task_flow_time_sum_mean_s": 6.166666666666667,
+          "role_switch_count": 1.8333333333333333,
+          "assignment_change_count": 2.9166666666666665,
+          "requested_duplicate_rate": 0.0,
+          "mean_return": null
+        },
+        "omitted_episode_records": 12
+      },
+      "central_exact": {
+        "summary": {
+          "episodes": 12,
+          "task_success_rate": 1.0,
+          "deadline_compliance_rate": 1.0,
+          "coverage_gap_ratio": 0.044270833333333336,
+          "response_time_mean_s": 5.416666666666667,
+          "restricted_response_mean_s": 5.416666666666667,
+          "unresponded_rate": 0.0,
+          "all_tasks_makespan_mean_s_complete_only": 7.416666666666667,
+          "completed_task_flow_time_sum_mean_s": 7.416666666666667,
+          "role_switch_count": 0.8333333333333334,
+          "assignment_change_count": 2.4166666666666665,
+          "requested_duplicate_rate": 0.0,
+          "mean_return": null
+        },
+        "omitted_episode_records": 12
+      },
+      "central_handover": {
+        "summary": {
+          "episodes": 12,
+          "task_success_rate": 1.0,
+          "deadline_compliance_rate": 1.0,
+          "coverage_gap_ratio": 0.0,
+          "response_time_mean_s": 6.833333333333333,
+          "restricted_response_mean_s": 6.833333333333333,
+          "unresponded_rate": 0.0,
+          "all_tasks_makespan_mean_s_complete_only": 8.833333333333334,
+          "completed_task_flow_time_sum_mean_s": 8.833333333333334,
+          "role_switch_count": 0.8333333333333334,
+          "assignment_change_count": 2.4166666666666665,
+          "requested_duplicate_rate": 0.0,
+          "mean_return": null
+        },
+        "omitted_episode_records": 12
+      }
+    },
+    "B2": {
+      "local_hold": {
+        "summary": {
+          "episodes": 12,
+          "task_success_rate": 0.0,
+          "deadline_compliance_rate": 0.0,
+          "coverage_gap_ratio": 0.0,
+          "response_time_mean_s": null,
+          "restricted_response_mean_s": 20.583333333333332,
+          "unresponded_rate": 1.0,
+          "all_tasks_makespan_mean_s_complete_only": null,
+          "completed_task_flow_time_sum_mean_s": 0,
+          "role_switch_count": 0,
+          "assignment_change_count": 0,
+          "requested_duplicate_rate": 0.0,
+          "mean_return": -2.5397135416666665
+        },
+        "omitted_episode_records": 12
+      },
+      "local_fixed": {
+        "summary": {
+          "episodes": 12,
+          "task_success_rate": 1.0,
+          "deadline_compliance_rate": 1.0,
+          "coverage_gap_ratio": 0.0,
+          "response_time_mean_s": 7.75,
+          "restricted_response_mean_s": 7.75,
+          "unresponded_rate": 0.0,
+          "all_tasks_makespan_mean_s_complete_only": 13.0,
+          "completed_task_flow_time_sum_mean_s": 19.5,
+          "role_switch_count": 0,
+          "assignment_change_count": 4,
+          "requested_duplicate_rate": 0.0,
+          "mean_return": 2.9819986979166666
+        },
+        "omitted_episode_records": 12
+      },
+      "local_eta": {
+        "summary": {
+          "episodes": 12,
+          "task_success_rate": 0.4583333333333333,
+          "deadline_compliance_rate": 0.45833333333333337,
+          "coverage_gap_ratio": 0.11458333333333333,
+          "response_time_mean_s": 4.833333333333333,
+          "restricted_response_mean_s": 13.291666666666666,
+          "unresponded_rate": 0.5416666666666666,
+          "all_tasks_makespan_mean_s_complete_only": 10.2,
+          "completed_task_flow_time_sum_mean_s": 6.416666666666667,
+          "role_switch_count": 1,
+          "assignment_change_count": 2.4166666666666665,
+          "requested_duplicate_rate": 0.0,
+          "mean_return": -0.26207682291666673
+        },
+        "omitted_episode_records": 12
+      },
+      "local_random": {
+        "summary": {
+          "episodes": 12,
+          "task_success_rate": 0.25,
+          "deadline_compliance_rate": 0.25,
+          "coverage_gap_ratio": 0.671875,
+          "response_time_mean_s": 13.61111111111111,
+          "restricted_response_mean_s": 16.458333333333332,
+          "unresponded_rate": 0.4583333333333333,
+          "all_tasks_makespan_mean_s_complete_only": 23.0,
+          "completed_task_flow_time_sum_mean_s": 8.333333333333334,
+          "role_switch_count": 13.166666666666666,
+          "assignment_change_count": 34.166666666666664,
+          "requested_duplicate_rate": 0.09961595814482589,
+          "mean_return": -3.442415364583333
+        },
+        "omitted_episode_records": 12
+      },
+      "central_fixed": {
+        "summary": {
+          "episodes": 12,
+          "task_success_rate": 0.5,
+          "deadline_compliance_rate": 0.5,
+          "coverage_gap_ratio": 0.0,
+          "response_time_mean_s": 6.5,
+          "restricted_response_mean_s": 12.958333333333334,
+          "unresponded_rate": 0.5,
+          "all_tasks_makespan_mean_s_complete_only": null,
+          "completed_task_flow_time_sum_mean_s": 8.5,
+          "role_switch_count": 0,
+          "assignment_change_count": 2,
+          "requested_duplicate_rate": 0.0,
+          "mean_return": null
+        },
+        "omitted_episode_records": 12
+      },
+      "central_greedy": {
+        "summary": {
+          "episodes": 12,
+          "task_success_rate": 1.0,
+          "deadline_compliance_rate": 1.0,
+          "coverage_gap_ratio": 0.203125,
+          "response_time_mean_s": 5.166666666666667,
+          "restricted_response_mean_s": 5.166666666666667,
+          "unresponded_rate": 0.0,
+          "all_tasks_makespan_mean_s_complete_only": 10.0,
+          "completed_task_flow_time_sum_mean_s": 14.333333333333334,
+          "role_switch_count": 2.75,
+          "assignment_change_count": 6.083333333333333,
+          "requested_duplicate_rate": 0.0,
+          "mean_return": null
+        },
+        "omitted_episode_records": 12
+      },
+      "central_exact": {
+        "summary": {
+          "episodes": 12,
+          "task_success_rate": 1.0,
+          "deadline_compliance_rate": 1.0,
+          "coverage_gap_ratio": 0.10416666666666667,
+          "response_time_mean_s": 6.708333333333333,
+          "restricted_response_mean_s": 6.708333333333333,
+          "unresponded_rate": 0.0,
+          "all_tasks_makespan_mean_s_complete_only": 11.75,
+          "completed_task_flow_time_sum_mean_s": 17.416666666666668,
+          "role_switch_count": 1,
+          "assignment_change_count": 4.666666666666667,
+          "requested_duplicate_rate": 0.0,
+          "mean_return": null
+        },
+        "omitted_episode_records": 12
+      },
+      "central_handover": {
+        "summary": {
+          "episodes": 12,
+          "task_success_rate": 1.0,
+          "deadline_compliance_rate": 1.0,
+          "coverage_gap_ratio": 0.08072916666666667,
+          "response_time_mean_s": 7.541666666666667,
+          "restricted_response_mean_s": 7.541666666666667,
+          "unresponded_rate": 0.0,
+          "all_tasks_makespan_mean_s_complete_only": 12.5,
+          "completed_task_flow_time_sum_mean_s": 19.083333333333332,
+          "role_switch_count": 1,
+          "assignment_change_count": 4.666666666666667,
+          "requested_duplicate_rate": 0.0,
+          "mean_return": null
+        },
+        "omitted_episode_records": 12
+      }
+    },
+    "B3": {
+      "local_hold": {
+        "summary": {
+          "episodes": 12,
+          "task_success_rate": 0.0,
+          "deadline_compliance_rate": 0.0,
+          "coverage_gap_ratio": 0.0,
+          "response_time_mean_s": null,
+          "restricted_response_mean_s": 20.375,
+          "unresponded_rate": 1.0,
+          "all_tasks_makespan_mean_s_complete_only": null,
+          "completed_task_flow_time_sum_mean_s": 0,
+          "role_switch_count": 0,
+          "assignment_change_count": 0,
+          "requested_duplicate_rate": 0.0,
+          "mean_return": -2.5392252604166665
+        },
+        "omitted_episode_records": 12
+      },
+      "local_fixed": {
+        "summary": {
+          "episodes": 12,
+          "task_success_rate": 1.0,
+          "deadline_compliance_rate": 1.0,
+          "coverage_gap_ratio": 0.0,
+          "response_time_mean_s": 8.041666666666666,
+          "restricted_response_mean_s": 8.041666666666666,
+          "unresponded_rate": 0.0,
+          "all_tasks_makespan_mean_s_complete_only": 13.583333333333334,
+          "completed_task_flow_time_sum_mean_s": 20.083333333333332,
+          "role_switch_count": 0,
+          "assignment_change_count": 4,
+          "requested_duplicate_rate": 0.2606220297923474,
+          "mean_return": 2.9814778645833333
+        },
+        "omitted_episode_records": 12
+      },
+      "local_eta": {
+        "summary": {
+          "episodes": 12,
+          "task_success_rate": 0.4583333333333333,
+          "deadline_compliance_rate": 0.45833333333333337,
+          "coverage_gap_ratio": 0.109375,
+          "response_time_mean_s": 5.416666666666667,
+          "restricted_response_mean_s": 13.875,
+          "unresponded_rate": 0.5416666666666666,
+          "all_tasks_makespan_mean_s_complete_only": 11.2,
+          "completed_task_flow_time_sum_mean_s": 6.916666666666667,
+          "role_switch_count": 1,
+          "assignment_change_count": 2.4166666666666665,
+          "requested_duplicate_rate": 0.0,
+          "mean_return": -0.2420355902777778
+        },
+        "omitted_episode_records": 12
+      },
+      "local_random": {
+        "summary": {
+          "episodes": 12,
+          "task_success_rate": 0.3333333333333333,
+          "deadline_compliance_rate": 0.33333333333333337,
+          "coverage_gap_ratio": 0.5286458333333334,
+          "response_time_mean_s": 12.375,
+          "restricted_response_mean_s": 15.083333333333334,
+          "unresponded_rate": 0.5,
+          "all_tasks_makespan_mean_s_complete_only": 11.0,
+          "completed_task_flow_time_sum_mean_s": 9.416666666666666,
+          "role_switch_count": 13.416666666666666,
+          "assignment_change_count": 42.416666666666664,
+          "requested_duplicate_rate": 0.27245286573524596,
+          "mean_return": -2.505240885416667
+        },
+        "omitted_episode_records": 12
+      },
+      "central_fixed": {
+        "summary": {
+          "episodes": 12,
+          "task_success_rate": 1.0,
+          "deadline_compliance_rate": 1.0,
+          "coverage_gap_ratio": 0.0,
+          "response_time_mean_s": 6.625,
+          "restricted_response_mean_s": 6.625,
+          "unresponded_rate": 0.0,
+          "all_tasks_makespan_mean_s_complete_only": 10.916666666666666,
+          "completed_task_flow_time_sum_mean_s": 17.25,
+          "role_switch_count": 0,
+          "assignment_change_count": 4,
+          "requested_duplicate_rate": 0.0,
+          "mean_return": null
+        },
+        "omitted_episode_records": 12
+      },
+      "central_greedy": {
+        "summary": {
+          "episodes": 12,
+          "task_success_rate": 1.0,
+          "deadline_compliance_rate": 1.0,
+          "coverage_gap_ratio": 0.109375,
+          "response_time_mean_s": 5.166666666666667,
+          "restricted_response_mean_s": 5.166666666666667,
+          "unresponded_rate": 0.0,
+          "all_tasks_makespan_mean_s_complete_only": 9.75,
+          "completed_task_flow_time_sum_mean_s": 14.333333333333334,
+          "role_switch_count": 2.3333333333333335,
+          "assignment_change_count": 5.666666666666667,
+          "requested_duplicate_rate": 0.0,
+          "mean_return": null
+        },
+        "omitted_episode_records": 12
+      },
+      "central_exact": {
+        "summary": {
+          "episodes": 12,
+          "task_success_rate": 1.0,
+          "deadline_compliance_rate": 1.0,
+          "coverage_gap_ratio": 0.049479166666666664,
+          "response_time_mean_s": 5.75,
+          "restricted_response_mean_s": 5.75,
+          "unresponded_rate": 0.0,
+          "all_tasks_makespan_mean_s_complete_only": 10.25,
+          "completed_task_flow_time_sum_mean_s": 15.5,
+          "role_switch_count": 1,
+          "assignment_change_count": 4.833333333333333,
+          "requested_duplicate_rate": 0.0,
+          "mean_return": null
+        },
+        "omitted_episode_records": 12
+      },
+      "central_handover": {
+        "summary": {
+          "episodes": 12,
+          "task_success_rate": 1.0,
+          "deadline_compliance_rate": 1.0,
+          "coverage_gap_ratio": 0.0,
+          "response_time_mean_s": 6.833333333333333,
+          "restricted_response_mean_s": 6.833333333333333,
+          "unresponded_rate": 0.0,
+          "all_tasks_makespan_mean_s_complete_only": 11.333333333333334,
+          "completed_task_flow_time_sum_mean_s": 17.666666666666668,
+          "role_switch_count": 1,
+          "assignment_change_count": 4.666666666666667,
+          "requested_duplicate_rate": 0.0,
+          "mean_return": null
+        },
+        "omitted_episode_records": 12
+      }
+    },
+    "C": {
+      "local_hold": {
+        "summary": {
+          "episodes": 12,
+          "task_success_rate": 0.0,
+          "deadline_compliance_rate": 0.0,
+          "coverage_gap_ratio": 0.0,
+          "response_time_mean_s": null,
+          "restricted_response_mean_s": 21.36111111111111,
+          "unresponded_rate": 1.0,
+          "all_tasks_makespan_mean_s_complete_only": null,
+          "completed_task_flow_time_sum_mean_s": 0,
+          "role_switch_count": 0,
+          "assignment_change_count": 0,
+          "requested_duplicate_rate": 0.0,
+          "mean_return": -3.79658203125
+        },
+        "omitted_episode_records": 12
+      },
+      "local_fixed": {
+        "summary": {
+          "episodes": 12,
+          "task_success_rate": 0.9722222222222222,
+          "deadline_compliance_rate": 0.9722222222222222,
+          "coverage_gap_ratio": 0.0,
+          "response_time_mean_s": 9.097222222222221,
+          "restricted_response_mean_s": 9.25,
+          "unresponded_rate": 0.027777777777777776,
+          "all_tasks_makespan_mean_s_complete_only": 17.636363636363637,
+          "completed_task_flow_time_sum_mean_s": 32.416666666666664,
+          "role_switch_count": 0,
+          "assignment_change_count": 6,
+          "requested_duplicate_rate": 0.18059046188851133,
+          "mean_return": 4.246907552083333
+        },
+        "omitted_episode_records": 12
+      },
+      "local_eta": {
+        "summary": {
+          "episodes": 12,
+          "task_success_rate": 0.2777777777777778,
+          "deadline_compliance_rate": 0.2777777777777778,
+          "coverage_gap_ratio": 0.04079861111111111,
+          "response_time_mean_s": 7.458333333333333,
+          "restricted_response_mean_s": 17.666666666666668,
+          "unresponded_rate": 0.7222222222222222,
+          "all_tasks_makespan_mean_s_complete_only": 18.0,
+          "completed_task_flow_time_sum_mean_s": 8.333333333333334,
+          "role_switch_count": 0.6666666666666666,
+          "assignment_change_count": 2.1666666666666665,
+          "requested_duplicate_rate": 0.0,
+          "mean_return": -1.5900282118055558
+        },
+        "omitted_episode_records": 12
+      },
+      "local_random": {
+        "summary": {
+          "episodes": 12,
+          "task_success_rate": 0.19444444444444445,
+          "deadline_compliance_rate": 0.19444444444444442,
+          "coverage_gap_ratio": 0.8136284722222222,
+          "response_time_mean_s": 13.125,
+          "restricted_response_mean_s": 18.444444444444443,
+          "unresponded_rate": 0.6944444444444444,
+          "all_tasks_makespan_mean_s_complete_only": 23.0,
+          "completed_task_flow_time_sum_mean_s": 9.666666666666666,
+          "role_switch_count": 27.916666666666668,
+          "assignment_change_count": 79.83333333333333,
+          "requested_duplicate_rate": 0.1907554718556033,
+          "mean_return": -5.023838975694445
+        },
+        "omitted_episode_records": 12
+      },
+      "central_fixed": {
+        "summary": {
+          "episodes": 12,
+          "task_success_rate": 0.6666666666666666,
+          "deadline_compliance_rate": 0.6666666666666667,
+          "coverage_gap_ratio": 0.0,
+          "response_time_mean_s": 6.833333333333333,
+          "restricted_response_mean_s": 11.13888888888889,
+          "unresponded_rate": 0.3333333333333333,
+          "all_tasks_makespan_mean_s_complete_only": null,
+          "completed_task_flow_time_sum_mean_s": 17.666666666666668,
+          "role_switch_count": 0,
+          "assignment_change_count": 4,
+          "requested_duplicate_rate": 0.0,
+          "mean_return": null
+        },
+        "omitted_episode_records": 12
+      },
+      "central_greedy": {
+        "summary": {
+          "episodes": 12,
+          "task_success_rate": 1.0,
+          "deadline_compliance_rate": 1.0,
+          "coverage_gap_ratio": 0.07838541666666667,
+          "response_time_mean_s": 5.527777777777778,
+          "restricted_response_mean_s": 5.527777777777778,
+          "unresponded_rate": 0.0,
+          "all_tasks_makespan_mean_s_complete_only": 11.583333333333334,
+          "completed_task_flow_time_sum_mean_s": 22.583333333333332,
+          "role_switch_count": 4.166666666666667,
+          "assignment_change_count": 10.083333333333334,
+          "requested_duplicate_rate": 0.0,
+          "mean_return": null
+        },
+        "omitted_episode_records": 12
+      },
+      "central_exact": {
+        "summary": {
+          "episodes": 12,
+          "task_success_rate": 1.0,
+          "deadline_compliance_rate": 1.0,
+          "coverage_gap_ratio": 0.01657986111111111,
+          "response_time_mean_s": 6.361111111111111,
+          "restricted_response_mean_s": 6.361111111111111,
+          "unresponded_rate": 0.0,
+          "all_tasks_makespan_mean_s_complete_only": 12.333333333333334,
+          "completed_task_flow_time_sum_mean_s": 25.083333333333332,
+          "role_switch_count": 1.1666666666666667,
+          "assignment_change_count": 7.416666666666667,
+          "requested_duplicate_rate": 0.0,
+          "mean_return": null
+        },
+        "omitted_episode_records": 12
+      },
+      "central_handover": {
+        "summary": {
+          "episodes": 12,
+          "task_success_rate": 1.0,
+          "deadline_compliance_rate": 1.0,
+          "coverage_gap_ratio": 0.0078125,
+          "response_time_mean_s": 7.388888888888889,
+          "restricted_response_mean_s": 7.388888888888889,
+          "unresponded_rate": 0.0,
+          "all_tasks_makespan_mean_s_complete_only": 13.416666666666666,
+          "completed_task_flow_time_sum_mean_s": 28.166666666666668,
+          "role_switch_count": 1,
+          "assignment_change_count": 7.666666666666667,
+          "requested_duplicate_rate": 0.0,
+          "mean_return": null
+        },
+        "omitted_episode_records": 12
+      }
+    },
+    "D": {
+      "local_hold": {
+        "summary": {
+          "episodes": 12,
+          "task_success_rate": 0.0,
+          "deadline_compliance_rate": 0.0,
+          "coverage_gap_ratio": 0.0,
+          "response_time_mean_s": null,
+          "restricted_response_mean_s": 19.944444444444443,
+          "unresponded_rate": 1.0,
+          "all_tasks_makespan_mean_s_complete_only": null,
+          "completed_task_flow_time_sum_mean_s": 0,
+          "role_switch_count": 0,
+          "assignment_change_count": 0,
+          "requested_duplicate_rate": 0.0,
+          "mean_return": -3.7968424479166667
+        },
+        "omitted_episode_records": 12
+      },
+      "local_fixed": {
+        "summary": {
+          "episodes": 12,
+          "task_success_rate": 0.3055555555555556,
+          "deadline_compliance_rate": 0.3055555555555556,
+          "coverage_gap_ratio": 0.0,
+          "response_time_mean_s": 13.666666666666666,
+          "restricted_response_mean_s": 17.805555555555557,
+          "unresponded_rate": 0.6944444444444444,
+          "all_tasks_makespan_mean_s_complete_only": 23.0,
+          "completed_task_flow_time_sum_mean_s": 14.416666666666666,
+          "role_switch_count": 0,
+          "assignment_change_count": 3,
+          "requested_duplicate_rate": 0.03882872990069561,
+          "mean_return": -1.2802408854166667
+        },
+        "omitted_episode_records": 12
+      },
+      "local_eta": {
+        "summary": {
+          "episodes": 12,
+          "task_success_rate": 0.1111111111111111,
+          "deadline_compliance_rate": 0.11111111111111116,
+          "coverage_gap_ratio": 0.016952790317635028,
+          "response_time_mean_s": 4.5,
+          "restricted_response_mean_s": 17.583333333333332,
+          "unresponded_rate": 0.8611111111111112,
+          "all_tasks_makespan_mean_s_complete_only": null,
+          "completed_task_flow_time_sum_mean_s": 2.5,
+          "role_switch_count": 0.4166666666666667,
+          "assignment_change_count": 1,
+          "requested_duplicate_rate": 0.0,
+          "mean_return": -2.9136393229166666
+        },
+        "omitted_episode_records": 12
+      },
+      "local_random": {
+        "summary": {
+          "episodes": 12,
+          "task_success_rate": 0.0,
+          "deadline_compliance_rate": 0.0,
+          "coverage_gap_ratio": 0.6172588180083783,
+          "response_time_mean_s": 11.0,
+          "restricted_response_mean_s": 19.72222222222222,
+          "unresponded_rate": 0.9722222222222222,
+          "all_tasks_makespan_mean_s_complete_only": null,
+          "completed_task_flow_time_sum_mean_s": 0,
+          "role_switch_count": 11.416666666666666,
+          "assignment_change_count": 54.833333333333336,
+          "requested_duplicate_rate": 0.20010634687287057,
+          "mean_return": -5.7549442997685185
+        },
+        "omitted_episode_records": 12
+      },
+      "central_fixed": {
+        "summary": {
+          "episodes": 12,
+          "task_success_rate": 0.5555555555555556,
+          "deadline_compliance_rate": 0.5555555555555556,
+          "coverage_gap_ratio": 0.0,
+          "response_time_mean_s": 13.541666666666666,
+          "restricted_response_mean_s": 15.444444444444445,
+          "unresponded_rate": 0.3888888888888889,
+          "all_tasks_makespan_mean_s_complete_only": null,
+          "completed_task_flow_time_sum_mean_s": 25.5,
+          "role_switch_count": 0,
+          "assignment_change_count": 6,
+          "requested_duplicate_rate": 0.0,
+          "mean_return": null
+        },
+        "omitted_episode_records": 12
+      },
+      "central_greedy": {
+        "summary": {
+          "episodes": 12,
+          "task_success_rate": 0.9166666666666666,
+          "deadline_compliance_rate": 0.9166666666666666,
+          "coverage_gap_ratio": 0.11920699555913682,
+          "response_time_mean_s": 9.583333333333334,
+          "restricted_response_mean_s": 9.777777777777779,
+          "unresponded_rate": 0.05555555555555555,
+          "all_tasks_makespan_mean_s_complete_only": 17.1,
+          "completed_task_flow_time_sum_mean_s": 30.916666666666668,
+          "role_switch_count": 5.583333333333333,
+          "assignment_change_count": 14.083333333333334,
+          "requested_duplicate_rate": 0.0,
+          "mean_return": null
+        },
+        "omitted_episode_records": 12
+      },
+      "central_exact": {
+        "summary": {
+          "episodes": 12,
+          "task_success_rate": 0.9444444444444444,
+          "deadline_compliance_rate": 0.9444444444444444,
+          "coverage_gap_ratio": 0.04295922258353341,
+          "response_time_mean_s": 9.347222222222223,
+          "restricted_response_mean_s": 9.555555555555555,
+          "unresponded_rate": 0.05555555555555555,
+          "all_tasks_makespan_mean_s_complete_only": 16.1,
+          "completed_task_flow_time_sum_mean_s": 31.5,
+          "role_switch_count": 2.6666666666666665,
+          "assignment_change_count": 10.166666666666666,
+          "requested_duplicate_rate": 0.0,
+          "mean_return": null
+        },
+        "omitted_episode_records": 12
+      },
+      "central_handover": {
+        "summary": {
+          "episodes": 12,
+          "task_success_rate": 0.8888888888888888,
+          "deadline_compliance_rate": 0.8888888888888888,
+          "coverage_gap_ratio": 0.020126106906682446,
+          "response_time_mean_s": 10.694444444444445,
+          "restricted_response_mean_s": 11.277777777777779,
+          "unresponded_rate": 0.1111111111111111,
+          "all_tasks_makespan_mean_s_complete_only": 17.25,
+          "completed_task_flow_time_sum_mean_s": 33.5,
+          "role_switch_count": 2.1666666666666665,
+          "assignment_change_count": 9.416666666666666,
+          "requested_duplicate_rate": 0.0,
+          "mean_return": null
+        },
+        "omitted_episode_records": 12
+      }
+    }
+  },
+  "trained_policies": {
+    "A_weight2": {
+      "selected_mappo_greedy": {
+        "summary": {
+          "episodes": 12,
+          "task_success_rate": 1.0,
+          "deadline_compliance_rate": 1.0,
+          "coverage_gap_ratio": 0.1015625,
+          "response_time_mean_s": 4.0,
+          "restricted_response_mean_s": 4.0,
+          "unresponded_rate": 0.0,
+          "all_tasks_makespan_mean_s_complete_only": 6.0,
+          "completed_task_flow_time_sum_mean_s": 6.0,
+          "role_switch_count": 2,
+          "assignment_change_count": 3,
+          "requested_duplicate_rate": 0.6847941058467375,
+          "mean_return": 1.24013671875
+        },
+        "omitted_episode_records": 12
+      },
+      "selected_mappo_stochastic": {
+        "summary": {
+          "episodes": 12,
+          "task_success_rate": 1.0,
+          "deadline_compliance_rate": 1.0,
+          "coverage_gap_ratio": 0.14583333333333334,
+          "response_time_mean_s": 4.083333333333333,
+          "restricted_response_mean_s": 4.083333333333333,
+          "unresponded_rate": 0.0,
+          "all_tasks_makespan_mean_s_complete_only": 6.083333333333333,
+          "completed_task_flow_time_sum_mean_s": 6.083333333333333,
+          "role_switch_count": 3,
+          "assignment_change_count": 6.666666666666667,
+          "requested_duplicate_rate": 0.5128995392153287,
+          "mean_return": 1.0597981770833333
+        },
+        "omitted_episode_records": 12
+      },
+      "final_mappo_greedy": {
+        "summary": {
+          "episodes": 12,
+          "task_success_rate": 1.0,
+          "deadline_compliance_rate": 1.0,
+          "coverage_gap_ratio": 0.1015625,
+          "response_time_mean_s": 4.0,
+          "restricted_response_mean_s": 4.0,
+          "unresponded_rate": 0.0,
+          "all_tasks_makespan_mean_s_complete_only": 6.0,
+          "completed_task_flow_time_sum_mean_s": 6.0,
+          "role_switch_count": 2,
+          "assignment_change_count": 3,
+          "requested_duplicate_rate": 0.6847941058467375,
+          "mean_return": 1.24013671875
+        },
+        "omitted_episode_records": 12
+      },
+      "final_mappo_stochastic": {
+        "summary": {
+          "episodes": 12,
+          "task_success_rate": 1.0,
+          "deadline_compliance_rate": 1.0,
+          "coverage_gap_ratio": 0.140625,
+          "response_time_mean_s": 4.25,
+          "restricted_response_mean_s": 4.25,
+          "unresponded_rate": 0.0,
+          "all_tasks_makespan_mean_s_complete_only": 6.25,
+          "completed_task_flow_time_sum_mean_s": 6.25,
+          "role_switch_count": 2.9166666666666665,
+          "assignment_change_count": 6.166666666666667,
+          "requested_duplicate_rate": 0.484323898797583,
+          "mean_return": 1.0824544270833334
+        },
+        "omitted_episode_records": 12
+      }
+    },
+    "A_weight8": {
+      "selected_mappo_greedy": {
+        "summary": {
+          "episodes": 12,
+          "task_success_rate": 1.0,
+          "deadline_compliance_rate": 1.0,
+          "coverage_gap_ratio": 0.0,
+          "response_time_mean_s": 6.666666666666667,
+          "restricted_response_mean_s": 6.666666666666667,
+          "unresponded_rate": 0.0,
+          "all_tasks_makespan_mean_s_complete_only": 8.666666666666666,
+          "completed_task_flow_time_sum_mean_s": 8.666666666666666,
+          "role_switch_count": 0,
+          "assignment_change_count": 2,
+          "requested_duplicate_rate": 0.5748069360392852,
+          "mean_return": 1.4904296875
+        },
+        "omitted_episode_records": 12
+      },
+      "selected_mappo_stochastic": {
+        "summary": {
+          "episodes": 12,
+          "task_success_rate": 0.6666666666666666,
+          "deadline_compliance_rate": 0.6666666666666667,
+          "coverage_gap_ratio": 0.3802083333333333,
+          "response_time_mean_s": 10.125,
+          "restricted_response_mean_s": 14.0,
+          "unresponded_rate": 0.3333333333333333,
+          "all_tasks_makespan_mean_s_complete_only": 14.625,
+          "completed_task_flow_time_sum_mean_s": 9.75,
+          "role_switch_count": 8.416666666666666,
+          "assignment_change_count": 24.25,
+          "requested_duplicate_rate": 0.2209312114189934,
+          "mean_return": -3.1229817708333334
+        },
+        "omitted_episode_records": 12
+      },
+      "final_mappo_greedy": {
+        "summary": {
+          "episodes": 12,
+          "task_success_rate": 0.0,
+          "deadline_compliance_rate": 0.0,
+          "coverage_gap_ratio": 0.0,
+          "response_time_mean_s": null,
+          "restricted_response_mean_s": 22.666666666666668,
+          "unresponded_rate": 1.0,
+          "all_tasks_makespan_mean_s_complete_only": null,
+          "completed_task_flow_time_sum_mean_s": 0,
+          "role_switch_count": 0,
+          "assignment_change_count": 0,
+          "requested_duplicate_rate": 0.5875471729148115,
+          "mean_return": -1.27412109375
+        },
+        "omitted_episode_records": 12
+      },
+      "final_mappo_stochastic": {
+        "summary": {
+          "episodes": 12,
+          "task_success_rate": 1.0,
+          "deadline_compliance_rate": 1.0,
+          "coverage_gap_ratio": 0.11197916666666667,
+          "response_time_mean_s": 7.916666666666667,
+          "restricted_response_mean_s": 7.916666666666667,
+          "unresponded_rate": 0.0,
+          "all_tasks_makespan_mean_s_complete_only": 10.083333333333334,
+          "completed_task_flow_time_sum_mean_s": 10.083333333333334,
+          "role_switch_count": 2.5,
+          "assignment_change_count": 5.083333333333333,
+          "requested_duplicate_rate": 0.436878284324888,
+          "mean_return": 0.4890299479166667
+        },
+        "omitted_episode_records": 12
+      }
+    },
+    "B3_weight2": {
+      "selected_mappo_greedy": {
+        "summary": {
+          "episodes": 12,
+          "task_success_rate": 1.0,
+          "deadline_compliance_rate": 1.0,
+          "coverage_gap_ratio": 0.0,
+          "response_time_mean_s": 7.458333333333333,
+          "restricted_response_mean_s": 7.458333333333333,
+          "unresponded_rate": 0.0,
+          "all_tasks_makespan_mean_s_complete_only": 13.0,
+          "completed_task_flow_time_sum_mean_s": 19.416666666666668,
+          "role_switch_count": 0,
+          "assignment_change_count": 5.666666666666667,
+          "requested_duplicate_rate": 0.14175567841890974,
+          "mean_return": 2.9544813368055554
+        },
+        "omitted_episode_records": 12
+      },
+      "selected_mappo_stochastic": {
+        "summary": {
+          "episodes": 12,
+          "task_success_rate": 0.5416666666666666,
+          "deadline_compliance_rate": 0.5416666666666667,
+          "coverage_gap_ratio": 0.5755208333333334,
+          "response_time_mean_s": 13.85,
+          "restricted_response_mean_s": 14.625,
+          "unresponded_rate": 0.20833333333333334,
+          "all_tasks_makespan_mean_s_complete_only": 23.333333333333332,
+          "completed_task_flow_time_sum_mean_s": 19.916666666666668,
+          "role_switch_count": 13.583333333333334,
+          "assignment_change_count": 40.666666666666664,
+          "requested_duplicate_rate": 0.2588057300029854,
+          "mean_return": -1.400900607638889
+        },
+        "omitted_episode_records": 12
+      },
+      "final_mappo_greedy": {
+        "summary": {
+          "episodes": 12,
+          "task_success_rate": 1.0,
+          "deadline_compliance_rate": 1.0,
+          "coverage_gap_ratio": 0.0,
+          "response_time_mean_s": 7.458333333333333,
+          "restricted_response_mean_s": 7.458333333333333,
+          "unresponded_rate": 0.0,
+          "all_tasks_makespan_mean_s_complete_only": 13.0,
+          "completed_task_flow_time_sum_mean_s": 19.416666666666668,
+          "role_switch_count": 0,
+          "assignment_change_count": 5.666666666666667,
+          "requested_duplicate_rate": 0.14175567841890974,
+          "mean_return": 2.9544813368055554
+        },
+        "omitted_episode_records": 12
+      },
+      "final_mappo_stochastic": {
+        "summary": {
+          "episodes": 12,
+          "task_success_rate": 0.9166666666666666,
+          "deadline_compliance_rate": 0.9166666666666666,
+          "coverage_gap_ratio": 0.4869791666666667,
+          "response_time_mean_s": 7.75,
+          "restricted_response_mean_s": 8.208333333333334,
+          "unresponded_rate": 0.041666666666666664,
+          "all_tasks_makespan_mean_s_complete_only": 13.8,
+          "completed_task_flow_time_sum_mean_s": 19.25,
+          "role_switch_count": 4,
+          "assignment_change_count": 18.833333333333332,
+          "requested_duplicate_rate": 0.397907617807508,
+          "mean_return": 1.2535807291666667
+        },
+        "omitted_episode_records": 12
+      }
+    },
+    "C_weight2": {
+      "selected_mappo_greedy": {
+        "summary": {
+          "episodes": 12,
+          "task_success_rate": 0.6666666666666666,
+          "deadline_compliance_rate": 0.6666666666666667,
+          "coverage_gap_ratio": 0.1642361111111111,
+          "response_time_mean_s": 5.166666666666667,
+          "restricted_response_mean_s": 10.027777777777779,
+          "unresponded_rate": 0.3333333333333333,
+          "all_tasks_makespan_mean_s_complete_only": null,
+          "completed_task_flow_time_sum_mean_s": 14.333333333333334,
+          "role_switch_count": 2,
+          "assignment_change_count": 6,
+          "requested_duplicate_rate": 0.3268669166896023,
+          "mean_return": 1.3469509548611107
+        },
+        "omitted_episode_records": 12
+      },
+      "selected_mappo_stochastic": {
+        "summary": {
+          "episodes": 12,
+          "task_success_rate": 0.25,
+          "deadline_compliance_rate": 0.25,
+          "coverage_gap_ratio": 0.8276909722222222,
+          "response_time_mean_s": 13.1875,
+          "restricted_response_mean_s": 18.055555555555554,
+          "unresponded_rate": 0.6388888888888888,
+          "all_tasks_makespan_mean_s_complete_only": null,
+          "completed_task_flow_time_sum_mean_s": 11.0,
+          "role_switch_count": 29.416666666666668,
+          "assignment_change_count": 79,
+          "requested_duplicate_rate": 0.2100674369460725,
+          "mean_return": -4.599229600694445
+        },
+        "omitted_episode_records": 12
+      },
+      "final_mappo_greedy": {
+        "summary": {
+          "episodes": 12,
+          "task_success_rate": 0.6666666666666666,
+          "deadline_compliance_rate": 0.6666666666666667,
+          "coverage_gap_ratio": 0.1642361111111111,
+          "response_time_mean_s": 5.166666666666667,
+          "restricted_response_mean_s": 10.027777777777779,
+          "unresponded_rate": 0.3333333333333333,
+          "all_tasks_makespan_mean_s_complete_only": null,
+          "completed_task_flow_time_sum_mean_s": 14.333333333333334,
+          "role_switch_count": 2,
+          "assignment_change_count": 6,
+          "requested_duplicate_rate": 0.3268669166896023,
+          "mean_return": 1.3469509548611107
+        },
+        "omitted_episode_records": 12
+      },
+      "final_mappo_stochastic": {
+        "summary": {
+          "episodes": 12,
+          "task_success_rate": 0.5,
+          "deadline_compliance_rate": 0.5,
+          "coverage_gap_ratio": 0.7469618055555556,
+          "response_time_mean_s": 12.291666666666666,
+          "restricted_response_mean_s": 14.055555555555555,
+          "unresponded_rate": 0.3888888888888889,
+          "all_tasks_makespan_mean_s_complete_only": null,
+          "completed_task_flow_time_sum_mean_s": 22.166666666666668,
+          "role_switch_count": 21.416666666666668,
+          "assignment_change_count": 64.58333333333333,
+          "requested_duplicate_rate": 0.260953009659126,
+          "mean_return": -2.0730902777777778
+        },
+        "omitted_episode_records": 12
+      }
+    }
+  },
+  "transfer": {
+    "A": {
+      "fixed_3b1_checkpoint": {
+        "summary": {
+          "episodes": 12,
+          "task_success_rate": 1.0,
+          "deadline_compliance_rate": 1.0,
+          "coverage_gap_ratio": 0.1015625,
+          "response_time_mean_s": 4.0,
+          "restricted_response_mean_s": 4.0,
+          "unresponded_rate": 0.0,
+          "all_tasks_makespan_mean_s_complete_only": 6.0,
+          "completed_task_flow_time_sum_mean_s": 6.0,
+          "role_switch_count": 2,
+          "assignment_change_count": 3,
+          "requested_duplicate_rate": 0.05264981580771055,
+          "mean_return": 1.24013671875
+        },
+        "omitted_episode_records": 12
+      },
+      "randomized_A_checkpoint": {
+        "summary": {
+          "episodes": 12,
+          "task_success_rate": 1.0,
+          "deadline_compliance_rate": 1.0,
+          "coverage_gap_ratio": 0.1015625,
+          "response_time_mean_s": 4.0,
+          "restricted_response_mean_s": 4.0,
+          "unresponded_rate": 0.0,
+          "all_tasks_makespan_mean_s_complete_only": 6.0,
+          "completed_task_flow_time_sum_mean_s": 6.0,
+          "role_switch_count": 2,
+          "assignment_change_count": 3,
+          "requested_duplicate_rate": 0.6847941058467375,
+          "mean_return": 1.24013671875
+        },
+        "omitted_episode_records": 12
+      }
+    },
+    "B2": {
+      "fixed_3b1_checkpoint": {
+        "summary": {
+          "episodes": 12,
+          "task_success_rate": 1.0,
+          "deadline_compliance_rate": 1.0,
+          "coverage_gap_ratio": 0.11197916666666667,
+          "response_time_mean_s": 5.083333333333333,
+          "restricted_response_mean_s": 5.083333333333333,
+          "unresponded_rate": 0.0,
+          "all_tasks_makespan_mean_s_complete_only": 10.333333333333334,
+          "completed_task_flow_time_sum_mean_s": 14.166666666666666,
+          "role_switch_count": 2,
+          "assignment_change_count": 5,
+          "requested_duplicate_rate": 0.048528309578586025,
+          "mean_return": 2.7131184895833336
+        },
+        "omitted_episode_records": 12
+      },
+      "randomized_A_checkpoint": {
+        "summary": {
+          "episodes": 12,
+          "task_success_rate": 1.0,
+          "deadline_compliance_rate": 1.0,
+          "coverage_gap_ratio": 0.11197916666666667,
+          "response_time_mean_s": 5.083333333333333,
+          "restricted_response_mean_s": 5.083333333333333,
+          "unresponded_rate": 0.0,
+          "all_tasks_makespan_mean_s_complete_only": 10.333333333333334,
+          "completed_task_flow_time_sum_mean_s": 14.166666666666666,
+          "role_switch_count": 2,
+          "assignment_change_count": 5,
+          "requested_duplicate_rate": 0.47104193408820905,
+          "mean_return": 2.7131184895833336
+        },
+        "omitted_episode_records": 12
+      }
+    },
+    "B3": {
+      "fixed_3b1_checkpoint": {
+        "summary": {
+          "episodes": 12,
+          "task_success_rate": 1.0,
+          "deadline_compliance_rate": 1.0,
+          "coverage_gap_ratio": 0.11197916666666667,
+          "response_time_mean_s": 5.5,
+          "restricted_response_mean_s": 5.5,
+          "unresponded_rate": 0.0,
+          "all_tasks_makespan_mean_s_complete_only": 11.083333333333334,
+          "completed_task_flow_time_sum_mean_s": 15.0,
+          "role_switch_count": 2,
+          "assignment_change_count": 5,
+          "requested_duplicate_rate": 0.6821730219667081,
+          "mean_return": 2.728873697916667
+        },
+        "omitted_episode_records": 12
+      },
+      "randomized_A_checkpoint": {
+        "summary": {
+          "episodes": 12,
+          "task_success_rate": 1.0,
+          "deadline_compliance_rate": 1.0,
+          "coverage_gap_ratio": 0.11197916666666667,
+          "response_time_mean_s": 5.5,
+          "restricted_response_mean_s": 5.5,
+          "unresponded_rate": 0.0,
+          "all_tasks_makespan_mean_s_complete_only": 11.083333333333334,
+          "completed_task_flow_time_sum_mean_s": 15.0,
+          "role_switch_count": 2,
+          "assignment_change_count": 5,
+          "requested_duplicate_rate": 0.6821730219667081,
+          "mean_return": 2.728873697916667
+        },
+        "omitted_episode_records": 12
+      }
+    },
+    "C": {
+      "fixed_3b1_checkpoint": {
+        "summary": {
+          "episodes": 12,
+          "task_success_rate": 0.0,
+          "deadline_compliance_rate": 0.0,
+          "coverage_gap_ratio": 0.0,
+          "response_time_mean_s": null,
+          "restricted_response_mean_s": 21.36111111111111,
+          "unresponded_rate": 1.0,
+          "all_tasks_makespan_mean_s_complete_only": null,
+          "completed_task_flow_time_sum_mean_s": 0,
+          "role_switch_count": 0,
+          "assignment_change_count": 1,
+          "requested_duplicate_rate": 0.2501379147984806,
+          "mean_return": -3.82158203125
+        },
+        "omitted_episode_records": 12
+      },
+      "randomized_A_checkpoint": {
+        "summary": {
+          "episodes": 12,
+          "task_success_rate": 0.0,
+          "deadline_compliance_rate": 0.0,
+          "coverage_gap_ratio": 0.0,
+          "response_time_mean_s": null,
+          "restricted_response_mean_s": 21.36111111111111,
+          "unresponded_rate": 1.0,
+          "all_tasks_makespan_mean_s_complete_only": null,
+          "completed_task_flow_time_sum_mean_s": 0,
+          "role_switch_count": 0,
+          "assignment_change_count": 1,
+          "requested_duplicate_rate": 0.2501379147984806,
+          "mean_return": -3.82158203125
+        },
+        "omitted_episode_records": 12
+      }
+    },
+    "D": {
+      "fixed_3b1_checkpoint": {
+        "summary": {
+          "episodes": 12,
+          "task_success_rate": 0.0,
+          "deadline_compliance_rate": 0.0,
+          "coverage_gap_ratio": 0.0,
+          "response_time_mean_s": null,
+          "restricted_response_mean_s": 19.944444444444443,
+          "unresponded_rate": 1.0,
+          "all_tasks_makespan_mean_s_complete_only": null,
+          "completed_task_flow_time_sum_mean_s": 0,
+          "role_switch_count": 0.4166666666666667,
+          "assignment_change_count": 1.75,
+          "requested_duplicate_rate": 0.2495526376311767,
+          "mean_return": -3.8218424479166666
+        },
+        "omitted_episode_records": 12
+      },
+      "randomized_A_checkpoint": {
+        "summary": {
+          "episodes": 12,
+          "task_success_rate": 0.027777777777777776,
+          "deadline_compliance_rate": 0.02777777777777779,
+          "coverage_gap_ratio": 0.0670045045045045,
+          "response_time_mean_s": 4.0,
+          "restricted_response_mean_s": 19.52777777777778,
+          "unresponded_rate": 0.9722222222222222,
+          "all_tasks_makespan_mean_s_complete_only": null,
+          "completed_task_flow_time_sum_mean_s": 0.5,
+          "role_switch_count": 0.5,
+          "assignment_change_count": 1.9166666666666667,
+          "requested_duplicate_rate": 0.2584178110060685,
+          "mean_return": -3.727322048611111
+        },
+        "omitted_episode_records": 12
+      }
+    }
+  },
+  "test_evaluation_wall_seconds": 68.48322870023549
+}

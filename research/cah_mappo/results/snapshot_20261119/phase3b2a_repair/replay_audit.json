@@ -1,0 +1,29 @@
+{
+  "status": "PASS",
+  "arms": {
+    "identity": {
+      "decisions": 8192,
+      "agent_decisions": 32768,
+      "checkpoint_steps_exactly_matched": [
+        2048,
+        4096,
+        6144,
+        8192
+      ],
+      "wall_seconds": 61.40088290069252,
+      "new_model_selected": false
+    },
+    "augmented": {
+      "decisions": 8192,
+      "agent_decisions": 32768,
+      "checkpoint_steps_exactly_matched": [
+        2048,
+        4096,
+        6144,
+        8192
+      ],
+      "wall_seconds": 61.70475269947201,
+      "new_model_selected": false
+    }
+  }
+}

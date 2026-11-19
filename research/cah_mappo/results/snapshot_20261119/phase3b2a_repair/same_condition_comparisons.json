@@ -1,0 +1,561 @@
+{
+  "old": {
+    "fixed": {
+      "greedy": {
+        "summary": {
+          "episodes": 6,
+          "task_success_rate": 0.6666666666666666,
+          "deadline_compliance_rate": 0.6666666666666667,
+          "coverage_gap_ratio": 0.1875,
+          "response_time_mean_s": 5.833333333333333,
+          "restricted_response_mean_s": 10.555555555555555,
+          "unresponded_rate": 0.3333333333333333,
+          "all_tasks_makespan_mean_s_complete_only": null,
+          "completed_task_flow_time_sum_mean_s": 15.666666666666666,
+          "role_switch_count": 2,
+          "assignment_change_count": 7,
+          "requested_duplicate_rate": 0.321620308272044,
+          "mean_return": 1.2846354166666654,
+          "actual_gap_region_seconds": 12.0,
+          "responsibility_region_seconds": 64.0,
+          "risk_weighted_gap_seconds": 12.0,
+          "risk_weighted_region_seconds": 64.0,
+          "task_count": 18,
+          "failure_categories": {
+            "success": 12,
+            "known_but_not_selected": 6
+          },
+          "never_observed_ratio": 0.0,
+          "no_timely_information_ratio": 0.0,
+          "known_but_not_selected_ratio": 0.3333333333333333
+        },
+        "omitted_episode_records": 6
+      },
+      "stochastic": {
+        "summary": {
+          "episodes": 6,
+          "task_success_rate": 0.38888888888888884,
+          "deadline_compliance_rate": 0.38888888888888895,
+          "coverage_gap_ratio": 0.5494791666666666,
+          "response_time_mean_s": 11.0,
+          "restricted_response_mean_s": 14.777777777777779,
+          "unresponded_rate": 0.3888888888888889,
+          "all_tasks_makespan_mean_s_complete_only": null,
+          "completed_task_flow_time_sum_mean_s": 14.166666666666666,
+          "role_switch_count": 20.666666666666668,
+          "assignment_change_count": 58.333333333333336,
+          "requested_duplicate_rate": 0.23920381671447458,
+          "mean_return": -2.4092447916666666,
+          "actual_gap_region_seconds": 35.166666666666664,
+          "responsibility_region_seconds": 64.0,
+          "risk_weighted_gap_seconds": 35.166666666666664,
+          "risk_weighted_region_seconds": 64.0,
+          "task_count": 18,
+          "failure_categories": {
+            "selected_but_no_response": 7,
+            "success": 7,
+            "responded_but_not_completed": 4
+          },
+          "never_observed_ratio": 0.0,
+          "no_timely_information_ratio": 0.0,
+          "known_but_not_selected_ratio": 0.0
+        },
+        "omitted_episode_records": 6
+      }
+    },
+    "positions": {
+      "greedy": {
+        "summary": {
+          "episodes": 24,
+          "task_success_rate": 0.6666666666666666,
+          "deadline_compliance_rate": 0.6666666666666667,
+          "coverage_gap_ratio": 0.19466145833333334,
+          "response_time_mean_s": 5.791666666666667,
+          "restricted_response_mean_s": 10.527777777777779,
+          "unresponded_rate": 0.3333333333333333,
+          "all_tasks_makespan_mean_s_complete_only": null,
+          "completed_task_flow_time_sum_mean_s": 15.583333333333334,
+          "role_switch_count": 2,
+          "assignment_change_count": 7,
+          "requested_duplicate_rate": 0.32190750880632757,
+          "mean_return": 1.2703776041666655,
+          "actual_gap_region_seconds": 12.458333333333334,
+          "responsibility_region_seconds": 64.0,
+          "risk_weighted_gap_seconds": 12.458333333333334,
+          "risk_weighted_region_seconds": 64.0,
+          "task_count": 72,
+          "failure_categories": {
+            "success": 48,
+            "known_but_not_selected": 24
+          },
+          "never_observed_ratio": 0.0,
+          "no_timely_information_ratio": 0.0,
+          "known_but_not_selected_ratio": 0.3333333333333333
+        },
+        "omitted_episode_records": 24
+      },
+      "stochastic": {
+        "summary": {
+          "episodes": 24,
+          "task_success_rate": 0.5138888888888888,
+          "deadline_compliance_rate": 0.5138888888888888,
+          "coverage_gap_ratio": 0.7395833333333334,
+          "response_time_mean_s": 12.375,
+          "restricted_response_mean_s": 14.541666666666666,
+          "unresponded_rate": 0.2777777777777778,
+          "all_tasks_makespan_mean_s_complete_only": 21.5,
+          "completed_task_flow_time_sum_mean_s": 22.083333333333332,
+          "role_switch_count": 19.166666666666668,
+          "assignment_change_count": 65.83333333333333,
+          "requested_duplicate_rate": 0.24335239296959071,
+          "mean_return": -1.9299479166666664,
+          "actual_gap_region_seconds": 47.333333333333336,
+          "responsibility_region_seconds": 64.0,
+          "risk_weighted_gap_seconds": 47.333333333333336,
+          "risk_weighted_region_seconds": 64.0,
+          "task_count": 72,
+          "failure_categories": {
+            "success": 37,
+            "responded_but_not_completed": 15,
+            "selected_but_no_response": 20
+          },
+          "never_observed_ratio": 0.0,
+          "no_timely_information_ratio": 0.0,
+          "known_but_not_selected_ratio": 0.0
+        },
+        "omitted_episode_records": 24
+      }
+    },
+    "priority_deadline": {
+      "greedy": {
+        "summary": {
+          "episodes": 24,
+          "task_success_rate": 0.6666666666666666,
+          "deadline_compliance_rate": 0.6666666666666667,
+          "coverage_gap_ratio": 0.20442708333333334,
+          "response_time_mean_s": 5.833333333333333,
+          "restricted_response_mean_s": 11.222222222222221,
+          "unresponded_rate": 0.3333333333333333,
+          "all_tasks_makespan_mean_s_complete_only": null,
+          "completed_task_flow_time_sum_mean_s": 15.666666666666666,
+          "role_switch_count": 2,
+          "assignment_change_count": 7,
+          "requested_duplicate_rate": 0.3154332860917664,
+          "mean_return": 1.2444986979166661,
+          "actual_gap_region_seconds": 13.083333333333334,
+          "responsibility_region_seconds": 64.0,
+          "risk_weighted_gap_seconds": 13.083333333333334,
+          "risk_weighted_region_seconds": 64.0,
+          "task_count": 72,
+          "failure_categories": {
+            "success": 48,
+            "known_but_not_selected": 24
+          },
+          "never_observed_ratio": 0.0,
+          "no_timely_information_ratio": 0.0,
+          "known_but_not_selected_ratio": 0.3333333333333333
+        },
+        "omitted_episode_records": 24
+      },
+      "stochastic": {
+        "summary": {
+          "episodes": 24,
+          "task_success_rate": 0.5277777777777778,
+          "deadline_compliance_rate": 0.5277777777777778,
+          "coverage_gap_ratio": 0.7591145833333334,
+          "response_time_mean_s": 11.819444444444445,
+          "restricted_response_mean_s": 15.597222222222221,
+          "unresponded_rate": 0.3611111111111111,
+          "all_tasks_makespan_mean_s_complete_only": 23.8,
+          "completed_task_flow_time_sum_mean_s": 25.833333333333332,
+          "role_switch_count": 25.25,
+          "assignment_change_count": 72.29166666666667,
+          "requested_duplicate_rate": 0.20629312919483633,
+          "mean_return": -2.0268391927083336,
+          "actual_gap_region_seconds": 48.583333333333336,
+          "responsibility_region_seconds": 64.0,
+          "risk_weighted_gap_seconds": 48.583333333333336,
+          "risk_weighted_region_seconds": 64.0,
+          "task_count": 72,
+          "failure_categories": {
+            "selected_but_no_response": 26,
+            "success": 38,
+            "responded_but_not_completed": 8
+          },
+          "never_observed_ratio": 0.0,
+          "no_timely_information_ratio": 0.0,
+          "known_but_not_selected_ratio": 0.0
+        },
+        "omitted_episode_records": 24
+      }
+    }
+  },
+  "identity": {
+    "fixed": {
+      "greedy": {
+        "summary": {
+          "episodes": 6,
+          "task_success_rate": 1.0,
+          "deadline_compliance_rate": 1.0,
+          "coverage_gap_ratio": 0.18489583333333334,
+          "response_time_mean_s": 7.888888888888889,
+          "restricted_response_mean_s": 7.888888888888889,
+          "unresponded_rate": 0.0,
+          "all_tasks_makespan_mean_s_complete_only": 16.0,
+          "completed_task_flow_time_sum_mean_s": 29.666666666666668,
+          "role_switch_count": 2,
+          "assignment_change_count": 9.666666666666666,
+          "requested_duplicate_rate": 0.33986807944318354,
+          "mean_return": 4.036197916666667,
+          "actual_gap_region_seconds": 11.833333333333334,
+          "responsibility_region_seconds": 64.0,
+          "risk_weighted_gap_seconds": 11.833333333333334,
+          "risk_weighted_region_seconds": 64.0,
+          "task_count": 18,
+          "failure_categories": {
+            "success": 18
+          },
+          "never_observed_ratio": 0.0,
+          "no_timely_information_ratio": 0.0,
+          "known_but_not_selected_ratio": 0.0
+        },
+        "omitted_episode_records": 6
+      },
+      "stochastic": {
+        "summary": {
+          "episodes": 6,
+          "task_success_rate": 1.0,
+          "deadline_compliance_rate": 1.0,
+          "coverage_gap_ratio": 0.2604166666666667,
+          "response_time_mean_s": 7.888888888888889,
+          "restricted_response_mean_s": 7.888888888888889,
+          "unresponded_rate": 0.0,
+          "all_tasks_makespan_mean_s_complete_only": 15.333333333333334,
+          "completed_task_flow_time_sum_mean_s": 29.666666666666668,
+          "role_switch_count": 4.166666666666667,
+          "assignment_change_count": 14.333333333333334,
+          "requested_duplicate_rate": 0.3797924411785429,
+          "mean_return": 3.83515625,
+          "actual_gap_region_seconds": 16.666666666666668,
+          "responsibility_region_seconds": 64.0,
+          "risk_weighted_gap_seconds": 16.666666666666668,
+          "risk_weighted_region_seconds": 64.0,
+          "task_count": 18,
+          "failure_categories": {
+            "success": 18
+          },
+          "never_observed_ratio": 0.0,
+          "no_timely_information_ratio": 0.0,
+          "known_but_not_selected_ratio": 0.0
+        },
+        "omitted_episode_records": 6
+      }
+    },
+    "positions": {
+      "greedy": {
+        "summary": {
+          "episodes": 24,
+          "task_success_rate": 1.0,
+          "deadline_compliance_rate": 1.0,
+          "coverage_gap_ratio": 0.21158854166666666,
+          "response_time_mean_s": 7.888888888888889,
+          "restricted_response_mean_s": 7.888888888888889,
+          "unresponded_rate": 0.0,
+          "all_tasks_makespan_mean_s_complete_only": 16.083333333333332,
+          "completed_task_flow_time_sum_mean_s": 29.666666666666668,
+          "role_switch_count": 2,
+          "assignment_change_count": 9.666666666666666,
+          "requested_duplicate_rate": 0.33998171358311424,
+          "mean_return": 3.9828124999999996,
+          "actual_gap_region_seconds": 13.541666666666666,
+          "responsibility_region_seconds": 64.0,
+          "risk_weighted_gap_seconds": 13.541666666666666,
+          "risk_weighted_region_seconds": 64.0,
+          "task_count": 72,
+          "failure_categories": {
+            "success": 72
+          },
+          "never_observed_ratio": 0.0,
+          "no_timely_information_ratio": 0.0,
+          "known_but_not_selected_ratio": 0.0
+        },
+        "omitted_episode_records": 24
+      },
+      "stochastic": {
+        "summary": {
+          "episodes": 24,
+          "task_success_rate": 1.0,
+          "deadline_compliance_rate": 1.0,
+          "coverage_gap_ratio": 0.3372395833333333,
+          "response_time_mean_s": 8.75,
+          "restricted_response_mean_s": 8.75,
+          "unresponded_rate": 0.0,
+          "all_tasks_makespan_mean_s_complete_only": 16.083333333333332,
+          "completed_task_flow_time_sum_mean_s": 33.416666666666664,
+          "role_switch_count": 4.625,
+          "assignment_change_count": 15.5,
+          "requested_duplicate_rate": 0.3557039192224155,
+          "mean_return": 3.6587890625000004,
+          "actual_gap_region_seconds": 21.583333333333332,
+          "responsibility_region_seconds": 64.0,
+          "risk_weighted_gap_seconds": 21.583333333333332,
+          "risk_weighted_region_seconds": 64.0,
+          "task_count": 72,
+          "failure_categories": {
+            "success": 72
+          },
+          "never_observed_ratio": 0.0,
+          "no_timely_information_ratio": 0.0,
+          "known_but_not_selected_ratio": 0.0
+        },
+        "omitted_episode_records": 24
+      }
+    },
+    "priority_deadline": {
+      "greedy": {
+        "summary": {
+          "episodes": 24,
+          "task_success_rate": 0.9861111111111112,
+          "deadline_compliance_rate": 0.9861111111111112,
+          "coverage_gap_ratio": 0.23502604166666666,
+          "response_time_mean_s": 7.875,
+          "restricted_response_mean_s": 7.875,
+          "unresponded_rate": 0.0,
+          "all_tasks_makespan_mean_s_complete_only": 15.826086956521738,
+          "completed_task_flow_time_sum_mean_s": 28.916666666666668,
+          "role_switch_count": 2,
+          "assignment_change_count": 9.666666666666666,
+          "requested_duplicate_rate": 0.34011655817277126,
+          "mean_return": 3.82578125,
+          "actual_gap_region_seconds": 15.041666666666666,
+          "responsibility_region_seconds": 64.0,
+          "risk_weighted_gap_seconds": 15.041666666666666,
+          "risk_weighted_region_seconds": 64.0,
+          "task_count": 72,
+          "failure_categories": {
+            "success": 71,
+            "responded_but_not_completed": 1
+          },
+          "never_observed_ratio": 0.0,
+          "no_timely_information_ratio": 0.0,
+          "known_but_not_selected_ratio": 0.0
+        },
+        "omitted_episode_records": 24
+      },
+      "stochastic": {
+        "summary": {
+          "episodes": 24,
+          "task_success_rate": 0.9861111111111112,
+          "deadline_compliance_rate": 0.9861111111111112,
+          "coverage_gap_ratio": 0.2955729166666667,
+          "response_time_mean_s": 8.215277777777779,
+          "restricted_response_mean_s": 8.305555555555555,
+          "unresponded_rate": 0.013888888888888888,
+          "all_tasks_makespan_mean_s_complete_only": 16.0,
+          "completed_task_flow_time_sum_mean_s": 30.791666666666668,
+          "role_switch_count": 3.875,
+          "assignment_change_count": 15,
+          "requested_duplicate_rate": 0.3531695165045533,
+          "mean_return": 3.633740234375,
+          "actual_gap_region_seconds": 18.916666666666668,
+          "responsibility_region_seconds": 64.0,
+          "risk_weighted_gap_seconds": 18.916666666666668,
+          "risk_weighted_region_seconds": 64.0,
+          "task_count": 72,
+          "failure_categories": {
+            "success": 71,
+            "selected_but_no_response": 1
+          },
+          "never_observed_ratio": 0.0,
+          "no_timely_information_ratio": 0.0,
+          "known_but_not_selected_ratio": 0.0
+        },
+        "omitted_episode_records": 24
+      }
+    }
+  },
+  "augmented": {
+    "fixed": {
+      "greedy": {
+        "summary": {
+          "episodes": 6,
+          "task_success_rate": 1.0,
+          "deadline_compliance_rate": 1.0,
+          "coverage_gap_ratio": 0.0,
+          "response_time_mean_s": 6.833333333333334,
+          "restricted_response_mean_s": 6.833333333333334,
+          "unresponded_rate": 0.0,
+          "all_tasks_makespan_mean_s_complete_only": 14.333333333333334,
+          "completed_task_flow_time_sum_mean_s": 26.5,
+          "role_switch_count": 0,
+          "assignment_change_count": 7,
+          "requested_duplicate_rate": 0.3145552671692827,
+          "mean_return": 4.466796875,
+          "actual_gap_region_seconds": 0.0,
+          "responsibility_region_seconds": 64.0,
+          "risk_weighted_gap_seconds": 0.0,
+          "risk_weighted_region_seconds": 64.0,
+          "task_count": 18,
+          "failure_categories": {
+            "success": 18
+          },
+          "never_observed_ratio": 0.0,
+          "no_timely_information_ratio": 0.0,
+          "known_but_not_selected_ratio": 0.0
+        },
+        "omitted_episode_records": 6
+      },
+      "stochastic": {
+        "summary": {
+          "episodes": 6,
+          "task_success_rate": 1.0,
+          "deadline_compliance_rate": 1.0,
+          "coverage_gap_ratio": 0.14322916666666666,
+          "response_time_mean_s": 8.777777777777779,
+          "restricted_response_mean_s": 8.777777777777779,
+          "unresponded_rate": 0.0,
+          "all_tasks_makespan_mean_s_complete_only": 17.666666666666668,
+          "completed_task_flow_time_sum_mean_s": 34.333333333333336,
+          "role_switch_count": 2.5,
+          "assignment_change_count": 15.833333333333334,
+          "requested_duplicate_rate": 0.31564189324163855,
+          "mean_return": 4.04921875,
+          "actual_gap_region_seconds": 9.166666666666666,
+          "responsibility_region_seconds": 64.0,
+          "risk_weighted_gap_seconds": 9.166666666666666,
+          "risk_weighted_region_seconds": 64.0,
+          "task_count": 18,
+          "failure_categories": {
+            "success": 18
+          },
+          "never_observed_ratio": 0.0,
+          "no_timely_information_ratio": 0.0,
+          "known_but_not_selected_ratio": 0.0
+        },
+        "omitted_episode_records": 6
+      }
+    },
+    "positions": {
+      "greedy": {
+        "summary": {
+          "episodes": 24,
+          "task_success_rate": 1.0,
+          "deadline_compliance_rate": 1.0,
+          "coverage_gap_ratio": 0.0,
+          "response_time_mean_s": 6.763888888888889,
+          "restricted_response_mean_s": 6.763888888888889,
+          "unresponded_rate": 0.0,
+          "all_tasks_makespan_mean_s_complete_only": 14.333333333333334,
+          "completed_task_flow_time_sum_mean_s": 26.291666666666668,
+          "role_switch_count": 0,
+          "assignment_change_count": 7,
+          "requested_duplicate_rate": 0.31623892509353607,
+          "mean_return": 4.466959635416666,
+          "actual_gap_region_seconds": 0.0,
+          "responsibility_region_seconds": 64.0,
+          "risk_weighted_gap_seconds": 0.0,
+          "risk_weighted_region_seconds": 64.0,
+          "task_count": 72,
+          "failure_categories": {
+            "success": 72
+          },
+          "never_observed_ratio": 0.0,
+          "no_timely_information_ratio": 0.0,
+          "known_but_not_selected_ratio": 0.0
+        },
+        "omitted_episode_records": 24
+      },
+      "stochastic": {
+        "summary": {
+          "episodes": 24,
+          "task_success_rate": 0.9722222222222222,
+          "deadline_compliance_rate": 0.9722222222222222,
+          "coverage_gap_ratio": 0.3229166666666667,
+          "response_time_mean_s": 8.583333333333334,
+          "restricted_response_mean_s": 8.583333333333334,
+          "unresponded_rate": 0.0,
+          "all_tasks_makespan_mean_s_complete_only": 15.954545454545455,
+          "completed_task_flow_time_sum_mean_s": 31.166666666666668,
+          "role_switch_count": 4.5,
+          "assignment_change_count": 16.291666666666668,
+          "requested_duplicate_rate": 0.3542701936798392,
+          "mean_return": 3.464973958333333,
+          "actual_gap_region_seconds": 20.666666666666668,
+          "responsibility_region_seconds": 64.0,
+          "risk_weighted_gap_seconds": 20.666666666666668,
+          "risk_weighted_region_seconds": 64.0,
+          "task_count": 72,
+          "failure_categories": {
+            "success": 70,
+            "responded_but_not_completed": 2
+          },
+          "never_observed_ratio": 0.0,
+          "no_timely_information_ratio": 0.0,
+          "known_but_not_selected_ratio": 0.0
+        },
+        "omitted_episode_records": 24
+      }
+    },
+    "priority_deadline": {
+      "greedy": {
+        "summary": {
+          "episodes": 24,
+          "task_success_rate": 1.0,
+          "deadline_compliance_rate": 1.0,
+          "coverage_gap_ratio": 0.0,
+          "response_time_mean_s": 7.125,
+          "restricted_response_mean_s": 7.125,
+          "unresponded_rate": 0.0,
+          "all_tasks_makespan_mean_s_complete_only": 14.75,
+          "completed_task_flow_time_sum_mean_s": 27.541666666666668,
+          "role_switch_count": 0,
+          "assignment_change_count": 7,
+          "requested_duplicate_rate": 0.30979398025260835,
+          "mean_return": 4.462483723958333,
+          "actual_gap_region_seconds": 0.0,
+          "responsibility_region_seconds": 64.0,
+          "risk_weighted_gap_seconds": 0.0,
+          "risk_weighted_region_seconds": 64.0,
+          "task_count": 72,
+          "failure_categories": {
+            "success": 72
+          },
+          "never_observed_ratio": 0.0,
+          "no_timely_information_ratio": 0.0,
+          "known_but_not_selected_ratio": 0.0
+        },
+        "omitted_episode_records": 24
+      },
+      "stochastic": {
+        "summary": {
+          "episodes": 24,
+          "task_success_rate": 0.9861111111111112,
+          "deadline_compliance_rate": 0.9861111111111112,
+          "coverage_gap_ratio": 0.3157552083333333,
+          "response_time_mean_s": 7.715277777777778,
+          "restricted_response_mean_s": 7.805555555555555,
+          "unresponded_rate": 0.013888888888888888,
+          "all_tasks_makespan_mean_s_complete_only": 15.652173913043478,
+          "completed_task_flow_time_sum_mean_s": 30.5,
+          "role_switch_count": 4.958333333333333,
+          "assignment_change_count": 15.916666666666666,
+          "requested_duplicate_rate": 0.34820156513902367,
+          "mean_return": 3.5749837239583333,
+          "actual_gap_region_seconds": 20.208333333333332,
+          "responsibility_region_seconds": 64.0,
+          "risk_weighted_gap_seconds": 20.208333333333332,
+          "risk_weighted_region_seconds": 64.0,
+          "task_count": 72,
+          "failure_categories": {
+            "success": 71,
+            "selected_but_no_response": 1
+          },
+          "never_observed_ratio": 0.0,
+          "no_timely_information_ratio": 0.0,
+          "known_but_not_selected_ratio": 0.0
+        },
+        "omitted_episode_records": 24
+      }
+    }
+  }
+}

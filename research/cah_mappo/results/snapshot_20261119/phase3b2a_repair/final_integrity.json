@@ -1,0 +1,13 @@
+{
+  "status": "PASS",
+  "preserved_files": 1888,
+  "compiled_new_python_files": 13,
+  "supplementary_sampling_probe_raw_logs_verified": 12,
+  "holdout_manifest_sha256": "ca0deb0d173262e4778360095e4acb20fe41517dbf510f06e8f415ad4238d306",
+  "holdout_outcomes_evaluated": 0,
+  "new_dependencies_installed": false,
+  "torch": "2.7.0+cpu",
+  "numpy": "1.26.4",
+  "cuda_runtime": null,
+  "korean_documents_and_svg_valid": true
+}

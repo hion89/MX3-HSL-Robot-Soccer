@@ -1,0 +1,28 @@
+{
+  "version": "phase3b2a-pilot-v1",
+  "training_seed": 7,
+  "train_scenarios_per_stage": 24,
+  "validation_scenarios_per_stage": 8,
+  "test_scenarios_per_stage": 12,
+  "stage_A": {
+    "steps_per_weight": 8192,
+    "coverage_weights": [
+      2.0,
+      8.0
+    ]
+  },
+  "stage_B3": {
+    "steps": 4096,
+    "gate": "A default selected validation success >= .75"
+  },
+  "stage_C": {
+    "steps": 2048,
+    "gate": "B3 selected validation success >= .60"
+  },
+  "stage_B2_D": "difficulty evaluation only; no training",
+  "max_training_steps": 22528,
+  "selection": "lexicographic validation success, -gap, -restricted response",
+  "test_policy": "evaluate only after selection_freeze.json; no subsequent tuning",
+  "episode_rule": "fixed horizon 32 seconds for all new policies",
+  "sensitivity": "two predeclared reward settings, identical optimizer/network/scenarios/seed"
+}

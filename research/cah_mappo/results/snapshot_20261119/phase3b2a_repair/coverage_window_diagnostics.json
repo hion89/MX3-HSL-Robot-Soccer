@@ -1,0 +1,80 @@
+{
+  "old": [
+    {
+      "window_seconds": 8,
+      "actual_gap_region_seconds": 6.0,
+      "responsibility_region_seconds": 16.0,
+      "risk_weighted_gap_seconds": 6.0,
+      "risk_weighted_region_seconds": 16.0,
+      "coverage_gap_ratio": 0.375
+    },
+    {
+      "window_seconds": 16,
+      "actual_gap_region_seconds": 13.0,
+      "responsibility_region_seconds": 32.0,
+      "risk_weighted_gap_seconds": 13.0,
+      "risk_weighted_region_seconds": 32.0,
+      "coverage_gap_ratio": 0.40625
+    },
+    {
+      "window_seconds": 32,
+      "actual_gap_region_seconds": 13.0,
+      "responsibility_region_seconds": 64.0,
+      "risk_weighted_gap_seconds": 13.0,
+      "risk_weighted_region_seconds": 64.0,
+      "coverage_gap_ratio": 0.203125
+    }
+  ],
+  "identity": [
+    {
+      "window_seconds": 8,
+      "actual_gap_region_seconds": 6.0,
+      "responsibility_region_seconds": 16.0,
+      "risk_weighted_gap_seconds": 6.0,
+      "risk_weighted_region_seconds": 16.0,
+      "coverage_gap_ratio": 0.375
+    },
+    {
+      "window_seconds": 16,
+      "actual_gap_region_seconds": 14.0,
+      "responsibility_region_seconds": 32.0,
+      "risk_weighted_gap_seconds": 14.0,
+      "risk_weighted_region_seconds": 32.0,
+      "coverage_gap_ratio": 0.4375
+    },
+    {
+      "window_seconds": 32,
+      "actual_gap_region_seconds": 18.0,
+      "responsibility_region_seconds": 64.0,
+      "risk_weighted_gap_seconds": 18.0,
+      "risk_weighted_region_seconds": 64.0,
+      "coverage_gap_ratio": 0.28125
+    }
+  ],
+  "augmented": [
+    {
+      "window_seconds": 8,
+      "actual_gap_region_seconds": 0.0,
+      "responsibility_region_seconds": 16.0,
+      "risk_weighted_gap_seconds": 0.0,
+      "risk_weighted_region_seconds": 16.0,
+      "coverage_gap_ratio": 0.0
+    },
+    {
+      "window_seconds": 16,
+      "actual_gap_region_seconds": 0.0,
+      "responsibility_region_seconds": 32.0,
+      "risk_weighted_gap_seconds": 0.0,
+      "risk_weighted_region_seconds": 32.0,
+      "coverage_gap_ratio": 0.0
+    },
+    {
+      "window_seconds": 32,
+      "actual_gap_region_seconds": 0.0,
+      "responsibility_region_seconds": 64.0,
+      "risk_weighted_gap_seconds": 0.0,
+      "risk_weighted_region_seconds": 64.0,
+      "coverage_gap_ratio": 0.0
+    }
+  ]
+}

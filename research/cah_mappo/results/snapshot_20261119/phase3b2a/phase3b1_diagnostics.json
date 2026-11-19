@@ -1,0 +1,50 @@
+{
+  "7": {
+    "evaluation_episodes": 20,
+    "reward_contributions_mean": {
+      "completion": 1.25,
+      "coverage": -0.475,
+      "failure": 0.0,
+      "progress": 0.125,
+      "response": 0.125,
+      "switching": -0.13,
+      "waiting": -0.0069791666666666665
+    },
+    "observed_horizon_mean_s": 8.7,
+    "coverage_gap_seconds_mean": 5.7,
+    "coverage_gap_ratio_mean": 0.6598611111111111,
+    "common_24s_censoring_lower_bound": 0.2375,
+    "common_24s_censoring_upper_bound": 0.875,
+    "role_switch_count_mean": 2.2,
+    "assignment_change_count_mean": 5.8,
+    "requested_duplicate_rate_mean": 0.1789186507936508,
+    "observed_base_risk_min_max": [
+      1.0,
+      1.0
+    ]
+  },
+  "11": {
+    "evaluation_episodes": 20,
+    "reward_contributions_mean": {
+      "completion": 1.25,
+      "coverage": -0.47916666666666663,
+      "failure": 0.0,
+      "progress": 0.125,
+      "response": 0.125,
+      "switching": -0.1325,
+      "waiting": -0.00765625
+    },
+    "observed_horizon_mean_s": 9.35,
+    "coverage_gap_seconds_mean": 5.75,
+    "coverage_gap_ratio_mean": 0.6360606060606061,
+    "common_24s_censoring_lower_bound": 0.23958333333333334,
+    "common_24s_censoring_upper_bound": 0.85,
+    "role_switch_count_mean": 1.9,
+    "assignment_change_count_mean": 5.45,
+    "requested_duplicate_rate_mean": 0.33534722222222224,
+    "observed_base_risk_min_max": [
+      1.0,
+      1.0
+    ]
+  }
+}

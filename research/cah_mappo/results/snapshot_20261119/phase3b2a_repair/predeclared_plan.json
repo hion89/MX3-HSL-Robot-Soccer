@@ -1,0 +1,50 @@
+{
+  "major_intervention": "episode-stable task-slot permutations only",
+  "train_steps_per_arm": 8192,
+  "max_total_training_steps": 16384,
+  "training_seed": 7,
+  "evaluation_seconds": 32,
+  "all_orders": [
+    [
+      2,
+      3,
+      4
+    ],
+    [
+      2,
+      4,
+      3
+    ],
+    [
+      3,
+      2,
+      4
+    ],
+    [
+      3,
+      4,
+      2
+    ],
+    [
+      4,
+      2,
+      3
+    ],
+    [
+      4,
+      3,
+      2
+    ]
+  ],
+  "PPO_and_network_and_reward": "frozen Phase 3B-1 implementations",
+  "initialization": "same Phase 3B-2A C final network and optimizer states",
+  "selection": "both greedy and stochastic validation; no holdout evaluation",
+  "diagnostic_order": [
+    "fixed_feasibility",
+    "fixed_slot_only",
+    "limited_positions",
+    "priority_deadline",
+    "information_control"
+  ],
+  "holdout_status": "prepared but rejected by environment/training interfaces"
+}
