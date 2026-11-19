@@ -257,3 +257,27 @@ class RobotV16PlayVolt106EnvCfg(RobotV16PlayEnvCfg):
     def __post_init__(self):
         super().__post_init__()
         self.events.motor_voltage.params["volt_range"] = (10.6, 10.6)
+
+
+@configclass
+class RobotV16PlayRealLikeEnvCfg(RobotV16PlayEnvCfg):
+    """실물 유사 조건 고정 (MuJoCo real_like 와 같은 값; 2026-11-19 추가).
+
+    목적: 학습 환경이 실물 실패 ("차고 나서 넘어짐") 를 재현하는지 22300 으로 먼저 확인한다.
+    MuJoCo real_like 에서 22300 은 78 % 넘어졌다. Isaac 에서도 비슷하게 넘어져야 이 조건이 학습 신호가 된다.
+      전압 11.1 V, 러너 프레임 1 스텝 + IMU 0.5 스텝 (10 ms), hold 0.6 s, 출력 필터 tau 0.02 s,
+      발 마찰 정지 0.55~0.65 / 운동 0.50~0.60, 잔디 비틀림 부족 c = 0.03 (항상).
+    """
+
+    def __post_init__(self):
+        super().__post_init__()
+        self.events.motor_voltage.params["volt_range"] = (11.1, 11.1)
+        self.events.obs_delays.params["frame_delay_prob"] = 1.0
+        self.events.obs_delays.params["imu_extra_range"] = (0.5, 0.5)
+        self.events.reset_hold.params["hold_range_s"] = (0.6, 0.6)
+        self.actions.JointPositionAction.filter_prob = 1.0
+        self.actions.JointPositionAction.filter_tau_range = (0.02, 0.02)
+        self.events.feet_material.params["static_friction_range"] = (0.55, 0.65)
+        self.events.feet_material.params["dynamic_friction_range"] = (0.50, 0.60)
+        self.events.turf_torsion_sample.params["coef_range"] = (0.03, 0.03)
+        self.events.turf_torsion_sample.params["zero_prob"] = 0.0

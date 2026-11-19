@@ -73,7 +73,8 @@ for _sfx, _train in (("A", "RobotV16AEnvCfg"), ("B", "RobotV16BEnvCfg"), ("C", "
         },
     )
 for _sfx, _play in (("", "RobotV16PlayEnvCfg"), ("-Turf", "RobotV16PlayTurfEnvCfg"),
-                    ("-IMU20", "RobotV16PlayIMU20EnvCfg"), ("-Volt106", "RobotV16PlayVolt106EnvCfg")):
+                    ("-IMU20", "RobotV16PlayIMU20EnvCfg"), ("-Volt106", "RobotV16PlayVolt106EnvCfg"),
+                    ("-RealLike", "RobotV16PlayRealLikeEnvCfg")):
     gym.register(
         id=f"Unitree-MX3-WalkKick-V1-6-Play{_sfx}",
         entry_point="isaaclab.envs:ManagerBasedRLEnv",

@@ -76,6 +76,21 @@ tmux new -s kick16 && bash scripts/kick_v1_6/train_v16.sh C
 
 서버의 `~/isaac_ws`에 로컬 수정이 있으면 `git pull --ff-only`가 거부될 수 있다. 이때는 `git status` 출력을 보고 판단하고, reset으로 지우지 않는다.
 
+#### 컨트롤센터(GUI)로 학습하기 (Isaac-work-space `robotmodel/XM540_robot/scripts/control_center.sh`)
+
+- Task ID가 `Unitree-MX3-`로 시작하면, 컨트롤센터는 `<unitree_rl_lab Path>/scripts/rsl_rl/train.py`와 `play.py`를 `isaaclab.sh -p`로 그 폴더에서 실행한다. 킥 패키지의 스냅샷 되돌림과 체크포인트 탐색이 그대로 유지된다.
+- XM540 태스크는 기존 IsaacLab 스크립트 + `launch_external.py` 경로 그대로다.
+- `isaaclab.sh -p`는 활성화된 conda 환경의 python을 쓰므로, `conda activate env_kick16` 상태에서 `control_center.sh`를 실행한다. 화면이 필요하므로 MobaXterm X11로 접속한다.
+- Settings 탭 값:
+  - IsaacLab Path: `/home/bami122/IsaacLab`
+  - unitree_rl_lab Path: `/home/bami122/isaac_ws/unitree_rl_lab_kick16`
+  - TensorBoard Logs: `/home/bami122/isaac_ws/unitree_rl_lab_kick16/logs/rsl_rl/unitree_mx3_walkkick_v1_6c`
+  - Task ID: `Unitree-MX3-WalkKick-V1-6C`
+  - Experiment Name: `unitree_mx3_walkkick_v1_6c`
+- XM540 값은 먼저 프로필(`xm540`)로 저장해 둔다.
+- Training 탭: Resume을 체크하고 체크포인트로 `init_22300/model_22300.pt`를 고른다(`kick16_setup.sh`가 배치한다). 이어 학습 체크포인트는 `logs/rsl_rl/<실험>/<run>/` 안의 것만 허용한다. Parallel Environments는 16384, Maximum Iterations는 3000, Headless를 켠다.
+- 실행 전에 Preview Command로 `.../unitree_rl_lab_kick16/scripts/rsl_rl/train.py ... --load_run init_22300 --checkpoint model_22300.pt`가 나오는지 확인한다. 짧은 확인은 Parallel Environments 64, Maximum Iterations 5로 먼저 돌린다.
+
 아래 3-1 이후는 MX3-HSL-Robot-Soccer를 서버에 직접 clone하는 대체 경로다.
 
 ### 3-1. 대체 경로 (MX3 저장소 직접 clone)
@@ -154,3 +169,14 @@ tmux new -s kick16 && bash scripts/kick_v1_6/train_v16.sh C
   현재 `kick_strength`는 러너가 시작할 때 한 번만 읽고, `control.launch.py`가 넘기지 않아 항상 1.0이다. 시험하려면 launch에 인자를 추가하고 러너를 재시작해야 한다. 텔레옵과 자율 경기에 모두 적용되고 공 이동 거리가 짧아진다.
 - **러너 관측 순서 맞추기.** 킥 러너가 추론 직전에 현재 센서 프레임을 history에 넣도록 바꾸면 학습 순서와 같아진다(MuJoCo 13%→2.3%).
   다만 실물 러너 코드 변경이라 텔레옵과 자율 경기 모두에 영향이 있다. 보행 러너도 같은 패턴인지 함께 확인해야 한다. v1_6은 두 순서를 모두 학습하므로, 수정하지 않아도 동작하도록 만들었다.
+
+## 학습 환경 보정 확인 — V1-6-Play-RealLike (2026-11-19)
+
+학습 환경에서 22300이 실물처럼 "차고 나서 넘어지는" 실패를 보여야 학습이 그 실패를 고친다. 첫 V1-6C 학습(22300→30600)은 Isaac 넘어짐이 출발점 수준에서 줄지 않았다. 모터 커리큘럼은 시작 직후 1.0이 되었다(min_episodes 20000이 16384 env에서 금방 참). `metric_*` 항목은 weight 0이라 TensorBoard에 항상 0으로 나온다.
+
+`Unitree-MX3-WalkKick-V1-6-Play-RealLike`는 MuJoCo real_like와 같은 조건을 고정한다(11.1 V, 러너 프레임 1스텝+IMU 10 ms, hold 0.6 s, 필터 tau 0.02 s, 발 마찰 약 0.6, 비틀림 부족 c=0.03). 서버에서 22300과 새 체크포인트를 같은 조건으로 잰다.
+
+    python scripts/kick_v1_5/eval_strength_isaac.py --headless --task Unitree-MX3-WalkKick-V1-6-Play-RealLike \
+      --checkpoint kick16_init/model_22300.pt --levels 0.5,1
+
+22300이 여기서도 많이 넘어지면 Isaac이 실물 실패를 재현하는 것이므로 학습 분포를 이 조건 쪽으로 옮긴다. 거의 넘어지지 않으면 Isaac 물리가 실패 원인을 재현하지 못하는 것이므로 원인 조건을 하나씩 바꿔 찾은 뒤 학습한다.
