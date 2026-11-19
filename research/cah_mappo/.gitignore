@@ -1,0 +1,12 @@
+# Keep original experiments locally; publish reviewed summaries in results/.
+/outputs/
+/*_outputs/
+/.venv/
+/**/__pycache__/
+*.py[cod]
+*.pt
+*.pth
+*.onnx
+*.jsonl
+*.jsonl.gz
+*sealed*holdout*

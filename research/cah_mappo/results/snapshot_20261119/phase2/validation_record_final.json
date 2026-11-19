@@ -1,0 +1,30 @@
+{
+  "python": "3.12.14 (main, Aug 14 2026, 15:40:22) [MSC v.1944 64 bit (AMD64)]",
+  "tests_passed": 55,
+  "phase1_tests": 26,
+  "phase2_tests": 29,
+  "analytic_runs": 32,
+  "paired_runs": 160,
+  "paired_seeds": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "paired_jitter_m": 0.15,
+  "new_logs_recomputed_in_separate_processes": 192,
+  "phase1_logs_replayed": 20,
+  "preserved_files": 55,
+  "source_hashes": {
+    "src/cah_mappo/phase2/engine.py": "309f2f54e65904484974047eccd7d42d095ac28f5583f8a919ca2f2ffb3bb12b",
+    "src/cah_mappo/phase2/metrics.py": "359105b9cf39f236cb3ce49bf61e65d3f1d5146fd78b3f89f0fc457aaf8e6ef5",
+    "src/cah_mappo/phase2/model.py": "4774b812170bb6a5bf03c2ab320ad8145726a177e0699d1a91f72b1bf033825a",
+    "src/cah_mappo/phase2/policies.py": "310826c9b689e2bb2a437b64851b0d7e17ea4e78e97cb30d9b2a061e115cdd97",
+    "src/cah_mappo/phase2/scenarios.py": "343c35d69e67c8d3a1bd5184414dbf5a9b0d8d97b7f057543b321e4db9fee307",
+    "src/cah_mappo/phase2/__init__.py": "6c1cea935d850d5311ddbd54549617742f9fe2072db48ad96acc65c6e27662c7",
+    "phase2.py": "67278eb9b6fcf05cf152a02bf0a793c39a1ecdaf4817da844c9d0ff3a6e06d7c",
+    "tests/test_phase2.py": "19221a62cc9538bb53a0e35427947e16fee9ca3914c573d2eeb404b9f88f982b"
+  },
+  "restrictions": "No installation, commit, push, SSH, robot operation, or Phase 3 implementation."
+}

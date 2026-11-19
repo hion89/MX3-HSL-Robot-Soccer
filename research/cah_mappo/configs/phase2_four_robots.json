@@ -1,0 +1,124 @@
+{
+  "name": "simultaneous",
+  "robots": [
+    {
+      "id": "A",
+      "position": [
+        0,
+        0
+      ],
+      "speed": 1.0,
+      "turn_speed": 3.141592653589793,
+      "heading": 0.0,
+      "initial_job": "base",
+      "base_role": "guard",
+      "operational": true,
+      "capacity": 1
+    },
+    {
+      "id": "B",
+      "position": [
+        -4,
+        0
+      ],
+      "speed": 1.0,
+      "turn_speed": 3.141592653589793,
+      "heading": 0.0,
+      "initial_job": null,
+      "base_role": "worker",
+      "operational": true,
+      "capacity": 1
+    },
+    {
+      "id": "C",
+      "position": [
+        0,
+        4
+      ],
+      "speed": 1.0,
+      "turn_speed": 3.141592653589793,
+      "heading": 0.0,
+      "initial_job": null,
+      "base_role": "worker",
+      "operational": true,
+      "capacity": 1
+    },
+    {
+      "id": "D",
+      "position": [
+        -4,
+        4
+      ],
+      "speed": 1.0,
+      "turn_speed": 3.141592653589793,
+      "heading": 0.0,
+      "initial_job": null,
+      "base_role": "worker",
+      "operational": true,
+      "capacity": 1
+    }
+  ],
+  "jobs": [
+    {
+      "id": "base",
+      "position": [
+        0,
+        0
+      ],
+      "kind": "base",
+      "priority": 1.0,
+      "spawn": 0,
+      "deadline": 24,
+      "service": 0,
+      "fixed_owner": "A"
+    },
+    {
+      "id": "task1",
+      "position": [
+        4,
+        0
+      ],
+      "kind": "task",
+      "priority": 2,
+      "spawn": 2,
+      "deadline": 18,
+      "service": 2,
+      "fixed_owner": "B"
+    },
+    {
+      "id": "task2",
+      "position": [
+        4,
+        4
+      ],
+      "kind": "task",
+      "priority": 2,
+      "spawn": 2,
+      "deadline": 18,
+      "service": 2.0,
+      "fixed_owner": "C"
+    },
+    {
+      "id": "task3",
+      "position": [
+        -4,
+        4
+      ],
+      "kind": "task",
+      "priority": 2,
+      "spawn": 2,
+      "deadline": 18,
+      "service": 2.0,
+      "fixed_owner": "D"
+    }
+  ],
+  "events": [],
+  "dt": 1.0,
+  "horizon": 24.0,
+  "radius": 0.25,
+  "seed": 0,
+  "jitter": 0.0,
+  "observation_delay": 0.0,
+  "switching_cost": 2.0,
+  "unassigned_cost": 50.0
+}

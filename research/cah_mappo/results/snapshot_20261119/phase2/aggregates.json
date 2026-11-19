@@ -1,0 +1,1922 @@
+[
+  {
+    "scenario": "single",
+    "policy": "fixed",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "runs": 5,
+    "coverage_gap_ratio": {
+      "mean": 0.0,
+      "min": 0.0,
+      "max": 0.0,
+      "defined_runs": 5
+    },
+    "task_success_rate": {
+      "mean": 1.0,
+      "min": 1.0,
+      "max": 1.0,
+      "defined_runs": 5
+    },
+    "deadline_miss_rate": {
+      "mean": 0.0,
+      "min": 0.0,
+      "max": 0.0,
+      "defined_runs": 5
+    },
+    "response_time_mean_s": {
+      "mean": 8.0,
+      "min": 8.0,
+      "max": 8.0,
+      "defined_runs": 5
+    },
+    "restricted_response_mean_s": {
+      "mean": 8.0,
+      "min": 8.0,
+      "max": 8.0,
+      "defined_runs": 5
+    },
+    "role_switch_count": {
+      "mean": 0,
+      "min": 0,
+      "max": 0,
+      "defined_runs": 5
+    },
+    "task_duplicate_rate": {
+      "mean": 0.0,
+      "min": 0.0,
+      "max": 0.0,
+      "defined_runs": 5
+    },
+    "all_tasks_makespan_s": {
+      "mean": 10.0,
+      "min": 10.0,
+      "max": 10.0,
+      "defined_runs": 5
+    }
+  },
+  {
+    "scenario": "single",
+    "policy": "greedy",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "runs": 5,
+    "coverage_gap_ratio": {
+      "mean": 0.16666666666666666,
+      "min": 0.16666666666666666,
+      "max": 0.16666666666666666,
+      "defined_runs": 5
+    },
+    "task_success_rate": {
+      "mean": 1.0,
+      "min": 1.0,
+      "max": 1.0,
+      "defined_runs": 5
+    },
+    "deadline_miss_rate": {
+      "mean": 0.0,
+      "min": 0.0,
+      "max": 0.0,
+      "defined_runs": 5
+    },
+    "response_time_mean_s": {
+      "mean": 4.0,
+      "min": 4.0,
+      "max": 4.0,
+      "defined_runs": 5
+    },
+    "restricted_response_mean_s": {
+      "mean": 4.0,
+      "min": 4.0,
+      "max": 4.0,
+      "defined_runs": 5
+    },
+    "role_switch_count": {
+      "mean": 2,
+      "min": 2,
+      "max": 2,
+      "defined_runs": 5
+    },
+    "task_duplicate_rate": {
+      "mean": 0.0,
+      "min": 0.0,
+      "max": 0.0,
+      "defined_runs": 5
+    },
+    "all_tasks_makespan_s": {
+      "mean": 6.0,
+      "min": 6.0,
+      "max": 6.0,
+      "defined_runs": 5
+    }
+  },
+  {
+    "scenario": "single",
+    "policy": "exact",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "runs": 5,
+    "coverage_gap_ratio": {
+      "mean": 0.16666666666666666,
+      "min": 0.16666666666666666,
+      "max": 0.16666666666666666,
+      "defined_runs": 5
+    },
+    "task_success_rate": {
+      "mean": 1.0,
+      "min": 1.0,
+      "max": 1.0,
+      "defined_runs": 5
+    },
+    "deadline_miss_rate": {
+      "mean": 0.0,
+      "min": 0.0,
+      "max": 0.0,
+      "defined_runs": 5
+    },
+    "response_time_mean_s": {
+      "mean": 4.0,
+      "min": 4.0,
+      "max": 4.0,
+      "defined_runs": 5
+    },
+    "restricted_response_mean_s": {
+      "mean": 4.0,
+      "min": 4.0,
+      "max": 4.0,
+      "defined_runs": 5
+    },
+    "role_switch_count": {
+      "mean": 2,
+      "min": 2,
+      "max": 2,
+      "defined_runs": 5
+    },
+    "task_duplicate_rate": {
+      "mean": 0.0,
+      "min": 0.0,
+      "max": 0.0,
+      "defined_runs": 5
+    },
+    "all_tasks_makespan_s": {
+      "mean": 6.0,
+      "min": 6.0,
+      "max": 6.0,
+      "defined_runs": 5
+    }
+  },
+  {
+    "scenario": "single",
+    "policy": "handover",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "runs": 5,
+    "coverage_gap_ratio": {
+      "mean": 0.0,
+      "min": 0.0,
+      "max": 0.0,
+      "defined_runs": 5
+    },
+    "task_success_rate": {
+      "mean": 1.0,
+      "min": 1.0,
+      "max": 1.0,
+      "defined_runs": 5
+    },
+    "deadline_miss_rate": {
+      "mean": 0.0,
+      "min": 0.0,
+      "max": 0.0,
+      "defined_runs": 5
+    },
+    "response_time_mean_s": {
+      "mean": 8.0,
+      "min": 8.0,
+      "max": 8.0,
+      "defined_runs": 5
+    },
+    "restricted_response_mean_s": {
+      "mean": 8.0,
+      "min": 8.0,
+      "max": 8.0,
+      "defined_runs": 5
+    },
+    "role_switch_count": {
+      "mean": 2,
+      "min": 2,
+      "max": 2,
+      "defined_runs": 5
+    },
+    "task_duplicate_rate": {
+      "mean": 0.0,
+      "min": 0.0,
+      "max": 0.0,
+      "defined_runs": 5
+    },
+    "all_tasks_makespan_s": {
+      "mean": 10.0,
+      "min": 10.0,
+      "max": 10.0,
+      "defined_runs": 5
+    }
+  },
+  {
+    "scenario": "simultaneous",
+    "policy": "fixed",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "runs": 5,
+    "coverage_gap_ratio": {
+      "mean": 0.0,
+      "min": 0.0,
+      "max": 0.0,
+      "defined_runs": 5
+    },
+    "task_success_rate": {
+      "mean": 1.0,
+      "min": 1.0,
+      "max": 1.0,
+      "defined_runs": 5
+    },
+    "deadline_miss_rate": {
+      "mean": 0.0,
+      "min": 0.0,
+      "max": 0.0,
+      "defined_runs": 5
+    },
+    "response_time_mean_s": {
+      "mean": 4.0,
+      "min": 4.0,
+      "max": 4.0,
+      "defined_runs": 5
+    },
+    "restricted_response_mean_s": {
+      "mean": 4.0,
+      "min": 4.0,
+      "max": 4.0,
+      "defined_runs": 5
+    },
+    "role_switch_count": {
+      "mean": 0,
+      "min": 0,
+      "max": 0,
+      "defined_runs": 5
+    },
+    "task_duplicate_rate": {
+      "mean": 0.0,
+      "min": 0.0,
+      "max": 0.0,
+      "defined_runs": 5
+    },
+    "all_tasks_makespan_s": {
+      "mean": 10.0,
+      "min": 10.0,
+      "max": 10.0,
+      "defined_runs": 5
+    }
+  },
+  {
+    "scenario": "simultaneous",
+    "policy": "greedy",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "runs": 5,
+    "coverage_gap_ratio": {
+      "mean": 0.16666666666666666,
+      "min": 0.16666666666666666,
+      "max": 0.16666666666666666,
+      "defined_runs": 5
+    },
+    "task_success_rate": {
+      "mean": 1.0,
+      "min": 1.0,
+      "max": 1.0,
+      "defined_runs": 5
+    },
+    "deadline_miss_rate": {
+      "mean": 0.0,
+      "min": 0.0,
+      "max": 0.0,
+      "defined_runs": 5
+    },
+    "response_time_mean_s": {
+      "mean": 2.6666666666666665,
+      "min": 2.6666666666666665,
+      "max": 2.6666666666666665,
+      "defined_runs": 5
+    },
+    "restricted_response_mean_s": {
+      "mean": 2.6666666666666665,
+      "min": 2.6666666666666665,
+      "max": 2.6666666666666665,
+      "defined_runs": 5
+    },
+    "role_switch_count": {
+      "mean": 2,
+      "min": 2,
+      "max": 2,
+      "defined_runs": 5
+    },
+    "task_duplicate_rate": {
+      "mean": 0.0,
+      "min": 0.0,
+      "max": 0.0,
+      "defined_runs": 5
+    },
+    "all_tasks_makespan_s": {
+      "mean": 6.0,
+      "min": 6.0,
+      "max": 6.0,
+      "defined_runs": 5
+    }
+  },
+  {
+    "scenario": "simultaneous",
+    "policy": "exact",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "runs": 5,
+    "coverage_gap_ratio": {
+      "mean": 0.16666666666666666,
+      "min": 0.16666666666666666,
+      "max": 0.16666666666666666,
+      "defined_runs": 5
+    },
+    "task_success_rate": {
+      "mean": 1.0,
+      "min": 1.0,
+      "max": 1.0,
+      "defined_runs": 5
+    },
+    "deadline_miss_rate": {
+      "mean": 0.0,
+      "min": 0.0,
+      "max": 0.0,
+      "defined_runs": 5
+    },
+    "response_time_mean_s": {
+      "mean": 2.6666666666666665,
+      "min": 2.6666666666666665,
+      "max": 2.6666666666666665,
+      "defined_runs": 5
+    },
+    "restricted_response_mean_s": {
+      "mean": 2.6666666666666665,
+      "min": 2.6666666666666665,
+      "max": 2.6666666666666665,
+      "defined_runs": 5
+    },
+    "role_switch_count": {
+      "mean": 2,
+      "min": 2,
+      "max": 2,
+      "defined_runs": 5
+    },
+    "task_duplicate_rate": {
+      "mean": 0.0,
+      "min": 0.0,
+      "max": 0.0,
+      "defined_runs": 5
+    },
+    "all_tasks_makespan_s": {
+      "mean": 6.0,
+      "min": 6.0,
+      "max": 6.0,
+      "defined_runs": 5
+    }
+  },
+  {
+    "scenario": "simultaneous",
+    "policy": "handover",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "runs": 5,
+    "coverage_gap_ratio": {
+      "mean": 0.0,
+      "min": 0.0,
+      "max": 0.0,
+      "defined_runs": 5
+    },
+    "task_success_rate": {
+      "mean": 1.0,
+      "min": 1.0,
+      "max": 1.0,
+      "defined_runs": 5
+    },
+    "deadline_miss_rate": {
+      "mean": 0.0,
+      "min": 0.0,
+      "max": 0.0,
+      "defined_runs": 5
+    },
+    "response_time_mean_s": {
+      "mean": 4.0,
+      "min": 4.0,
+      "max": 4.0,
+      "defined_runs": 5
+    },
+    "restricted_response_mean_s": {
+      "mean": 4.0,
+      "min": 4.0,
+      "max": 4.0,
+      "defined_runs": 5
+    },
+    "role_switch_count": {
+      "mean": 2,
+      "min": 2,
+      "max": 2,
+      "defined_runs": 5
+    },
+    "task_duplicate_rate": {
+      "mean": 0.0,
+      "min": 0.0,
+      "max": 0.0,
+      "defined_runs": 5
+    },
+    "all_tasks_makespan_s": {
+      "mean": 10.0,
+      "min": 10.0,
+      "max": 10.0,
+      "defined_runs": 5
+    }
+  },
+  {
+    "scenario": "priorities",
+    "policy": "fixed",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "runs": 5,
+    "coverage_gap_ratio": {
+      "mean": 0.0,
+      "min": 0.0,
+      "max": 0.0,
+      "defined_runs": 5
+    },
+    "task_success_rate": {
+      "mean": 0.6666666666666666,
+      "min": 0.6666666666666666,
+      "max": 0.6666666666666666,
+      "defined_runs": 5
+    },
+    "deadline_miss_rate": {
+      "mean": 0.3333333333333333,
+      "min": 0.3333333333333333,
+      "max": 0.3333333333333333,
+      "defined_runs": 5
+    },
+    "response_time_mean_s": {
+      "mean": 2.0,
+      "min": 2.0,
+      "max": 2.0,
+      "defined_runs": 5
+    },
+    "restricted_response_mean_s": {
+      "mean": 3.6666666666666665,
+      "min": 3.6666666666666665,
+      "max": 3.6666666666666665,
+      "defined_runs": 5
+    },
+    "role_switch_count": {
+      "mean": 0,
+      "min": 0,
+      "max": 0,
+      "defined_runs": 5
+    },
+    "task_duplicate_rate": {
+      "mean": 0.0,
+      "min": 0.0,
+      "max": 0.0,
+      "defined_runs": 5
+    },
+    "all_tasks_makespan_s": {
+      "mean": null,
+      "min": null,
+      "max": null,
+      "defined_runs": 0
+    }
+  },
+  {
+    "scenario": "priorities",
+    "policy": "greedy",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "runs": 5,
+    "coverage_gap_ratio": {
+      "mean": 0.16666666666666666,
+      "min": 0.16666666666666666,
+      "max": 0.16666666666666666,
+      "defined_runs": 5
+    },
+    "task_success_rate": {
+      "mean": 1.0,
+      "min": 1.0,
+      "max": 1.0,
+      "defined_runs": 5
+    },
+    "deadline_miss_rate": {
+      "mean": 0.0,
+      "min": 0.0,
+      "max": 0.0,
+      "defined_runs": 5
+    },
+    "response_time_mean_s": {
+      "mean": 2.6666666666666665,
+      "min": 2.6666666666666665,
+      "max": 2.6666666666666665,
+      "defined_runs": 5
+    },
+    "restricted_response_mean_s": {
+      "mean": 2.6666666666666665,
+      "min": 2.6666666666666665,
+      "max": 2.6666666666666665,
+      "defined_runs": 5
+    },
+    "role_switch_count": {
+      "mean": 2,
+      "min": 2,
+      "max": 2,
+      "defined_runs": 5
+    },
+    "task_duplicate_rate": {
+      "mean": 0.0,
+      "min": 0.0,
+      "max": 0.0,
+      "defined_runs": 5
+    },
+    "all_tasks_makespan_s": {
+      "mean": 6.0,
+      "min": 6.0,
+      "max": 6.0,
+      "defined_runs": 5
+    }
+  },
+  {
+    "scenario": "priorities",
+    "policy": "exact",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "runs": 5,
+    "coverage_gap_ratio": {
+      "mean": 0.16666666666666666,
+      "min": 0.16666666666666666,
+      "max": 0.16666666666666666,
+      "defined_runs": 5
+    },
+    "task_success_rate": {
+      "mean": 1.0,
+      "min": 1.0,
+      "max": 1.0,
+      "defined_runs": 5
+    },
+    "deadline_miss_rate": {
+      "mean": 0.0,
+      "min": 0.0,
+      "max": 0.0,
+      "defined_runs": 5
+    },
+    "response_time_mean_s": {
+      "mean": 2.6666666666666665,
+      "min": 2.6666666666666665,
+      "max": 2.6666666666666665,
+      "defined_runs": 5
+    },
+    "restricted_response_mean_s": {
+      "mean": 2.6666666666666665,
+      "min": 2.6666666666666665,
+      "max": 2.6666666666666665,
+      "defined_runs": 5
+    },
+    "role_switch_count": {
+      "mean": 2,
+      "min": 2,
+      "max": 2,
+      "defined_runs": 5
+    },
+    "task_duplicate_rate": {
+      "mean": 0.0,
+      "min": 0.0,
+      "max": 0.0,
+      "defined_runs": 5
+    },
+    "all_tasks_makespan_s": {
+      "mean": 6.0,
+      "min": 6.0,
+      "max": 6.0,
+      "defined_runs": 5
+    }
+  },
+  {
+    "scenario": "priorities",
+    "policy": "handover",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "runs": 5,
+    "coverage_gap_ratio": {
+      "mean": 0.16666666666666666,
+      "min": 0.16666666666666666,
+      "max": 0.16666666666666666,
+      "defined_runs": 5
+    },
+    "task_success_rate": {
+      "mean": 1.0,
+      "min": 1.0,
+      "max": 1.0,
+      "defined_runs": 5
+    },
+    "deadline_miss_rate": {
+      "mean": 0.0,
+      "min": 0.0,
+      "max": 0.0,
+      "defined_runs": 5
+    },
+    "response_time_mean_s": {
+      "mean": 2.6666666666666665,
+      "min": 2.6666666666666665,
+      "max": 2.6666666666666665,
+      "defined_runs": 5
+    },
+    "restricted_response_mean_s": {
+      "mean": 2.6666666666666665,
+      "min": 2.6666666666666665,
+      "max": 2.6666666666666665,
+      "defined_runs": 5
+    },
+    "role_switch_count": {
+      "mean": 2,
+      "min": 2,
+      "max": 2,
+      "defined_runs": 5
+    },
+    "task_duplicate_rate": {
+      "mean": 0.0,
+      "min": 0.0,
+      "max": 0.0,
+      "defined_runs": 5
+    },
+    "all_tasks_makespan_s": {
+      "mean": 6.0,
+      "min": 6.0,
+      "max": 6.0,
+      "defined_runs": 5
+    }
+  },
+  {
+    "scenario": "slow_robot",
+    "policy": "fixed",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "runs": 5,
+    "coverage_gap_ratio": {
+      "mean": 0.0,
+      "min": 0.0,
+      "max": 0.0,
+      "defined_runs": 5
+    },
+    "task_success_rate": {
+      "mean": 1.0,
+      "min": 1.0,
+      "max": 1.0,
+      "defined_runs": 5
+    },
+    "deadline_miss_rate": {
+      "mean": 0.0,
+      "min": 0.0,
+      "max": 0.0,
+      "defined_runs": 5
+    },
+    "response_time_mean_s": {
+      "mean": 6.8,
+      "min": 6.666666666666667,
+      "max": 7.0,
+      "defined_runs": 5
+    },
+    "restricted_response_mean_s": {
+      "mean": 6.8,
+      "min": 6.666666666666667,
+      "max": 7.0,
+      "defined_runs": 5
+    },
+    "role_switch_count": {
+      "mean": 0,
+      "min": 0,
+      "max": 0,
+      "defined_runs": 5
+    },
+    "task_duplicate_rate": {
+      "mean": 0.0,
+      "min": 0.0,
+      "max": 0.0,
+      "defined_runs": 5
+    },
+    "all_tasks_makespan_s": {
+      "mean": 14.4,
+      "min": 14.0,
+      "max": 15.0,
+      "defined_runs": 5
+    }
+  },
+  {
+    "scenario": "slow_robot",
+    "policy": "greedy",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "runs": 5,
+    "coverage_gap_ratio": {
+      "mean": 0.4083333333333333,
+      "min": 0.3333333333333333,
+      "max": 0.4583333333333333,
+      "defined_runs": 5
+    },
+    "task_success_rate": {
+      "mean": 1.0,
+      "min": 1.0,
+      "max": 1.0,
+      "defined_runs": 5
+    },
+    "deadline_miss_rate": {
+      "mean": 0.0,
+      "min": 0.0,
+      "max": 0.0,
+      "defined_runs": 5
+    },
+    "response_time_mean_s": {
+      "mean": 4.333333333333333,
+      "min": 4.333333333333333,
+      "max": 4.333333333333333,
+      "defined_runs": 5
+    },
+    "restricted_response_mean_s": {
+      "mean": 4.333333333333333,
+      "min": 4.333333333333333,
+      "max": 4.333333333333333,
+      "defined_runs": 5
+    },
+    "role_switch_count": {
+      "mean": 5,
+      "min": 5,
+      "max": 5,
+      "defined_runs": 5
+    },
+    "task_duplicate_rate": {
+      "mean": 0.0,
+      "min": 0.0,
+      "max": 0.0,
+      "defined_runs": 5
+    },
+    "all_tasks_makespan_s": {
+      "mean": 11.0,
+      "min": 11.0,
+      "max": 11.0,
+      "defined_runs": 5
+    }
+  },
+  {
+    "scenario": "slow_robot",
+    "policy": "exact",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "runs": 5,
+    "coverage_gap_ratio": {
+      "mean": 0.16666666666666666,
+      "min": 0.16666666666666666,
+      "max": 0.16666666666666666,
+      "defined_runs": 5
+    },
+    "task_success_rate": {
+      "mean": 1.0,
+      "min": 1.0,
+      "max": 1.0,
+      "defined_runs": 5
+    },
+    "deadline_miss_rate": {
+      "mean": 0.0,
+      "min": 0.0,
+      "max": 0.0,
+      "defined_runs": 5
+    },
+    "response_time_mean_s": {
+      "mean": 4.666666666666667,
+      "min": 4.666666666666667,
+      "max": 4.666666666666667,
+      "defined_runs": 5
+    },
+    "restricted_response_mean_s": {
+      "mean": 4.666666666666667,
+      "min": 4.666666666666667,
+      "max": 4.666666666666667,
+      "defined_runs": 5
+    },
+    "role_switch_count": {
+      "mean": 2,
+      "min": 2,
+      "max": 2,
+      "defined_runs": 5
+    },
+    "task_duplicate_rate": {
+      "mean": 0.0,
+      "min": 0.0,
+      "max": 0.0,
+      "defined_runs": 5
+    },
+    "all_tasks_makespan_s": {
+      "mean": 12.0,
+      "min": 12.0,
+      "max": 12.0,
+      "defined_runs": 5
+    }
+  },
+  {
+    "scenario": "slow_robot",
+    "policy": "handover",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "runs": 5,
+    "coverage_gap_ratio": {
+      "mean": 0.0,
+      "min": 0.0,
+      "max": 0.0,
+      "defined_runs": 5
+    },
+    "task_success_rate": {
+      "mean": 1.0,
+      "min": 1.0,
+      "max": 1.0,
+      "defined_runs": 5
+    },
+    "deadline_miss_rate": {
+      "mean": 0.0,
+      "min": 0.0,
+      "max": 0.0,
+      "defined_runs": 5
+    },
+    "response_time_mean_s": {
+      "mean": 6.0,
+      "min": 6.0,
+      "max": 6.0,
+      "defined_runs": 5
+    },
+    "restricted_response_mean_s": {
+      "mean": 6.0,
+      "min": 6.0,
+      "max": 6.0,
+      "defined_runs": 5
+    },
+    "role_switch_count": {
+      "mean": 2,
+      "min": 2,
+      "max": 2,
+      "defined_runs": 5
+    },
+    "task_duplicate_rate": {
+      "mean": 0.0,
+      "min": 0.0,
+      "max": 0.0,
+      "defined_runs": 5
+    },
+    "all_tasks_makespan_s": {
+      "mean": 12.0,
+      "min": 12.0,
+      "max": 12.0,
+      "defined_runs": 5
+    }
+  },
+  {
+    "scenario": "owner_failure",
+    "policy": "fixed",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "runs": 5,
+    "coverage_gap_ratio": {
+      "mean": 0.9583333333333334,
+      "min": 0.9583333333333334,
+      "max": 0.9583333333333334,
+      "defined_runs": 5
+    },
+    "task_success_rate": {
+      "mean": 1.0,
+      "min": 1.0,
+      "max": 1.0,
+      "defined_runs": 5
+    },
+    "deadline_miss_rate": {
+      "mean": 0.0,
+      "min": 0.0,
+      "max": 0.0,
+      "defined_runs": 5
+    },
+    "response_time_mean_s": {
+      "mean": 8.0,
+      "min": 8.0,
+      "max": 8.0,
+      "defined_runs": 5
+    },
+    "restricted_response_mean_s": {
+      "mean": 8.0,
+      "min": 8.0,
+      "max": 8.0,
+      "defined_runs": 5
+    },
+    "role_switch_count": {
+      "mean": 0,
+      "min": 0,
+      "max": 0,
+      "defined_runs": 5
+    },
+    "task_duplicate_rate": {
+      "mean": 0.0,
+      "min": 0.0,
+      "max": 0.0,
+      "defined_runs": 5
+    },
+    "all_tasks_makespan_s": {
+      "mean": 10.0,
+      "min": 10.0,
+      "max": 10.0,
+      "defined_runs": 5
+    }
+  },
+  {
+    "scenario": "owner_failure",
+    "policy": "greedy",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "runs": 5,
+    "coverage_gap_ratio": {
+      "mean": 0.625,
+      "min": 0.625,
+      "max": 0.625,
+      "defined_runs": 5
+    },
+    "task_success_rate": {
+      "mean": 1.0,
+      "min": 1.0,
+      "max": 1.0,
+      "defined_runs": 5
+    },
+    "deadline_miss_rate": {
+      "mean": 0.0,
+      "min": 0.0,
+      "max": 0.0,
+      "defined_runs": 5
+    },
+    "response_time_mean_s": {
+      "mean": 7.0,
+      "min": 7.0,
+      "max": 7.0,
+      "defined_runs": 5
+    },
+    "restricted_response_mean_s": {
+      "mean": 7.0,
+      "min": 7.0,
+      "max": 7.0,
+      "defined_runs": 5
+    },
+    "role_switch_count": {
+      "mean": 3,
+      "min": 3,
+      "max": 3,
+      "defined_runs": 5
+    },
+    "task_duplicate_rate": {
+      "mean": 0.0,
+      "min": 0.0,
+      "max": 0.0,
+      "defined_runs": 5
+    },
+    "all_tasks_makespan_s": {
+      "mean": 9.0,
+      "min": 9.0,
+      "max": 9.0,
+      "defined_runs": 5
+    }
+  },
+  {
+    "scenario": "owner_failure",
+    "policy": "exact",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "runs": 5,
+    "coverage_gap_ratio": {
+      "mean": 0.625,
+      "min": 0.625,
+      "max": 0.625,
+      "defined_runs": 5
+    },
+    "task_success_rate": {
+      "mean": 1.0,
+      "min": 1.0,
+      "max": 1.0,
+      "defined_runs": 5
+    },
+    "deadline_miss_rate": {
+      "mean": 0.0,
+      "min": 0.0,
+      "max": 0.0,
+      "defined_runs": 5
+    },
+    "response_time_mean_s": {
+      "mean": 7.0,
+      "min": 7.0,
+      "max": 7.0,
+      "defined_runs": 5
+    },
+    "restricted_response_mean_s": {
+      "mean": 7.0,
+      "min": 7.0,
+      "max": 7.0,
+      "defined_runs": 5
+    },
+    "role_switch_count": {
+      "mean": 3,
+      "min": 3,
+      "max": 3,
+      "defined_runs": 5
+    },
+    "task_duplicate_rate": {
+      "mean": 0.0,
+      "min": 0.0,
+      "max": 0.0,
+      "defined_runs": 5
+    },
+    "all_tasks_makespan_s": {
+      "mean": 9.0,
+      "min": 9.0,
+      "max": 9.0,
+      "defined_runs": 5
+    }
+  },
+  {
+    "scenario": "owner_failure",
+    "policy": "handover",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "runs": 5,
+    "coverage_gap_ratio": {
+      "mean": 0.625,
+      "min": 0.625,
+      "max": 0.625,
+      "defined_runs": 5
+    },
+    "task_success_rate": {
+      "mean": 1.0,
+      "min": 1.0,
+      "max": 1.0,
+      "defined_runs": 5
+    },
+    "deadline_miss_rate": {
+      "mean": 0.0,
+      "min": 0.0,
+      "max": 0.0,
+      "defined_runs": 5
+    },
+    "response_time_mean_s": {
+      "mean": 7.0,
+      "min": 7.0,
+      "max": 7.0,
+      "defined_runs": 5
+    },
+    "restricted_response_mean_s": {
+      "mean": 7.0,
+      "min": 7.0,
+      "max": 7.0,
+      "defined_runs": 5
+    },
+    "role_switch_count": {
+      "mean": 3,
+      "min": 3,
+      "max": 3,
+      "defined_runs": 5
+    },
+    "task_duplicate_rate": {
+      "mean": 0.0,
+      "min": 0.0,
+      "max": 0.0,
+      "defined_runs": 5
+    },
+    "all_tasks_makespan_s": {
+      "mean": 9.0,
+      "min": 9.0,
+      "max": 9.0,
+      "defined_runs": 5
+    }
+  },
+  {
+    "scenario": "urgent",
+    "policy": "fixed",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "runs": 5,
+    "coverage_gap_ratio": {
+      "mean": 0.0,
+      "min": 0.0,
+      "max": 0.0,
+      "defined_runs": 5
+    },
+    "task_success_rate": {
+      "mean": 0.0,
+      "min": 0.0,
+      "max": 0.0,
+      "defined_runs": 5
+    },
+    "deadline_miss_rate": {
+      "mean": 1.0,
+      "min": 1.0,
+      "max": 1.0,
+      "defined_runs": 5
+    },
+    "response_time_mean_s": {
+      "mean": null,
+      "min": null,
+      "max": null,
+      "defined_runs": 0
+    },
+    "restricted_response_mean_s": {
+      "mean": 6,
+      "min": 6,
+      "max": 6,
+      "defined_runs": 5
+    },
+    "role_switch_count": {
+      "mean": 0,
+      "min": 0,
+      "max": 0,
+      "defined_runs": 5
+    },
+    "task_duplicate_rate": {
+      "mean": 0.0,
+      "min": 0.0,
+      "max": 0.0,
+      "defined_runs": 5
+    },
+    "all_tasks_makespan_s": {
+      "mean": null,
+      "min": null,
+      "max": null,
+      "defined_runs": 0
+    }
+  },
+  {
+    "scenario": "urgent",
+    "policy": "greedy",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "runs": 5,
+    "coverage_gap_ratio": {
+      "mean": 0.16666666666666666,
+      "min": 0.16666666666666666,
+      "max": 0.16666666666666666,
+      "defined_runs": 5
+    },
+    "task_success_rate": {
+      "mean": 1.0,
+      "min": 1.0,
+      "max": 1.0,
+      "defined_runs": 5
+    },
+    "deadline_miss_rate": {
+      "mean": 0.0,
+      "min": 0.0,
+      "max": 0.0,
+      "defined_runs": 5
+    },
+    "response_time_mean_s": {
+      "mean": 4.0,
+      "min": 4.0,
+      "max": 4.0,
+      "defined_runs": 5
+    },
+    "restricted_response_mean_s": {
+      "mean": 4.0,
+      "min": 4.0,
+      "max": 4.0,
+      "defined_runs": 5
+    },
+    "role_switch_count": {
+      "mean": 2,
+      "min": 2,
+      "max": 2,
+      "defined_runs": 5
+    },
+    "task_duplicate_rate": {
+      "mean": 0.0,
+      "min": 0.0,
+      "max": 0.0,
+      "defined_runs": 5
+    },
+    "all_tasks_makespan_s": {
+      "mean": 6.0,
+      "min": 6.0,
+      "max": 6.0,
+      "defined_runs": 5
+    }
+  },
+  {
+    "scenario": "urgent",
+    "policy": "exact",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "runs": 5,
+    "coverage_gap_ratio": {
+      "mean": 0.16666666666666666,
+      "min": 0.16666666666666666,
+      "max": 0.16666666666666666,
+      "defined_runs": 5
+    },
+    "task_success_rate": {
+      "mean": 1.0,
+      "min": 1.0,
+      "max": 1.0,
+      "defined_runs": 5
+    },
+    "deadline_miss_rate": {
+      "mean": 0.0,
+      "min": 0.0,
+      "max": 0.0,
+      "defined_runs": 5
+    },
+    "response_time_mean_s": {
+      "mean": 4.0,
+      "min": 4.0,
+      "max": 4.0,
+      "defined_runs": 5
+    },
+    "restricted_response_mean_s": {
+      "mean": 4.0,
+      "min": 4.0,
+      "max": 4.0,
+      "defined_runs": 5
+    },
+    "role_switch_count": {
+      "mean": 2,
+      "min": 2,
+      "max": 2,
+      "defined_runs": 5
+    },
+    "task_duplicate_rate": {
+      "mean": 0.0,
+      "min": 0.0,
+      "max": 0.0,
+      "defined_runs": 5
+    },
+    "all_tasks_makespan_s": {
+      "mean": 6.0,
+      "min": 6.0,
+      "max": 6.0,
+      "defined_runs": 5
+    }
+  },
+  {
+    "scenario": "urgent",
+    "policy": "handover",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "runs": 5,
+    "coverage_gap_ratio": {
+      "mean": 0.16666666666666666,
+      "min": 0.16666666666666666,
+      "max": 0.16666666666666666,
+      "defined_runs": 5
+    },
+    "task_success_rate": {
+      "mean": 1.0,
+      "min": 1.0,
+      "max": 1.0,
+      "defined_runs": 5
+    },
+    "deadline_miss_rate": {
+      "mean": 0.0,
+      "min": 0.0,
+      "max": 0.0,
+      "defined_runs": 5
+    },
+    "response_time_mean_s": {
+      "mean": 4.0,
+      "min": 4.0,
+      "max": 4.0,
+      "defined_runs": 5
+    },
+    "restricted_response_mean_s": {
+      "mean": 4.0,
+      "min": 4.0,
+      "max": 4.0,
+      "defined_runs": 5
+    },
+    "role_switch_count": {
+      "mean": 2,
+      "min": 2,
+      "max": 2,
+      "defined_runs": 5
+    },
+    "task_duplicate_rate": {
+      "mean": 0.0,
+      "min": 0.0,
+      "max": 0.0,
+      "defined_runs": 5
+    },
+    "all_tasks_makespan_s": {
+      "mean": 6.0,
+      "min": 6.0,
+      "max": 6.0,
+      "defined_runs": 5
+    }
+  },
+  {
+    "scenario": "rising_risk",
+    "policy": "fixed",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "runs": 5,
+    "coverage_gap_ratio": {
+      "mean": 0.0,
+      "min": 0.0,
+      "max": 0.0,
+      "defined_runs": 5
+    },
+    "task_success_rate": {
+      "mean": 1.0,
+      "min": 1.0,
+      "max": 1.0,
+      "defined_runs": 5
+    },
+    "deadline_miss_rate": {
+      "mean": 0.0,
+      "min": 0.0,
+      "max": 0.0,
+      "defined_runs": 5
+    },
+    "response_time_mean_s": {
+      "mean": 8.0,
+      "min": 8.0,
+      "max": 8.0,
+      "defined_runs": 5
+    },
+    "restricted_response_mean_s": {
+      "mean": 8.0,
+      "min": 8.0,
+      "max": 8.0,
+      "defined_runs": 5
+    },
+    "role_switch_count": {
+      "mean": 0,
+      "min": 0,
+      "max": 0,
+      "defined_runs": 5
+    },
+    "task_duplicate_rate": {
+      "mean": 0.0,
+      "min": 0.0,
+      "max": 0.0,
+      "defined_runs": 5
+    },
+    "all_tasks_makespan_s": {
+      "mean": 10.0,
+      "min": 10.0,
+      "max": 10.0,
+      "defined_runs": 5
+    }
+  },
+  {
+    "scenario": "rising_risk",
+    "policy": "greedy",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "runs": 5,
+    "coverage_gap_ratio": {
+      "mean": 0.09859154929577464,
+      "min": 0.09859154929577464,
+      "max": 0.09859154929577464,
+      "defined_runs": 5
+    },
+    "task_success_rate": {
+      "mean": 1.0,
+      "min": 1.0,
+      "max": 1.0,
+      "defined_runs": 5
+    },
+    "deadline_miss_rate": {
+      "mean": 0.0,
+      "min": 0.0,
+      "max": 0.0,
+      "defined_runs": 5
+    },
+    "response_time_mean_s": {
+      "mean": 8.0,
+      "min": 8.0,
+      "max": 8.0,
+      "defined_runs": 5
+    },
+    "restricted_response_mean_s": {
+      "mean": 8.0,
+      "min": 8.0,
+      "max": 8.0,
+      "defined_runs": 5
+    },
+    "role_switch_count": {
+      "mean": 4,
+      "min": 4,
+      "max": 4,
+      "defined_runs": 5
+    },
+    "task_duplicate_rate": {
+      "mean": 0.0,
+      "min": 0.0,
+      "max": 0.0,
+      "defined_runs": 5
+    },
+    "all_tasks_makespan_s": {
+      "mean": 10.0,
+      "min": 10.0,
+      "max": 10.0,
+      "defined_runs": 5
+    }
+  },
+  {
+    "scenario": "rising_risk",
+    "policy": "exact",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "runs": 5,
+    "coverage_gap_ratio": {
+      "mean": 0.14553990610328638,
+      "min": 0.14553990610328638,
+      "max": 0.14553990610328638,
+      "defined_runs": 5
+    },
+    "task_success_rate": {
+      "mean": 1.0,
+      "min": 1.0,
+      "max": 1.0,
+      "defined_runs": 5
+    },
+    "deadline_miss_rate": {
+      "mean": 0.0,
+      "min": 0.0,
+      "max": 0.0,
+      "defined_runs": 5
+    },
+    "response_time_mean_s": {
+      "mean": 4.0,
+      "min": 4.0,
+      "max": 4.0,
+      "defined_runs": 5
+    },
+    "restricted_response_mean_s": {
+      "mean": 4.0,
+      "min": 4.0,
+      "max": 4.0,
+      "defined_runs": 5
+    },
+    "role_switch_count": {
+      "mean": 2,
+      "min": 2,
+      "max": 2,
+      "defined_runs": 5
+    },
+    "task_duplicate_rate": {
+      "mean": 0.0,
+      "min": 0.0,
+      "max": 0.0,
+      "defined_runs": 5
+    },
+    "all_tasks_makespan_s": {
+      "mean": 6.0,
+      "min": 6.0,
+      "max": 6.0,
+      "defined_runs": 5
+    }
+  },
+  {
+    "scenario": "rising_risk",
+    "policy": "handover",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "runs": 5,
+    "coverage_gap_ratio": {
+      "mean": 0.0,
+      "min": 0.0,
+      "max": 0.0,
+      "defined_runs": 5
+    },
+    "task_success_rate": {
+      "mean": 1.0,
+      "min": 1.0,
+      "max": 1.0,
+      "defined_runs": 5
+    },
+    "deadline_miss_rate": {
+      "mean": 0.0,
+      "min": 0.0,
+      "max": 0.0,
+      "defined_runs": 5
+    },
+    "response_time_mean_s": {
+      "mean": 8.0,
+      "min": 8.0,
+      "max": 8.0,
+      "defined_runs": 5
+    },
+    "restricted_response_mean_s": {
+      "mean": 8.0,
+      "min": 8.0,
+      "max": 8.0,
+      "defined_runs": 5
+    },
+    "role_switch_count": {
+      "mean": 2,
+      "min": 2,
+      "max": 2,
+      "defined_runs": 5
+    },
+    "task_duplicate_rate": {
+      "mean": 0.0,
+      "min": 0.0,
+      "max": 0.0,
+      "defined_runs": 5
+    },
+    "all_tasks_makespan_s": {
+      "mean": 10.0,
+      "min": 10.0,
+      "max": 10.0,
+      "defined_runs": 5
+    }
+  },
+  {
+    "scenario": "communication_delay",
+    "policy": "fixed",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "runs": 5,
+    "coverage_gap_ratio": {
+      "mean": 0.0,
+      "min": 0.0,
+      "max": 0.0,
+      "defined_runs": 5
+    },
+    "task_success_rate": {
+      "mean": 1.0,
+      "min": 1.0,
+      "max": 1.0,
+      "defined_runs": 5
+    },
+    "deadline_miss_rate": {
+      "mean": 0.0,
+      "min": 0.0,
+      "max": 0.0,
+      "defined_runs": 5
+    },
+    "response_time_mean_s": {
+      "mean": 9.0,
+      "min": 9.0,
+      "max": 9.0,
+      "defined_runs": 5
+    },
+    "restricted_response_mean_s": {
+      "mean": 9.0,
+      "min": 9.0,
+      "max": 9.0,
+      "defined_runs": 5
+    },
+    "role_switch_count": {
+      "mean": 0,
+      "min": 0,
+      "max": 0,
+      "defined_runs": 5
+    },
+    "task_duplicate_rate": {
+      "mean": 0.0,
+      "min": 0.0,
+      "max": 0.0,
+      "defined_runs": 5
+    },
+    "all_tasks_makespan_s": {
+      "mean": 11.0,
+      "min": 11.0,
+      "max": 11.0,
+      "defined_runs": 5
+    }
+  },
+  {
+    "scenario": "communication_delay",
+    "policy": "greedy",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "runs": 5,
+    "coverage_gap_ratio": {
+      "mean": 0.16666666666666666,
+      "min": 0.16666666666666666,
+      "max": 0.16666666666666666,
+      "defined_runs": 5
+    },
+    "task_success_rate": {
+      "mean": 1.0,
+      "min": 1.0,
+      "max": 1.0,
+      "defined_runs": 5
+    },
+    "deadline_miss_rate": {
+      "mean": 0.0,
+      "min": 0.0,
+      "max": 0.0,
+      "defined_runs": 5
+    },
+    "response_time_mean_s": {
+      "mean": 5.0,
+      "min": 5.0,
+      "max": 5.0,
+      "defined_runs": 5
+    },
+    "restricted_response_mean_s": {
+      "mean": 5.0,
+      "min": 5.0,
+      "max": 5.0,
+      "defined_runs": 5
+    },
+    "role_switch_count": {
+      "mean": 2,
+      "min": 2,
+      "max": 2,
+      "defined_runs": 5
+    },
+    "task_duplicate_rate": {
+      "mean": 0.0,
+      "min": 0.0,
+      "max": 0.0,
+      "defined_runs": 5
+    },
+    "all_tasks_makespan_s": {
+      "mean": 7.0,
+      "min": 7.0,
+      "max": 7.0,
+      "defined_runs": 5
+    }
+  },
+  {
+    "scenario": "communication_delay",
+    "policy": "exact",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "runs": 5,
+    "coverage_gap_ratio": {
+      "mean": 0.16666666666666666,
+      "min": 0.16666666666666666,
+      "max": 0.16666666666666666,
+      "defined_runs": 5
+    },
+    "task_success_rate": {
+      "mean": 1.0,
+      "min": 1.0,
+      "max": 1.0,
+      "defined_runs": 5
+    },
+    "deadline_miss_rate": {
+      "mean": 0.0,
+      "min": 0.0,
+      "max": 0.0,
+      "defined_runs": 5
+    },
+    "response_time_mean_s": {
+      "mean": 5.0,
+      "min": 5.0,
+      "max": 5.0,
+      "defined_runs": 5
+    },
+    "restricted_response_mean_s": {
+      "mean": 5.0,
+      "min": 5.0,
+      "max": 5.0,
+      "defined_runs": 5
+    },
+    "role_switch_count": {
+      "mean": 2,
+      "min": 2,
+      "max": 2,
+      "defined_runs": 5
+    },
+    "task_duplicate_rate": {
+      "mean": 0.0,
+      "min": 0.0,
+      "max": 0.0,
+      "defined_runs": 5
+    },
+    "all_tasks_makespan_s": {
+      "mean": 7.0,
+      "min": 7.0,
+      "max": 7.0,
+      "defined_runs": 5
+    }
+  },
+  {
+    "scenario": "communication_delay",
+    "policy": "handover",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "runs": 5,
+    "coverage_gap_ratio": {
+      "mean": 0.0,
+      "min": 0.0,
+      "max": 0.0,
+      "defined_runs": 5
+    },
+    "task_success_rate": {
+      "mean": 1.0,
+      "min": 1.0,
+      "max": 1.0,
+      "defined_runs": 5
+    },
+    "deadline_miss_rate": {
+      "mean": 0.0,
+      "min": 0.0,
+      "max": 0.0,
+      "defined_runs": 5
+    },
+    "response_time_mean_s": {
+      "mean": 10.0,
+      "min": 10.0,
+      "max": 10.0,
+      "defined_runs": 5
+    },
+    "restricted_response_mean_s": {
+      "mean": 10.0,
+      "min": 10.0,
+      "max": 10.0,
+      "defined_runs": 5
+    },
+    "role_switch_count": {
+      "mean": 2,
+      "min": 2,
+      "max": 2,
+      "defined_runs": 5
+    },
+    "task_duplicate_rate": {
+      "mean": 0.0,
+      "min": 0.0,
+      "max": 0.0,
+      "defined_runs": 5
+    },
+    "all_tasks_makespan_s": {
+      "mean": 12.0,
+      "min": 12.0,
+      "max": 12.0,
+      "defined_runs": 5
+    }
+  }
+]

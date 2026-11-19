@@ -1,0 +1,573 @@
+[
+  {
+    "scenario": "normal",
+    "policy": "immediate",
+    "log": "normal__immediate.jsonl",
+    "coverage_gap_ratio": 0.25,
+    "coverage_gap_s": 4.0,
+    "ownership_gap_ratio": 0.0,
+    "declared_owner_not_ready_ratio": 0.25,
+    "task_count": 1,
+    "task_success_count": 1,
+    "task_success_rate": 1.0,
+    "response_times_s": [
+      4.0
+    ],
+    "response_time_mean_s": 4.0,
+    "unresponded_tasks": 0,
+    "restricted_response_mean_s": 4.0,
+    "handover_count": 1,
+    "handovers": [
+      {
+        "id": 1,
+        "release": 2.0,
+        "successor_ready_at_or_after_release": 6.0,
+        "initial_gap_s": 4.0,
+        "right_censored": false,
+        "physical_gap_union_s": 4.0
+      }
+    ],
+    "failure_recoveries": []
+  },
+  {
+    "scenario": "normal",
+    "policy": "ready",
+    "log": "normal__ready.jsonl",
+    "coverage_gap_ratio": 0.0,
+    "coverage_gap_s": 0,
+    "ownership_gap_ratio": 0.0,
+    "declared_owner_not_ready_ratio": 0.0,
+    "task_count": 1,
+    "task_success_count": 1,
+    "task_success_rate": 1.0,
+    "response_times_s": [
+      8.0
+    ],
+    "response_time_mean_s": 8.0,
+    "unresponded_tasks": 0,
+    "restricted_response_mean_s": 8.0,
+    "handover_count": 1,
+    "handovers": [
+      {
+        "id": 1,
+        "release": 6.0,
+        "successor_ready_at_or_after_release": 6.0,
+        "initial_gap_s": 0.0,
+        "right_censored": false,
+        "physical_gap_union_s": 0
+      }
+    ],
+    "failure_recoveries": []
+  },
+  {
+    "scenario": "normal",
+    "policy": "late",
+    "log": "normal__late.jsonl",
+    "coverage_gap_ratio": 0.0,
+    "coverage_gap_s": 0,
+    "ownership_gap_ratio": 0.0,
+    "declared_owner_not_ready_ratio": 0.0,
+    "task_count": 1,
+    "task_success_count": 1,
+    "task_success_rate": 1.0,
+    "response_times_s": [
+      10.0
+    ],
+    "response_time_mean_s": 10.0,
+    "unresponded_tasks": 0,
+    "restricted_response_mean_s": 10.0,
+    "handover_count": 1,
+    "handovers": [
+      {
+        "id": 1,
+        "release": 8.0,
+        "successor_ready_at_or_after_release": 8.0,
+        "initial_gap_s": 0.0,
+        "right_censored": false,
+        "physical_gap_union_s": 0
+      }
+    ],
+    "failure_recoveries": []
+  },
+  {
+    "scenario": "normal",
+    "policy": "fixed",
+    "log": "normal__fixed.jsonl",
+    "coverage_gap_ratio": 0.0,
+    "coverage_gap_s": 0,
+    "ownership_gap_ratio": 0.0,
+    "declared_owner_not_ready_ratio": 0.0,
+    "task_count": 1,
+    "task_success_count": 0,
+    "task_success_rate": 0.0,
+    "response_times_s": [],
+    "response_time_mean_s": null,
+    "unresponded_tasks": 1,
+    "restricted_response_mean_s": 12.0,
+    "handover_count": 0,
+    "handovers": [],
+    "failure_recoveries": []
+  },
+  {
+    "scenario": "urgent",
+    "policy": "immediate",
+    "log": "urgent__immediate.jsonl",
+    "coverage_gap_ratio": 0.25,
+    "coverage_gap_s": 4.0,
+    "ownership_gap_ratio": 0.0,
+    "declared_owner_not_ready_ratio": 0.25,
+    "task_count": 1,
+    "task_success_count": 1,
+    "task_success_rate": 1.0,
+    "response_times_s": [
+      4.0
+    ],
+    "response_time_mean_s": 4.0,
+    "unresponded_tasks": 0,
+    "restricted_response_mean_s": 4.0,
+    "handover_count": 1,
+    "handovers": [
+      {
+        "id": 1,
+        "release": 2.0,
+        "successor_ready_at_or_after_release": 6.0,
+        "initial_gap_s": 4.0,
+        "right_censored": false,
+        "physical_gap_union_s": 4.0
+      }
+    ],
+    "failure_recoveries": []
+  },
+  {
+    "scenario": "urgent",
+    "policy": "ready",
+    "log": "urgent__ready.jsonl",
+    "coverage_gap_ratio": 0.0,
+    "coverage_gap_s": 0,
+    "ownership_gap_ratio": 0.0,
+    "declared_owner_not_ready_ratio": 0.0,
+    "task_count": 1,
+    "task_success_count": 0,
+    "task_success_rate": 0.0,
+    "response_times_s": [],
+    "response_time_mean_s": null,
+    "unresponded_tasks": 1,
+    "restricted_response_mean_s": 7.0,
+    "handover_count": 1,
+    "handovers": [
+      {
+        "id": 1,
+        "release": 6.0,
+        "successor_ready_at_or_after_release": 6.0,
+        "initial_gap_s": 0.0,
+        "right_censored": false,
+        "physical_gap_union_s": 0
+      }
+    ],
+    "failure_recoveries": []
+  },
+  {
+    "scenario": "urgent",
+    "policy": "late",
+    "log": "urgent__late.jsonl",
+    "coverage_gap_ratio": 0.0,
+    "coverage_gap_s": 0,
+    "ownership_gap_ratio": 0.0,
+    "declared_owner_not_ready_ratio": 0.0,
+    "task_count": 1,
+    "task_success_count": 0,
+    "task_success_rate": 0.0,
+    "response_times_s": [],
+    "response_time_mean_s": null,
+    "unresponded_tasks": 1,
+    "restricted_response_mean_s": 7.0,
+    "handover_count": 1,
+    "handovers": [
+      {
+        "id": 1,
+        "release": 8.0,
+        "successor_ready_at_or_after_release": 8.0,
+        "initial_gap_s": 0.0,
+        "right_censored": false,
+        "physical_gap_union_s": 0
+      }
+    ],
+    "failure_recoveries": []
+  },
+  {
+    "scenario": "urgent",
+    "policy": "fixed",
+    "log": "urgent__fixed.jsonl",
+    "coverage_gap_ratio": 0.0,
+    "coverage_gap_s": 0,
+    "ownership_gap_ratio": 0.0,
+    "declared_owner_not_ready_ratio": 0.0,
+    "task_count": 1,
+    "task_success_count": 0,
+    "task_success_rate": 0.0,
+    "response_times_s": [],
+    "response_time_mean_s": null,
+    "unresponded_tasks": 1,
+    "restricted_response_mean_s": 7.0,
+    "handover_count": 0,
+    "handovers": [],
+    "failure_recoveries": []
+  },
+  {
+    "scenario": "successor_failure",
+    "policy": "immediate",
+    "log": "successor_failure__immediate.jsonl",
+    "coverage_gap_ratio": 0.875,
+    "coverage_gap_s": 14.0,
+    "ownership_gap_ratio": 0.0,
+    "declared_owner_not_ready_ratio": 0.875,
+    "task_count": 1,
+    "task_success_count": 1,
+    "task_success_rate": 1.0,
+    "response_times_s": [
+      4.0
+    ],
+    "response_time_mean_s": 4.0,
+    "unresponded_tasks": 0,
+    "restricted_response_mean_s": 4.0,
+    "handover_count": 1,
+    "handovers": [
+      {
+        "id": 1,
+        "release": 2.0,
+        "successor_ready_at_or_after_release": null,
+        "initial_gap_s": 14.0,
+        "right_censored": true,
+        "physical_gap_union_s": 14.0
+      }
+    ],
+    "failure_recoveries": [
+      {
+        "robot": "B",
+        "failure": 4.0,
+        "coverage_recovery_s": null,
+        "right_censored": true
+      }
+    ]
+  },
+  {
+    "scenario": "successor_failure",
+    "policy": "ready",
+    "log": "successor_failure__ready.jsonl",
+    "coverage_gap_ratio": 0.0,
+    "coverage_gap_s": 0,
+    "ownership_gap_ratio": 0.0,
+    "declared_owner_not_ready_ratio": 0.0,
+    "task_count": 1,
+    "task_success_count": 0,
+    "task_success_rate": 0.0,
+    "response_times_s": [],
+    "response_time_mean_s": null,
+    "unresponded_tasks": 1,
+    "restricted_response_mean_s": 12.0,
+    "handover_count": 0,
+    "handovers": [],
+    "failure_recoveries": [
+      {
+        "robot": "B",
+        "failure": 4.0,
+        "coverage_recovery_s": 0.0,
+        "right_censored": false
+      }
+    ]
+  },
+  {
+    "scenario": "successor_failure",
+    "policy": "late",
+    "log": "successor_failure__late.jsonl",
+    "coverage_gap_ratio": 0.0,
+    "coverage_gap_s": 0,
+    "ownership_gap_ratio": 0.0,
+    "declared_owner_not_ready_ratio": 0.0,
+    "task_count": 1,
+    "task_success_count": 0,
+    "task_success_rate": 0.0,
+    "response_times_s": [],
+    "response_time_mean_s": null,
+    "unresponded_tasks": 1,
+    "restricted_response_mean_s": 12.0,
+    "handover_count": 0,
+    "handovers": [],
+    "failure_recoveries": [
+      {
+        "robot": "B",
+        "failure": 4.0,
+        "coverage_recovery_s": 0.0,
+        "right_censored": false
+      }
+    ]
+  },
+  {
+    "scenario": "successor_failure",
+    "policy": "fixed",
+    "log": "successor_failure__fixed.jsonl",
+    "coverage_gap_ratio": 0.0,
+    "coverage_gap_s": 0,
+    "ownership_gap_ratio": 0.0,
+    "declared_owner_not_ready_ratio": 0.0,
+    "task_count": 1,
+    "task_success_count": 0,
+    "task_success_rate": 0.0,
+    "response_times_s": [],
+    "response_time_mean_s": null,
+    "unresponded_tasks": 1,
+    "restricted_response_mean_s": 12.0,
+    "handover_count": 0,
+    "handovers": [],
+    "failure_recoveries": [
+      {
+        "robot": "B",
+        "failure": 4.0,
+        "coverage_recovery_s": 0.0,
+        "right_censored": false
+      }
+    ]
+  },
+  {
+    "scenario": "communication_delay",
+    "policy": "immediate",
+    "log": "communication_delay__immediate.jsonl",
+    "coverage_gap_ratio": 0.3125,
+    "coverage_gap_s": 5.0,
+    "ownership_gap_ratio": 0.0,
+    "declared_owner_not_ready_ratio": 0.3125,
+    "task_count": 1,
+    "task_success_count": 1,
+    "task_success_rate": 1.0,
+    "response_times_s": [
+      4.0
+    ],
+    "response_time_mean_s": 4.0,
+    "unresponded_tasks": 0,
+    "restricted_response_mean_s": 4.0,
+    "handover_count": 1,
+    "handovers": [
+      {
+        "id": 1,
+        "release": 2.0,
+        "successor_ready_at_or_after_release": 7.0,
+        "initial_gap_s": 5.0,
+        "right_censored": false,
+        "physical_gap_union_s": 5.0
+      }
+    ],
+    "failure_recoveries": []
+  },
+  {
+    "scenario": "communication_delay",
+    "policy": "ready",
+    "log": "communication_delay__ready.jsonl",
+    "coverage_gap_ratio": 0.0,
+    "coverage_gap_s": 0,
+    "ownership_gap_ratio": 0.0,
+    "declared_owner_not_ready_ratio": 0.0,
+    "task_count": 1,
+    "task_success_count": 1,
+    "task_success_rate": 1.0,
+    "response_times_s": [
+      10.0
+    ],
+    "response_time_mean_s": 10.0,
+    "unresponded_tasks": 0,
+    "restricted_response_mean_s": 10.0,
+    "handover_count": 1,
+    "handovers": [
+      {
+        "id": 1,
+        "release": 8.0,
+        "successor_ready_at_or_after_release": 8.0,
+        "initial_gap_s": 0.0,
+        "right_censored": false,
+        "physical_gap_union_s": 0
+      }
+    ],
+    "failure_recoveries": []
+  },
+  {
+    "scenario": "communication_delay",
+    "policy": "late",
+    "log": "communication_delay__late.jsonl",
+    "coverage_gap_ratio": 0.0,
+    "coverage_gap_s": 0,
+    "ownership_gap_ratio": 0.0,
+    "declared_owner_not_ready_ratio": 0.0,
+    "task_count": 1,
+    "task_success_count": 0,
+    "task_success_rate": 0.0,
+    "response_times_s": [],
+    "response_time_mean_s": null,
+    "unresponded_tasks": 1,
+    "restricted_response_mean_s": 12.0,
+    "handover_count": 1,
+    "handovers": [
+      {
+        "id": 1,
+        "release": 10.0,
+        "successor_ready_at_or_after_release": 10.0,
+        "initial_gap_s": 0.0,
+        "right_censored": false,
+        "physical_gap_union_s": 0
+      }
+    ],
+    "failure_recoveries": []
+  },
+  {
+    "scenario": "communication_delay",
+    "policy": "fixed",
+    "log": "communication_delay__fixed.jsonl",
+    "coverage_gap_ratio": 0.0,
+    "coverage_gap_s": 0,
+    "ownership_gap_ratio": 0.0,
+    "declared_owner_not_ready_ratio": 0.0,
+    "task_count": 1,
+    "task_success_count": 0,
+    "task_success_rate": 0.0,
+    "response_times_s": [],
+    "response_time_mean_s": null,
+    "unresponded_tasks": 1,
+    "restricted_response_mean_s": 12.0,
+    "handover_count": 0,
+    "handovers": [],
+    "failure_recoveries": []
+  },
+  {
+    "scenario": "temporary_failure",
+    "policy": "immediate",
+    "log": "temporary_failure__immediate.jsonl",
+    "coverage_gap_ratio": 0.4375,
+    "coverage_gap_s": 7.0,
+    "ownership_gap_ratio": 0.0,
+    "declared_owner_not_ready_ratio": 0.4375,
+    "task_count": 1,
+    "task_success_count": 1,
+    "task_success_rate": 1.0,
+    "response_times_s": [
+      4.0
+    ],
+    "response_time_mean_s": 4.0,
+    "unresponded_tasks": 0,
+    "restricted_response_mean_s": 4.0,
+    "handover_count": 1,
+    "handovers": [
+      {
+        "id": 1,
+        "release": 2.0,
+        "successor_ready_at_or_after_release": 9.0,
+        "initial_gap_s": 7.0,
+        "right_censored": false,
+        "physical_gap_union_s": 7.0
+      }
+    ],
+    "failure_recoveries": [
+      {
+        "robot": "B",
+        "failure": 4.0,
+        "coverage_recovery_s": 5.0,
+        "right_censored": false
+      }
+    ]
+  },
+  {
+    "scenario": "temporary_failure",
+    "policy": "ready",
+    "log": "temporary_failure__ready.jsonl",
+    "coverage_gap_ratio": 0.0,
+    "coverage_gap_s": 0,
+    "ownership_gap_ratio": 0.0,
+    "declared_owner_not_ready_ratio": 0.0,
+    "task_count": 1,
+    "task_success_count": 0,
+    "task_success_rate": 0.0,
+    "response_times_s": [
+      11.0
+    ],
+    "response_time_mean_s": 11.0,
+    "unresponded_tasks": 0,
+    "restricted_response_mean_s": 11.0,
+    "handover_count": 1,
+    "handovers": [
+      {
+        "id": 1,
+        "release": 9.0,
+        "successor_ready_at_or_after_release": 9.0,
+        "initial_gap_s": 0.0,
+        "right_censored": false,
+        "physical_gap_union_s": 0
+      }
+    ],
+    "failure_recoveries": [
+      {
+        "robot": "B",
+        "failure": 4.0,
+        "coverage_recovery_s": 0.0,
+        "right_censored": false
+      }
+    ]
+  },
+  {
+    "scenario": "temporary_failure",
+    "policy": "late",
+    "log": "temporary_failure__late.jsonl",
+    "coverage_gap_ratio": 0.0,
+    "coverage_gap_s": 0,
+    "ownership_gap_ratio": 0.0,
+    "declared_owner_not_ready_ratio": 0.0,
+    "task_count": 1,
+    "task_success_count": 0,
+    "task_success_rate": 0.0,
+    "response_times_s": [],
+    "response_time_mean_s": null,
+    "unresponded_tasks": 1,
+    "restricted_response_mean_s": 12.0,
+    "handover_count": 1,
+    "handovers": [
+      {
+        "id": 1,
+        "release": 11.0,
+        "successor_ready_at_or_after_release": 11.0,
+        "initial_gap_s": 0.0,
+        "right_censored": false,
+        "physical_gap_union_s": 0
+      }
+    ],
+    "failure_recoveries": [
+      {
+        "robot": "B",
+        "failure": 4.0,
+        "coverage_recovery_s": 0.0,
+        "right_censored": false
+      }
+    ]
+  },
+  {
+    "scenario": "temporary_failure",
+    "policy": "fixed",
+    "log": "temporary_failure__fixed.jsonl",
+    "coverage_gap_ratio": 0.0,
+    "coverage_gap_s": 0,
+    "ownership_gap_ratio": 0.0,
+    "declared_owner_not_ready_ratio": 0.0,
+    "task_count": 1,
+    "task_success_count": 0,
+    "task_success_rate": 0.0,
+    "response_times_s": [],
+    "response_time_mean_s": null,
+    "unresponded_tasks": 1,
+    "restricted_response_mean_s": 12.0,
+    "handover_count": 0,
+    "handovers": [],
+    "failure_recoveries": [
+      {
+        "robot": "B",
+        "failure": 4.0,
+        "coverage_recovery_s": 0.0,
+        "right_censored": false
+      }
+    ]
+  }
+]

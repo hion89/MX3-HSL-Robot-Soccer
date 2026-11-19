@@ -1,0 +1,16 @@
+{
+  "scenario": "normal",
+  "policy": "ready",
+  "seed": 0,
+  "dt": 1.0,
+  "horizon": 16.0,
+  "spawn": 2.0,
+  "deadline": 14.0,
+  "service": 2.0,
+  "speed": 1.0,
+  "radius": 0.25,
+  "base": [0.0, 0.0],
+  "task": [4.0, 0.0],
+  "initial_a": [0.0, 0.0],
+  "initial_b": [-4.0, 0.0]
+}
