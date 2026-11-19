@@ -111,3 +111,14 @@ gym.register(
         "rsl_rl_cfg_entry_point": _V16_AGENT,
     },
 )
+
+# V1-6F (2026-11-19): 보상은 V1-5B 와 같고 환경만 (관측 지연 + 바닥 + hold·필터). 재생·평가는 V1-6D-Play / -RealLike.
+gym.register(
+    id="Unitree-MX3-WalkKick-V1-6F",
+    entry_point="isaaclab.envs:ManagerBasedRLEnv",
+    kwargs={
+        "env_cfg_entry_point": f"{_V16}:RobotV16FEnvCfg",
+        "play_env_cfg_entry_point": f"{_V16}:RobotV16DPlayEnvCfg",
+        "rsl_rl_cfg_entry_point": _V16_AGENT,
+    },
+)

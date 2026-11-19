@@ -406,3 +406,16 @@ class RobotV16EPlayEnvCfg(v15.RobotV15BPlayEnvCfg):
     def __post_init__(self):
         super().__post_init__()
         _apply_v1_6e(self)
+
+
+# ============================================================================
+# V1-6F (2026-11-19) — 보상은 22300 (V1-5B) 과 완전히 같고 환경만 바꾼다 (관측 지연 + 바닥 + hold·필터).
+#   대조 실험: V1-5B 그대로 22300 → 22550 은 kick_resolved 45 → 78 %, 안정.
+#   D (−0.05 디딤발 yaw, 킥 직후 ×3) 는 시작 시 그 벌점 (−0.049) 이 킥 보상 합 (~+0.031) 보다 커서 차기를 포기했다.
+#   E (−0.02 + 안 차기 −8) 는 넘어져서 안 차기 벌점을 피했다 (넘어짐 ×4). → 보상 추가 없이 환경만 먼저 확인한다.
+# ============================================================================
+@configclass
+class RobotV16FEnvCfg(v15.RobotV15BEnvCfg):
+    def __post_init__(self):
+        super().__post_init__()
+        _apply_v1_6(self, act=False, obs=True, surf=True, ctr=True, rew=False)
