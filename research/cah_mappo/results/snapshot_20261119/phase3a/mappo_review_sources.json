@@ -1,0 +1,66 @@
+{
+  "review_date": "2026-11-18",
+  "method": "Read-only public GitHub connector file reads; no repository clone, execution, install or workspace upload. File blob hashes pin the reviewed contents; no single commit SHA was obtained.",
+  "files": [
+    {
+      "repository": "marlbenchmark/on-policy",
+      "path": "onpolicy/runner/shared/base_runner.py",
+      "blob_sha": "539a13377fbef935a4933aac93c026afeb3195da",
+      "url": "https://github.com/marlbenchmark/on-policy/blob/main/onpolicy/runner/shared/base_runner.py"
+    },
+    {
+      "repository": "marlbenchmark/on-policy",
+      "path": "onpolicy/runner/shared/mpe_runner.py",
+      "blob_sha": "6f8a263cc434c70afc5f2ef64e8153ca7d7eb242",
+      "url": "https://github.com/marlbenchmark/on-policy/blob/main/onpolicy/runner/shared/mpe_runner.py"
+    },
+    {
+      "repository": "marlbenchmark/on-policy",
+      "path": "onpolicy/utils/shared_buffer.py",
+      "blob_sha": "4204feef2a5c95266fc3116f2c5619012ea2b998",
+      "url": "https://github.com/marlbenchmark/on-policy/blob/main/onpolicy/utils/shared_buffer.py"
+    },
+    {
+      "repository": "marlbenchmark/on-policy",
+      "path": "onpolicy/algorithms/r_mappo/algorithm/r_actor_critic.py",
+      "blob_sha": "fb1b05242fe37f3334e7639f370d8b61776a16a9",
+      "url": "https://github.com/marlbenchmark/on-policy/blob/main/onpolicy/algorithms/r_mappo/algorithm/r_actor_critic.py"
+    },
+    {
+      "repository": "marlbenchmark/on-policy",
+      "path": "onpolicy/algorithms/r_mappo/algorithm/rMAPPOPolicy.py",
+      "blob_sha": "62bf50c2b3bc1a5cd157aa32d877e9d13167d332",
+      "url": "https://github.com/marlbenchmark/on-policy/blob/main/onpolicy/algorithms/r_mappo/algorithm/rMAPPOPolicy.py"
+    },
+    {
+      "repository": "marlbenchmark/on-policy",
+      "path": "onpolicy/algorithms/r_mappo/r_mappo.py",
+      "blob_sha": "346e667114186cbc316c8ecba8e1992a8e342d76",
+      "url": "https://github.com/marlbenchmark/on-policy/blob/main/onpolicy/algorithms/r_mappo/r_mappo.py"
+    },
+    {
+      "repository": "marlbenchmark/on-policy",
+      "path": "onpolicy/algorithms/utils/act.py",
+      "blob_sha": "ebea30e3615b532e1ca574ac50d0b651935d7b7c",
+      "url": "https://github.com/marlbenchmark/on-policy/blob/main/onpolicy/algorithms/utils/act.py"
+    },
+    {
+      "repository": "marlbenchmark/on-policy",
+      "path": "onpolicy/algorithms/utils/distributions.py",
+      "blob_sha": "15e125eae38efa1568dd946116a9d9707ee922e1",
+      "url": "https://github.com/marlbenchmark/on-policy/blob/main/onpolicy/algorithms/utils/distributions.py"
+    },
+    {
+      "repository": "marlbenchmark/on-policy",
+      "path": "environment.yaml",
+      "blob_sha": "8d82f0b2eaa1322e9cf84c4d22893b814f58b8a1",
+      "url": "https://github.com/marlbenchmark/on-policy/blob/main/environment.yaml"
+    },
+    {
+      "repository": "marlbenchmark/on-policy",
+      "path": "README.md",
+      "blob_sha": "c3f08656c714c691454de0efcf8cfb2744153b73",
+      "url": "https://github.com/marlbenchmark/on-policy/blob/main/README.md"
+    }
+  ]
+}

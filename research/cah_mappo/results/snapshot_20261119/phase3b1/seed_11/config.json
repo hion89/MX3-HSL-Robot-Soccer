@@ -1,0 +1,175 @@
+{
+  "train_config": {
+    "seed": 11,
+    "environment_seed": 100,
+    "hidden": 64,
+    "gamma": 0.99,
+    "gae_lambda": 0.95,
+    "clip": 0.2,
+    "entropy": 0.01,
+    "value_coef": 0.5,
+    "learning_rate": 0.0003,
+    "max_grad_norm": 0.5,
+    "rollout_steps": 256,
+    "epochs": 4,
+    "minibatch_steps": 64
+  },
+  "total_env_steps_requested": 4096,
+  "training_environment_config": {
+    "name": "single",
+    "robots": [
+      {
+        "id": "A",
+        "position": [
+          0,
+          0
+        ],
+        "speed": 1.0,
+        "turn_speed": 3.141592653589793,
+        "heading": 0.0,
+        "initial_job": "base",
+        "base_role": "guard",
+        "operational": true,
+        "capacity": 1
+      },
+      {
+        "id": "B",
+        "position": [
+          -4,
+          0
+        ],
+        "speed": 1.0,
+        "turn_speed": 3.141592653589793,
+        "heading": 0.0,
+        "initial_job": null,
+        "base_role": "worker",
+        "operational": true,
+        "capacity": 1
+      }
+    ],
+    "jobs": [
+      {
+        "id": "base",
+        "position": [
+          0,
+          0
+        ],
+        "kind": "base",
+        "priority": 1.0,
+        "spawn": 0,
+        "deadline": 24,
+        "service": 0,
+        "fixed_owner": "A"
+      },
+      {
+        "id": "task1",
+        "position": [
+          4,
+          0
+        ],
+        "kind": "task",
+        "priority": 2,
+        "spawn": 2,
+        "deadline": 18,
+        "service": 2,
+        "fixed_owner": "B"
+      }
+    ],
+    "events": [],
+    "dt": 1.0,
+    "horizon": 24.0,
+    "radius": 0.25,
+    "seed": 100,
+    "jitter": 0.0,
+    "observation_delay": 0.0,
+    "switching_cost": 2.0,
+    "unassigned_cost": 50.0
+  },
+  "settings": {
+    "roster": [
+      "A",
+      "B",
+      "C",
+      "D"
+    ],
+    "max_jobs": 8,
+    "sensor_radius": 10,
+    "sensor_noise": 0,
+    "radio_enabled": true,
+    "radio_delay": 0,
+    "cache_ttl": 4.0
+  },
+  "reward_weights": {
+    "progress": 1.0,
+    "completion": 10.0,
+    "response": 1.0,
+    "failure": 10.0,
+    "waiting": 1.0,
+    "coverage": 2.0,
+    "switching": 0.1,
+    "max_abs_step": 100.0,
+    "max_abs_episode": 1000.0
+  },
+  "terminate_on_tasks_resolved": true,
+  "evaluation_environment_seeds": [
+    1000,
+    1001,
+    1002,
+    1003,
+    1004,
+    1005,
+    1006,
+    1007,
+    1008,
+    1009,
+    1010,
+    1011,
+    1012,
+    1013,
+    1014,
+    1015,
+    1016,
+    1017,
+    1018,
+    1019
+  ],
+  "evaluation_jitter": 0.05,
+  "python": "3.12.14 (main, Aug 14 2026, 15:40:22) [MSC v.1944 64 bit (AMD64)]",
+  "platform": "Windows-10-10.0.19045-SP0",
+  "dependencies": {
+    "torch": "2.7.0+cpu",
+    "numpy": "1.26.4"
+  },
+  "device": "cpu",
+  "torch_threads": 1,
+  "network": {
+    "actor": [
+      146,
+      64,
+      64,
+      10
+    ],
+    "critic": [
+      141,
+      64,
+      64,
+      1
+    ],
+    "activation": "Tanh",
+    "actor_parameters": 14218,
+    "critic_parameters": 13313
+  },
+  "source_sha256": {
+    "src\\cah_mappo\\phase3b1\\experiment.py": "70872c5d2f8bb16266e785d7c73698799f0d81bd58d8182b53379784a3bf1d05",
+    "src\\cah_mappo\\phase3b1\\learner.py": "df08054ca1e638e58586e81d48881b6c36a27ba1e833b2472d4e1b678462ac63",
+    "src\\cah_mappo\\phase3b1\\math_utils.py": "4ecb78ff3ccc4990376755bacbc433c7299fa36bee559b74c624b48b2bb7cd8a",
+    "src\\cah_mappo\\phase3b1\\networks.py": "da3bd8cb8c575e2a6d662b94181958d31d9bccecfe46544fc6a3e8caaeb0fa4e",
+    "src\\cah_mappo\\phase3b1\\__init__.py": "c7e161d1625fb961e9b6a4250708bb1d757c716b0f8f5939a9db994f3b7fe1bc",
+    "src\\cah_mappo\\phase3a\\adapters.py": "d6dd186d8260a2b3ff2a6c05fbbfee63554e38ea37c98ea66a250705c0acb7f0",
+    "src\\cah_mappo\\phase3a\\contracts.py": "7e61d116a600c25e799f541c9f027b988a28f8d16bb887e165b72c3a119b2312",
+    "src\\cah_mappo\\phase3a\\env.py": "f066adbe26724ee4a8844de129f5b2a3932597cb5ab6793d97329fbbd2bc4b9b",
+    "src\\cah_mappo\\phase3a\\perception.py": "62561014f81fcb76c292a02d041b1ed5302db6640afd24409b958f4327f83f6f",
+    "src\\cah_mappo\\phase3a\\rewards.py": "4810cc790c74aab8094c9b2ca739edb0f3fbd41d653a39e9080f2737ff49d505",
+    "src\\cah_mappo\\phase3a\\__init__.py": "1fa211571e85251b7606249ce9c6a04fea5de79958c441ece6a8dfc3f8df9f01"
+  }
+}

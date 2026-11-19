@@ -1,0 +1,57 @@
+{
+  "random": {
+    "summary": {
+      "episodes": 20,
+      "mean_return": -1.1651041666666668,
+      "task_success_rate": 0.4,
+      "response_time_mean_s": 7.4,
+      "coverage_gap_ratio": 0.43242052881758763,
+      "unresponded_tasks": 10
+    },
+    "omitted_episode_records": 20
+  },
+  "hold": {
+    "summary": {
+      "episodes": 20,
+      "mean_return": -1.2666666666666666,
+      "task_success_rate": 0.0,
+      "response_time_mean_s": null,
+      "coverage_gap_ratio": 0.0,
+      "unresponded_tasks": 20
+    },
+    "omitted_episode_records": 20
+  },
+  "manual": {
+    "summary": {
+      "episodes": 20,
+      "mean_return": 1.1104166666666668,
+      "task_success_rate": 1.0,
+      "response_time_mean_s": 4.0,
+      "coverage_gap_ratio": 0.5,
+      "unresponded_tasks": 0
+    },
+    "omitted_episode_records": 20
+  },
+  "learned_greedy": {
+    "summary": {
+      "episodes": 20,
+      "mean_return": -1.2666666666666666,
+      "task_success_rate": 0.0,
+      "response_time_mean_s": null,
+      "coverage_gap_ratio": 0.0,
+      "unresponded_tasks": 20
+    },
+    "omitted_episode_records": 20
+  },
+  "learned_stochastic": {
+    "summary": {
+      "episodes": 20,
+      "mean_return": -1.2057291666666665,
+      "task_success_rate": 0.4,
+      "response_time_mean_s": 7.833333333333333,
+      "coverage_gap_ratio": 0.5192075163398693,
+      "unresponded_tasks": 8
+    },
+    "omitted_episode_records": 20
+  }
+}

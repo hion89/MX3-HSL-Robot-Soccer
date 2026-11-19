@@ -1,0 +1,55 @@
+{
+  "total_env_steps": 4096,
+  "training_wall_seconds": 16.818652500398457,
+  "best_debug_checkpoint": "checkpoints\\best_step256.pt",
+  "results": {
+    "final_learned_greedy": {
+      "checkpoint": "checkpoints\\final_step4096.pt",
+      "summary": {
+        "episodes": 20,
+        "mean_return": 0.94375,
+        "task_success_rate": 1.0,
+        "response_time_mean_s": 4.0,
+        "coverage_gap_ratio": 0.75,
+        "unresponded_tasks": 0
+      },
+      "omitted_episode_records": 20
+    },
+    "final_learned_stochastic": {
+      "checkpoint": "checkpoints\\final_step4096.pt",
+      "summary": {
+        "episodes": 20,
+        "mean_return": 0.8806770833333334,
+        "task_success_rate": 1.0,
+        "response_time_mean_s": 5.25,
+        "coverage_gap_ratio": 0.6360606060606061,
+        "unresponded_tasks": 0
+      },
+      "omitted_episode_records": 20
+    },
+    "best_debug_learned_greedy": {
+      "checkpoint": "checkpoints\\best_step256.pt",
+      "summary": {
+        "episodes": 20,
+        "mean_return": 1.4895833333333335,
+        "task_success_rate": 1.0,
+        "response_time_mean_s": 8.0,
+        "coverage_gap_ratio": 0.0,
+        "unresponded_tasks": 0
+      },
+      "omitted_episode_records": 20
+    },
+    "best_debug_learned_stochastic": {
+      "checkpoint": "checkpoints\\best_step256.pt",
+      "summary": {
+        "episodes": 20,
+        "mean_return": -0.8140104166666666,
+        "task_success_rate": 0.5,
+        "response_time_mean_s": 8.214285714285714,
+        "coverage_gap_ratio": 0.5072420634920635,
+        "unresponded_tasks": 6
+      },
+      "omitted_episode_records": 20
+    }
+  }
+}

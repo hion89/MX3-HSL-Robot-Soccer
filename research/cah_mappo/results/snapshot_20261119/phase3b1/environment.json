@@ -1,0 +1,14 @@
+{
+  "approval": "User explicitly approved a new isolated environment via request_user_input_async on 2026-11-18",
+  "venv": "C:\\Users\\jes\\Desktop\\MX3_Match_Sim\\research\\cah_mappo\\.venv",
+  "python": "3.12.14 (main, Aug 14 2026, 15:40:22) [MSC v.1944 64 bit (AMD64)]",
+  "torch": "2.7.0+cpu",
+  "numpy": "1.26.4",
+  "torch_cuda_runtime": null,
+  "device": "cpu",
+  "cpu": "AMD Ryzen 5 5500GT, 6 cores / 12 threads",
+  "ram_gib": 31.3,
+  "gpu_inventory_only": "NVIDIA GeForce RTX 3080, 10240 MiB, driver 610.88; no GPU training",
+  "installation_source": "https://download.pytorch.org/whl/cpu",
+  "existing_environments_changed": false
+}

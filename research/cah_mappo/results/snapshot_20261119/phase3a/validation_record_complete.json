@@ -1,0 +1,28 @@
+{
+  "python": "3.12.14 (main, Aug 14 2026, 15:40:22) [MSC v.1944 64 bit (AMD64)]",
+  "tests_passed": 85,
+  "phase1_phase2_tests": 55,
+  "phase3a_tests": 30,
+  "smoke_episodes": 32,
+  "smoke_steps": 768,
+  "behavior_records": 2112,
+  "inactive_records": 92,
+  "new_logs_recomputed_in_separate_processes": 32,
+  "legacy_logs_replayed": 212,
+  "existing_files_preserved": 301,
+  "max_abs_step_reward": 3.9114583333333335,
+  "final_log_directory": "smoke_complete",
+  "final_test_file": "test_results_acceptance.txt",
+  "pettingzoo_parallel_api_test_executed": false,
+  "torch_network_or_optimizer_executed": false,
+  "source_hashes": {
+    "src/cah_mappo/phase3a/adapters.py": "d6dd186d8260a2b3ff2a6c05fbbfee63554e38ea37c98ea66a250705c0acb7f0",
+    "src/cah_mappo/phase3a/contracts.py": "7e61d116a600c25e799f541c9f027b988a28f8d16bb887e165b72c3a119b2312",
+    "src/cah_mappo/phase3a/env.py": "f066adbe26724ee4a8844de129f5b2a3932597cb5ab6793d97329fbbd2bc4b9b",
+    "src/cah_mappo/phase3a/perception.py": "62561014f81fcb76c292a02d041b1ed5302db6640afd24409b958f4327f83f6f",
+    "src/cah_mappo/phase3a/rewards.py": "4810cc790c74aab8094c9b2ca739edb0f3fbd41d653a39e9080f2737ff49d505",
+    "src/cah_mappo/phase3a/__init__.py": "1fa211571e85251b7606249ce9c6a04fea5de79958c441ece6a8dfc3f8df9f01",
+    "tests/test_phase3a.py": "6b00f7a9747b03718aeb4dbac1489c793114215ee8a6bfeb89eba0fe47915c5f",
+    "phase3a.py": "e96155a76fdba2aabcf99976b9ffde8fc6b046e3e9a9915748099ccc44d65d78"
+  }
+}

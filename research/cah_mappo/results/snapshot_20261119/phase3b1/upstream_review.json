@@ -1,0 +1,36 @@
+{
+  "review_date": "2026-11-18",
+  "method": "Read-only public GitHub files; independent compact feed-forward implementation, not vendored upstream runner.",
+  "files": [
+    {
+      "path": "LICENSE",
+      "blob_sha": "7ea42f3d5d0a353e1fc80f1f685643afda72a86c",
+      "url": "https://github.com/marlbenchmark/on-policy/blob/main/LICENSE"
+    },
+    {
+      "path": "onpolicy/algorithms/r_mappo/algorithm/rMAPPOPolicy.py",
+      "blob_sha": "62bf50c2b3bc1a5cd157aa32d877e9d13167d332",
+      "url": "https://github.com/marlbenchmark/on-policy/blob/main/onpolicy/algorithms/r_mappo/algorithm/rMAPPOPolicy.py"
+    },
+    {
+      "path": "onpolicy/algorithms/r_mappo/algorithm/r_actor_critic.py",
+      "blob_sha": "fb1b05242fe37f3334e7639f370d8b61776a16a9",
+      "url": "https://github.com/marlbenchmark/on-policy/blob/main/onpolicy/algorithms/r_mappo/algorithm/r_actor_critic.py"
+    },
+    {
+      "path": "onpolicy/algorithms/r_mappo/r_mappo.py",
+      "blob_sha": "346e667114186cbc316c8ecba8e1992a8e342d76",
+      "url": "https://github.com/marlbenchmark/on-policy/blob/main/onpolicy/algorithms/r_mappo/r_mappo.py"
+    },
+    {
+      "path": "onpolicy/utils/shared_buffer.py",
+      "blob_sha": "4204feef2a5c95266fc3116f2c5619012ea2b998",
+      "url": "https://github.com/marlbenchmark/on-policy/blob/main/onpolicy/utils/shared_buffer.py"
+    },
+    {
+      "path": "onpolicy/runner/shared/mpe_runner.py",
+      "blob_sha": "6f8a263cc434c70afc5f2ef64e8153ca7d7eb242",
+      "url": "https://github.com/marlbenchmark/on-policy/blob/main/onpolicy/runner/shared/mpe_runner.py"
+    }
+  ]
+}

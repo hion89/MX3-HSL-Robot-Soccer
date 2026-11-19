@@ -1,0 +1,53 @@
+{
+  "team_return": 1.1104166666666668,
+  "coverage_gap_ratio": 0.16666666666666666,
+  "coverage_gap_s": 4.0,
+  "weighted_coverage_gap_s": 4.0,
+  "coverage_weighted_time_s": 24.0,
+  "unweighted_coverage_gap_ratio": 0.16666666666666666,
+  "handover_count": 1,
+  "handovers": [
+    {
+      "id": 1,
+      "base": "base",
+      "old": "A",
+      "new": "B",
+      "release": 2.0,
+      "observed_until": 24.0,
+      "initial_gap_s": 4.0,
+      "right_censored": false,
+      "physical_gap_union_s": 4.0
+    }
+  ],
+  "handover_gap_mean_s": 4.0,
+  "task_count": 1,
+  "task_success_count": 1,
+  "task_success_rate": 1.0,
+  "deadline_miss_rate": 0.0,
+  "response_times_s": [
+    4.0
+  ],
+  "response_time_mean_s": 4.0,
+  "unresponded_tasks": 0,
+  "restricted_response_mean_s": 4.0,
+  "all_tasks_makespan_s": 6.0,
+  "last_successful_completion_at": 8.0,
+  "completed_task_flow_time_sum_s": 6.0,
+  "role_switch_count": 2,
+  "assignment_change_count": 3,
+  "task_duplicate_rate": 0.0,
+  "requested_duplicate_rate": 0.06666666666666667,
+  "task_details": [
+    {
+      "id": "task1",
+      "priority": 2,
+      "spawn": 2,
+      "deadline": 18,
+      "response_at": 6.0,
+      "response_s": 4.0,
+      "completed_at": 8.0,
+      "success": true,
+      "work": 2.0
+    }
+  ]
+}

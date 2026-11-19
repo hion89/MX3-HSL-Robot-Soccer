@@ -1,0 +1,28 @@
+{
+  "status": "PASS",
+  "preexisting_files_sha256_preserved": 424,
+  "experiments": [
+    {
+      "experiment": "research\\cah_mappo\\phase3b1_outputs\\debug_seed7_steps4096",
+      "raw_evaluation_logs_recomputed": 180,
+      "checkpoint_evaluation_episodes_replayed": 80,
+      "first_rollout_preupdate_logp_max_error": 0.0,
+      "arbitrated_agent_actions_in_first_rollout": 67,
+      "initial_to_final_parameter_l1_change": {
+        "actor": 172.18687623739243,
+        "critic": 41.10302451392636
+      }
+    },
+    {
+      "experiment": "research\\cah_mappo\\phase3b1_outputs\\debug_seed11_steps4096",
+      "raw_evaluation_logs_recomputed": 180,
+      "checkpoint_evaluation_episodes_replayed": 80,
+      "first_rollout_preupdate_logp_max_error": 0.0,
+      "arbitrated_agent_actions_in_first_rollout": 62,
+      "initial_to_final_parameter_l1_change": {
+        "actor": 164.8609168305993,
+        "critic": 38.47507770266384
+      }
+    }
+  ]
+}
