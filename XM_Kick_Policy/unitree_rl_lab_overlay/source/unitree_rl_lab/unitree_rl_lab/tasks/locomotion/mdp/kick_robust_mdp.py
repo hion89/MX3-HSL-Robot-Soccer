@@ -435,3 +435,26 @@ def metric_post_kick_yaw_rate(env: "ManagerBasedRLEnv", window_s: float = 1.0) -
     el = kick_clock_s(env) - env.kick_time_s
     win = (env.kick_time_s >= 0) & (el <= window_s)
     return torch.where(win, robot.data.root_ang_vel_w[:, 2].abs(), torch.zeros(env.num_envs, device=env.device))
+
+
+# ============================================================================
+# 10. 안 차기 벌점 (V1-6E, 2026-11-19)
+# ============================================================================
+def no_kick_penalty(env: "ManagerBasedRLEnv", exclude: tuple[str, ...] = ("whiff", "duel"), fallback_s: float = 5.0):
+    """데드라인까지 공을 안 찼으면 그 스텝에 1.0 (음수 weight). 공을 찰 수 없는 에피소드 (헛발질·다툼) 는 뺀다.
+
+    V1-6D 에서 정책이 차기를 포기했다 (22300 → 22880: kick_resolved 37 → 1 %, no_kick_deadline 45 → 94 %,
+    mean_reward 3.8 → 6.0). 기존 보상에는 안 차는 것 자체의 비용이 없고, 찬 뒤 넘어짐만 −6 이라 안 차는 쪽이 유리했다.
+    """
+    from . import kick_handoff_mdp as kh
+    from . import kick_mdp
+
+    out = kick_mdp.no_kick_timeout_termination(env, fallback_s=fallback_s)
+    ep = getattr(env, "kick_episode_type", None)
+    from_bank = getattr(env, "kick_from_bank", None)
+    if ep is not None and from_bank is not None and exclude:
+        skip = torch.zeros_like(out)
+        for name in exclude:
+            skip |= from_bank & (ep == kh.EP_NAMES[name])
+        out = out & ~skip
+    return out.float()

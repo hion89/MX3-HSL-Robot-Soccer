@@ -32,11 +32,11 @@ CK=kick16_init/model_22300.pt
 [ -f "$CK" ] || { echo "missing $CK (git pull incomplete?)"; exit 2; }
 echo "checkpoint sha256: $(sha256sum "$CK" | cut -d' ' -f1)  (expected $(cat kick16_init/model_22300.pt.sha256))"
 [ "$(sha256sum "$CK" | cut -d' ' -f1)" = "$(cat kick16_init/model_22300.pt.sha256)" ] || { echo "SHA MISMATCH"; exit 3; }
-for e in a b c d; do
+for e in a b c d e; do
   d="logs/rsl_rl/unitree_mx3_walkkick_v1_6$e/init_22300"
   mkdir -p "$d" && cp -n "$CK" "$d/model_22300.pt"
 done
-echo "resume checkpoints placed: logs/rsl_rl/unitree_mx3_walkkick_v1_6{a,b,c,d}/init_22300/"
+echo "resume checkpoints placed: logs/rsl_rl/unitree_mx3_walkkick_v1_6{a,b,c,d,e}/init_22300/"
 RSL=$(python -c "import rsl_rl, os; print(os.path.dirname(rsl_rl.__file__))" 2>/dev/null || true)
 if [ -z "$RSL" ]; then
   echo "rsl_rl not importable: activate the Isaac Lab conda env first"

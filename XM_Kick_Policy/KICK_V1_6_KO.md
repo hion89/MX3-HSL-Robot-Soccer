@@ -201,3 +201,9 @@ tmux new -s kick16 && bash scripts/kick_v1_6/train_v16.sh C
 - V1-6D-Play-RealLike: 세기 0.5에서 27%/35.6%(방향 오차 30°). 실물 유사 고정 조건이 22300을 크게 무너뜨리므로 평가용으로 쓴다.
 
 같은 실행에서 `kick16_setup.sh`의 rsl_rl 패치 확인이 "dry-run failed"로 나왔다. 패치 적용 여부를 직접 확인해야 한다.
+
+### V1-6D 학습에서 차기 포기 → V1-6E (2026-11-19)
+
+V1-6D 학습(22300→22880, 8192 env)의 TensorBoard 값을 보면 정책이 차기를 포기했다. `kick_resolved`는 37%에서 1%로, `no_kick_deadline`은 45%에서 94%로 바뀌었는데 `mean_reward`는 3.8에서 6.0으로 올랐다. 기존 보상에는 안 차는 것 자체의 비용이 없다. 찬 뒤 넘어짐만 −6이라 바닥 조건이 어려워지면 안 차는 쪽이 유리하다.
+
+`Unitree-MX3-WalkKick-V1-6E`는 D에 두 가지를 바꾼다. 하나는 안 차기 벌점 `no_kick`이다. 데드라인까지 안 차면 1회 −400×dt=−8을 주고, 헛발질·다툼 에피소드는 제외한다. 다른 하나는 `stance_foot_yaw` 가중치를 −0.05에서 −0.02로 낮춘 것이다. 22300에서 다시 시작하고, `kick_resolved`·`no_kick_deadline`·`ball_velocity`를 먼저 감시한다. 재생·평가는 V1-6D-Play와 -RealLike를 그대로 쓴다.

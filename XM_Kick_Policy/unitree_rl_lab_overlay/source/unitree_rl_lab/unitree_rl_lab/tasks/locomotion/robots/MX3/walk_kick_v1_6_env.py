@@ -375,3 +375,34 @@ class RobotV16DPlayRealLikeEnvCfg(RobotV16DPlayEnvCfg):
     def __post_init__(self):
         super().__post_init__()
         _real_like(self, volt=False)
+
+
+# ============================================================================
+# V1-6E (2026-11-19) — D 에 "안 차기 벌점" 추가, 디딤발 yaw 벌점 완화.
+#   D 학습 (22300 → 22880): kick_resolved 37 → 1 %, no_kick_deadline 45 → 94 %, mean_reward 3.8 → 6.0 — 차기 포기.
+#   ① no_kick: 데드라인까지 안 차면 1 회 W_NO_KICK × dt (−400 × 0.02 = −8). 찬 뒤 넘어짐 (−6) 보다 크게 →
+#      "차고 가끔 넘어짐" 이 "안 참" 보다 항상 낫다. 헛발질·다툼 에피소드 (공을 찰 수 없음) 는 제외.
+#   ② stance_foot_yaw −0.05 → −0.02 (D 시작 시 가장 큰 킥 관련 벌점 −0.049 였다).
+# ============================================================================
+W_NO_KICK = -400.0
+W_STANCE_YAW_E = -0.02
+
+
+def _apply_v1_6e(cfg):
+    _apply_v1_6(cfg, act=False, obs=True, surf=True, ctr=True, rew=True)
+    cfg.rewards.stance_foot_yaw.weight = W_STANCE_YAW_E
+    cfg.rewards.no_kick = RewTerm(func=kr.no_kick_penalty, weight=W_NO_KICK)
+
+
+@configclass
+class RobotV16EEnvCfg(v15.RobotV15BEnvCfg):
+    def __post_init__(self):
+        super().__post_init__()
+        _apply_v1_6e(self)
+
+
+@configclass
+class RobotV16EPlayEnvCfg(v15.RobotV15BPlayEnvCfg):
+    def __post_init__(self):
+        super().__post_init__()
+        _apply_v1_6e(self)

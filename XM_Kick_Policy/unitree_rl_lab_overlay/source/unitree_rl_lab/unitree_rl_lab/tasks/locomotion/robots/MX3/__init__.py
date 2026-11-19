@@ -100,3 +100,14 @@ for _sfx, _play in (("", "RobotV16DPlayEnvCfg"), ("-RealLike", "RobotV16DPlayRea
         entry_point="isaaclab.envs:ManagerBasedRLEnv",
         kwargs={"env_cfg_entry_point": f"{_V16}:{_play}", "rsl_rl_cfg_entry_point": _V16_AGENT},
     )
+
+# V1-6E (2026-11-19): D + 안 차기 벌점 (−8, 헛발질·다툼 제외) + 디딤발 yaw −0.02. 재생·평가는 V1-6D-Play / -RealLike 그대로 쓴다.
+gym.register(
+    id="Unitree-MX3-WalkKick-V1-6E",
+    entry_point="isaaclab.envs:ManagerBasedRLEnv",
+    kwargs={
+        "env_cfg_entry_point": f"{_V16}:RobotV16EEnvCfg",
+        "play_env_cfg_entry_point": f"{_V16}:RobotV16EPlayEnvCfg",
+        "rsl_rl_cfg_entry_point": _V16_AGENT,
+    },
+)
