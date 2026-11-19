@@ -1,0 +1,49 @@
+{
+  "status": "PASS",
+  "preserved_files_sha256": 2628,
+  "sealed_files_metadata_only": 1,
+  "holdout_content_opened": false,
+  "holdout_evaluations": 0,
+  "independent_training_seeds": 5,
+  "training_agent_decisions_verified": 2007040,
+  "all_raw_logs_recomputed": 12000,
+  "paired_physical_scenarios": 400,
+  "actor_only_inference_reproductions": 9600,
+  "stochastic_checkpoint_replay_episodes": 20,
+  "episode_return_recalculation_max_roundoff": 2.886579864025407e-15,
+  "episode_return_absolute_tolerance": 1e-12,
+  "other_metrics_compare_exactly": true,
+  "seed_level_ci_verified": true,
+  "training": {
+    "101": {
+      "steps": 100352,
+      "trace_frames": 100352,
+      "first_rollout_logp_error": 0.0,
+      "selected": "checkpoints/step073728.pt"
+    },
+    "211": {
+      "steps": 100352,
+      "trace_frames": 100352,
+      "first_rollout_logp_error": 0.0,
+      "selected": "checkpoints/step090112.pt"
+    },
+    "307": {
+      "steps": 100352,
+      "trace_frames": 100352,
+      "first_rollout_logp_error": 0.0,
+      "selected": "checkpoints/step100352.pt"
+    },
+    "401": {
+      "steps": 100352,
+      "trace_frames": 100352,
+      "first_rollout_logp_error": 0.0,
+      "selected": "checkpoints/step100352.pt"
+    },
+    "503": {
+      "steps": 100352,
+      "trace_frames": 100352,
+      "first_rollout_logp_error": 0.0,
+      "selected": "checkpoints/step100352.pt"
+    }
+  }
+}

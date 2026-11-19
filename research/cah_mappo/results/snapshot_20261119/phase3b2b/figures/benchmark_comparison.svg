@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1250" height="550" viewBox="0 0 1250 550">
+<rect width="100%" height="100%" fill="white"/><g font-family="Arial,sans-serif" font-size="12" fill="#263238">
+<text x="20" y="28" font-size="19">Controlled common benchmark: task success and responsibility coverage</text>
+<text x="20" y="50">MAPPO error bars: descriptive 95% t intervals over 5 training seeds. References are not trained replicates.</text>
+<text x="20" y="70">Gray central references have extra information; central_handover also has a preparation action.</text>
+<text x="215" y="105" font-size="15">Task success rate</text>
+<path d="M215.0,125 v340" stroke="#e0e5e8"/>
+<text x="215.0" y="488" text-anchor="middle">0</text>
+<path d="M285.0,125 v340" stroke="#e0e5e8"/>
+<text x="285.0" y="488" text-anchor="middle">0.2</text>
+<path d="M355.0,125 v340" stroke="#e0e5e8"/>
+<text x="355.0" y="488" text-anchor="middle">0.4</text>
+<path d="M425.0,125 v340" stroke="#e0e5e8"/>
+<text x="425.0" y="488" text-anchor="middle">0.6</text>
+<path d="M495.0,125 v340" stroke="#e0e5e8"/>
+<text x="495.0" y="488" text-anchor="middle">0.8</text>
+<path d="M565.0,125 v340" stroke="#e0e5e8"/>
+<text x="565.0" y="488" text-anchor="middle">1</text>
+<text x="207" y="145" text-anchor="end">MAPPO greedy</text>
+<rect x="215.0" y="129" width="349.9597577803605" height="24" fill="#1565c0"/>
+<path d="M564.9597577803605,141 H564.9597577803605 M564.9597577803605,135 V147 M564.9597577803605,135 V147" stroke="#111" fill="none"/>
+<text x="572.9597577803605" y="145">1.0000</text>
+<text x="207" y="185" text-anchor="end">MAPPO stochastic</text>
+<rect x="215.0" y="169" width="349.6875668576424" height="24" fill="#1565c0"/>
+<path d="M564.3751337152848,181 H565.0 M564.3751337152848,175 V187 M565.0,175 V187" stroke="#111" fill="none"/>
+<text x="572.6875668576424" y="185">0.9992</text>
+<text x="207" y="225" text-anchor="end">central_exact</text>
+<rect x="215.0" y="209" width="349.9597577803605" height="24" fill="#777777"/>
+<text x="572.9597577803605" y="225">1.0000</text>
+<text x="207" y="265" text-anchor="end">central_fixed</text>
+<rect x="215.0" y="249" width="349.9597577803605" height="24" fill="#777777"/>
+<text x="572.9597577803605" y="265">1.0000</text>
+<text x="207" y="305" text-anchor="end">central_greedy</text>
+<rect x="215.0" y="289" width="349.9597577803605" height="24" fill="#777777"/>
+<text x="572.9597577803605" y="305">1.0000</text>
+<text x="207" y="345" text-anchor="end">central_handover</text>
+<rect x="215.0" y="329" width="349.9597577803605" height="24" fill="#777777"/>
+<text x="572.9597577803605" y="345">1.0000</text>
+<text x="207" y="385" text-anchor="end">local_eta</text>
+<rect x="215.0" y="369" width="330.12870483947347" height="24" fill="#21814b"/>
+<text x="553.1287048394735" y="385">0.9433</text>
+<text x="207" y="425" text-anchor="end">local_fixed</text>
+<rect x="215.0" y="409" width="349.9597577803605" height="24" fill="#21814b"/>
+<text x="572.9597577803605" y="425">1.0000</text>
+<text x="835" y="105" font-size="15">Coverage Gap Ratio</text>
+<path d="M835.0,125 v340" stroke="#e0e5e8"/>
+<text x="835.0" y="488" text-anchor="middle">0</text>
+<path d="M905.0,125 v340" stroke="#e0e5e8"/>
+<text x="905.0" y="488" text-anchor="middle">0.2</text>
+<path d="M975.0,125 v340" stroke="#e0e5e8"/>
+<text x="975.0" y="488" text-anchor="middle">0.4</text>
+<path d="M1045.0,125 v340" stroke="#e0e5e8"/>
+<text x="1045.0" y="488" text-anchor="middle">0.6</text>
+<path d="M1115.0,125 v340" stroke="#e0e5e8"/>
+<text x="1115.0" y="488" text-anchor="middle">0.8</text>
+<path d="M1185.0,125 v340" stroke="#e0e5e8"/>
+<text x="1185.0" y="488" text-anchor="middle">1</text>
+<text x="827" y="145" text-anchor="end">MAPPO greedy</text>
+<rect x="835.0" y="129" width="0" height="24" fill="#1565c0"/>
+<path d="M835.0,141 H835.0 M835.0,135 V147 M835.0,135 V147" stroke="#111" fill="none"/>
+<text x="843.0" y="145">0.0000</text>
+<text x="827" y="185" text-anchor="end">MAPPO stochastic</text>
+<rect x="835.0" y="169" width="0.7328125000000227" height="24" fill="#1565c0"/>
+<path d="M835.3453433444362,181 H836.1202816555638 M835.3453433444362,175 V187 M836.1202816555638,175 V187" stroke="#111" fill="none"/>
+<text x="843.7328125" y="185">0.0021</text>
+<text x="827" y="225" text-anchor="end">central_exact</text>
+<rect x="835.0" y="209" width="34.193359375" height="24" fill="#777777"/>
+<text x="877.193359375" y="225">0.0977</text>
+<text x="827" y="265" text-anchor="end">central_fixed</text>
+<rect x="835.0" y="249" width="0" height="24" fill="#777777"/>
+<text x="843.0" y="265">0.0000</text>
+<text x="827" y="305" text-anchor="end">central_greedy</text>
+<rect x="835.0" y="289" width="68.564453125" height="24" fill="#777777"/>
+<text x="911.564453125" y="305">0.1959</text>
+<text x="827" y="345" text-anchor="end">central_handover</text>
+<rect x="835.0" y="329" width="27.31640625" height="24" fill="#777777"/>
+<text x="870.31640625" y="345">0.0780</text>
+<text x="827" y="385" text-anchor="end">local_eta</text>
+<rect x="835.0" y="369" width="68.5234375" height="24" fill="#21814b"/>
+<text x="911.5234375" y="385">0.1958</text>
+<text x="827" y="425" text-anchor="end">local_fixed</text>
+<rect x="835.0" y="409" width="0" height="24" fill="#21814b"/>
+<text x="843.0" y="425">0.0000</text>
+</g></svg>

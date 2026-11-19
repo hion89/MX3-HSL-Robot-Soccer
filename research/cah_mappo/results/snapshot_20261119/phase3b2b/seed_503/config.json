@@ -1,0 +1,25 @@
+{
+  "stream": 4,
+  "seed": 503,
+  "train_config": {
+    "seed": 503,
+    "environment_seed": 100,
+    "hidden": 64,
+    "gamma": 0.99,
+    "gae_lambda": 0.95,
+    "clip": 0.2,
+    "entropy": 0.01,
+    "value_coef": 0.5,
+    "learning_rate": 0.0003,
+    "max_grad_norm": 0.5,
+    "rollout_steps": 256,
+    "epochs": 4,
+    "minibatch_steps": 64
+  },
+  "steps": 100352,
+  "initialization": "independent from scratch; no pretrained weights or optimizers",
+  "frozen_plan_sha256": "488093814c595093a7a7fbd1d03cff2f60029709c40fca6f229b2986af00a51c",
+  "source_manifest_sha256": "882b47796c8414d5d9ed7d518f8dd30daf19a449e6062d82bdbdd53d9b68d772",
+  "checkpoint_protocol": "episode-boundary-v1",
+  "slot_augmentation": false
+}

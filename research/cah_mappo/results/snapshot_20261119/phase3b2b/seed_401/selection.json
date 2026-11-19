@@ -1,0 +1,19 @@
+{
+  "seed": 401,
+  "stream": 3,
+  "steps": 100352,
+  "episodes": 3136,
+  "wall_seconds_including_intermediate_validation": 847.6406672000885,
+  "collect_seconds": 643.5003412943333,
+  "optimizer_seconds": 44.679030103608966,
+  "validation_seconds": 152.4456358011812,
+  "selected_checkpoint": "checkpoints/step100352.pt",
+  "selected_validation_key": [
+    1.0,
+    1.0,
+    -0.0,
+    -7.25
+  ],
+  "last_checkpoint": "checkpoints/step100352.pt",
+  "source_manifest_sha256": "882b47796c8414d5d9ed7d518f8dd30daf19a449e6062d82bdbdd53d9b68d772"
+}

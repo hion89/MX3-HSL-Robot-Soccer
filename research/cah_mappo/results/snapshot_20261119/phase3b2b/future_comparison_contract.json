@@ -1,0 +1,89 @@
+{
+  "protocol": "phase3b2b-controlled-v1",
+  "actor": [
+    146,
+    64,
+    64,
+    10
+  ],
+  "critic": [
+    141,
+    64,
+    64,
+    1
+  ],
+  "ppo_hyperparameters": {
+    "hidden": 64,
+    "gamma": 0.99,
+    "gae_lambda": 0.95,
+    "clip": 0.2,
+    "entropy": 0.01,
+    "value_coef": 0.5,
+    "learning_rate": 0.0003,
+    "max_grad_norm": 0.5,
+    "rollout_steps": 256,
+    "epochs": 4,
+    "minibatch_steps": 64
+  },
+  "reward_weights": {
+    "progress": 1.0,
+    "completion": 10.0,
+    "response": 1.0,
+    "failure": 10.0,
+    "waiting": 1.0,
+    "coverage": 2.0,
+    "switching": 0.1,
+    "max_abs_step": 100.0,
+    "max_abs_episode": 1000.0
+  },
+  "environment": {
+    "robots": 4,
+    "capacity": 1,
+    "tasks_train": "1/2/3 with .2/.2/.6 probability",
+    "tasks_benchmark": 3,
+    "task_spawn_times": [
+      2,
+      4,
+      6
+    ],
+    "service_seconds": 2,
+    "task_priorities": [
+      1,
+      2,
+      4
+    ],
+    "task_deadlines": [
+      20,
+      24,
+      28
+    ],
+    "position_halfwidth_m": 0.75,
+    "guard_position_halfwidth_m": 0.05,
+    "base_positions": [
+      [
+        0,
+        1.5
+      ],
+      [
+        0,
+        -1.5
+      ]
+    ],
+    "base_priorities": [
+      1,
+      1
+    ],
+    "horizon_seconds": 32,
+    "sensor_radius": 100,
+    "sensor_noise": 0,
+    "radio_delay": 0,
+    "failures": false
+  },
+  "mask": "0 NOOP always valid; 1 keep; 2..9 locally known fresh job slots; no inactive actor loss",
+  "termination": "32s truncation, bootstrap1 and continuation0; no early workload end",
+  "cgr": "capacity-feasible physical matching, two persistent priority1 bases; denominator64 region-seconds",
+  "reference_information": "local actor packets vs privileged team reference; central_handover has extra preparation action",
+  "purpose": "Common environment/reward contract for later comparisons; no CAH implementation",
+  "source_manifest_sha256": "882b47796c8414d5d9ed7d518f8dd30daf19a449e6062d82bdbdd53d9b68d772",
+  "changes_require_explicit_new_version_and_validation_only_selection": true
+}

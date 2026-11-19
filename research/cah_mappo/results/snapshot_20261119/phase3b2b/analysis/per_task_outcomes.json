@@ -1,0 +1,398 @@
+{
+  "seed101_greedy": {
+    "task0": {
+      "attempts": 400,
+      "successes": 400,
+      "selection_requests": 3929,
+      "failure_categories": {},
+      "success_rate": 1.0
+    },
+    "task1": {
+      "attempts": 400,
+      "successes": 400,
+      "selection_requests": 3236,
+      "failure_categories": {},
+      "success_rate": 1.0
+    },
+    "task2": {
+      "attempts": 400,
+      "successes": 400,
+      "selection_requests": 2909,
+      "failure_categories": {},
+      "success_rate": 1.0
+    }
+  },
+  "seed101_stochastic": {
+    "task0": {
+      "attempts": 1200,
+      "successes": 1200,
+      "selection_requests": 11549,
+      "failure_categories": {},
+      "success_rate": 1.0
+    },
+    "task1": {
+      "attempts": 1200,
+      "successes": 1198,
+      "selection_requests": 9981,
+      "failure_categories": {
+        "selected_no_response": 2
+      },
+      "success_rate": 0.9983333333333333
+    },
+    "task2": {
+      "attempts": 1200,
+      "successes": 1199,
+      "selection_requests": 9667,
+      "failure_categories": {
+        "responded_incomplete": 1
+      },
+      "success_rate": 0.9991666666666666
+    }
+  },
+  "seed211_greedy": {
+    "task0": {
+      "attempts": 400,
+      "successes": 400,
+      "selection_requests": 3929,
+      "failure_categories": {},
+      "success_rate": 1.0
+    },
+    "task1": {
+      "attempts": 400,
+      "successes": 400,
+      "selection_requests": 3236,
+      "failure_categories": {},
+      "success_rate": 1.0
+    },
+    "task2": {
+      "attempts": 400,
+      "successes": 400,
+      "selection_requests": 2909,
+      "failure_categories": {},
+      "success_rate": 1.0
+    }
+  },
+  "seed211_stochastic": {
+    "task0": {
+      "attempts": 1200,
+      "successes": 1197,
+      "selection_requests": 10981,
+      "failure_categories": {
+        "responded_incomplete": 2,
+        "selected_no_response": 1
+      },
+      "success_rate": 0.9975
+    },
+    "task1": {
+      "attempts": 1200,
+      "successes": 1199,
+      "selection_requests": 10702,
+      "failure_categories": {
+        "responded_incomplete": 1
+      },
+      "success_rate": 0.9991666666666666
+    },
+    "task2": {
+      "attempts": 1200,
+      "successes": 1197,
+      "selection_requests": 9252,
+      "failure_categories": {
+        "responded_incomplete": 1,
+        "selected_no_response": 2
+      },
+      "success_rate": 0.9975
+    }
+  },
+  "seed307_greedy": {
+    "task0": {
+      "attempts": 400,
+      "successes": 400,
+      "selection_requests": 3929,
+      "failure_categories": {},
+      "success_rate": 1.0
+    },
+    "task1": {
+      "attempts": 400,
+      "successes": 400,
+      "selection_requests": 3236,
+      "failure_categories": {},
+      "success_rate": 1.0
+    },
+    "task2": {
+      "attempts": 400,
+      "successes": 400,
+      "selection_requests": 2909,
+      "failure_categories": {},
+      "success_rate": 1.0
+    }
+  },
+  "seed307_stochastic": {
+    "task0": {
+      "attempts": 1200,
+      "successes": 1200,
+      "selection_requests": 11920,
+      "failure_categories": {},
+      "success_rate": 1.0
+    },
+    "task1": {
+      "attempts": 1200,
+      "successes": 1199,
+      "selection_requests": 10848,
+      "failure_categories": {
+        "responded_incomplete": 1
+      },
+      "success_rate": 0.9991666666666666
+    },
+    "task2": {
+      "attempts": 1200,
+      "successes": 1199,
+      "selection_requests": 9292,
+      "failure_categories": {
+        "responded_incomplete": 1
+      },
+      "success_rate": 0.9991666666666666
+    }
+  },
+  "seed401_greedy": {
+    "task0": {
+      "attempts": 400,
+      "successes": 400,
+      "selection_requests": 3929,
+      "failure_categories": {},
+      "success_rate": 1.0
+    },
+    "task1": {
+      "attempts": 400,
+      "successes": 400,
+      "selection_requests": 5179,
+      "failure_categories": {},
+      "success_rate": 1.0
+    },
+    "task2": {
+      "attempts": 400,
+      "successes": 400,
+      "selection_requests": 3044,
+      "failure_categories": {},
+      "success_rate": 1.0
+    }
+  },
+  "seed401_stochastic": {
+    "task0": {
+      "attempts": 1200,
+      "successes": 1200,
+      "selection_requests": 12132,
+      "failure_categories": {},
+      "success_rate": 1.0
+    },
+    "task1": {
+      "attempts": 1200,
+      "successes": 1200,
+      "selection_requests": 12336,
+      "failure_categories": {},
+      "success_rate": 1.0
+    },
+    "task2": {
+      "attempts": 1200,
+      "successes": 1200,
+      "selection_requests": 9150,
+      "failure_categories": {},
+      "success_rate": 1.0
+    }
+  },
+  "seed503_greedy": {
+    "task0": {
+      "attempts": 400,
+      "successes": 400,
+      "selection_requests": 3929,
+      "failure_categories": {},
+      "success_rate": 1.0
+    },
+    "task1": {
+      "attempts": 400,
+      "successes": 400,
+      "selection_requests": 3236,
+      "failure_categories": {},
+      "success_rate": 1.0
+    },
+    "task2": {
+      "attempts": 400,
+      "successes": 400,
+      "selection_requests": 2909,
+      "failure_categories": {},
+      "success_rate": 1.0
+    }
+  },
+  "seed503_stochastic": {
+    "task0": {
+      "attempts": 1200,
+      "successes": 1200,
+      "selection_requests": 11739,
+      "failure_categories": {},
+      "success_rate": 1.0
+    },
+    "task1": {
+      "attempts": 1200,
+      "successes": 1199,
+      "selection_requests": 10442,
+      "failure_categories": {
+        "responded_incomplete": 1
+      },
+      "success_rate": 0.9991666666666666
+    },
+    "task2": {
+      "attempts": 1200,
+      "successes": 1199,
+      "selection_requests": 9414,
+      "failure_categories": {
+        "responded_incomplete": 1
+      },
+      "success_rate": 0.9991666666666666
+    }
+  },
+  "central_exact": {
+    "task0": {
+      "attempts": 400,
+      "successes": 400,
+      "selection_requests": 2740,
+      "failure_categories": {},
+      "success_rate": 1.0
+    },
+    "task1": {
+      "attempts": 400,
+      "successes": 400,
+      "selection_requests": 2629,
+      "failure_categories": {},
+      "success_rate": 1.0
+    },
+    "task2": {
+      "attempts": 400,
+      "successes": 400,
+      "selection_requests": 2141,
+      "failure_categories": {},
+      "success_rate": 1.0
+    }
+  },
+  "central_fixed": {
+    "task0": {
+      "attempts": 400,
+      "successes": 400,
+      "selection_requests": 3129,
+      "failure_categories": {},
+      "success_rate": 1.0
+    },
+    "task1": {
+      "attempts": 400,
+      "successes": 400,
+      "selection_requests": 3235,
+      "failure_categories": {},
+      "success_rate": 1.0
+    },
+    "task2": {
+      "attempts": 400,
+      "successes": 400,
+      "selection_requests": 1907,
+      "failure_categories": {},
+      "success_rate": 1.0
+    }
+  },
+  "central_greedy": {
+    "task0": {
+      "attempts": 400,
+      "successes": 400,
+      "selection_requests": 2480,
+      "failure_categories": {},
+      "success_rate": 1.0
+    },
+    "task1": {
+      "attempts": 400,
+      "successes": 400,
+      "selection_requests": 2287,
+      "failure_categories": {},
+      "success_rate": 1.0
+    },
+    "task2": {
+      "attempts": 400,
+      "successes": 400,
+      "selection_requests": 2059,
+      "failure_categories": {},
+      "success_rate": 1.0
+    }
+  },
+  "central_handover": {
+    "task0": {
+      "attempts": 400,
+      "successes": 400,
+      "selection_requests": 2723,
+      "failure_categories": {},
+      "success_rate": 1.0
+    },
+    "task1": {
+      "attempts": 400,
+      "successes": 400,
+      "selection_requests": 2668,
+      "failure_categories": {},
+      "success_rate": 1.0
+    },
+    "task2": {
+      "attempts": 400,
+      "successes": 400,
+      "selection_requests": 2118,
+      "failure_categories": {},
+      "success_rate": 1.0
+    }
+  },
+  "local_eta": {
+    "task0": {
+      "attempts": 400,
+      "successes": 376,
+      "selection_requests": 1997,
+      "failure_categories": {
+        "known_not_selected": 20,
+        "selected_no_response": 2,
+        "responded_incomplete": 2
+      },
+      "success_rate": 0.94
+    },
+    "task1": {
+      "attempts": 400,
+      "successes": 379,
+      "selection_requests": 1541,
+      "failure_categories": {
+        "known_not_selected": 21
+      },
+      "success_rate": 0.9475
+    },
+    "task2": {
+      "attempts": 400,
+      "successes": 377,
+      "selection_requests": 1516,
+      "failure_categories": {
+        "known_not_selected": 23
+      },
+      "success_rate": 0.9425
+    }
+  },
+  "local_fixed": {
+    "task0": {
+      "attempts": 400,
+      "successes": 400,
+      "selection_requests": 6258,
+      "failure_categories": {},
+      "success_rate": 1.0
+    },
+    "task1": {
+      "attempts": 400,
+      "successes": 400,
+      "selection_requests": 3132,
+      "failure_categories": {},
+      "success_rate": 1.0
+    },
+    "task2": {
+      "attempts": 400,
+      "successes": 400,
+      "selection_requests": 3028,
+      "failure_categories": {},
+      "success_rate": 1.0
+    }
+  }
+}

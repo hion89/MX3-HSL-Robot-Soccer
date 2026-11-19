@@ -1,0 +1,130 @@
+{
+  "seed101_greedy": {
+    "handover_events": 0,
+    "right_censored_events": 0,
+    "episodes_without_handover": 400,
+    "initial_ready_gap_event_mean_including_censored_lower_bounds_s": null,
+    "uncensored_ready_gap_event_mean_s": null,
+    "physical_gap_union_per_handover_mean_s": null
+  },
+  "seed101_stochastic": {
+    "handover_events": 22,
+    "right_censored_events": 0,
+    "episodes_without_handover": 1178,
+    "initial_ready_gap_event_mean_including_censored_lower_bounds_s": 11.409090909090908,
+    "uncensored_ready_gap_event_mean_s": 11.409090909090908,
+    "physical_gap_union_per_handover_mean_s": 12.090909090909092
+  },
+  "seed211_greedy": {
+    "handover_events": 0,
+    "right_censored_events": 0,
+    "episodes_without_handover": 400,
+    "initial_ready_gap_event_mean_including_censored_lower_bounds_s": null,
+    "uncensored_ready_gap_event_mean_s": null,
+    "physical_gap_union_per_handover_mean_s": null
+  },
+  "seed211_stochastic": {
+    "handover_events": 14,
+    "right_censored_events": 0,
+    "episodes_without_handover": 1186,
+    "initial_ready_gap_event_mean_including_censored_lower_bounds_s": 7.357142857142857,
+    "uncensored_ready_gap_event_mean_s": 7.357142857142857,
+    "physical_gap_union_per_handover_mean_s": 8.714285714285714
+  },
+  "seed307_greedy": {
+    "handover_events": 0,
+    "right_censored_events": 0,
+    "episodes_without_handover": 400,
+    "initial_ready_gap_event_mean_including_censored_lower_bounds_s": null,
+    "uncensored_ready_gap_event_mean_s": null,
+    "physical_gap_union_per_handover_mean_s": null
+  },
+  "seed307_stochastic": {
+    "handover_events": 12,
+    "right_censored_events": 0,
+    "episodes_without_handover": 1188,
+    "initial_ready_gap_event_mean_including_censored_lower_bounds_s": 10.666666666666666,
+    "uncensored_ready_gap_event_mean_s": 10.666666666666666,
+    "physical_gap_union_per_handover_mean_s": 11.75
+  },
+  "seed401_greedy": {
+    "handover_events": 0,
+    "right_censored_events": 0,
+    "episodes_without_handover": 400,
+    "initial_ready_gap_event_mean_including_censored_lower_bounds_s": null,
+    "uncensored_ready_gap_event_mean_s": null,
+    "physical_gap_union_per_handover_mean_s": null
+  },
+  "seed401_stochastic": {
+    "handover_events": 7,
+    "right_censored_events": 0,
+    "episodes_without_handover": 1193,
+    "initial_ready_gap_event_mean_including_censored_lower_bounds_s": 12.0,
+    "uncensored_ready_gap_event_mean_s": 12.0,
+    "physical_gap_union_per_handover_mean_s": 12.714285714285714
+  },
+  "seed503_greedy": {
+    "handover_events": 0,
+    "right_censored_events": 0,
+    "episodes_without_handover": 400,
+    "initial_ready_gap_event_mean_including_censored_lower_bounds_s": null,
+    "uncensored_ready_gap_event_mean_s": null,
+    "physical_gap_union_per_handover_mean_s": null
+  },
+  "seed503_stochastic": {
+    "handover_events": 12,
+    "right_censored_events": 1,
+    "episodes_without_handover": 1188,
+    "initial_ready_gap_event_mean_including_censored_lower_bounds_s": 12.5,
+    "uncensored_ready_gap_event_mean_s": 11.454545454545455,
+    "physical_gap_union_per_handover_mean_s": 15.5
+  },
+  "central_exact": {
+    "handover_events": 577,
+    "right_censored_events": 81,
+    "episodes_without_handover": 65,
+    "initial_ready_gap_event_mean_including_censored_lower_bounds_s": 4.334488734835356,
+    "uncensored_ready_gap_event_mean_s": 4.715725806451613,
+    "physical_gap_union_per_handover_mean_s": 4.334488734835356
+  },
+  "central_fixed": {
+    "handover_events": 0,
+    "right_censored_events": 0,
+    "episodes_without_handover": 400,
+    "initial_ready_gap_event_mean_including_censored_lower_bounds_s": null,
+    "uncensored_ready_gap_event_mean_s": null,
+    "physical_gap_union_per_handover_mean_s": null
+  },
+  "central_greedy": {
+    "handover_events": 1649,
+    "right_censored_events": 640,
+    "episodes_without_handover": 0,
+    "initial_ready_gap_event_mean_including_censored_lower_bounds_s": 3.0412371134020617,
+    "uncensored_ready_gap_event_mean_s": 3.7750247770069376,
+    "physical_gap_union_per_handover_mean_s": 3.0412371134020617
+  },
+  "central_handover": {
+    "handover_events": 605,
+    "right_censored_events": 0,
+    "episodes_without_handover": 65,
+    "initial_ready_gap_event_mean_including_censored_lower_bounds_s": 3.239669421487603,
+    "uncensored_ready_gap_event_mean_s": 3.239669421487603,
+    "physical_gap_union_per_handover_mean_s": 3.3024793388429754
+  },
+  "local_eta": {
+    "handover_events": 427,
+    "right_censored_events": 104,
+    "episodes_without_handover": 11,
+    "initial_ready_gap_event_mean_including_censored_lower_bounds_s": 11.737704918032787,
+    "uncensored_ready_gap_event_mean_s": 6.291021671826625,
+    "physical_gap_union_per_handover_mean_s": 11.737704918032787
+  },
+  "local_fixed": {
+    "handover_events": 0,
+    "right_censored_events": 0,
+    "episodes_without_handover": 400,
+    "initial_ready_gap_event_mean_including_censored_lower_bounds_s": null,
+    "uncensored_ready_gap_event_mean_s": null,
+    "physical_gap_union_per_handover_mean_s": null
+  }
+}

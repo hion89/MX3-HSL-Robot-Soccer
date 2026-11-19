@@ -1,0 +1,6 @@
+{
+  "seconds": 866.3590000001714,
+  "source": "monotonic elapsed_seconds printed by train-all coordinator after all five workers exited successfully",
+  "seeds_parallel": 5,
+  "per_seed_worker_times_are_separate": true
+}

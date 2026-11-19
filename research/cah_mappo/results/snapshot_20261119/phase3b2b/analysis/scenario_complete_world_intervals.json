@@ -1,0 +1,262 @@
+{
+  "seed101_greedy_repeat0": {
+    "independent_physical_scenarios": 400,
+    "complete_worlds": 400,
+    "complete_world_rate": 1.0,
+    "wilson95": [
+      0.9904877056657034,
+      0.9999999999999999
+    ],
+    "estimand": "all tasks completed in a physical world, one evaluation repeat; not a training-seed CI or Task Success Rate CI"
+  },
+  "seed101_stochastic_repeat0": {
+    "independent_physical_scenarios": 400,
+    "complete_worlds": 399,
+    "complete_world_rate": 0.9975,
+    "wilson95": [
+      0.9859767149241766,
+      0.9995585522131983
+    ],
+    "estimand": "all tasks completed in a physical world, one evaluation repeat; not a training-seed CI or Task Success Rate CI"
+  },
+  "seed101_stochastic_repeat1": {
+    "independent_physical_scenarios": 400,
+    "complete_worlds": 398,
+    "complete_world_rate": 0.995,
+    "wilson95": [
+      0.9819550815637568,
+      0.9986277470452896
+    ],
+    "estimand": "all tasks completed in a physical world, one evaluation repeat; not a training-seed CI or Task Success Rate CI"
+  },
+  "seed101_stochastic_repeat2": {
+    "independent_physical_scenarios": 400,
+    "complete_worlds": 400,
+    "complete_world_rate": 1.0,
+    "wilson95": [
+      0.9904877056657034,
+      0.9999999999999999
+    ],
+    "estimand": "all tasks completed in a physical world, one evaluation repeat; not a training-seed CI or Task Success Rate CI"
+  },
+  "seed211_greedy_repeat0": {
+    "independent_physical_scenarios": 400,
+    "complete_worlds": 400,
+    "complete_world_rate": 1.0,
+    "wilson95": [
+      0.9904877056657034,
+      0.9999999999999999
+    ],
+    "estimand": "all tasks completed in a physical world, one evaluation repeat; not a training-seed CI or Task Success Rate CI"
+  },
+  "seed211_stochastic_repeat0": {
+    "independent_physical_scenarios": 400,
+    "complete_worlds": 398,
+    "complete_world_rate": 0.995,
+    "wilson95": [
+      0.9819550815637568,
+      0.9986277470452896
+    ],
+    "estimand": "all tasks completed in a physical world, one evaluation repeat; not a training-seed CI or Task Success Rate CI"
+  },
+  "seed211_stochastic_repeat1": {
+    "independent_physical_scenarios": 400,
+    "complete_worlds": 396,
+    "complete_world_rate": 0.99,
+    "wilson95": [
+      0.9745734353473804,
+      0.996104516205009
+    ],
+    "estimand": "all tasks completed in a physical world, one evaluation repeat; not a training-seed CI or Task Success Rate CI"
+  },
+  "seed211_stochastic_repeat2": {
+    "independent_physical_scenarios": 400,
+    "complete_worlds": 399,
+    "complete_world_rate": 0.9975,
+    "wilson95": [
+      0.9859767149241766,
+      0.9995585522131983
+    ],
+    "estimand": "all tasks completed in a physical world, one evaluation repeat; not a training-seed CI or Task Success Rate CI"
+  },
+  "seed307_greedy_repeat0": {
+    "independent_physical_scenarios": 400,
+    "complete_worlds": 400,
+    "complete_world_rate": 1.0,
+    "wilson95": [
+      0.9904877056657034,
+      0.9999999999999999
+    ],
+    "estimand": "all tasks completed in a physical world, one evaluation repeat; not a training-seed CI or Task Success Rate CI"
+  },
+  "seed307_stochastic_repeat0": {
+    "independent_physical_scenarios": 400,
+    "complete_worlds": 400,
+    "complete_world_rate": 1.0,
+    "wilson95": [
+      0.9904877056657034,
+      0.9999999999999999
+    ],
+    "estimand": "all tasks completed in a physical world, one evaluation repeat; not a training-seed CI or Task Success Rate CI"
+  },
+  "seed307_stochastic_repeat1": {
+    "independent_physical_scenarios": 400,
+    "complete_worlds": 398,
+    "complete_world_rate": 0.995,
+    "wilson95": [
+      0.9819550815637568,
+      0.9986277470452896
+    ],
+    "estimand": "all tasks completed in a physical world, one evaluation repeat; not a training-seed CI or Task Success Rate CI"
+  },
+  "seed307_stochastic_repeat2": {
+    "independent_physical_scenarios": 400,
+    "complete_worlds": 400,
+    "complete_world_rate": 1.0,
+    "wilson95": [
+      0.9904877056657034,
+      0.9999999999999999
+    ],
+    "estimand": "all tasks completed in a physical world, one evaluation repeat; not a training-seed CI or Task Success Rate CI"
+  },
+  "seed401_greedy_repeat0": {
+    "independent_physical_scenarios": 400,
+    "complete_worlds": 400,
+    "complete_world_rate": 1.0,
+    "wilson95": [
+      0.9904877056657034,
+      0.9999999999999999
+    ],
+    "estimand": "all tasks completed in a physical world, one evaluation repeat; not a training-seed CI or Task Success Rate CI"
+  },
+  "seed401_stochastic_repeat0": {
+    "independent_physical_scenarios": 400,
+    "complete_worlds": 400,
+    "complete_world_rate": 1.0,
+    "wilson95": [
+      0.9904877056657034,
+      0.9999999999999999
+    ],
+    "estimand": "all tasks completed in a physical world, one evaluation repeat; not a training-seed CI or Task Success Rate CI"
+  },
+  "seed401_stochastic_repeat1": {
+    "independent_physical_scenarios": 400,
+    "complete_worlds": 400,
+    "complete_world_rate": 1.0,
+    "wilson95": [
+      0.9904877056657034,
+      0.9999999999999999
+    ],
+    "estimand": "all tasks completed in a physical world, one evaluation repeat; not a training-seed CI or Task Success Rate CI"
+  },
+  "seed401_stochastic_repeat2": {
+    "independent_physical_scenarios": 400,
+    "complete_worlds": 400,
+    "complete_world_rate": 1.0,
+    "wilson95": [
+      0.9904877056657034,
+      0.9999999999999999
+    ],
+    "estimand": "all tasks completed in a physical world, one evaluation repeat; not a training-seed CI or Task Success Rate CI"
+  },
+  "seed503_greedy_repeat0": {
+    "independent_physical_scenarios": 400,
+    "complete_worlds": 400,
+    "complete_world_rate": 1.0,
+    "wilson95": [
+      0.9904877056657034,
+      0.9999999999999999
+    ],
+    "estimand": "all tasks completed in a physical world, one evaluation repeat; not a training-seed CI or Task Success Rate CI"
+  },
+  "seed503_stochastic_repeat0": {
+    "independent_physical_scenarios": 400,
+    "complete_worlds": 400,
+    "complete_world_rate": 1.0,
+    "wilson95": [
+      0.9904877056657034,
+      0.9999999999999999
+    ],
+    "estimand": "all tasks completed in a physical world, one evaluation repeat; not a training-seed CI or Task Success Rate CI"
+  },
+  "seed503_stochastic_repeat1": {
+    "independent_physical_scenarios": 400,
+    "complete_worlds": 398,
+    "complete_world_rate": 0.995,
+    "wilson95": [
+      0.9819550815637568,
+      0.9986277470452896
+    ],
+    "estimand": "all tasks completed in a physical world, one evaluation repeat; not a training-seed CI or Task Success Rate CI"
+  },
+  "seed503_stochastic_repeat2": {
+    "independent_physical_scenarios": 400,
+    "complete_worlds": 400,
+    "complete_world_rate": 1.0,
+    "wilson95": [
+      0.9904877056657034,
+      0.9999999999999999
+    ],
+    "estimand": "all tasks completed in a physical world, one evaluation repeat; not a training-seed CI or Task Success Rate CI"
+  },
+  "central_exact": {
+    "independent_physical_scenarios": 400,
+    "complete_worlds": 400,
+    "complete_world_rate": 1.0,
+    "wilson95": [
+      0.9904877056657034,
+      0.9999999999999999
+    ],
+    "estimand": "all tasks completed in a physical world, one evaluation repeat; not a training-seed CI or Task Success Rate CI"
+  },
+  "central_fixed": {
+    "independent_physical_scenarios": 400,
+    "complete_worlds": 400,
+    "complete_world_rate": 1.0,
+    "wilson95": [
+      0.9904877056657034,
+      0.9999999999999999
+    ],
+    "estimand": "all tasks completed in a physical world, one evaluation repeat; not a training-seed CI or Task Success Rate CI"
+  },
+  "central_greedy": {
+    "independent_physical_scenarios": 400,
+    "complete_worlds": 400,
+    "complete_world_rate": 1.0,
+    "wilson95": [
+      0.9904877056657034,
+      0.9999999999999999
+    ],
+    "estimand": "all tasks completed in a physical world, one evaluation repeat; not a training-seed CI or Task Success Rate CI"
+  },
+  "central_handover": {
+    "independent_physical_scenarios": 400,
+    "complete_worlds": 400,
+    "complete_world_rate": 1.0,
+    "wilson95": [
+      0.9904877056657034,
+      0.9999999999999999
+    ],
+    "estimand": "all tasks completed in a physical world, one evaluation repeat; not a training-seed CI or Task Success Rate CI"
+  },
+  "local_eta": {
+    "independent_physical_scenarios": 400,
+    "complete_worlds": 357,
+    "complete_world_rate": 0.8925,
+    "wilson95": [
+      0.8583265694191717,
+      0.9192062795284055
+    ],
+    "estimand": "all tasks completed in a physical world, one evaluation repeat; not a training-seed CI or Task Success Rate CI"
+  },
+  "local_fixed": {
+    "independent_physical_scenarios": 400,
+    "complete_worlds": 400,
+    "complete_world_rate": 1.0,
+    "wilson95": [
+      0.9904877056657034,
+      0.9999999999999999
+    ],
+    "estimand": "all tasks completed in a physical world, one evaluation repeat; not a training-seed CI or Task Success Rate CI"
+  }
+}

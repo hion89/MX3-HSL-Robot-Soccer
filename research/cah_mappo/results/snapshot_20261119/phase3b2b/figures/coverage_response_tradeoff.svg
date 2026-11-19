@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="690" viewBox="0 0 1120 690">
+<rect width="100%" height="100%" fill="white"/><g font-family="Arial,sans-serif" font-size="12" fill="#263238">
+<text x="25" y="30" font-size="19">Coverage / response tradeoff: same 32-second benchmark</text>
+<text x="25" y="52">Error bars: descriptive t95 over 5 MAPPO training seeds. Gray central policies have extra information.</text>
+<text x="25" y="73">Response is conditional on a recorded response; task success is reported separately.</text>
+<path d="M85.0,100 v500" stroke="#e0e5e8"/>
+<text x="85.0" y="622" text-anchor="middle">0</text>
+<path d="M262.27272727272725,100 v500" stroke="#e0e5e8"/>
+<text x="262.27272727272725" y="622" text-anchor="middle">5</text>
+<path d="M439.54545454545456,100 v500" stroke="#e0e5e8"/>
+<text x="439.54545454545456" y="622" text-anchor="middle">10</text>
+<path d="M616.8181818181819,100 v500" stroke="#e0e5e8"/>
+<text x="616.8181818181819" y="622" text-anchor="middle">15</text>
+<path d="M794.0909090909091,100 v500" stroke="#e0e5e8"/>
+<text x="794.0909090909091" y="622" text-anchor="middle">20</text>
+<path d="M85,600.0 h780" stroke="#e0e5e8"/>
+<text x="75" y="604.0" text-anchor="end">3</text>
+<path d="M85,516.6666666666667 h780" stroke="#e0e5e8"/>
+<text x="75" y="520.6666666666667" text-anchor="end">4</text>
+<path d="M85,433.3333333333333 h780" stroke="#e0e5e8"/>
+<text x="75" y="437.3333333333333" text-anchor="end">5</text>
+<path d="M85,350.0 h780" stroke="#e0e5e8"/>
+<text x="75" y="354.0" text-anchor="end">6</text>
+<path d="M85,266.66666666666663 h780" stroke="#e0e5e8"/>
+<text x="75" y="270.66666666666663" text-anchor="end">7</text>
+<path d="M85,183.33333333333331 h780" stroke="#e0e5e8"/>
+<text x="75" y="187.33333333333331" text-anchor="end">8</text>
+<path d="M85,100.0 h780" stroke="#e0e5e8"/>
+<text x="75" y="104.0" text-anchor="end">9</text>
+<path d="M85.0,316.5138888888889 H85.0 M85.0,370.924500599375 V262.1032771784028" stroke="#1565c0" fill="none"/>
+<circle cx="85.0" cy="316.5138888888889" r="5" fill="#1565c0"/>
+<text x="95.0" y="307.5138888888889" fill="#1565c0">MAPPO greedy</text>
+<path d="M88.49828322935392,277.35416666666663 H96.34830767973699 M92.42329545454545,292.19346311094137 V262.5148702223919" stroke="#c23b22" fill="none"/>
+<circle cx="92.42329545454545" cy="277.35416666666663" r="5" fill="#c23b22"/>
+<text x="102.42329545454545" y="268.35416666666663" fill="#c23b22">MAPPO stochastic</text>
+<circle cx="431.37428977272725" cy="467.9166666666667" r="5" fill="#777777"/>
+<text x="441.37428977272725" y="458.9166666666667" fill="#777777">central_exact</text>
+<circle cx="85.0" cy="336.1111111111111" r="5" fill="#777777"/>
+<text x="95.0" y="327.1111111111111" fill="#777777">central_fixed</text>
+<circle cx="779.5490056818181" cy="543.4027777777778" r="5" fill="#777777"/>
+<text x="789.5490056818181" y="534.4027777777778" fill="#777777">central_greedy</text>
+<circle cx="361.71164772727275" cy="375.3472222222222" r="5" fill="#777777"/>
+<text x="371.71164772727275" y="366.3472222222222" fill="#777777">central_handover</text>
+<circle cx="779.1335227272727" cy="394.6301056840902" r="5" fill="#21814b"/>
+<text x="789.1335227272727" y="385.6301056840902" fill="#21814b">local_eta (success 94.3%)</text>
+<circle cx="85.0" cy="208.81944444444446" r="5" fill="#21814b"/>
+<text x="95.0" y="199.81944444444446" fill="#21814b">local_fixed</text>
+<text x="345" y="654">Coverage Gap Ratio (%)</text>
+<text x="18" y="420" transform="rotate(-90 18 420)">Task Response Time (seconds)</text>
+</g></svg>

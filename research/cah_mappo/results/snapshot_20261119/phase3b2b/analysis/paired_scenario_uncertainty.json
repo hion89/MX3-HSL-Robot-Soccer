@@ -1,0 +1,2359 @@
+{
+  "estimand": "scenario-sampling uncertainty conditional on each fixed trained network; separate from n=5 seed uncertainty",
+  "method": "equal-family stratified paired mean; normal approximation with independent physical-world strata",
+  "not_training_replications": true,
+  "comparisons": {
+    "central_exact": {
+      "101": {
+        "greedy": {
+          "task_success_rate": {
+            "paired_delta_mappo_minus_reference": 0.0,
+            "stratified_scenario_standard_error": 0.0,
+            "scenario_normal_approx_95": [
+              0.0,
+              0.0
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          },
+          "coverage_gap_ratio": {
+            "paired_delta_mappo_minus_reference": -0.0976953125,
+            "stratified_scenario_standard_error": 0.0024431506801780548,
+            "scenario_normal_approx_95": [
+              -0.1024837998419534,
+              -0.09290682515804662
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          },
+          "response_time_mean_s": {
+            "paired_delta_mappo_minus_reference": 1.5816666666666666,
+            "stratified_scenario_standard_error": 0.05042387333074525,
+            "scenario_normal_approx_95": [
+              1.4828376909773988,
+              1.6804956423559343
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          }
+        },
+        "stochastic": {
+          "task_success_rate": {
+            "paired_delta_mappo_minus_reference": -0.0008333333333333337,
+            "stratified_scenario_standard_error": 0.00047870140425051663,
+            "scenario_normal_approx_95": [
+              -0.0017715708450130696,
+              0.00010490417834640216
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          },
+          "coverage_gap_ratio": {
+            "paired_delta_mappo_minus_reference": -0.09423177083333333,
+            "stratified_scenario_standard_error": 0.0025999086773977505,
+            "scenario_normal_approx_95": [
+              -0.09932749820412594,
+              -0.08913604346254071
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          },
+          "response_time_mean_s": {
+            "paired_delta_mappo_minus_reference": 2.1433333333333335,
+            "stratified_scenario_standard_error": 0.054216376136777655,
+            "scenario_normal_approx_95": [
+              2.0370711887329755,
+              2.2495954779336915
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          }
+        }
+      },
+      "211": {
+        "greedy": {
+          "task_success_rate": {
+            "paired_delta_mappo_minus_reference": 0.0,
+            "stratified_scenario_standard_error": 0.0,
+            "scenario_normal_approx_95": [
+              0.0,
+              0.0
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          },
+          "coverage_gap_ratio": {
+            "paired_delta_mappo_minus_reference": -0.0976953125,
+            "stratified_scenario_standard_error": 0.0024431506801780548,
+            "scenario_normal_approx_95": [
+              -0.1024837998419534,
+              -0.09290682515804662
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          },
+          "response_time_mean_s": {
+            "paired_delta_mappo_minus_reference": 1.5816666666666666,
+            "stratified_scenario_standard_error": 0.05042387333074525,
+            "scenario_normal_approx_95": [
+              1.4828376909773988,
+              1.6804956423559343
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          }
+        },
+        "stochastic": {
+          "task_success_rate": {
+            "paired_delta_mappo_minus_reference": -0.0019444444444444453,
+            "stratified_scenario_standard_error": 0.0007269740171008852,
+            "scenario_normal_approx_95": [
+              -0.0033692873356585464,
+              -0.0005196015532303441
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          },
+          "coverage_gap_ratio": {
+            "paired_delta_mappo_minus_reference": -0.09610677083333333,
+            "stratified_scenario_standard_error": 0.0024772275672309174,
+            "scenario_normal_approx_95": [
+              -0.10096204764661557,
+              -0.09125149402005109
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          },
+          "response_time_mean_s": {
+            "paired_delta_mappo_minus_reference": 2.471527777777778,
+            "stratified_scenario_standard_error": 0.05412322969528359,
+            "scenario_normal_approx_95": [
+              2.3654481968480363,
+              2.57760735870752
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          }
+        }
+      },
+      "307": {
+        "greedy": {
+          "task_success_rate": {
+            "paired_delta_mappo_minus_reference": 0.0,
+            "stratified_scenario_standard_error": 0.0,
+            "scenario_normal_approx_95": [
+              0.0,
+              0.0
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          },
+          "coverage_gap_ratio": {
+            "paired_delta_mappo_minus_reference": -0.0976953125,
+            "stratified_scenario_standard_error": 0.0024431506801780548,
+            "scenario_normal_approx_95": [
+              -0.1024837998419534,
+              -0.09290682515804662
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          },
+          "response_time_mean_s": {
+            "paired_delta_mappo_minus_reference": 1.5816666666666666,
+            "stratified_scenario_standard_error": 0.05042387333074525,
+            "scenario_normal_approx_95": [
+              1.4828376909773988,
+              1.6804956423559343
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          }
+        },
+        "stochastic": {
+          "task_success_rate": {
+            "paired_delta_mappo_minus_reference": -0.0005555555555555558,
+            "stratified_scenario_standard_error": 0.00039184882965794275,
+            "scenario_normal_approx_95": [
+              -0.001323565149069273,
+              0.0002124540379581615
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          },
+          "coverage_gap_ratio": {
+            "paired_delta_mappo_minus_reference": -0.095859375,
+            "stratified_scenario_standard_error": 0.002545873824398642,
+            "scenario_normal_approx_95": [
+              -0.10084919600500444,
+              -0.09086955399499555
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          },
+          "response_time_mean_s": {
+            "paired_delta_mappo_minus_reference": 2.268888888888889,
+            "stratified_scenario_standard_error": 0.053758880342769134,
+            "scenario_normal_approx_95": [
+              2.1635234195678663,
+              2.374254358209912
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          }
+        }
+      },
+      "401": {
+        "greedy": {
+          "task_success_rate": {
+            "paired_delta_mappo_minus_reference": 0.0,
+            "stratified_scenario_standard_error": 0.0,
+            "scenario_normal_approx_95": [
+              0.0,
+              0.0
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          },
+          "coverage_gap_ratio": {
+            "paired_delta_mappo_minus_reference": -0.0976953125,
+            "stratified_scenario_standard_error": 0.0024431506801780548,
+            "scenario_normal_approx_95": [
+              -0.1024837998419534,
+              -0.09290682515804662
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          },
+          "response_time_mean_s": {
+            "paired_delta_mappo_minus_reference": 2.7575000000000003,
+            "stratified_scenario_standard_error": 0.05521577768146792,
+            "scenario_normal_approx_95": [
+              2.6492790643659556,
+              2.865720935634045
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          }
+        },
+        "stochastic": {
+          "task_success_rate": {
+            "paired_delta_mappo_minus_reference": 0.0,
+            "stratified_scenario_standard_error": 0.0,
+            "scenario_normal_approx_95": [
+              0.0,
+              0.0
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          },
+          "coverage_gap_ratio": {
+            "paired_delta_mappo_minus_reference": -0.09653645833333332,
+            "stratified_scenario_standard_error": 0.002517985827524232,
+            "scenario_normal_approx_95": [
+              -0.10147161986886297,
+              -0.09160129679780368
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          },
+          "response_time_mean_s": {
+            "paired_delta_mappo_minus_reference": 2.391111111111111,
+            "stratified_scenario_standard_error": 0.054047188162725364,
+            "scenario_normal_approx_95": [
+              2.2851805688465125,
+              2.4970416533757094
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          }
+        }
+      },
+      "503": {
+        "greedy": {
+          "task_success_rate": {
+            "paired_delta_mappo_minus_reference": 0.0,
+            "stratified_scenario_standard_error": 0.0,
+            "scenario_normal_approx_95": [
+              0.0,
+              0.0
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          },
+          "coverage_gap_ratio": {
+            "paired_delta_mappo_minus_reference": -0.0976953125,
+            "stratified_scenario_standard_error": 0.0024431506801780548,
+            "scenario_normal_approx_95": [
+              -0.1024837998419534,
+              -0.09290682515804662
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          },
+          "response_time_mean_s": {
+            "paired_delta_mappo_minus_reference": 1.5816666666666666,
+            "stratified_scenario_standard_error": 0.05042387333074525,
+            "scenario_normal_approx_95": [
+              1.4828376909773988,
+              1.6804956423559343
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          }
+        },
+        "stochastic": {
+          "task_success_rate": {
+            "paired_delta_mappo_minus_reference": -0.0005555555555555558,
+            "stratified_scenario_standard_error": 0.00039184882965794275,
+            "scenario_normal_approx_95": [
+              -0.001323565149069273,
+              0.0002124540379581615
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          },
+          "coverage_gap_ratio": {
+            "paired_delta_mappo_minus_reference": -0.0952734375,
+            "stratified_scenario_standard_error": 0.0025586259243606155,
+            "scenario_normal_approx_95": [
+              -0.10028825216165718,
+              -0.09025862283834282
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          },
+          "response_time_mean_s": {
+            "paired_delta_mappo_minus_reference": 2.158888888888889,
+            "stratified_scenario_standard_error": 0.05409945507254532,
+            "scenario_normal_approx_95": [
+              2.0528559053634603,
+              2.2649218724143174
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          }
+        }
+      }
+    },
+    "central_fixed": {
+      "101": {
+        "greedy": {
+          "task_success_rate": {
+            "paired_delta_mappo_minus_reference": 0.0,
+            "stratified_scenario_standard_error": 0.0,
+            "scenario_normal_approx_95": [
+              0.0,
+              0.0
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          },
+          "coverage_gap_ratio": {
+            "paired_delta_mappo_minus_reference": 0.0,
+            "stratified_scenario_standard_error": 0.0,
+            "scenario_normal_approx_95": [
+              0.0,
+              0.0
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          },
+          "response_time_mean_s": {
+            "paired_delta_mappo_minus_reference": 0.0,
+            "stratified_scenario_standard_error": 0.0,
+            "scenario_normal_approx_95": [
+              0.0,
+              0.0
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          }
+        },
+        "stochastic": {
+          "task_success_rate": {
+            "paired_delta_mappo_minus_reference": -0.0008333333333333337,
+            "stratified_scenario_standard_error": 0.00047870140425051663,
+            "scenario_normal_approx_95": [
+              -0.0017715708450130696,
+              0.00010490417834640216
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          },
+          "coverage_gap_ratio": {
+            "paired_delta_mappo_minus_reference": 0.003463541666666667,
+            "stratified_scenario_standard_error": 0.0007824508324252505,
+            "scenario_normal_approx_95": [
+              0.0019299662154398328,
+              0.004997117117893501
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          },
+          "response_time_mean_s": {
+            "paired_delta_mappo_minus_reference": 0.5616666666666666,
+            "stratified_scenario_standard_error": 0.021334117040788074,
+            "scenario_normal_approx_95": [
+              0.5198525656247609,
+              0.6034807677085724
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          }
+        }
+      },
+      "211": {
+        "greedy": {
+          "task_success_rate": {
+            "paired_delta_mappo_minus_reference": 0.0,
+            "stratified_scenario_standard_error": 0.0,
+            "scenario_normal_approx_95": [
+              0.0,
+              0.0
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          },
+          "coverage_gap_ratio": {
+            "paired_delta_mappo_minus_reference": 0.0,
+            "stratified_scenario_standard_error": 0.0,
+            "scenario_normal_approx_95": [
+              0.0,
+              0.0
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          },
+          "response_time_mean_s": {
+            "paired_delta_mappo_minus_reference": 0.0,
+            "stratified_scenario_standard_error": 0.0,
+            "scenario_normal_approx_95": [
+              0.0,
+              0.0
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          }
+        },
+        "stochastic": {
+          "task_success_rate": {
+            "paired_delta_mappo_minus_reference": -0.0019444444444444453,
+            "stratified_scenario_standard_error": 0.0007269740171008852,
+            "scenario_normal_approx_95": [
+              -0.0033692873356585464,
+              -0.0005196015532303441
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          },
+          "coverage_gap_ratio": {
+            "paired_delta_mappo_minus_reference": 0.0015885416666666667,
+            "stratified_scenario_standard_error": 0.0004968124673136959,
+            "scenario_normal_approx_95": [
+              0.0006148071236613667,
+              0.002562276209671967
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          },
+          "response_time_mean_s": {
+            "paired_delta_mappo_minus_reference": 0.8898611111111112,
+            "stratified_scenario_standard_error": 0.025410281483701835,
+            "scenario_normal_approx_95": [
+              0.840057874566032,
+              0.9396643476561904
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          }
+        }
+      },
+      "307": {
+        "greedy": {
+          "task_success_rate": {
+            "paired_delta_mappo_minus_reference": 0.0,
+            "stratified_scenario_standard_error": 0.0,
+            "scenario_normal_approx_95": [
+              0.0,
+              0.0
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          },
+          "coverage_gap_ratio": {
+            "paired_delta_mappo_minus_reference": 0.0,
+            "stratified_scenario_standard_error": 0.0,
+            "scenario_normal_approx_95": [
+              0.0,
+              0.0
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          },
+          "response_time_mean_s": {
+            "paired_delta_mappo_minus_reference": 0.0,
+            "stratified_scenario_standard_error": 0.0,
+            "scenario_normal_approx_95": [
+              0.0,
+              0.0
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          }
+        },
+        "stochastic": {
+          "task_success_rate": {
+            "paired_delta_mappo_minus_reference": -0.0005555555555555558,
+            "stratified_scenario_standard_error": 0.00039184882965794275,
+            "scenario_normal_approx_95": [
+              -0.001323565149069273,
+              0.0002124540379581615
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          },
+          "coverage_gap_ratio": {
+            "paired_delta_mappo_minus_reference": 0.0018359375000000001,
+            "stratified_scenario_standard_error": 0.0005773422120519631,
+            "scenario_normal_approx_95": [
+              0.0007043675576234969,
+              0.0029675074423765034
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          },
+          "response_time_mean_s": {
+            "paired_delta_mappo_minus_reference": 0.6872222222222223,
+            "stratified_scenario_standard_error": 0.02166924350093578,
+            "scenario_normal_approx_95": [
+              0.6447512853881607,
+              0.7296931590562838
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          }
+        }
+      },
+      "401": {
+        "greedy": {
+          "task_success_rate": {
+            "paired_delta_mappo_minus_reference": 0.0,
+            "stratified_scenario_standard_error": 0.0,
+            "scenario_normal_approx_95": [
+              0.0,
+              0.0
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          },
+          "coverage_gap_ratio": {
+            "paired_delta_mappo_minus_reference": 0.0,
+            "stratified_scenario_standard_error": 0.0,
+            "scenario_normal_approx_95": [
+              0.0,
+              0.0
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          },
+          "response_time_mean_s": {
+            "paired_delta_mappo_minus_reference": 1.1758333333333335,
+            "stratified_scenario_standard_error": 0.02792861753247492,
+            "scenario_normal_approx_95": [
+              1.1210942488316902,
+              1.2305724178349768
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          }
+        },
+        "stochastic": {
+          "task_success_rate": {
+            "paired_delta_mappo_minus_reference": 0.0,
+            "stratified_scenario_standard_error": 0.0,
+            "scenario_normal_approx_95": [
+              0.0,
+              0.0
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          },
+          "coverage_gap_ratio": {
+            "paired_delta_mappo_minus_reference": 0.0011588541666666665,
+            "stratified_scenario_standard_error": 0.0005064147080063103,
+            "scenario_normal_approx_95": [
+              0.0001662995777329578,
+              0.0021514087556003753
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          },
+          "response_time_mean_s": {
+            "paired_delta_mappo_minus_reference": 0.8094444444444444,
+            "stratified_scenario_standard_error": 0.02178702130657128,
+            "scenario_normal_approx_95": [
+              0.7667426673531591,
+              0.8521462215357297
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          }
+        }
+      },
+      "503": {
+        "greedy": {
+          "task_success_rate": {
+            "paired_delta_mappo_minus_reference": 0.0,
+            "stratified_scenario_standard_error": 0.0,
+            "scenario_normal_approx_95": [
+              0.0,
+              0.0
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          },
+          "coverage_gap_ratio": {
+            "paired_delta_mappo_minus_reference": 0.0,
+            "stratified_scenario_standard_error": 0.0,
+            "scenario_normal_approx_95": [
+              0.0,
+              0.0
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          },
+          "response_time_mean_s": {
+            "paired_delta_mappo_minus_reference": 0.0,
+            "stratified_scenario_standard_error": 0.0,
+            "scenario_normal_approx_95": [
+              0.0,
+              0.0
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          }
+        },
+        "stochastic": {
+          "task_success_rate": {
+            "paired_delta_mappo_minus_reference": -0.0005555555555555558,
+            "stratified_scenario_standard_error": 0.00039184882965794275,
+            "scenario_normal_approx_95": [
+              -0.001323565149069273,
+              0.0002124540379581615
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          },
+          "coverage_gap_ratio": {
+            "paired_delta_mappo_minus_reference": 0.002421875,
+            "stratified_scenario_standard_error": 0.0007398414655427749,
+            "scenario_normal_approx_95": [
+              0.0009718123732668697,
+              0.0038719376267331304
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          },
+          "response_time_mean_s": {
+            "paired_delta_mappo_minus_reference": 0.5772222222222223,
+            "stratified_scenario_standard_error": 0.021066377566826153,
+            "scenario_normal_approx_95": [
+              0.5359328809065217,
+              0.6185115635379229
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          }
+        }
+      }
+    },
+    "central_greedy": {
+      "101": {
+        "greedy": {
+          "task_success_rate": {
+            "paired_delta_mappo_minus_reference": 0.0,
+            "stratified_scenario_standard_error": 0.0,
+            "scenario_normal_approx_95": [
+              0.0,
+              0.0
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          },
+          "coverage_gap_ratio": {
+            "paired_delta_mappo_minus_reference": -0.19589843750000002,
+            "stratified_scenario_standard_error": 0.002120366090324933,
+            "scenario_normal_approx_95": [
+              -0.20005427867107678,
+              -0.19174259632892326
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          },
+          "response_time_mean_s": {
+            "paired_delta_mappo_minus_reference": 2.4875,
+            "stratified_scenario_standard_error": 0.027705566384938204,
+            "scenario_normal_approx_95": [
+              2.433198087714239,
+              2.5418019122857607
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          }
+        },
+        "stochastic": {
+          "task_success_rate": {
+            "paired_delta_mappo_minus_reference": -0.0008333333333333337,
+            "stratified_scenario_standard_error": 0.00047870140425051663,
+            "scenario_normal_approx_95": [
+              -0.0017715708450130696,
+              0.00010490417834640216
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          },
+          "coverage_gap_ratio": {
+            "paired_delta_mappo_minus_reference": -0.19243489583333334,
+            "stratified_scenario_standard_error": 0.002219352615913114,
+            "scenario_normal_approx_95": [
+              -0.19678474702951768,
+              -0.188085044637149
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          },
+          "response_time_mean_s": {
+            "paired_delta_mappo_minus_reference": 3.049166666666667,
+            "stratified_scenario_standard_error": 0.03506733019316351,
+            "scenario_normal_approx_95": [
+              2.980435962454094,
+              3.1178973708792395
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          }
+        }
+      },
+      "211": {
+        "greedy": {
+          "task_success_rate": {
+            "paired_delta_mappo_minus_reference": 0.0,
+            "stratified_scenario_standard_error": 0.0,
+            "scenario_normal_approx_95": [
+              0.0,
+              0.0
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          },
+          "coverage_gap_ratio": {
+            "paired_delta_mappo_minus_reference": -0.19589843750000002,
+            "stratified_scenario_standard_error": 0.002120366090324933,
+            "scenario_normal_approx_95": [
+              -0.20005427867107678,
+              -0.19174259632892326
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          },
+          "response_time_mean_s": {
+            "paired_delta_mappo_minus_reference": 2.4875,
+            "stratified_scenario_standard_error": 0.027705566384938204,
+            "scenario_normal_approx_95": [
+              2.433198087714239,
+              2.5418019122857607
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          }
+        },
+        "stochastic": {
+          "task_success_rate": {
+            "paired_delta_mappo_minus_reference": -0.0019444444444444453,
+            "stratified_scenario_standard_error": 0.0007269740171008852,
+            "scenario_normal_approx_95": [
+              -0.0033692873356585464,
+              -0.0005196015532303441
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          },
+          "coverage_gap_ratio": {
+            "paired_delta_mappo_minus_reference": -0.19430989583333333,
+            "stratified_scenario_standard_error": 0.0021505691071312502,
+            "scenario_normal_approx_95": [
+              -0.19852493382957492,
+              -0.19009485783709174
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          },
+          "response_time_mean_s": {
+            "paired_delta_mappo_minus_reference": 3.377361111111111,
+            "stratified_scenario_standard_error": 0.035781295398705934,
+            "scenario_normal_approx_95": [
+              3.3072310608094604,
+              3.4474911614127617
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          }
+        }
+      },
+      "307": {
+        "greedy": {
+          "task_success_rate": {
+            "paired_delta_mappo_minus_reference": 0.0,
+            "stratified_scenario_standard_error": 0.0,
+            "scenario_normal_approx_95": [
+              0.0,
+              0.0
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          },
+          "coverage_gap_ratio": {
+            "paired_delta_mappo_minus_reference": -0.19589843750000002,
+            "stratified_scenario_standard_error": 0.002120366090324933,
+            "scenario_normal_approx_95": [
+              -0.20005427867107678,
+              -0.19174259632892326
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          },
+          "response_time_mean_s": {
+            "paired_delta_mappo_minus_reference": 2.4875,
+            "stratified_scenario_standard_error": 0.027705566384938204,
+            "scenario_normal_approx_95": [
+              2.433198087714239,
+              2.5418019122857607
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          }
+        },
+        "stochastic": {
+          "task_success_rate": {
+            "paired_delta_mappo_minus_reference": -0.0005555555555555558,
+            "stratified_scenario_standard_error": 0.00039184882965794275,
+            "scenario_normal_approx_95": [
+              -0.001323565149069273,
+              0.0002124540379581615
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          },
+          "coverage_gap_ratio": {
+            "paired_delta_mappo_minus_reference": -0.1940625,
+            "stratified_scenario_standard_error": 0.0021643987719780224,
+            "scenario_normal_approx_95": [
+              -0.19830464364125952,
+              -0.18982035635874048
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          },
+          "response_time_mean_s": {
+            "paired_delta_mappo_minus_reference": 3.174722222222222,
+            "stratified_scenario_standard_error": 0.03416721139138973,
+            "scenario_normal_approx_95": [
+              3.107755718442933,
+              3.241688726001511
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          }
+        }
+      },
+      "401": {
+        "greedy": {
+          "task_success_rate": {
+            "paired_delta_mappo_minus_reference": 0.0,
+            "stratified_scenario_standard_error": 0.0,
+            "scenario_normal_approx_95": [
+              0.0,
+              0.0
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          },
+          "coverage_gap_ratio": {
+            "paired_delta_mappo_minus_reference": -0.19589843750000002,
+            "stratified_scenario_standard_error": 0.002120366090324933,
+            "scenario_normal_approx_95": [
+              -0.20005427867107678,
+              -0.19174259632892326
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          },
+          "response_time_mean_s": {
+            "paired_delta_mappo_minus_reference": 3.663333333333333,
+            "stratified_scenario_standard_error": 0.03653728887730492,
+            "scenario_normal_approx_95": [
+              3.5917215630410815,
+              3.7349451036255847
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          }
+        },
+        "stochastic": {
+          "task_success_rate": {
+            "paired_delta_mappo_minus_reference": 0.0,
+            "stratified_scenario_standard_error": 0.0,
+            "scenario_normal_approx_95": [
+              0.0,
+              0.0
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          },
+          "coverage_gap_ratio": {
+            "paired_delta_mappo_minus_reference": -0.19473958333333333,
+            "stratified_scenario_standard_error": 0.0021657229288694325,
+            "scenario_normal_approx_95": [
+              -0.1989843222744099,
+              -0.19049484439225675
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          },
+          "response_time_mean_s": {
+            "paired_delta_mappo_minus_reference": 3.2969444444444447,
+            "stratified_scenario_standard_error": 0.0346670136187165,
+            "scenario_normal_approx_95": [
+              3.2289983463002025,
+              3.364890542588687
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          }
+        }
+      },
+      "503": {
+        "greedy": {
+          "task_success_rate": {
+            "paired_delta_mappo_minus_reference": 0.0,
+            "stratified_scenario_standard_error": 0.0,
+            "scenario_normal_approx_95": [
+              0.0,
+              0.0
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          },
+          "coverage_gap_ratio": {
+            "paired_delta_mappo_minus_reference": -0.19589843750000002,
+            "stratified_scenario_standard_error": 0.002120366090324933,
+            "scenario_normal_approx_95": [
+              -0.20005427867107678,
+              -0.19174259632892326
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          },
+          "response_time_mean_s": {
+            "paired_delta_mappo_minus_reference": 2.4875,
+            "stratified_scenario_standard_error": 0.027705566384938204,
+            "scenario_normal_approx_95": [
+              2.433198087714239,
+              2.5418019122857607
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          }
+        },
+        "stochastic": {
+          "task_success_rate": {
+            "paired_delta_mappo_minus_reference": -0.0005555555555555558,
+            "stratified_scenario_standard_error": 0.00039184882965794275,
+            "scenario_normal_approx_95": [
+              -0.001323565149069273,
+              0.0002124540379581615
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          },
+          "coverage_gap_ratio": {
+            "paired_delta_mappo_minus_reference": -0.1934765625,
+            "stratified_scenario_standard_error": 0.002212806211881655,
+            "scenario_normal_approx_95": [
+              -0.19781358298005444,
+              -0.18913954201994557
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          },
+          "response_time_mean_s": {
+            "paired_delta_mappo_minus_reference": 3.0647222222222226,
+            "stratified_scenario_standard_error": 0.03431785761740673,
+            "scenario_normal_approx_95": [
+              2.9974604572655337,
+              3.1319839871789115
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          }
+        }
+      }
+    },
+    "central_handover": {
+      "101": {
+        "greedy": {
+          "task_success_rate": {
+            "paired_delta_mappo_minus_reference": 0.0,
+            "stratified_scenario_standard_error": 0.0,
+            "scenario_normal_approx_95": [
+              0.0,
+              0.0
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          },
+          "coverage_gap_ratio": {
+            "paired_delta_mappo_minus_reference": -0.078046875,
+            "stratified_scenario_standard_error": 0.002340443385651869,
+            "scenario_normal_approx_95": [
+              -0.08263405974373253,
+              -0.07345969025626747
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          },
+          "response_time_mean_s": {
+            "paired_delta_mappo_minus_reference": 0.4708333333333333,
+            "stratified_scenario_standard_error": 0.032101777965096875,
+            "scenario_normal_approx_95": [
+              0.40791500468204367,
+              0.533751661984623
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          }
+        },
+        "stochastic": {
+          "task_success_rate": {
+            "paired_delta_mappo_minus_reference": -0.0008333333333333337,
+            "stratified_scenario_standard_error": 0.00047870140425051663,
+            "scenario_normal_approx_95": [
+              -0.0017715708450130696,
+              0.00010490417834640216
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          },
+          "coverage_gap_ratio": {
+            "paired_delta_mappo_minus_reference": -0.07458333333333333,
+            "stratified_scenario_standard_error": 0.0024535595310807585,
+            "scenario_normal_approx_95": [
+              -0.07939222164817647,
+              -0.0697744450184902
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          },
+          "response_time_mean_s": {
+            "paired_delta_mappo_minus_reference": 1.0325,
+            "stratified_scenario_standard_error": 0.037683598366270527,
+            "scenario_normal_approx_95": [
+              0.9586415043942393,
+              1.1063584956057606
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          }
+        }
+      },
+      "211": {
+        "greedy": {
+          "task_success_rate": {
+            "paired_delta_mappo_minus_reference": 0.0,
+            "stratified_scenario_standard_error": 0.0,
+            "scenario_normal_approx_95": [
+              0.0,
+              0.0
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          },
+          "coverage_gap_ratio": {
+            "paired_delta_mappo_minus_reference": -0.078046875,
+            "stratified_scenario_standard_error": 0.002340443385651869,
+            "scenario_normal_approx_95": [
+              -0.08263405974373253,
+              -0.07345969025626747
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          },
+          "response_time_mean_s": {
+            "paired_delta_mappo_minus_reference": 0.4708333333333333,
+            "stratified_scenario_standard_error": 0.032101777965096875,
+            "scenario_normal_approx_95": [
+              0.40791500468204367,
+              0.533751661984623
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          }
+        },
+        "stochastic": {
+          "task_success_rate": {
+            "paired_delta_mappo_minus_reference": -0.0019444444444444453,
+            "stratified_scenario_standard_error": 0.0007269740171008852,
+            "scenario_normal_approx_95": [
+              -0.0033692873356585464,
+              -0.0005196015532303441
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          },
+          "coverage_gap_ratio": {
+            "paired_delta_mappo_minus_reference": -0.07645833333333334,
+            "stratified_scenario_standard_error": 0.0023691552436143136,
+            "scenario_normal_approx_95": [
+              -0.08110179228460149,
+              -0.07181487438206519
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          },
+          "response_time_mean_s": {
+            "paired_delta_mappo_minus_reference": 1.3606944444444444,
+            "stratified_scenario_standard_error": 0.03903418036344806,
+            "scenario_normal_approx_95": [
+              1.2841888567660478,
+              1.437200032122841
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          }
+        }
+      },
+      "307": {
+        "greedy": {
+          "task_success_rate": {
+            "paired_delta_mappo_minus_reference": 0.0,
+            "stratified_scenario_standard_error": 0.0,
+            "scenario_normal_approx_95": [
+              0.0,
+              0.0
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          },
+          "coverage_gap_ratio": {
+            "paired_delta_mappo_minus_reference": -0.078046875,
+            "stratified_scenario_standard_error": 0.002340443385651869,
+            "scenario_normal_approx_95": [
+              -0.08263405974373253,
+              -0.07345969025626747
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          },
+          "response_time_mean_s": {
+            "paired_delta_mappo_minus_reference": 0.4708333333333333,
+            "stratified_scenario_standard_error": 0.032101777965096875,
+            "scenario_normal_approx_95": [
+              0.40791500468204367,
+              0.533751661984623
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          }
+        },
+        "stochastic": {
+          "task_success_rate": {
+            "paired_delta_mappo_minus_reference": -0.0005555555555555558,
+            "stratified_scenario_standard_error": 0.00039184882965794275,
+            "scenario_normal_approx_95": [
+              -0.001323565149069273,
+              0.0002124540379581615
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          },
+          "coverage_gap_ratio": {
+            "paired_delta_mappo_minus_reference": -0.07621093749999999,
+            "stratified_scenario_standard_error": 0.00242542310560166,
+            "scenario_normal_approx_95": [
+              -0.0809646794342504,
+              -0.07145719556574959
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          },
+          "response_time_mean_s": {
+            "paired_delta_mappo_minus_reference": 1.1580555555555556,
+            "stratified_scenario_standard_error": 0.03761502923492074,
+            "scenario_normal_approx_95": [
+              1.0843314529776917,
+              1.2317796581334195
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          }
+        }
+      },
+      "401": {
+        "greedy": {
+          "task_success_rate": {
+            "paired_delta_mappo_minus_reference": 0.0,
+            "stratified_scenario_standard_error": 0.0,
+            "scenario_normal_approx_95": [
+              0.0,
+              0.0
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          },
+          "coverage_gap_ratio": {
+            "paired_delta_mappo_minus_reference": -0.078046875,
+            "stratified_scenario_standard_error": 0.002340443385651869,
+            "scenario_normal_approx_95": [
+              -0.08263405974373253,
+              -0.07345969025626747
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          },
+          "response_time_mean_s": {
+            "paired_delta_mappo_minus_reference": 1.646666666666667,
+            "stratified_scenario_standard_error": 0.03928769745623455,
+            "scenario_normal_approx_95": [
+              1.5696641946169434,
+              1.7236691387163905
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          }
+        },
+        "stochastic": {
+          "task_success_rate": {
+            "paired_delta_mappo_minus_reference": 0.0,
+            "stratified_scenario_standard_error": 0.0,
+            "scenario_normal_approx_95": [
+              0.0,
+              0.0
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          },
+          "coverage_gap_ratio": {
+            "paired_delta_mappo_minus_reference": -0.07688802083333333,
+            "stratified_scenario_standard_error": 0.0024114523342769006,
+            "scenario_normal_approx_95": [
+              -0.08161438055895097,
+              -0.0721616611077157
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          },
+          "response_time_mean_s": {
+            "paired_delta_mappo_minus_reference": 1.2802777777777778,
+            "stratified_scenario_standard_error": 0.038850159186139585,
+            "scenario_normal_approx_95": [
+              1.2041328649792984,
+              1.3564226905762573
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          }
+        }
+      },
+      "503": {
+        "greedy": {
+          "task_success_rate": {
+            "paired_delta_mappo_minus_reference": 0.0,
+            "stratified_scenario_standard_error": 0.0,
+            "scenario_normal_approx_95": [
+              0.0,
+              0.0
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          },
+          "coverage_gap_ratio": {
+            "paired_delta_mappo_minus_reference": -0.078046875,
+            "stratified_scenario_standard_error": 0.002340443385651869,
+            "scenario_normal_approx_95": [
+              -0.08263405974373253,
+              -0.07345969025626747
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          },
+          "response_time_mean_s": {
+            "paired_delta_mappo_minus_reference": 0.4708333333333333,
+            "stratified_scenario_standard_error": 0.032101777965096875,
+            "scenario_normal_approx_95": [
+              0.40791500468204367,
+              0.533751661984623
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          }
+        },
+        "stochastic": {
+          "task_success_rate": {
+            "paired_delta_mappo_minus_reference": -0.0005555555555555558,
+            "stratified_scenario_standard_error": 0.00039184882965794275,
+            "scenario_normal_approx_95": [
+              -0.001323565149069273,
+              0.0002124540379581615
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          },
+          "coverage_gap_ratio": {
+            "paired_delta_mappo_minus_reference": -0.075625,
+            "stratified_scenario_standard_error": 0.002434666113065113,
+            "scenario_normal_approx_95": [
+              -0.0803968578959876,
+              -0.07085314210401239
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          },
+          "response_time_mean_s": {
+            "paired_delta_mappo_minus_reference": 1.0480555555555555,
+            "stratified_scenario_standard_error": 0.03826770675269722,
+            "scenario_normal_approx_95": [
+              0.9730522285493308,
+              1.1230588825617802
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          }
+        }
+      }
+    },
+    "local_eta": {
+      "101": {
+        "greedy": {
+          "task_success_rate": {
+            "paired_delta_mappo_minus_reference": 0.05666666666666667,
+            "stratified_scenario_standard_error": 0.00925324576732929,
+            "scenario_normal_approx_95": [
+              0.038530638222604066,
+              0.07480269511072928
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          },
+          "coverage_gap_ratio": {
+            "paired_delta_mappo_minus_reference": -0.19578125000000002,
+            "stratified_scenario_standard_error": 0.008861363785143654,
+            "scenario_normal_approx_95": [
+              -0.21314920387278863,
+              -0.1784132961272114
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          },
+          "response_time_mean_s": {
+            "paired_delta_mappo_minus_reference": 0.6898500881834215,
+            "stratified_scenario_standard_error": 0.06490403762095567,
+            "scenario_normal_approx_95": [
+              0.5626405119951192,
+              0.8170596643717238
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 189
+            }
+          }
+        },
+        "stochastic": {
+          "task_success_rate": {
+            "paired_delta_mappo_minus_reference": 0.05583333333333333,
+            "stratified_scenario_standard_error": 0.009287438508638439,
+            "scenario_normal_approx_95": [
+              0.0376302883477721,
+              0.07403637831889456
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          },
+          "coverage_gap_ratio": {
+            "paired_delta_mappo_minus_reference": -0.19231770833333334,
+            "stratified_scenario_standard_error": 0.008888765639872917,
+            "scenario_normal_approx_95": [
+              -0.2097393688545009,
+              -0.17489604781216578
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          },
+          "response_time_mean_s": {
+            "paired_delta_mappo_minus_reference": 1.2460964138741917,
+            "stratified_scenario_standard_error": 0.06756309177500876,
+            "scenario_normal_approx_95": [
+              1.1136751873110038,
+              1.3785176404373796
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 189
+            }
+          }
+        }
+      },
+      "211": {
+        "greedy": {
+          "task_success_rate": {
+            "paired_delta_mappo_minus_reference": 0.05666666666666667,
+            "stratified_scenario_standard_error": 0.00925324576732929,
+            "scenario_normal_approx_95": [
+              0.038530638222604066,
+              0.07480269511072928
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          },
+          "coverage_gap_ratio": {
+            "paired_delta_mappo_minus_reference": -0.19578125000000002,
+            "stratified_scenario_standard_error": 0.008861363785143654,
+            "scenario_normal_approx_95": [
+              -0.21314920387278863,
+              -0.1784132961272114
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          },
+          "response_time_mean_s": {
+            "paired_delta_mappo_minus_reference": 0.6898500881834215,
+            "stratified_scenario_standard_error": 0.06490403762095567,
+            "scenario_normal_approx_95": [
+              0.5626405119951192,
+              0.8170596643717238
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 189
+            }
+          }
+        },
+        "stochastic": {
+          "task_success_rate": {
+            "paired_delta_mappo_minus_reference": 0.05472222222222223,
+            "stratified_scenario_standard_error": 0.009301538963313948,
+            "scenario_normal_approx_95": [
+              0.03649154085333136,
+              0.07295290359111309
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          },
+          "coverage_gap_ratio": {
+            "paired_delta_mappo_minus_reference": -0.19419270833333332,
+            "stratified_scenario_standard_error": 0.008873667493209428,
+            "scenario_normal_approx_95": [
+              -0.21158477703080714,
+              -0.1768006396358595
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          },
+          "response_time_mean_s": {
+            "paired_delta_mappo_minus_reference": 1.5702542621987066,
+            "stratified_scenario_standard_error": 0.06885212970542808,
+            "scenario_normal_approx_95": [
+              1.4353065677171908,
+              1.7052019566802223
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 189
+            }
+          }
+        }
+      },
+      "307": {
+        "greedy": {
+          "task_success_rate": {
+            "paired_delta_mappo_minus_reference": 0.05666666666666667,
+            "stratified_scenario_standard_error": 0.00925324576732929,
+            "scenario_normal_approx_95": [
+              0.038530638222604066,
+              0.07480269511072928
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          },
+          "coverage_gap_ratio": {
+            "paired_delta_mappo_minus_reference": -0.19578125000000002,
+            "stratified_scenario_standard_error": 0.008861363785143654,
+            "scenario_normal_approx_95": [
+              -0.21314920387278863,
+              -0.1784132961272114
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          },
+          "response_time_mean_s": {
+            "paired_delta_mappo_minus_reference": 0.6898500881834215,
+            "stratified_scenario_standard_error": 0.06490403762095567,
+            "scenario_normal_approx_95": [
+              0.5626405119951192,
+              0.8170596643717238
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 189
+            }
+          }
+        },
+        "stochastic": {
+          "task_success_rate": {
+            "paired_delta_mappo_minus_reference": 0.05611111111111111,
+            "stratified_scenario_standard_error": 0.009276096732662359,
+            "scenario_normal_approx_95": [
+              0.03793029559798372,
+              0.0742919266242385
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          },
+          "coverage_gap_ratio": {
+            "paired_delta_mappo_minus_reference": -0.19394531250000002,
+            "stratified_scenario_standard_error": 0.00888952822172518,
+            "scenario_normal_approx_95": [
+              -0.21136846765413328,
+              -0.17652215734586676
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          },
+          "response_time_mean_s": {
+            "paired_delta_mappo_minus_reference": 1.3772986478542033,
+            "stratified_scenario_standard_error": 0.06822105137581261,
+            "scenario_normal_approx_95": [
+              1.2435878441701576,
+              1.511009451538249
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 189
+            }
+          }
+        }
+      },
+      "401": {
+        "greedy": {
+          "task_success_rate": {
+            "paired_delta_mappo_minus_reference": 0.05666666666666667,
+            "stratified_scenario_standard_error": 0.00925324576732929,
+            "scenario_normal_approx_95": [
+              0.038530638222604066,
+              0.07480269511072928
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          },
+          "coverage_gap_ratio": {
+            "paired_delta_mappo_minus_reference": -0.19578125000000002,
+            "stratified_scenario_standard_error": 0.008861363785143654,
+            "scenario_normal_approx_95": [
+              -0.21314920387278863,
+              -0.1784132961272114
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          },
+          "response_time_mean_s": {
+            "paired_delta_mappo_minus_reference": 1.859514991181658,
+            "stratified_scenario_standard_error": 0.06987741388952821,
+            "scenario_normal_approx_95": [
+              1.7225577766253874,
+              1.9964722057379285
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 189
+            }
+          }
+        },
+        "stochastic": {
+          "task_success_rate": {
+            "paired_delta_mappo_minus_reference": 0.05666666666666667,
+            "stratified_scenario_standard_error": 0.00925324576732929,
+            "scenario_normal_approx_95": [
+              0.038530638222604066,
+              0.07480269511072928
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          },
+          "coverage_gap_ratio": {
+            "paired_delta_mappo_minus_reference": -0.19462239583333332,
+            "stratified_scenario_standard_error": 0.008893802223131617,
+            "scenario_normal_approx_95": [
+              -0.21205392787629307,
+              -0.17719086379037358
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          },
+          "response_time_mean_s": {
+            "paired_delta_mappo_minus_reference": 1.4948118753674309,
+            "stratified_scenario_standard_error": 0.0685131476558178,
+            "scenario_normal_approx_95": [
+              1.360528573494557,
+              1.6290951772403048
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 189
+            }
+          }
+        }
+      },
+      "503": {
+        "greedy": {
+          "task_success_rate": {
+            "paired_delta_mappo_minus_reference": 0.05666666666666667,
+            "stratified_scenario_standard_error": 0.00925324576732929,
+            "scenario_normal_approx_95": [
+              0.038530638222604066,
+              0.07480269511072928
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          },
+          "coverage_gap_ratio": {
+            "paired_delta_mappo_minus_reference": -0.19578125000000002,
+            "stratified_scenario_standard_error": 0.008861363785143654,
+            "scenario_normal_approx_95": [
+              -0.21314920387278863,
+              -0.1784132961272114
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          },
+          "response_time_mean_s": {
+            "paired_delta_mappo_minus_reference": 0.6898500881834215,
+            "stratified_scenario_standard_error": 0.06490403762095567,
+            "scenario_normal_approx_95": [
+              0.5626405119951192,
+              0.8170596643717238
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 189
+            }
+          }
+        },
+        "stochastic": {
+          "task_success_rate": {
+            "paired_delta_mappo_minus_reference": 0.05611111111111111,
+            "stratified_scenario_standard_error": 0.009276096732662359,
+            "scenario_normal_approx_95": [
+              0.03793029559798372,
+              0.0742919266242385
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          },
+          "coverage_gap_ratio": {
+            "paired_delta_mappo_minus_reference": -0.193359375,
+            "stratified_scenario_standard_error": 0.008930275467618327,
+            "scenario_normal_approx_95": [
+              -0.21086239328855302,
+              -0.17585635671144698
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          },
+          "response_time_mean_s": {
+            "paired_delta_mappo_minus_reference": 1.2609126984126984,
+            "stratified_scenario_standard_error": 0.06821541559412926,
+            "scenario_normal_approx_95": [
+              1.1272129406577767,
+              1.39461245616762
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 189
+            }
+          }
+        }
+      }
+    },
+    "local_fixed": {
+      "101": {
+        "greedy": {
+          "task_success_rate": {
+            "paired_delta_mappo_minus_reference": 0.0,
+            "stratified_scenario_standard_error": 0.0,
+            "scenario_normal_approx_95": [
+              0.0,
+              0.0
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          },
+          "coverage_gap_ratio": {
+            "paired_delta_mappo_minus_reference": 0.0,
+            "stratified_scenario_standard_error": 0.0,
+            "scenario_normal_approx_95": [
+              0.0,
+              0.0
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          },
+          "response_time_mean_s": {
+            "paired_delta_mappo_minus_reference": -1.5275,
+            "stratified_scenario_standard_error": 0.02885004018259126,
+            "scenario_normal_approx_95": [
+              -1.5840450397104107,
+              -1.4709549602895895
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          }
+        },
+        "stochastic": {
+          "task_success_rate": {
+            "paired_delta_mappo_minus_reference": -0.0008333333333333337,
+            "stratified_scenario_standard_error": 0.00047870140425051663,
+            "scenario_normal_approx_95": [
+              -0.0017715708450130696,
+              0.00010490417834640216
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          },
+          "coverage_gap_ratio": {
+            "paired_delta_mappo_minus_reference": 0.003463541666666667,
+            "stratified_scenario_standard_error": 0.0007824508324252505,
+            "scenario_normal_approx_95": [
+              0.0019299662154398328,
+              0.004997117117893501
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          },
+          "response_time_mean_s": {
+            "paired_delta_mappo_minus_reference": -0.9658333333333334,
+            "stratified_scenario_standard_error": 0.03649335446736041,
+            "scenario_normal_approx_95": [
+              -1.0373589937644119,
+              -0.8943076729022551
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          }
+        }
+      },
+      "211": {
+        "greedy": {
+          "task_success_rate": {
+            "paired_delta_mappo_minus_reference": 0.0,
+            "stratified_scenario_standard_error": 0.0,
+            "scenario_normal_approx_95": [
+              0.0,
+              0.0
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          },
+          "coverage_gap_ratio": {
+            "paired_delta_mappo_minus_reference": 0.0,
+            "stratified_scenario_standard_error": 0.0,
+            "scenario_normal_approx_95": [
+              0.0,
+              0.0
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          },
+          "response_time_mean_s": {
+            "paired_delta_mappo_minus_reference": -1.5275,
+            "stratified_scenario_standard_error": 0.02885004018259126,
+            "scenario_normal_approx_95": [
+              -1.5840450397104107,
+              -1.4709549602895895
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          }
+        },
+        "stochastic": {
+          "task_success_rate": {
+            "paired_delta_mappo_minus_reference": -0.0019444444444444453,
+            "stratified_scenario_standard_error": 0.0007269740171008852,
+            "scenario_normal_approx_95": [
+              -0.0033692873356585464,
+              -0.0005196015532303441
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          },
+          "coverage_gap_ratio": {
+            "paired_delta_mappo_minus_reference": 0.0015885416666666667,
+            "stratified_scenario_standard_error": 0.0004968124673136959,
+            "scenario_normal_approx_95": [
+              0.0006148071236613667,
+              0.002562276209671967
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          },
+          "response_time_mean_s": {
+            "paired_delta_mappo_minus_reference": -0.6376388888888889,
+            "stratified_scenario_standard_error": 0.03755116631560216,
+            "scenario_normal_approx_95": [
+              -0.7112378224449407,
+              -0.564039955332837
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          }
+        }
+      },
+      "307": {
+        "greedy": {
+          "task_success_rate": {
+            "paired_delta_mappo_minus_reference": 0.0,
+            "stratified_scenario_standard_error": 0.0,
+            "scenario_normal_approx_95": [
+              0.0,
+              0.0
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          },
+          "coverage_gap_ratio": {
+            "paired_delta_mappo_minus_reference": 0.0,
+            "stratified_scenario_standard_error": 0.0,
+            "scenario_normal_approx_95": [
+              0.0,
+              0.0
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          },
+          "response_time_mean_s": {
+            "paired_delta_mappo_minus_reference": -1.5275,
+            "stratified_scenario_standard_error": 0.02885004018259126,
+            "scenario_normal_approx_95": [
+              -1.5840450397104107,
+              -1.4709549602895895
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          }
+        },
+        "stochastic": {
+          "task_success_rate": {
+            "paired_delta_mappo_minus_reference": -0.0005555555555555558,
+            "stratified_scenario_standard_error": 0.00039184882965794275,
+            "scenario_normal_approx_95": [
+              -0.001323565149069273,
+              0.0002124540379581615
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          },
+          "coverage_gap_ratio": {
+            "paired_delta_mappo_minus_reference": 0.0018359375000000001,
+            "stratified_scenario_standard_error": 0.0005773422120519631,
+            "scenario_normal_approx_95": [
+              0.0007043675576234969,
+              0.0029675074423765034
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          },
+          "response_time_mean_s": {
+            "paired_delta_mappo_minus_reference": -0.8402777777777779,
+            "stratified_scenario_standard_error": 0.03435178161941628,
+            "scenario_normal_approx_95": [
+              -0.907606032556617,
+              -0.7729495229989388
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          }
+        }
+      },
+      "401": {
+        "greedy": {
+          "task_success_rate": {
+            "paired_delta_mappo_minus_reference": 0.0,
+            "stratified_scenario_standard_error": 0.0,
+            "scenario_normal_approx_95": [
+              0.0,
+              0.0
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          },
+          "coverage_gap_ratio": {
+            "paired_delta_mappo_minus_reference": 0.0,
+            "stratified_scenario_standard_error": 0.0,
+            "scenario_normal_approx_95": [
+              0.0,
+              0.0
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          },
+          "response_time_mean_s": {
+            "paired_delta_mappo_minus_reference": -0.3516666666666667,
+            "stratified_scenario_standard_error": 0.036467978504021,
+            "scenario_normal_approx_95": [
+              -0.42314259112352676,
+              -0.2801907422098066
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          }
+        },
+        "stochastic": {
+          "task_success_rate": {
+            "paired_delta_mappo_minus_reference": 0.0,
+            "stratified_scenario_standard_error": 0.0,
+            "scenario_normal_approx_95": [
+              0.0,
+              0.0
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          },
+          "coverage_gap_ratio": {
+            "paired_delta_mappo_minus_reference": 0.0011588541666666665,
+            "stratified_scenario_standard_error": 0.0005064147080063103,
+            "scenario_normal_approx_95": [
+              0.0001662995777329578,
+              0.0021514087556003753
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          },
+          "response_time_mean_s": {
+            "paired_delta_mappo_minus_reference": -0.7180555555555557,
+            "stratified_scenario_standard_error": 0.03269782595900775,
+            "scenario_normal_approx_95": [
+              -0.782142116807968,
+              -0.6539689943031434
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          }
+        }
+      },
+      "503": {
+        "greedy": {
+          "task_success_rate": {
+            "paired_delta_mappo_minus_reference": 0.0,
+            "stratified_scenario_standard_error": 0.0,
+            "scenario_normal_approx_95": [
+              0.0,
+              0.0
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          },
+          "coverage_gap_ratio": {
+            "paired_delta_mappo_minus_reference": 0.0,
+            "stratified_scenario_standard_error": 0.0,
+            "scenario_normal_approx_95": [
+              0.0,
+              0.0
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          },
+          "response_time_mean_s": {
+            "paired_delta_mappo_minus_reference": -1.5275,
+            "stratified_scenario_standard_error": 0.02885004018259126,
+            "scenario_normal_approx_95": [
+              -1.5840450397104107,
+              -1.4709549602895895
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          }
+        },
+        "stochastic": {
+          "task_success_rate": {
+            "paired_delta_mappo_minus_reference": -0.0005555555555555558,
+            "stratified_scenario_standard_error": 0.00039184882965794275,
+            "scenario_normal_approx_95": [
+              -0.001323565149069273,
+              0.0002124540379581615
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          },
+          "coverage_gap_ratio": {
+            "paired_delta_mappo_minus_reference": 0.002421875,
+            "stratified_scenario_standard_error": 0.0007398414655427749,
+            "scenario_normal_approx_95": [
+              0.0009718123732668697,
+              0.0038719376267331304
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          },
+          "response_time_mean_s": {
+            "paired_delta_mappo_minus_reference": -0.9502777777777779,
+            "stratified_scenario_standard_error": 0.03378646387442444,
+            "scenario_normal_approx_95": [
+              -1.0164980301366116,
+              -0.8840575254189442
+            ],
+            "paired_scene_counts": {
+              "positions": 200,
+              "conditions": 200
+            }
+          }
+        }
+      }
+    }
+  }
+}

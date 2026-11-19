@@ -1,0 +1,116 @@
+{
+  "seeds": {
+    "101": {
+      "selection": {
+        "seed": 101,
+        "stream": 0,
+        "steps": 100352,
+        "episodes": 3136,
+        "wall_seconds_including_intermediate_validation": 841.9198698000982,
+        "collect_seconds": 637.7256655944511,
+        "optimizer_seconds": 44.680242388509214,
+        "validation_seconds": 152.62424790021032,
+        "selected_checkpoint": "checkpoints/step073728.pt",
+        "selected_validation_key": [
+          1.0,
+          1.0,
+          -0.0,
+          -6.40625
+        ],
+        "last_checkpoint": "checkpoints/step100352.pt",
+        "source_manifest_sha256": "882b47796c8414d5d9ed7d518f8dd30daf19a449e6062d82bdbdd53d9b68d772"
+      },
+      "checkpoint_sha256": "bbd847ac5c57e9654a2edd8bfcfa76fa6aa94d02b4cbf777e4dc135ffabee41b"
+    },
+    "211": {
+      "selection": {
+        "seed": 211,
+        "stream": 1,
+        "steps": 100352,
+        "episodes": 3136,
+        "wall_seconds_including_intermediate_validation": 842.8147473996505,
+        "collect_seconds": 638.1984760053456,
+        "optimizer_seconds": 44.79531118739396,
+        "validation_seconds": 153.0087990006432,
+        "selected_checkpoint": "checkpoints/step090112.pt",
+        "selected_validation_key": [
+          1.0,
+          1.0,
+          -0.00537109375,
+          -6.510416666666666
+        ],
+        "last_checkpoint": "checkpoints/step100352.pt",
+        "source_manifest_sha256": "882b47796c8414d5d9ed7d518f8dd30daf19a449e6062d82bdbdd53d9b68d772"
+      },
+      "checkpoint_sha256": "2ed4dfd9e9bc97f68a6c663449f5fef4907dc6b5edfac7dd9302c7b4e945a388"
+    },
+    "307": {
+      "selection": {
+        "seed": 307,
+        "stream": 2,
+        "steps": 100352,
+        "episodes": 3136,
+        "wall_seconds_including_intermediate_validation": 841.788331400603,
+        "collect_seconds": 637.1354390056804,
+        "optimizer_seconds": 44.620775390416384,
+        "validation_seconds": 153.09239559900016,
+        "selected_checkpoint": "checkpoints/step100352.pt",
+        "selected_validation_key": [
+          1.0,
+          1.0,
+          -0.0,
+          -6.515625
+        ],
+        "last_checkpoint": "checkpoints/step100352.pt",
+        "source_manifest_sha256": "882b47796c8414d5d9ed7d518f8dd30daf19a449e6062d82bdbdd53d9b68d772"
+      },
+      "checkpoint_sha256": "75fd474d6da0627e7f4fdb00e891c1fefb44fa6c50061525d19d24126c81f4a0"
+    },
+    "401": {
+      "selection": {
+        "seed": 401,
+        "stream": 3,
+        "steps": 100352,
+        "episodes": 3136,
+        "wall_seconds_including_intermediate_validation": 847.6406672000885,
+        "collect_seconds": 643.5003412943333,
+        "optimizer_seconds": 44.679030103608966,
+        "validation_seconds": 152.4456358011812,
+        "selected_checkpoint": "checkpoints/step100352.pt",
+        "selected_validation_key": [
+          1.0,
+          1.0,
+          -0.0,
+          -7.25
+        ],
+        "last_checkpoint": "checkpoints/step100352.pt",
+        "source_manifest_sha256": "882b47796c8414d5d9ed7d518f8dd30daf19a449e6062d82bdbdd53d9b68d772"
+      },
+      "checkpoint_sha256": "8b2f342b59291d3703139c917a7cea446bd5a71b0fadbcef85c0fed69e906408"
+    },
+    "503": {
+      "selection": {
+        "seed": 503,
+        "stream": 4,
+        "steps": 100352,
+        "episodes": 3136,
+        "wall_seconds_including_intermediate_validation": 842.4906331002712,
+        "collect_seconds": 637.6241230871528,
+        "optimizer_seconds": 44.851363902911544,
+        "validation_seconds": 153.07793370075524,
+        "selected_checkpoint": "checkpoints/step100352.pt",
+        "selected_validation_key": [
+          1.0,
+          1.0,
+          -0.0,
+          -6.427083333333333
+        ],
+        "last_checkpoint": "checkpoints/step100352.pt",
+        "source_manifest_sha256": "882b47796c8414d5d9ed7d518f8dd30daf19a449e6062d82bdbdd53d9b68d772"
+      },
+      "checkpoint_sha256": "3d7226550e9dec1e3d4e9b8594fe994e979b90e9b00c1f06fa99899deee2024f"
+    }
+  },
+  "benchmark_started": false,
+  "holdout_opened": false
+}

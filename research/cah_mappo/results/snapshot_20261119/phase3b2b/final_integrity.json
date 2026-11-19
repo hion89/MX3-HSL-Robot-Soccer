@@ -1,0 +1,20 @@
+{
+  "status": "PASS",
+  "date_client": "2026-11-19",
+  "preserved_files_sha256": 2628,
+  "protected_files_metadata_only": 1,
+  "protected_holdout_content_opened": false,
+  "protected_holdout_evaluations": 0,
+  "new_python_files_compiled": 16,
+  "new_packages_installed": false,
+  "torch": "2.7.0+cpu",
+  "numpy": "1.26.4",
+  "torch_cuda_runtime": null,
+  "output_gib_before_manifest": 1.169227902777493,
+  "main_training_steps": 501760,
+  "calibration_steps_separate": 512,
+  "regression_tests": 152,
+  "parent_training_wall_seconds": 866.3590000001714,
+  "benchmark_file_timestamp_interval_seconds": 499.4346079826355,
+  "algorithm_source_manifest_sha256": "882b47796c8414d5d9ed7d518f8dd30daf19a449e6062d82bdbdd53d9b68d772"
+}
