@@ -186,3 +186,11 @@ tmux new -s kick16 && bash scripts/kick_v1_6/train_v16.sh C
 사용자 GUI 재생에서 22300이 V1-6 재생 환경에서 공을 차지 않았다. 원래 22300의 다리 모터는 ImplicitActuator(PhysX 내부 PD)인데, V1-6의 VoltageDCMotor는 Explicit PD라서 곡선을 끈 β=0에서도 동역학이 달라진다. MuJoCo 평가기는 위치 액추에이터에 힘 범위만 잘랐으므로 이 전환을 시험하지 않았다. 아직 확인 전의 유력 후보다.
 
 변경을 하나씩만 켠 재생 태스크로 확인한다. `Unitree-MX3-WalkKick-V1-6-Play-Diag-ActFlat`(Explicit, β=0), `-Diag-Act`(β=1+전압), `-Diag-Obs`, `-Diag-Surf`, `-Diag-Ctr`가 있다. 기준은 `Unitree-MX3-WalkKick-V1-5B-Play`다. 각 태스크에서 `eval_strength_isaac.py --levels 1`로 22300의 킥 성공·넘어짐을 비교한다.
+
+### 진단 결과와 V1-6D (2026-11-19, 서버 실측)
+
+22300, 세기 1, `eval_strength_isaac.py` 500 env 결과는 다음과 같다. V1-5B는 킥 성공 99%, 넘어짐 0.2%다. Diag-ActFlat(Explicit 모터, 곡선 끔)과 Diag-Act, 전체 V1-6은 킥 성공 0%다. Diag-Obs는 99%/1.4%, Diag-Ctr는 99%/0.2%, Diag-Surf는 82%/6.0%다.
+
+결론: Implicit→Explicit 모터 전환만으로 22300이 공을 차지 못한다. 그래서 V1-6A/B/C 학습(22300→30600)은 잘못된 모터 위에서 진행된 것이라 쓰지 않는다. 바닥 조건은 "차지만 넘어지는" 실물 실패를 Isaac에서 재현한다.
+
+`Unitree-MX3-WalkKick-V1-6D`는 C에서 Explicit DC 모터만 뺀 학습 태스크다(22300과 같은 ImplicitActuator). 모터 한계는 v1_4의 torque_envelope 벌점이 그대로 맡는다. 재생은 `V1-6D-Play`, 실물 유사 고정 조건은 `V1-6D-Play-RealLike`(전압 제외)다. 학습 전에 22300이 D-Play에서 공을 차는지(킥 성공 90% 이상) 먼저 확인한다.

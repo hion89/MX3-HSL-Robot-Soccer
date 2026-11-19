@@ -328,3 +328,50 @@ class RobotV16DiagCtrEnvCfg(v15.RobotV15BPlayEnvCfg):
     def __post_init__(self):
         super().__post_init__()
         _diag(self, ctr=True)
+
+
+# ============================================================================
+# V1-6D (2026-11-19) — Explicit DC 모터를 뺀 학습 태스크.
+#   진단 (22300, s = 1, eval_strength_isaac): V1-5B 킥 99 % / 넘어짐 0.2 %, Diag-ActFlat (Explicit, β = 0) 킥 0 %,
+#   Diag-Obs 99 % / 1.4 %, Diag-Ctr 99 % / 0.2 %, Diag-Surf 82 % / 6.0 %.
+#   → Implicit → Explicit 모터 전환만으로 22300 이 공을 못 찬다 (A/B/C 는 이 모터로 학습됐다).
+#   D = 22300 과 같은 ImplicitActuator + 관측 지연 + 바닥 (마찰·비틀림) + hold·필터 + 디딤발 yaw 벌점.
+#   모터 토크-속도 한계는 v1_4 의 torque_envelope 벌점 (그대로) 이 맡는다.
+# ============================================================================
+def _real_like(cfg, volt: bool):
+    if volt:
+        cfg.events.motor_voltage.params["volt_range"] = (11.1, 11.1)
+    cfg.events.obs_delays.params["frame_delay_prob"] = 1.0
+    cfg.events.obs_delays.params["imu_extra_range"] = (0.5, 0.5)
+    cfg.events.reset_hold.params["hold_range_s"] = (0.6, 0.6)
+    cfg.actions.JointPositionAction.filter_prob = 1.0
+    cfg.actions.JointPositionAction.filter_tau_range = (0.02, 0.02)
+    cfg.events.feet_material.params["static_friction_range"] = (0.55, 0.65)
+    cfg.events.feet_material.params["dynamic_friction_range"] = (0.50, 0.60)
+    cfg.events.turf_torsion_sample.params["coef_range"] = (0.03, 0.03)
+    cfg.events.turf_torsion_sample.params["zero_prob"] = 0.0
+
+
+@configclass
+class RobotV16DEnvCfg(v15.RobotV15BEnvCfg):
+    """D: 학습용 — C 에서 Explicit DC 모터만 뺀 것."""
+
+    def __post_init__(self):
+        super().__post_init__()
+        _apply_v1_6(self, act=False, obs=True, surf=True, ctr=True, rew=True)
+
+
+@configclass
+class RobotV16DPlayEnvCfg(v15.RobotV15BPlayEnvCfg):
+    def __post_init__(self):
+        super().__post_init__()
+        _apply_v1_6(self, act=False, obs=True, surf=True, ctr=True, rew=True)
+
+
+@configclass
+class RobotV16DPlayRealLikeEnvCfg(RobotV16DPlayEnvCfg):
+    """D 의 실물 유사 고정 조건 (전압 제외 — D 에는 전압 모델이 없다)."""
+
+    def __post_init__(self):
+        super().__post_init__()
+        _real_like(self, volt=False)

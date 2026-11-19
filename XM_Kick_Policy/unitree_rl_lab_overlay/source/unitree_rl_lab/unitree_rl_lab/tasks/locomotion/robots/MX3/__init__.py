@@ -83,3 +83,20 @@ for _sfx, _play in (("", "RobotV16PlayEnvCfg"), ("-Turf", "RobotV16PlayTurfEnvCf
         entry_point="isaaclab.envs:ManagerBasedRLEnv",
         kwargs={"env_cfg_entry_point": f"{_V16}:{_play}", "rsl_rl_cfg_entry_point": _V16_AGENT},
     )
+
+# V1-6D (2026-11-19): C 에서 Explicit DC 모터를 뺀 학습 태스크 (22300 과 같은 ImplicitActuator)
+gym.register(
+    id="Unitree-MX3-WalkKick-V1-6D",
+    entry_point="isaaclab.envs:ManagerBasedRLEnv",
+    kwargs={
+        "env_cfg_entry_point": f"{_V16}:RobotV16DEnvCfg",
+        "play_env_cfg_entry_point": f"{_V16}:RobotV16DPlayEnvCfg",
+        "rsl_rl_cfg_entry_point": _V16_AGENT,
+    },
+)
+for _sfx, _play in (("", "RobotV16DPlayEnvCfg"), ("-RealLike", "RobotV16DPlayRealLikeEnvCfg")):
+    gym.register(
+        id=f"Unitree-MX3-WalkKick-V1-6D-Play{_sfx}",
+        entry_point="isaaclab.envs:ManagerBasedRLEnv",
+        kwargs={"env_cfg_entry_point": f"{_V16}:{_play}", "rsl_rl_cfg_entry_point": _V16_AGENT},
+    )
