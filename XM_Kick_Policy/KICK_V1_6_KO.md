@@ -180,3 +180,9 @@ tmux new -s kick16 && bash scripts/kick_v1_6/train_v16.sh C
       --checkpoint kick16_init/model_22300.pt --levels 0.5,1
 
 22300이 여기서도 많이 넘어지면 Isaac이 실물 실패를 재현하는 것이므로 학습 분포를 이 조건 쪽으로 옮긴다. 거의 넘어지지 않으면 Isaac 물리가 실패 원인을 재현하지 못하는 것이므로 원인 조건을 하나씩 바꿔 찾은 뒤 학습한다.
+
+## 22300이 V1-6-Play에서 공을 안 찬 문제 — 원인 분리 (2026-11-19)
+
+사용자 GUI 재생에서 22300이 V1-6 재생 환경에서 공을 차지 않았다. 원래 22300의 다리 모터는 ImplicitActuator(PhysX 내부 PD)인데, V1-6의 VoltageDCMotor는 Explicit PD라서 곡선을 끈 β=0에서도 동역학이 달라진다. MuJoCo 평가기는 위치 액추에이터에 힘 범위만 잘랐으므로 이 전환을 시험하지 않았다. 아직 확인 전의 유력 후보다.
+
+변경을 하나씩만 켠 재생 태스크로 확인한다. `Unitree-MX3-WalkKick-V1-6-Play-Diag-ActFlat`(Explicit, β=0), `-Diag-Act`(β=1+전압), `-Diag-Obs`, `-Diag-Surf`, `-Diag-Ctr`가 있다. 기준은 `Unitree-MX3-WalkKick-V1-5B-Play`다. 각 태스크에서 `eval_strength_isaac.py --levels 1`로 22300의 킥 성공·넘어짐을 비교한다.

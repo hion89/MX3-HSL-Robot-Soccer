@@ -281,3 +281,50 @@ class RobotV16PlayRealLikeEnvCfg(RobotV16PlayEnvCfg):
         self.events.feet_material.params["dynamic_friction_range"] = (0.50, 0.60)
         self.events.turf_torsion_sample.params["coef_range"] = (0.03, 0.03)
         self.events.turf_torsion_sample.params["zero_prob"] = 0.0
+
+
+# ============================================================================
+# 진단용 재생 — V1-6 변경을 하나씩만 켠다 (2026-11-19). 22300 이 V1-6-Play 에서 공을 안 찬 원인 분리용.
+#   Diag-ActFlat : 다리 모터를 Explicit(DCMotor) 로 바꾸되 곡선은 끔 (β = 0) → Implicit→Explicit 전환만의 영향
+#   Diag-Act     : 모터 곡선 β = 1 + 전압 (A 와 같은 구동기)
+#   Diag-Obs / Diag-Surf / Diag-Ctr : 관측 지연 / 발 마찰·비틀림 / hold·필터 만
+# ============================================================================
+def _diag(cfg, **flags):
+    base = dict(act=False, obs=False, surf=False, ctr=False, rew=False, curriculum=False, dc_blend=1.0)
+    base.update(flags)
+    _apply_v1_6(cfg, **base)
+
+
+@configclass
+class RobotV16DiagActFlatEnvCfg(v15.RobotV15BPlayEnvCfg):
+    def __post_init__(self):
+        super().__post_init__()
+        _diag(self, act=True, dc_blend=0.0)
+
+
+@configclass
+class RobotV16DiagActEnvCfg(v15.RobotV15BPlayEnvCfg):
+    def __post_init__(self):
+        super().__post_init__()
+        _diag(self, act=True)
+
+
+@configclass
+class RobotV16DiagObsEnvCfg(v15.RobotV15BPlayEnvCfg):
+    def __post_init__(self):
+        super().__post_init__()
+        _diag(self, obs=True)
+
+
+@configclass
+class RobotV16DiagSurfEnvCfg(v15.RobotV15BPlayEnvCfg):
+    def __post_init__(self):
+        super().__post_init__()
+        _diag(self, surf=True)
+
+
+@configclass
+class RobotV16DiagCtrEnvCfg(v15.RobotV15BPlayEnvCfg):
+    def __post_init__(self):
+        super().__post_init__()
+        _diag(self, ctr=True)
