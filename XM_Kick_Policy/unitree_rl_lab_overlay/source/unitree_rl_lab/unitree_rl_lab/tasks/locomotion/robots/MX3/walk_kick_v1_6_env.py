@@ -436,3 +436,35 @@ class RobotV16GEnvCfg(RobotV16FEnvCfg):
     def __post_init__(self):
         super().__post_init__()
         self.rewards.end_no_kick = RewTerm(func=kr.ended_without_kick_penalty, weight=W_END_NO_KICK_G)
+
+
+# ============================================================================
+# V1-6H (2026-11-20) — F + '차야 플러스 보상' 게이트 (사용자 제안: 공차기를 전제 조건으로 곱한다).
+#   F·G 에서 안 차는 에피소드도 데드라인까지 alive·gait·capture_point 등 플러스 보상을 계속 받았고,
+#   차면 kick_resolved 로 일찍 끝나 그 수입을 잃었다. G 의 −4 는 이 수입보다 작았던 것으로 본다.
+#   차기 전 플러스 보상에 g = 1 − α·clamp(t/ramp) 를 곱하고, 차면 g = 1. 벌점·ball_approach·킥 보상은 그대로.
+#   계수 (α, ramp) 는 짧은 시험으로 고른다. 변형: H (α1, 데드라인), H2 (α1, 1.5 s), H3 (α0.5, 1.5 s).
+# ============================================================================
+def _apply_v1_6h(cfg, alpha: float, ramp_s: float):
+    cfg.rewards.kick_gate = RewTerm(func=kr.kick_gated_positive, weight=1.0, params={"alpha": alpha, "ramp_s": ramp_s})
+
+
+@configclass
+class RobotV16HEnvCfg(RobotV16FEnvCfg):
+    def __post_init__(self):
+        super().__post_init__()
+        _apply_v1_6h(self, alpha=1.0, ramp_s=-1.0)
+
+
+@configclass
+class RobotV16H2EnvCfg(RobotV16FEnvCfg):
+    def __post_init__(self):
+        super().__post_init__()
+        _apply_v1_6h(self, alpha=1.0, ramp_s=1.5)
+
+
+@configclass
+class RobotV16H3EnvCfg(RobotV16FEnvCfg):
+    def __post_init__(self):
+        super().__post_init__()
+        _apply_v1_6h(self, alpha=0.5, ramp_s=1.5)

@@ -133,3 +133,15 @@ gym.register(
         "rsl_rl_cfg_entry_point": _V16_AGENT,
     },
 )
+
+# V1-6H (2026-11-20): F + 차기 전 플러스 보상 게이트 (H: α1·데드라인, H2: α1·1.5 s, H3: α0.5·1.5 s). 재생·평가는 V1-6D-Play / -RealLike.
+for _h in ("H", "H2", "H3"):
+    gym.register(
+        id=f"Unitree-MX3-WalkKick-V1-6{_h}",
+        entry_point="isaaclab.envs:ManagerBasedRLEnv",
+        kwargs={
+            "env_cfg_entry_point": f"{_V16}:RobotV16{_h}EnvCfg",
+            "play_env_cfg_entry_point": f"{_V16}:RobotV16DPlayEnvCfg",
+            "rsl_rl_cfg_entry_point": _V16_AGENT,
+        },
+    )

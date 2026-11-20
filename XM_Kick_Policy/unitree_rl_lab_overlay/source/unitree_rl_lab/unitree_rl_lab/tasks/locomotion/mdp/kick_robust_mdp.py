@@ -479,3 +479,53 @@ def ended_without_kick_penalty(env: "ManagerBasedRLEnv", exclude: tuple[str, ...
             skip |= from_bank & (ep == kh.EP_NAMES[name])
         out = out & ~skip
     return out.float()
+
+
+GATED_POSITIVE_TERMS = ("alive", "gait", "stop_posture", "joint_pose_to_default", "capture_point", "track_lin_vel_x")
+
+
+def kick_gated_positive(
+    env: "ManagerBasedRLEnv",
+    terms: tuple[str, ...] = GATED_POSITIVE_TERMS,
+    alpha: float = 1.0,
+    ramp_s: float = -1.0,
+    exclude: tuple[str, ...] = ("whiff", "duel"),
+):
+    """'공을 차야 생존·자세 보상을 받는다' 를 곱으로 만든다 (V1-6H). 반드시 보상 목록의 마지막 항이어야 한다.
+
+    F·G 에서 안 차는 에피소드는 데드라인까지 alive·gait·capture_point 같은 플러스 보상을 계속 받았고,
+    차면 kick_resolved 로 에피소드가 일찍 끝나 그 수입을 잃었다 → 어려운 배치는 건너뛰는 게 이득.
+    여기서는 차기 전의 그 플러스 보상에 배율 g 를 곱한 효과를 낸다:
+        g = 1                                   (찼거나, 헛발질·다툼 에피소드)
+        g = 1 − alpha · clamp(t / ramp, 0, 1)    (차기 전, ramp_s < 0 이면 ramp = 에피소드 데드라인)
+    RewardManager 는 항을 순서대로 계산하고 _step_reward 에 weight 곱한 값을 넣으므로, 마지막 항이 앞 항들의
+    이번 스텝 값을 읽어 −(1−g)·Σmax(항, 0) 을 돌려준다 (weight 1.0). 음수 값은 깎지 않는다 (벌점을 줄이면 거꾸로 된다).
+    """
+    from . import kick_handoff_mdp as kh
+    from . import kick_mdp
+
+    rm = env.reward_manager
+    idx = getattr(env, "_kick_gate_idx", None)
+    if idx is None:
+        names = rm._term_names
+        me = names.index("kick_gate")
+        idx = [names.index(t) for t in terms if t in names]
+        assert all(i < me for i in idx), "kick_gate 는 보상 목록의 마지막에 있어야 한다"
+        env._kick_gate_idx = idx
+    kick_mdp._ensure_kick_state(env)
+    t = kick_clock_s(env)
+    ramp = env.kick_deadline_s if (ramp_s < 0 and hasattr(env, "kick_deadline_s")) else max(ramp_s, 1e-3)
+    if ramp_s == 0:
+        frac = torch.ones_like(t)
+    else:
+        frac = torch.clamp(t / ramp, 0.0, 1.0)
+    g = 1.0 - alpha * frac
+    open_ = env.kick_time_s >= 0
+    ep = getattr(env, "kick_episode_type", None)
+    from_bank = getattr(env, "kick_from_bank", None)
+    if ep is not None and from_bank is not None and exclude:
+        for name in exclude:
+            open_ |= from_bank & (ep == kh.EP_NAMES[name])
+    g = torch.where(open_, torch.ones_like(g), g)
+    pos = torch.clamp(rm._step_reward[:, idx], min=0.0).sum(dim=1)
+    return -(1.0 - g) * pos
