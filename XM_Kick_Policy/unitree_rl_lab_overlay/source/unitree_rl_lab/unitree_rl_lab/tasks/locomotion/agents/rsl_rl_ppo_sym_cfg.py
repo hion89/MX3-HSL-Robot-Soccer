@@ -339,3 +339,17 @@ class KickSwitchClipPPORunnerCfg(KickSwitchPPORunnerCfg):
     """
 
     rollback_randomize_ep_len: bool = False
+
+
+@configclass
+class WalkKickClipPPORunnerCfg(WalkKickPPORunnerCfg):
+    """WalkKick + 액션 클리핑 (2026-11-23, V1-6H 장기 학습부터).
+
+    V1-6E 7 회, V1-6H 6 회 value loss 발산 → 롤백 (최대 8.9e22). 킥 러너의 clip_actions 가 null 이라
+    기상 V2 (GetupPPOMirror03ClipRunnerCfg, 2026-09-11) 와 같은 '정책 출력 폭주 → action_rate 폭발' 로 본다.
+    100 = 관절 목표 25 rad (scale 0.25), 어차피 관절 리밋으로 클램프되는 범위 → 정상 동작 영향 없음.
+    """
+
+    def __post_init__(self):
+        super().__post_init__()
+        self.clip_actions = 100.0

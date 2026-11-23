@@ -528,4 +528,29 @@ def kick_gated_positive(
             open_ |= from_bank & (ep == kh.EP_NAMES[name])
     g = torch.where(open_, torch.ones_like(g), g)
     pos = torch.clamp(rm._step_reward[:, idx], min=0.0).sum(dim=1)
+    _watch_reward_blowup(env, rm)
     return -(1.0 - g) * pos
+
+
+REWARD_BLOWUP_WARN = 1.0e4
+
+
+def _watch_reward_blowup(env, rm):
+    """진단 (2026-11-23): 이번 스텝의 항별 |보상| 최댓값이 1e4 를 넘으면 항 이름·env·행동 크기를 출력한다.
+
+    value loss 발산 롤백 (E 7 회, H 6 회) 의 원인 항을 기록하기 위한 것. 평소 항별 값은 1 미만이다.
+    kick_gate 가 마지막 항이라 이 시점에 _step_reward 에 이번 스텝의 모든 항이 들어 있다.
+    """
+    sr = rm._step_reward
+    bad = ~torch.isfinite(sr)
+    mx = torch.where(bad, torch.full_like(sr, float("inf")), sr.abs()).amax(dim=0)
+    if bool((mx > REWARD_BLOWUP_WARN).any()):
+        n = int(getattr(env, "_blowup_prints", 0))
+        if n < 200:
+            env._blowup_prints = n + 1
+            act = env.action_manager.action.abs()
+            it = int(env.common_step_counter)
+            hits = [(rm._term_names[i], float(mx[i]), int(torch.where(bad[:, i], 1.0, sr[:, i].abs()).argmax()))
+                    for i in torch.nonzero(mx > REWARD_BLOWUP_WARN).flatten().tolist()]
+            print(f"[REWARD_BLOWUP] step {it} terms {hits} | |action| max {float(act.max()):.3g} "
+                  f"(env {int(act.amax(dim=1).argmax())})", flush=True)
