@@ -1,0 +1,98 @@
+C:\Users\jes\Desktop\isaac_ws\sim2real_evidence\.mujoco_env\Scripts\python.exe C:\Users\jes\Desktop\MX3_Match_Sim\sim2real_evidence\kick_robust_20261116\mujoco_kick_stress.py --suite gate --trials 300 --workers 11 --out results_v16h_long_25500\stress --policy C:\Users\jes\Desktop\MX3_Match_Sim\XM_Kick_Policy\policy\policy.onnx --policy results_v16h_long_25500\onnx\ckpt_v16h_long__model_25500.onnx
+[stress] 2 policy x 11 cond x 300 = 6600 trials, 11 workers
+  100/6600  2s
+  200/6600  4s
+  300/6600  5s
+  400/6600  6s
+  500/6600  8s
+  600/6600  9s
+  700/6600  10s
+  800/6600  12s
+  900/6600  13s
+  1000/6600  15s
+  1100/6600  16s
+  1200/6600  18s
+  1300/6600  19s
+  1400/6600  20s
+  1500/6600  21s
+  1600/6600  22s
+  1700/6600  24s
+  1800/6600  25s
+  1900/6600  26s
+  2000/6600  27s
+  2100/6600  29s
+  2200/6600  30s
+  2300/6600  31s
+  2400/6600  33s
+  2500/6600  34s
+  2600/6600  35s
+  2700/6600  37s
+  2800/6600  38s
+  2900/6600  39s
+  3000/6600  41s
+  3100/6600  42s
+  3200/6600  44s
+  3300/6600  45s
+  3400/6600  47s
+  3500/6600  48s
+  3600/6600  49s
+  3700/6600  51s
+  3800/6600  52s
+  3900/6600  53s
+  4000/6600  55s
+  4100/6600  56s
+  4200/6600  57s
+  4300/6600  59s
+  4400/6600  60s
+  4500/6600  62s
+  4600/6600  63s
+  4700/6600  64s
+  4800/6600  66s
+  4900/6600  67s
+  5000/6600  68s
+  5100/6600  70s
+  5200/6600  71s
+  5300/6600  72s
+  5400/6600  74s
+  5500/6600  75s
+  5600/6600  76s
+  5700/6600  78s
+  5800/6600  79s
+  5900/6600  81s
+  6000/6600  82s
+  6100/6600  84s
+  6200/6600  86s
+  6300/6600  87s
+  6400/6600  89s
+  6500/6600  90s
+  6600/6600  92s
+policy                cond                     n   fall%   ¡¾95  kick%     v  spin90  slip90
+ckpt_v16h_long__model train_fresh_obs        300    25.3   4.9   97.3  3.75     7.7     4.1
+ckpt_v16h_long__model baseline               300    22.0   4.7   98.0  3.80     9.2     4.0
+ckpt_v16h_long__model deploy_contract        300    13.3   3.8   98.3  3.78     7.2     3.7
+ckpt_v16h_long__model volt_11.1_dc           300     9.3   3.3   98.0  3.31     7.3     3.6
+ckpt_v16h_long__model imu_delay_20ms         300    22.0   4.7   98.0  3.74     8.1     3.6
+ckpt_v16h_long__model act_delay_2            300    22.0   4.7   97.7  3.78     9.0     3.9
+ckpt_v16h_long__model mu_0.5                 300    25.3   4.9   98.0  4.04     6.0     3.5
+ckpt_v16h_long__model torsion_0.1            300     8.0   3.1   98.0  3.81    13.5     3.5
+ckpt_v16h_long__model real_like              300     8.7   3.2   99.0  3.47     9.7     3.3
+ckpt_v16h_long__model real_like_low_mu       300    23.3   4.8   98.3  3.50     9.7     3.8
+ckpt_v16h_long__model real_like_strength_0.5 300     6.0   2.7   98.7  3.45     9.1     3.1
+policy.onnx           train_fresh_obs        300     2.3   1.7  100.0  4.55     7.7     3.6
+policy.onnx           baseline               300    13.0   3.8  100.0  4.70     8.7     4.6
+policy.onnx           deploy_contract        300    10.0   3.4  100.0  4.69     8.2     4.3
+policy.onnx           volt_11.1_dc           300    33.7   5.3  100.0  4.21     7.6     4.1
+policy.onnx           imu_delay_20ms         300    44.0   5.6  100.0  4.66     7.7     4.5
+policy.onnx           act_delay_2            300    28.0   5.1  100.0  4.49    13.1     3.9
+policy.onnx           mu_0.5                 300    38.7   5.5  100.0  4.69     6.5     3.5
+policy.onnx           torsion_0.1            300     9.3   3.3  100.0  4.62    13.5     4.0
+policy.onnx           real_like              300    78.3   4.7  100.0  4.35     8.3     3.4
+policy.onnx           real_like_low_mu       300    89.0   3.5  100.0  4.36     6.0     3.1
+policy.onnx           real_like_strength_0.5 300     0.0   0.0  100.0  3.25     7.3     3.1
+[stress] done 92s -> results_v16h_long_25500\stress
+# MuJoCo gate ranking
+
+trials per cell: 300. Lower is better. Simulation only.
+
+- baseline: worst 89.0 %, mean 31.5 %, real_like 78.3 %, low_mu 89.0 %, kick â‰¥ 100 %, v 4.55 m/s 
+- ckpt_v16h_long__model_25500.onnx: worst 25.3 %, mean 16.8 %, real_like 8.7 %, low_mu 23.3 %, kick â‰¥ 97 %, v 3.75 m/s âš  ball_speed<85%
