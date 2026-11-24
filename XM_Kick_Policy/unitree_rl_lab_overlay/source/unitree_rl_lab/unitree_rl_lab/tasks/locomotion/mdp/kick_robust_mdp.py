@@ -554,3 +554,34 @@ def _watch_reward_blowup(env, rm):
                     for i in torch.nonzero(mx > REWARD_BLOWUP_WARN).flatten().tolist()]
             print(f"[REWARD_BLOWUP] step {it} terms {hits} | |action| max {float(act.max()):.3g} "
                   f"(env {int(act.amax(dim=1).argmax())})", flush=True)
+
+
+# ============================================================================
+# V1-6I (2026-11-24) — 공 속도 보상에 방향 배율을 곱한다.
+#   H 27500 은 넘어짐은 줄었지만 공 속도 −22 %, 방향 오차 16~22° (22300 11~14°).
+#   기존 방향 항 ball_offaxis (−0.3 × 수직성분²) 는 20° 오차에서 킥당 약 −0.06 으로 속도 보상 (~+3) 에 비해 무시할 만했다.
+#   투영 proj² 도 20° 에서 12 % 만 깎는다. 그래서 속도 보상 자체에 dir = floor + (1 − floor)·exp(−(θ/σ)²) 를 곱한다:
+#   σ 20° → 10° 는 ×0.82, 20° 는 ×0.56, 30° 는 ×0.38 (floor 0.3). 공이 거의 안 움직이면 (속도 < 0.3 m/s) 배율 1.
+# ============================================================================
+def ball_velocity_dir_gated(
+    env, v_full: float, lo: float, sigma_frac: float, sigma_min: float, lin_err: float = 0.0, lin_w: float = 0.0,
+    soft_scale: float = 1.0, max_speed: float = 3.0, post_kick_window_s: float = 0.4, quality_floor: float = 0.3,
+    min_strike_speed: float = 1.8, window_steps: int = 20,
+    asset_cfg: SceneEntityCfg = SceneEntityCfg("robot"), ball_cfg: SceneEntityCfg = SceneEntityCfg("ball"),
+    dir_sigma_deg: float = 20.0, dir_floor: float = 0.3,
+) -> torch.Tensor:
+    # Isaac Lab 은 보상 함수의 **kwargs 를 받지 않는다 → kh.ball_velocity_strength 인자를 그대로 나열한다.
+    from . import kick_handoff_mdp as kh
+    from . import kick_inside_mdp as kim
+
+    base = kh.ball_velocity_strength(env, v_full, lo, sigma_frac, sigma_min, lin_err, lin_w, soft_scale, max_speed,
+                                     post_kick_window_s, quality_floor, min_strike_speed, window_steps,
+                                     asset_cfg, ball_cfg)
+    ball = env.scene[ball_cfg.name]
+    v_xy = ball.data.root_lin_vel_w[:, :2]
+    speed = torch.norm(v_xy, dim=-1)
+    cos = ((v_xy * kim._target_dir_xy(env)).sum(dim=-1) / (speed + 1e-6)).clamp(-1.0, 1.0)
+    theta = torch.rad2deg(torch.acos(cos))
+    dir_q = dir_floor + (1.0 - dir_floor) * torch.exp(-torch.square(theta / dir_sigma_deg))
+    dir_q = torch.where(speed > 0.3, dir_q, torch.ones_like(dir_q))
+    return base * dir_q

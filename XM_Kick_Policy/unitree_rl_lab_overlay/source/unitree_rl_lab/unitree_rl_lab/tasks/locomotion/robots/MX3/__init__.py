@@ -147,3 +147,15 @@ for _h in ("H", "H2", "H3"):
             "rsl_rl_cfg_entry_point": _V16_AGENT_CLIP,
         },
     )
+
+# V1-6I (2026-11-24): H + 공 속도 보상에 방향 배율 (σ20°, floor 0.3). I: 가중치 2.5, I2: 3.0. H long model_27500 에서 이어 학습.
+for _i in ("I", "I2"):
+    gym.register(
+        id=f"Unitree-MX3-WalkKick-V1-6{_i}",
+        entry_point="isaaclab.envs:ManagerBasedRLEnv",
+        kwargs={
+            "env_cfg_entry_point": f"{_V16}:RobotV16{_i}EnvCfg",
+            "play_env_cfg_entry_point": f"{_V16}:RobotV16DPlayEnvCfg",
+            "rsl_rl_cfg_entry_point": _V16_AGENT_CLIP,
+        },
+    )

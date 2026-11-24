@@ -468,3 +468,28 @@ class RobotV16H3EnvCfg(RobotV16FEnvCfg):
     def __post_init__(self):
         super().__post_init__()
         _apply_v1_6h(self, alpha=0.5, ramp_s=1.5)
+
+
+# ============================================================================
+# V1-6I (2026-11-24) — H + 방향 배율 곱한 공 속도 보상 (+ 속도 가중치). H long model_27500 에서 이어 학습.
+#   I: 가중치 2.0 → 2.5, I2: 2.0 → 3.0. 둘 다 dir σ 20°, floor 0.3. 넘어짐 벌점 (fall_after_kick −6) 은 그대로.
+#   kick_gate 는 마지막 항이어야 한다 — 기존 ball_velocity 항을 바꿔 끼우므로 순서는 유지된다.
+# ============================================================================
+def _apply_v1_6i(cfg, weight: float, sigma_deg: float = 20.0, floor: float = 0.3):
+    bv = cfg.rewards.ball_velocity
+    cfg.rewards.ball_velocity = RewTerm(func=kr.ball_velocity_dir_gated, weight=weight,
+                                        params={**bv.params, "dir_sigma_deg": sigma_deg, "dir_floor": floor})
+
+
+@configclass
+class RobotV16IEnvCfg(RobotV16HEnvCfg):
+    def __post_init__(self):
+        super().__post_init__()
+        _apply_v1_6i(self, weight=2.5)
+
+
+@configclass
+class RobotV16I2EnvCfg(RobotV16HEnvCfg):
+    def __post_init__(self):
+        super().__post_init__()
+        _apply_v1_6i(self, weight=3.0)
