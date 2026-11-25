@@ -161,7 +161,8 @@ for _i in ("I", "I2"):
     )
 
 # V1-6J (2026-11-25): I2 + 골반 roll 벌림 상한 벌점 (J1 35°·−20, J2 35°·−60, J3 45°·−60, J4 25°·−40). I2 model_final 에서 이어 학습.
-for _j in ("J1", "J2", "J3", "J4"):
+# J5·J6 (2026-11-25): 같은 벌점을 0 에서 약 500 iteration 동안 올린다 (목표 −5, −10).
+for _j in ("J1", "J2", "J3", "J4", "J5", "J6"):
     gym.register(
         id=f"Unitree-MX3-WalkKick-V1-6{_j}",
         entry_point="isaaclab.envs:ManagerBasedRLEnv",

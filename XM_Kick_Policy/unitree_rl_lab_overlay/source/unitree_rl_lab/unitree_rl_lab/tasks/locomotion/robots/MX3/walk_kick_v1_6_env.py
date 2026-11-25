@@ -535,3 +535,29 @@ class RobotV16J4EnvCfg(RobotV16I2EnvCfg):
     def __post_init__(self):
         super().__post_init__()
         _apply_v1_6j(self, 25.0, -40.0)
+
+
+# V1-6J5·J6 (2026-11-25): J1~J4 는 큰 벌점을 한 번에 넣어 킥이 무너졌다. 같은 벌점 (35°) 을 0 에서 천천히 올린다.
+#   iteration 당 24 스텝 → ramp 12000 스텝 = 약 500 iteration. J5 목표 −5, J6 목표 −10.
+J_RAMP_STEPS = 12000
+
+
+def _apply_v1_6j_ramp(cfg, threshold_deg: float, target: float):
+    _apply_v1_6j(cfg, threshold_deg, 0.0)
+    cfg.curriculum.hip_roll_excess_w = CurrTerm(func=kr.ramp_reward_weight,
+                                                params={"term_name": "hip_roll_excess", "target": target,
+                                                        "ramp_steps": J_RAMP_STEPS})
+
+
+@configclass
+class RobotV16J5EnvCfg(RobotV16I2EnvCfg):
+    def __post_init__(self):
+        super().__post_init__()
+        _apply_v1_6j_ramp(self, 35.0, -5.0)
+
+
+@configclass
+class RobotV16J6EnvCfg(RobotV16I2EnvCfg):
+    def __post_init__(self):
+        super().__post_init__()
+        _apply_v1_6j_ramp(self, 35.0, -10.0)

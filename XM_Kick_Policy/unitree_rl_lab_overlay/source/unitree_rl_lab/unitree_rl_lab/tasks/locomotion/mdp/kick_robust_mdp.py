@@ -607,3 +607,18 @@ def metric_hip_roll_max_deg(env, asset_cfg: SceneEntityCfg = SceneEntityCfg("rob
     ids = asset_cfg.joint_ids
     dev = asset.data.joint_pos[:, ids] - asset.data.default_joint_pos[:, ids]
     return torch.rad2deg(dev.abs().max(dim=1).values)
+
+
+def ramp_reward_weight(env, env_ids, term_name: str, target: float, ramp_steps: int) -> float:
+    """보상 항 가중치를 0 → target 으로 학습 진행 (env.common_step_counter) 에 비례해 올린다.
+
+    V1-6J1~J4 (2026-11-25) 는 수렴한 정책에 큰 새 벌점을 한 번에 넣어 value 추정이 깨지고 킥이 무너졌다
+    (kick_resolved 0.6 → 0.005~0.33, noise std 0.375 → 0.46). 가중치를 천천히 올려 그 충격을 피한다.
+    TensorBoard: Curriculum/<이 항 이름> = 현재 가중치.
+    """
+    frac = min(1.0, float(env.common_step_counter) / max(1, ramp_steps))
+    rm = env.reward_manager
+    cfg = rm.get_term_cfg(term_name)
+    cfg.weight = target * frac
+    rm.set_term_cfg(term_name, cfg)
+    return cfg.weight
