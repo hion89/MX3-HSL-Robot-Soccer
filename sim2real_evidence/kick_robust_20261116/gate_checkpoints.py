@@ -58,6 +58,7 @@ def main():
     ap.add_argument("--trials", type=int, default=300)
     ap.add_argument("--workers", type=int, default=max(1, (os.cpu_count() or 2) - 1))
     ap.add_argument("--out", default=os.path.join(HERE, "gate_out"))
+    ap.add_argument("--suite", default="gate", choices=["gate", "push"], help="push = 킥 디딤발 쪽 외력 4~12 N")
     args = ap.parse_args()
 
     ckpts = list(args.ckpt)
@@ -79,7 +80,7 @@ def main():
             export(c, o)
         pols.append(o)
         names[os.path.basename(o)] = os.path.basename(o)
-    cmd = [sys.executable, os.path.join(HERE, "mujoco_kick_stress.py"), "--suite", "gate", "--trials", str(args.trials),
+    cmd = [sys.executable, os.path.join(HERE, "mujoco_kick_stress.py"), "--suite", args.suite, "--trials", str(args.trials),
            "--workers", str(args.workers), "--out", os.path.join(args.out, "stress")]
     for p in pols:
         cmd += ["--policy", p]
@@ -91,12 +92,13 @@ def main():
     for s in summ:
         by.setdefault(s["policy"], {})[s["cond"]] = s
     base = by.get(os.path.basename(args.baseline), {})
-    v_ref = base.get("train_fresh_obs", {}).get("peak_v_mean", 0.0)
+    v_key = "train_fresh_obs" if args.suite == "gate" else "push_4N"
+    v_ref = base.get(v_key, {}).get("peak_v_mean", 0.0)
     rows = []
     for pol, cells in by.items():
         falls = {k: v["fall_pct"] for k, v in cells.items()}
         kick = min(v["kick_pct"] for v in cells.values())
-        v_nom = cells.get("train_fresh_obs", {}).get("peak_v_mean", 0.0)
+        v_nom = cells.get(v_key, {}).get("peak_v_mean", 0.0)
         flag = []
         if kick < 95.0:
             flag.append("kick<95%")

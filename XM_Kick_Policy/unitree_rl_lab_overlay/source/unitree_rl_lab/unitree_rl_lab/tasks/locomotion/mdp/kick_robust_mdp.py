@@ -593,10 +593,17 @@ def ball_velocity_dir_gated(
 #   들리며 넘어졌다. MuJoCo 는 같은 동작에서 버텨 재현되지 않았다 (질량·강성·지연·바닥·발 형상 모두 시험).
 #   그래서 실물이 감당할 여유를 두도록 |골반 roll − 기본| 이 threshold 를 넘는 만큼 제곱 벌점을 준다 (양 다리).
 # ============================================================================
+def _require_resolved(cfg: SceneEntityCfg, attr: str, who: str):
+    """Isaac Lab 은 params 에 넣은 SceneEntityCfg 만 resolve 한다. 함수 기본값은 slice(None) (= 전체) 로 남는다."""
+    if isinstance(getattr(cfg, attr), slice):
+        raise ValueError(f"{who}: {cfg.name}.{attr} 가 resolve 되지 않았다 — SceneEntityCfg 를 params 에 넣어라")
+
+
 def hip_roll_excess(env, threshold_rad: float = 0.61,
                     asset_cfg: SceneEntityCfg = SceneEntityCfg("robot", joint_names=[".*_pelvis_roll_joint"])) -> torch.Tensor:
     asset = env.scene[asset_cfg.name]
     ids = asset_cfg.joint_ids
+    _require_resolved(asset_cfg, "joint_ids", "hip_roll_excess")
     dev = asset.data.joint_pos[:, ids] - asset.data.default_joint_pos[:, ids]
     excess = torch.clamp(dev.abs() - threshold_rad, min=0.0)
     return torch.square(excess).sum(dim=1)
@@ -622,3 +629,134 @@ def ramp_reward_weight(env, env_ids, term_name: str, target: float, ramp_steps: 
     cfg.weight = target * frac
     rm.set_term_cfg(term_name, cfg)
     return cfg.weight
+
+
+# ============================================================================
+# V1-6K (2026-11-25) — 킥 디딤발 쪽 지속 외력 + 몸 roll 벌점 (실물 '디딤발 쪽 roll 전도' 대용)
+# ----------------------------------------------------------------------------
+# 실물: 차는 다리 골반 roll 55~63° 벌림 직후 디딤발이 바깥 모서리로 들려 디딤발 쪽으로 넘어진다.
+# 시뮬은 같은 동작에도 버틴다 (발·잔디·모터 차이를 모델로 재현 못 함, KICK_V1_6_KO.md).
+# 그 차이를 '디딤발 쪽으로 미는 지속 외력' 으로 대신 넣는다.
+#   시작: 한쪽 발이 떠 있고 (접촉 수직력 < 5 N) 그 다리 골반 roll 벌림 > trig_deg (40°, 걷는 중 ~30° 보다 큼)
+#   방향: 몸통 좌우축 (수평), 디딤발 쪽. 크기: 에피소드마다 force_range 균등, probability 의 에피소드만.
+#   시간: duration_s 동안 일정, 에피소드당 한 번. 크기는 ramp_steps 동안 0 → 1 배로 키운다.
+# MuJoCo 보정 (push_calib.py, 2026-11-25): 같은 외력 0.5 s 에 30899 는 8 N, 27500 은 4 N 부터 거의 다 넘어진다.
+# 같은 정의가 mujoco_kick_stress.KickPush 에 있다 (게이트 push 조건).
+# ============================================================================
+_KSP_ROLL = SceneEntityCfg("robot", joint_names=["r_pelvis_roll_joint", "l_pelvis_roll_joint"], preserve_order=True)
+_KSP_FEET = SceneEntityCfg("contact_forces", body_names=["r_ankle_roll_link", "l_ankle_roll_link"], preserve_order=True)
+
+
+def _ksp_init(env):
+    if hasattr(env, "_ksp_left"):
+        return
+    n, dev = env.num_envs, env.device
+    env._ksp_left = torch.full((n,), -1.0, device=dev)        # 남은 외력 시간 [s], −1 = 대기
+    env._ksp_done = torch.zeros(n, dtype=torch.bool, device=dev)
+    env._ksp_peak = torch.zeros(n, device=dev)                 # 이 에피소드의 힘 [N], 0 = 안 밂
+    env._ksp_F = torch.zeros(n, 3, device=dev)
+    env._ksp_scale = 0.0
+    env._ksp_stat = {"eligible": 0.0, "pushed": 0.0, "force_sum": 0.0, "roll_sum": 0.0, "eps": 0.0}
+    env._ksp_roll_max = torch.zeros(n, device=dev)
+
+
+def kick_support_push_reset(env, env_ids, force_range: tuple[float, float], probability: float = 0.5,
+                            asset_cfg: SceneEntityCfg = SceneEntityCfg("robot", body_names="base_link")):
+    """리셋 env: 외력 끄고, 이번 에피소드 힘 크기를 뽑는다."""
+    _ksp_init(env)
+    if env_ids is None:
+        env_ids = torch.arange(env.num_envs, device=env.device)
+    k = len(env_ids)
+    # 끝난 에피소드 통계 (Curriculum/kick_push_max_N/* 로 기록)
+    st, el = env._ksp_stat, env._ksp_peak[env_ids] > 0
+    pushed = el & (env._ksp_done[env_ids] | (env._ksp_left[env_ids] >= 0))
+    st["eligible"] += float(el.sum()); st["pushed"] += float(pushed.sum())
+    st["force_sum"] += float((env._ksp_peak[env_ids] * env._ksp_scale * pushed.float()).sum())
+    st["roll_sum"] += float(env._ksp_roll_max[env_ids].sum()); st["eps"] += float(k)
+    env._ksp_roll_max[env_ids] = 0.0
+    lo, hi = force_range
+    peak = torch.rand(k, device=env.device) * (hi - lo) + lo
+    on = torch.rand(k, device=env.device) < probability
+    env._ksp_peak[env_ids] = torch.where(on, peak, torch.zeros_like(peak))
+    env._ksp_left[env_ids] = -1.0
+    env._ksp_done[env_ids] = False
+    env._ksp_F[env_ids] = 0.0
+    _require_resolved(asset_cfg, "body_ids", "kick_support_push_reset")
+    asset = env.scene[asset_cfg.name]
+    z = torch.zeros(k, 1, 3, device=env.device)
+    asset.set_external_force_and_torque(z, z, body_ids=asset_cfg.body_ids, env_ids=env_ids)
+
+
+def kick_support_push(env, env_ids, duration_s: float = 0.5, trig_deg: float = 40.0, ramp_steps: int = 12000,
+                      contact_n: float = 5.0,
+                      asset_cfg: SceneEntityCfg = SceneEntityCfg("robot", body_names="base_link"),
+                      roll_cfg: SceneEntityCfg = _KSP_ROLL, sensor_cfg: SceneEntityCfg = _KSP_FEET):
+    """매 스텝 (interval 0.02 s) 호출. 시작 조건을 보고 디딤발 쪽 외력을 쓴다."""
+    _ksp_init(env)
+    _require_resolved(asset_cfg, "body_ids", "kick_support_push")
+    _require_resolved(roll_cfg, "joint_ids", "kick_support_push")
+    _require_resolved(sensor_cfg, "body_ids", "kick_support_push")
+    asset = env.scene[asset_cfg.name]
+    sensor = env.scene.sensors[sensor_cfg.name]
+    jid = roll_cfg.joint_ids
+    dev_deg = torch.rad2deg((asset.data.joint_pos[:, jid] - asset.data.default_joint_pos[:, jid]).abs())
+    fn = sensor.data.net_forces_w[:, sensor_cfg.body_ids, 2].abs()
+    air = fn < contact_n
+    idle = (env._ksp_left < 0) & ~env._ksp_done & (env._ksp_peak > 0)
+    r_kick = idle & air[:, 0] & ~air[:, 1] & (dev_deg[:, 0] > trig_deg)
+    l_kick = idle & air[:, 1] & ~air[:, 0] & (dev_deg[:, 1] > trig_deg) & ~r_kick
+    start = r_kick | l_kick
+    env._ksp_scale = min(1.0, float(env.common_step_counter) / max(1, ramp_steps))
+    g = asset.data.projected_gravity_b
+    env._ksp_roll_max = torch.maximum(env._ksp_roll_max, torch.rad2deg(torch.atan2(g[:, 1], -g[:, 2]).abs()))
+    if start.any():
+        q = asset.data.root_quat_w                                   # (w, x, y, z)
+        w, x, y, z = q[:, 0], q[:, 1], q[:, 2], q[:, 3]
+        ax = torch.stack([2 * (x * y - w * z), 1 - 2 * (x * x + z * z)], dim=-1)   # 몸 +y 축 (월드 xy)
+        ax = ax / ax.norm(dim=-1, keepdim=True).clamp(min=1e-6)
+        sgn = torch.where(r_kick, 1.0, -1.0)                         # R 차기 → 디딤발 L = 몸 +y
+        mag = sgn * env._ksp_peak * env._ksp_scale
+        F = torch.zeros_like(env._ksp_F)
+        F[:, :2] = ax * mag.unsqueeze(-1)
+        env._ksp_F = torch.where(start.unsqueeze(-1), F, env._ksp_F)
+        env._ksp_left = torch.where(start, torch.full_like(env._ksp_left, duration_s), env._ksp_left)
+    active = env._ksp_left >= 0
+    force = env._ksp_F * active.unsqueeze(-1).float()
+    asset.set_external_force_and_torque(force.unsqueeze(1), torch.zeros_like(force).unsqueeze(1),
+                                        body_ids=asset_cfg.body_ids, is_global=True)
+    env._ksp_left = torch.where(active, env._ksp_left - env.step_dt, env._ksp_left)
+    env._ksp_done = env._ksp_done | (active & (env._ksp_left < 0))
+
+
+def metric_kick_push_N(env) -> torch.Tensor:
+    """지금 걸린 디딤발 쪽 외력 크기 [N] (weight 0, TensorBoard 용)."""
+    if not hasattr(env, "_ksp_left"):
+        return torch.zeros(env.num_envs, device=env.device)
+    return env._ksp_F.norm(dim=-1) * (env._ksp_left >= 0).float()
+
+
+def kick_push_scale(env, env_ids, max_N: float) -> dict:
+    """커리큘럼 기록용 (가중치 0 보상 항은 Isaac Lab 이 계산하지 않아 로그가 늘 0 이다).
+    TensorBoard: Curriculum/<이름>/max_N (지금 외력 최대 = max_N × 램프), pushed_frac (외력 대상 에피소드 중 실제 밀린 비율),
+    mean_N (밀린 에피소드 평균 힘), roll_max_deg (에피소드 몸 roll 최대 평균). 지난 기록 뒤 끝난 에피소드 기준."""
+    out = {"max_N": max_N * float(getattr(env, "_ksp_scale", 0.0))}
+    st = getattr(env, "_ksp_stat", None)
+    if st and st["eps"] > 0:
+        out["pushed_frac"] = st["pushed"] / max(1.0, st["eligible"])
+        out["mean_N"] = st["force_sum"] / max(1.0, st["pushed"])
+        out["roll_max_deg"] = st["roll_sum"] / st["eps"]
+        for key in st:
+            st[key] = 0.0
+    return out
+
+
+def base_roll_excess(env, threshold_rad: float = 0.1745, asset_cfg: SceneEntityCfg = SceneEntityCfg("robot")) -> torch.Tensor:
+    """몸통 roll 이 threshold 를 넘은 만큼의 제곱 [rad²]."""
+    g = env.scene[asset_cfg.name].data.projected_gravity_b
+    roll = torch.atan2(g[:, 1], -g[:, 2])
+    return torch.square(torch.clamp(roll.abs() - threshold_rad, min=0.0))
+
+
+def metric_base_roll_deg(env, asset_cfg: SceneEntityCfg = SceneEntityCfg("robot")) -> torch.Tensor:
+    g = env.scene[asset_cfg.name].data.projected_gravity_b
+    return torch.rad2deg(torch.atan2(g[:, 1], -g[:, 2]).abs())

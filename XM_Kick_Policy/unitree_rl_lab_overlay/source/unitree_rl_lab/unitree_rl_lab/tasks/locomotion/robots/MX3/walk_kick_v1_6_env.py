@@ -503,9 +503,13 @@ class RobotV16I2EnvCfg(RobotV16HEnvCfg):
 def _apply_v1_6j(cfg, threshold_deg: float, weight: float):
     kg = cfg.rewards.kick_gate
     delattr(cfg.rewards, "kick_gate")
+    # ⚠ SceneEntityCfg 는 params 에 넣어야 Isaac Lab 이 관절 번호로 바꾼다. 함수 기본값으로 두면 전체 관절이 된다
+    #   (2026-11-25 발견: J1~J6 은 이 때문에 모든 관절의 35~45° 넘는 움직임에 벌점을 줬다).
     cfg.rewards.hip_roll_excess = RewTerm(func=kr.hip_roll_excess, weight=weight,
-                                          params={"threshold_rad": threshold_deg * 3.14159265 / 180.0})
-    cfg.rewards.metric_hip_roll_max = RewTerm(func=kr.metric_hip_roll_max_deg, weight=0.0)
+                                          params={"threshold_rad": threshold_deg * 3.14159265 / 180.0,
+                                                  "asset_cfg": SceneEntityCfg("robot", joint_names=[".*_pelvis_roll_joint"])})
+    cfg.rewards.metric_hip_roll_max = RewTerm(func=kr.metric_hip_roll_max_deg, weight=0.0,
+                                              params={"asset_cfg": SceneEntityCfg("robot", joint_names=[".*_pelvis_roll_joint"])})
     cfg.rewards.kick_gate = kg
 
 
@@ -561,3 +565,95 @@ class RobotV16J6EnvCfg(RobotV16I2EnvCfg):
     def __post_init__(self):
         super().__post_init__()
         _apply_v1_6j_ramp(self, 35.0, -10.0)
+
+
+# ============================================================================
+# V1-6K (2026-11-25) — '공을 차되 넘어지지 않게' 후보 6개. 모두 I2 long model_final (30899) 에서 700 iteration.
+#   J1~J6 (골반 roll 벌림 벌점 35~45°) 는 벌림을 줄이지 못하고 킥만 포기했다.
+#   ① 각도 여유: K1 50°·−10, K2 55°·−30 (벌점 램프)
+#   ② 디딤발 쪽 외력: K3 (0~12 N, 에피소드 절반, 0.5 s, 램프). MuJoCo 에서 30899 는 8 N, 27500 은 4 N 부터 넘어진다.
+#   ③ 몸 roll 벌점: K4 (10° 넘는 만큼 제곱, −20, 램프). 넘어짐 종료는 기존 기울기 0.6 rad (34°) 그대로.
+#   조합: K5 = ② + ③, K6 = ② + ③ + ① (50°·−10).
+#   새 항은 모두 0 에서 J_RAMP_STEPS (약 500 iteration) 동안 키운다. kick_gate 는 마지막 항으로 다시 붙인다.
+# ============================================================================
+K_PUSH_N = (0.0, 12.0)
+K_PUSH_P = 0.5
+K_PUSH_S = 0.5
+K_ROLL_DEG, K_ROLL_W = 10.0, -20.0
+
+
+def _k_reattach_gate(cfg):
+    kg = cfg.rewards.kick_gate
+    delattr(cfg.rewards, "kick_gate")
+    cfg.rewards.kick_gate = kg
+
+
+def _apply_k_push(cfg):
+    base = lambda: SceneEntityCfg("robot", body_names=v14.MX_BASE_LINK)
+    cfg.events.kick_support_push_reset = EventTerm(
+        func=kr.kick_support_push_reset, mode="reset",
+        params={"force_range": K_PUSH_N, "probability": K_PUSH_P, "asset_cfg": base()})
+    cfg.events.kick_support_push = EventTerm(
+        func=kr.kick_support_push, mode="interval", interval_range_s=(0.02, 0.02),
+        params={"duration_s": K_PUSH_S, "trig_deg": 40.0, "ramp_steps": J_RAMP_STEPS, "asset_cfg": base(),
+                "roll_cfg": SceneEntityCfg("robot", joint_names=["r_pelvis_roll_joint", "l_pelvis_roll_joint"],
+                                           preserve_order=True),
+                "sensor_cfg": SceneEntityCfg("contact_forces", body_names=list(_FEET), preserve_order=True)})
+    cfg.curriculum.kick_push_max_N = CurrTerm(func=kr.kick_push_scale, params={"max_N": K_PUSH_N[1]})
+    cfg.rewards.metric_kick_push_N = RewTerm(func=kr.metric_kick_push_N, weight=0.0)
+    _k_reattach_gate(cfg)
+
+
+def _apply_k_roll(cfg):
+    cfg.rewards.base_roll_excess = RewTerm(func=kr.base_roll_excess, weight=0.0,
+                                           params={"threshold_rad": K_ROLL_DEG * 3.14159265 / 180.0})
+    cfg.rewards.metric_base_roll = RewTerm(func=kr.metric_base_roll_deg, weight=0.0)
+    cfg.curriculum.base_roll_excess_w = CurrTerm(func=kr.ramp_reward_weight,
+                                                 params={"term_name": "base_roll_excess", "target": K_ROLL_W,
+                                                         "ramp_steps": J_RAMP_STEPS})
+    _k_reattach_gate(cfg)
+
+
+@configclass
+class RobotV16K1EnvCfg(RobotV16I2EnvCfg):
+    def __post_init__(self):
+        super().__post_init__()
+        _apply_v1_6j_ramp(self, 50.0, -10.0)
+
+
+@configclass
+class RobotV16K2EnvCfg(RobotV16I2EnvCfg):
+    def __post_init__(self):
+        super().__post_init__()
+        _apply_v1_6j_ramp(self, 55.0, -30.0)
+
+
+@configclass
+class RobotV16K3EnvCfg(RobotV16I2EnvCfg):
+    def __post_init__(self):
+        super().__post_init__()
+        _apply_k_push(self)
+
+
+@configclass
+class RobotV16K4EnvCfg(RobotV16I2EnvCfg):
+    def __post_init__(self):
+        super().__post_init__()
+        _apply_k_roll(self)
+
+
+@configclass
+class RobotV16K5EnvCfg(RobotV16I2EnvCfg):
+    def __post_init__(self):
+        super().__post_init__()
+        _apply_k_push(self)
+        _apply_k_roll(self)
+
+
+@configclass
+class RobotV16K6EnvCfg(RobotV16I2EnvCfg):
+    def __post_init__(self):
+        super().__post_init__()
+        _apply_k_push(self)
+        _apply_k_roll(self)
+        _apply_v1_6j_ramp(self, 50.0, -10.0)

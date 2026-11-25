@@ -1,0 +1,40 @@
+[stress] 3 policy x 5 cond x 150 = 2250 trials, 11 workers
+  100/2250  3s
+  200/2250  4s
+  300/2250  6s
+  400/2250  8s
+  500/2250  9s
+  600/2250  10s
+  700/2250  12s
+  800/2250  14s
+  900/2250  15s
+  1000/2250  17s
+  1100/2250  18s
+  1200/2250  19s
+  1300/2250  21s
+  1400/2250  22s
+  1500/2250  23s
+  1600/2250  25s
+  1700/2250  26s
+  1800/2250  28s
+  1900/2250  29s
+  2000/2250  31s
+  2100/2250  32s
+  2200/2250  33s
+policy                cond                     n   fall%   ¡¾95  kick%     v  spin90  slip90
+kick_accurate_30899.o push_4N                150     2.7   2.6   97.3  3.79     7.6     3.1
+kick_accurate_30899.o push_6N                150    11.3   5.1   98.0  3.76     8.8     4.8
+kick_accurate_30899.o push_8N                150    51.3   8.0   98.0  3.70     8.4     5.0
+kick_accurate_30899.o push_10N               150    79.3   6.5   98.0  3.66     9.4     5.2
+kick_accurate_30899.o push_12N               150    93.3   4.0   98.0  3.61     7.6     3.9
+kick_power_22300.onnx push_4N                150     4.0   3.1  100.0  4.34     8.9     4.0
+kick_power_22300.onnx push_6N                150     5.3   3.6  100.0  4.34    10.3     5.0
+kick_power_22300.onnx push_8N                150    33.3   7.5  100.0  4.33    10.7     4.3
+kick_power_22300.onnx push_10N               150    58.0   7.9  100.0  4.33    10.9     4.4
+kick_power_22300.onnx push_12N               150    90.0   4.8  100.0  4.30    10.7     3.9
+kick_stable_27500.onn push_4N                150    19.3   6.3   99.3  3.50    10.9     4.8
+kick_stable_27500.onn push_6N                150    48.7   8.0   99.3  3.46     9.9     4.8
+kick_stable_27500.onn push_8N                150    84.7   5.8   98.7  3.47     9.1     4.7
+kick_stable_27500.onn push_10N               150    98.0   2.2   98.7  3.43     7.4     4.6
+kick_stable_27500.onn push_12N               150    99.3   1.3   98.0  3.39     7.5     4.2
+[stress] done 34s -> results_push_ref_20261125

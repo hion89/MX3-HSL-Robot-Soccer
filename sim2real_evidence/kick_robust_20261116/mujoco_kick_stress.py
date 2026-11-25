@@ -92,6 +92,12 @@ class Cond:
     target_deg: tuple = (-90.0, 90.0)
     strength: float = 1.0
     ball_bias_x: tuple = (0.0, 0.0)   # true ball - believed ball [m], robot frame
+    # 킥 디딤발 쪽 외력 (실물 디딤발 바깥 모서리 들림 대용). 0 = 끔.
+    # 한쪽 발이 떠 있고 그 다리 골반 roll 벌림이 push_trig_deg 를 넘는 순간 시작,
+    # 몸통에 디딤발 방향(몸 좌우축, 수평) 힘 push_N 을 push_s 동안 준다. 에피소드당 한 번.
+    push_N: float = 0.0
+    push_s: float = 0.5
+    push_trig_deg: float = 40.0       # 걷는 중 골반 roll ~30° 보다 커야 킥에만 걸린다
 
 
 def suite(name: str) -> list[Cond]:
@@ -152,6 +158,11 @@ def suite(name: str) -> list[Cond]:
             dataclasses.replace(real, name="real_like_low_mu", mu=0.45),
             dataclasses.replace(real, name="real_like_strength_0.5", strength=0.5),
         ]
+    if name == "push":
+        # 킥 디딤발 쪽 외력 (KickPush). 실물 디딤발 쪽 전도 대용. 30899 는 8 N, 27500 은 4 N 부터 거의 다 넘어진다.
+        real = dataclasses.replace(base, name="real_like", volt=11.1, imu_delay_ms=10.0, hold_s=0.6,
+                                   cmd_vx=0.20, filter_tau=0.02, mu=0.6, mu_torsion=0.1)
+        return [dataclasses.replace(real, name=f"push_{f:g}N", push_N=f) for f in (4.0, 6.0, 8.0, 10.0, 12.0)]
     raise SystemExit(f"unknown suite {name}")
 
 
@@ -245,6 +256,7 @@ class Sim:
     def place(self, rng, c: Cond):
         mj, m, d = self.mj, self.m, self.d
         mj.mj_resetData(m, d)
+        d.xfrc_applied[:] = 0.0
         d.qpos[self.rq:self.rq + 3] = [0.0, 0.0, 0.42]
         d.qpos[self.rq + 3:self.rq + 7] = [1.0, 0.0, 0.0, 0.0]
         for n in self.all_joints:
@@ -305,6 +317,45 @@ class Sim:
         return out
 
 
+class KickPush:
+    """킥 디딤발 쪽 외력. 정책 스텝마다 update() (물리 스텝 뒤) 를 부른다."""
+    _ROLL = None
+
+    def __init__(self, sim, c):
+        self.sim, self.c = sim, c
+        self.t_left = -1.0          # 남은 시간, -1 = 대기
+        self.done = False
+        self.F = np.zeros(3)
+        self.start_t = -1.0
+        if KickPush._ROLL is None:
+            KickPush._ROLL = (POLICY_JOINTS.index("r_pelvis_roll_joint"), POLICY_JOINTS.index("l_pelvis_roll_joint"))
+
+    def update(self, t):
+        sim, c = self.sim, self.c
+        if c.push_N <= 0:
+            return
+        if self.t_left < 0 and not self.done:
+            dev = np.abs(sim.d.qpos[sim.leg_q] - sim.default12)
+            fn = sim.foot_contact()          # (r, l)
+            for kick, sup in ((0, 1), (1, 0)):
+                if fn[kick] < 5.0 and fn[sup] > 5.0 and math.degrees(dev[KickPush._ROLL[kick]]) > c.push_trig_deg:
+                    R = sim.R_base()
+                    y = R[:, 1].copy(); y[2] = 0.0
+                    y /= max(np.linalg.norm(y), 1e-6)
+                    sgn = 1.0 if sup == 1 else -1.0       # 몸 +y = 왼쪽
+                    self.F = sgn * c.push_N * y
+                    self.t_left = c.push_s
+                    self.start_t = t
+                    break
+        if self.t_left >= 0:
+            sim.d.xfrc_applied[sim.base, :3] = self.F
+            self.t_left -= POLICY_DT
+            if self.t_left < 0:
+                self.done = True
+        else:
+            sim.d.xfrc_applied[sim.base, :3] = 0.0
+
+
 def yaw_of(R):
     return math.atan2(R[1, 0], R[0, 0])
 
@@ -363,6 +414,7 @@ def run_trial(sim: Sim, sess, c: Cond, seed: int, log_rows: list | None = None) 
         return imu_buf[-1 - lag]
 
     sense()
+    push = KickPush(sim, c)
     for k in range(steps):
         t = k * POLICY_DT
         in_hold = t < c.hold_s
@@ -407,6 +459,7 @@ def run_trial(sim: Sim, sess, c: Cond, seed: int, log_rows: list | None = None) 
             sense()
         for i, n in enumerate(POLICY_JOINTS):
             sim.target[sim.aid[n]] = applied[i]
+        push.update(t)
         # metrics
         R = sim.R_base()
         tilt = math.acos(max(-1.0, min(1.0, R[2, 2])))
@@ -447,7 +500,7 @@ def run_trial(sim: Sim, sess, c: Cond, seed: int, log_rows: list | None = None) 
                 peak_v=peak_v, stance_spin_deg=math.degrees(max_stance_spin),
                 stance_slip_cm=100.0 * max_stance_slip, yaw_rate_max=base_yaw_rate_max,
                 max_tilt_deg=math.degrees(max_tilt), dist=dist, bearing_deg=math.degrees(brg),
-                target_deg=math.degrees(tgt))
+                target_deg=math.degrees(tgt), pushed=push.start_t >= 0)
 
 
 _W = {}
@@ -485,6 +538,7 @@ def summarize(rows):
         res.append(dict(
             policy=pol, cond=cond, n=n, fall_pct=100 * p, fall_ci95_pct=100 * ci,
             kick_pct=100 * len(kicked) / n, fall_after_kick_pct=100 * fak / n,
+            pushed_pct=100 * sum(bool(r.get("pushed", False)) for r in rs) / n,
             peak_v_mean=float(np.mean([r["peak_v"] for r in kicked])) if kicked else 0.0,
             stance_spin_deg_p90=float(np.percentile([r["stance_spin_deg"] for r in kicked], 90)) if kicked else 0.0,
             stance_slip_cm_p90=float(np.percentile([r["stance_slip_cm"] for r in kicked], 90)) if kicked else 0.0,
@@ -505,7 +559,7 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--policy", action="append", help="kick ONNX (repeatable). default: XM_Kick_Policy/policy/policy.onnx")
     ap.add_argument("--scene", default=DEFAULT_SCENE)
-    ap.add_argument("--suite", default="quick", choices=["baseline", "quick", "full", "gate"])
+    ap.add_argument("--suite", default="quick", choices=["baseline", "quick", "full", "gate", "push"])
     ap.add_argument("--only", default="", help="comma separated condition names to keep")
     ap.add_argument("--trials", type=int, default=40)
     ap.add_argument("--seed", type=int, default=20261116)

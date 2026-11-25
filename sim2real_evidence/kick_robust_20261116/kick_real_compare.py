@@ -98,6 +98,7 @@ def run(sim, sess, c: ks.Cond, seed: int, kick_s: float, after_s: float, jitter:
         imu_buf.append(sim.imu())
 
     sense()
+    push = ks.KickPush(sim, c)
     rows = []
     fell_t = None
     steps = int(round((kick_s + after_s) / ks.POLICY_DT))
@@ -140,6 +141,7 @@ def run(sim, sess, c: ks.Cond, seed: int, kick_s: float, after_s: float, jitter:
             sense()
         for i, n in enumerate(ks.POLICY_JOINTS):
             sim.target[sim.aid[n]] = applied[i]
+        push.update(t)
         R = sim.R_base()
         tilt = math.acos(max(-1.0, min(1.0, R[2, 2])))
         h = sim.d.xpos[sim.base][2]
@@ -152,7 +154,8 @@ def run(sim, sess, c: ks.Cond, seed: int, kick_s: float, after_s: float, jitter:
         sat = np.where(frc >= 0, frc / np.maximum(lim_hi, 1e-6), frc / np.minimum(lim_lo, -1e-6))
         rows.append(dict(t=t, roll=roll_of(R), tilt=math.degrees(tilt), fn=sim.foot_contact().tolist(),
                          q=np.degrees(qn - sim.default12).tolist(), goal=np.degrees(applied - sim.default12).tolist(),
-                         tau=frc.tolist(), sat=sat.tolist(), vball=float(np.linalg.norm(sim.d.qvel[sim.bv:sim.bv + 2]))))
+                         tau=frc.tolist(), sat=sat.tolist(), vball=float(np.linalg.norm(sim.d.qvel[sim.bv:sim.bv + 2])),
+                         push=float(np.linalg.norm(sim.d.xfrc_applied[sim.base, :3]))))
         if fell_t is not None and t - fell_t > 0.4:
             break
     return rows, fell_t
@@ -178,6 +181,7 @@ def summarize(rows, fell_t):
         roll_max=float(np.abs([r["roll"] for r in rows[:len(q)]]).max()),
         fell=fell_t is not None, fell_t=fell_t if fell_t is not None else -1.0,
         vball_max=float(max(r["vball"] for r in rows)),
+        pushed=float(any(r.get("push", 0.0) > 0 for r in rows)),
     )
 
 
