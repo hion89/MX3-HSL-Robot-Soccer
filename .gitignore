@@ -24,3 +24,7 @@
 **/*.mp4
 **/*.avi
 /깃허브 링크.docx
+
+# 킥 시험 산출물 중 다시 만들 수 있는 것: 게이트가 체크포인트에서 내보낸 onnx, 시행별 시계열 json (요약 summary.json 은 커밋)
+sim2real_evidence/kick_robust_20261116/results_*/onnx/
+sim2real_evidence/kick_robust_20261116/results_*/*_trial0.json
