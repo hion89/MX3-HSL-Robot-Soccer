@@ -1,0 +1,34 @@
+[
+ {
+  "kick_hip_roll_max": 38.29009602927623,
+  "kick_hip_roll_goal_max": 39.9588737487793,
+  "support_hip_roll_err_max": 20.708574342631653,
+  "support_hip_roll_tau_max": 5.0,
+  "support_hip_roll_sat95_frac": 0.14100000000000001,
+  "roll_max": 8.562244375642246,
+  "fell": 0.0,
+  "fell_t": -1.0,
+  "vball_max": 3.6809582103030727,
+  "pushed": 0.0,
+  "policy": "ckpt_v16k5long__k5L_model_33500.onnx",
+  "cond": "real_like_cut2.0",
+  "strength": 1.0,
+  "kick_leg_R": 0.0
+ },
+ {
+  "kick_hip_roll_max": 37.69725998695347,
+  "kick_hip_roll_goal_max": 40.39303970336914,
+  "support_hip_roll_err_max": 19.79383580774148,
+  "support_hip_roll_tau_max": 5.0,
+  "support_hip_roll_sat95_frac": 0.14300000000000002,
+  "roll_max": 8.363331484788997,
+  "fell": 0.0,
+  "fell_t": -1.0,
+  "vball_max": 3.2963904082136226,
+  "pushed": 0.0,
+  "policy": "ckpt_v16k5long__k5L_model_33500.onnx",
+  "cond": "real_like_10.3V_cut2.0",
+  "strength": 1.0,
+  "kick_leg_R": 0.0
+ }
+]

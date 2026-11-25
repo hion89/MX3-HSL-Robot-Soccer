@@ -1,0 +1,35 @@
+C:\Users\jes\Desktop\isaac_ws\sim2real_evidence\.mujoco_env\Scripts\python.exe C:\Users\jes\Desktop\MX3_Match_Sim\sim2real_evidence\kick_robust_20261116\mujoco_kick_stress.py --suite push --trials 150 --workers 11 --out results_v16k5L_push_33500\stress --policy C:\Users\jes\Desktop\MX3_Match_Sim\XM_Kick_Policy\policy\policy.onnx --policy results_v16k5L_push_33500\onnx\ckpt_v16k5long__k5L_model_33500.onnx
+[stress] 2 policy x 5 cond x 150 = 1500 trials, 11 workers
+  100/1500  3s
+  200/1500  4s
+  300/1500  6s
+  400/1500  8s
+  500/1500  9s
+  600/1500  10s
+  700/1500  11s
+  800/1500  13s
+  900/1500  15s
+  1000/1500  16s
+  1100/1500  18s
+  1200/1500  19s
+  1300/1500  21s
+  1400/1500  22s
+  1500/1500  24s
+policy                cond                     n   fall%   ¡¾95  kick%     v  spin90  slip90
+ckpt_v16k5long__k5L_m push_4N                150    16.7   6.0  100.0  4.08     7.7     3.4
+ckpt_v16k5long__k5L_m push_6N                150    16.7   6.0  100.0  4.08     7.7     3.4
+ckpt_v16k5long__k5L_m push_8N                150    16.7   6.0  100.0  4.08     7.9     3.4
+ckpt_v16k5long__k5L_m push_10N               150    16.7   6.0  100.0  4.08     7.7     3.4
+ckpt_v16k5long__k5L_m push_12N               150    16.7   6.0  100.0  4.08     7.7     3.6
+policy.onnx           push_4N                150     4.0   3.1  100.0  4.34     8.9     4.0
+policy.onnx           push_6N                150     5.3   3.6  100.0  4.34    10.3     5.0
+policy.onnx           push_8N                150    33.3   7.5  100.0  4.33    10.7     4.3
+policy.onnx           push_10N               150    58.0   7.9  100.0  4.33    10.9     4.4
+policy.onnx           push_12N               150    90.0   4.8  100.0  4.30    10.7     3.9
+[stress] done 24s -> results_v16k5L_push_33500\stress
+# MuJoCo gate ranking
+
+trials per cell: 150. Lower is better. Simulation only.
+
+- ckpt_v16k5long__k5L_model_33500.onnx: worst 16.7 %, mean 16.7 %, real_like -1.0 %, low_mu -1.0 %, kick â‰¥ 100 %, v 4.08 m/s 
+- baseline: worst 90.0 %, mean 38.1 %, real_like -1.0 %, low_mu -1.0 %, kick â‰¥ 100 %, v 4.34 m/s 
