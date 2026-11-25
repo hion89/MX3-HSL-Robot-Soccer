@@ -585,3 +585,25 @@ def ball_velocity_dir_gated(
     dir_q = dir_floor + (1.0 - dir_floor) * torch.exp(-torch.square(theta / dir_sigma_deg))
     dir_q = torch.where(speed > 0.3, dir_q, torch.ones_like(dir_q))
     return base * dir_q
+
+
+# ============================================================================
+# V1-6J (2026-11-25) — 골반 roll 벌림 상한 벌점.
+#   실물 킥 (2026-11-25, robo04): 차는 다리 골반 roll 이 55~63° 까지 벌어지고, 그 직후 디딤발이 바깥 모서리로
+#   들리며 넘어졌다. MuJoCo 는 같은 동작에서 버텨 재현되지 않았다 (질량·강성·지연·바닥·발 형상 모두 시험).
+#   그래서 실물이 감당할 여유를 두도록 |골반 roll − 기본| 이 threshold 를 넘는 만큼 제곱 벌점을 준다 (양 다리).
+# ============================================================================
+def hip_roll_excess(env, threshold_rad: float = 0.61,
+                    asset_cfg: SceneEntityCfg = SceneEntityCfg("robot", joint_names=[".*_pelvis_roll_joint"])) -> torch.Tensor:
+    asset = env.scene[asset_cfg.name]
+    ids = asset_cfg.joint_ids
+    dev = asset.data.joint_pos[:, ids] - asset.data.default_joint_pos[:, ids]
+    excess = torch.clamp(dev.abs() - threshold_rad, min=0.0)
+    return torch.square(excess).sum(dim=1)
+
+
+def metric_hip_roll_max_deg(env, asset_cfg: SceneEntityCfg = SceneEntityCfg("robot", joint_names=[".*_pelvis_roll_joint"])) -> torch.Tensor:
+    asset = env.scene[asset_cfg.name]
+    ids = asset_cfg.joint_ids
+    dev = asset.data.joint_pos[:, ids] - asset.data.default_joint_pos[:, ids]
+    return torch.rad2deg(dev.abs().max(dim=1).values)

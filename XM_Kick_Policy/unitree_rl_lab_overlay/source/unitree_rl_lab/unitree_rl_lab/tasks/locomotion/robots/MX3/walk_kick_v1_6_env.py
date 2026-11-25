@@ -493,3 +493,45 @@ class RobotV16I2EnvCfg(RobotV16HEnvCfg):
     def __post_init__(self):
         super().__post_init__()
         _apply_v1_6i(self, weight=3.0)
+
+
+# ============================================================================
+# V1-6J (2026-11-25) — I2 + 골반 roll 벌림 상한 벌점. I2 long model_final (30899) 에서 이어 학습.
+#   실물에서 차는 다리 골반 roll 55~63° 직후 디딤발이 모서리로 들려 넘어졌다 (KICK_V1_6_KO.md 실물 진단).
+#   계수 시험: J1 35°·−20, J2 35°·−60, J3 45°·−60, J4 25°·−40. kick_gate 는 마지막 항으로 다시 붙인다.
+# ============================================================================
+def _apply_v1_6j(cfg, threshold_deg: float, weight: float):
+    kg = cfg.rewards.kick_gate
+    delattr(cfg.rewards, "kick_gate")
+    cfg.rewards.hip_roll_excess = RewTerm(func=kr.hip_roll_excess, weight=weight,
+                                          params={"threshold_rad": threshold_deg * 3.14159265 / 180.0})
+    cfg.rewards.metric_hip_roll_max = RewTerm(func=kr.metric_hip_roll_max_deg, weight=0.0)
+    cfg.rewards.kick_gate = kg
+
+
+@configclass
+class RobotV16J1EnvCfg(RobotV16I2EnvCfg):
+    def __post_init__(self):
+        super().__post_init__()
+        _apply_v1_6j(self, 35.0, -20.0)
+
+
+@configclass
+class RobotV16J2EnvCfg(RobotV16I2EnvCfg):
+    def __post_init__(self):
+        super().__post_init__()
+        _apply_v1_6j(self, 35.0, -60.0)
+
+
+@configclass
+class RobotV16J3EnvCfg(RobotV16I2EnvCfg):
+    def __post_init__(self):
+        super().__post_init__()
+        _apply_v1_6j(self, 45.0, -60.0)
+
+
+@configclass
+class RobotV16J4EnvCfg(RobotV16I2EnvCfg):
+    def __post_init__(self):
+        super().__post_init__()
+        _apply_v1_6j(self, 25.0, -40.0)
