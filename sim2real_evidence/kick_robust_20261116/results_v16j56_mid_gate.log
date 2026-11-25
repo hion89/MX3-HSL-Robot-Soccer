@@ -1,0 +1,207 @@
+C:\Users\jes\Desktop\isaac_ws\sim2real_evidence\.mujoco_env\Scripts\python.exe C:\Users\jes\Desktop\MX3_Match_Sim\sim2real_evidence\kick_robust_20261116\mujoco_kick_stress.py --suite gate --trials 150 --workers 11 --out results_v16j56_mid_gate\stress --policy C:\Users\jes\Desktop\MX3_Match_Sim\XM_Kick_Policy\policy\policy.onnx --policy results_v16j56_mid_gate\onnx\ckpt_v16j__j6_model_31100.onnx --policy results_v16j56_mid_gate\onnx\ckpt_v16j__j5_model_31100.onnx --policy results_v16j56_mid_gate\onnx\ckpt_v16j__j6_model_31200.onnx --policy results_v16j56_mid_gate\onnx\ckpt_v16j__j5_model_31200.onnx --policy results_v16j56_mid_gate\onnx\ckpt_v16j__j5_model_31300.onnx --policy results_v16j56_mid_gate\onnx\ckpt_v16j__j6_model_31300.onnx
+[stress] 7 policy x 11 cond x 150 = 11550 trials, 11 workers
+  100/11550  2s
+  200/11550  4s
+  300/11550  5s
+  400/11550  7s
+  500/11550  8s
+  600/11550  9s
+  700/11550  10s
+  800/11550  12s
+  900/11550  13s
+  1000/11550  14s
+  1100/11550  15s
+  1200/11550  17s
+  1300/11550  18s
+  1400/11550  19s
+  1500/11550  20s
+  1600/11550  22s
+  1700/11550  23s
+  1800/11550  24s
+  1900/11550  26s
+  2000/11550  27s
+  2100/11550  28s
+  2200/11550  30s
+  2300/11550  31s
+  2400/11550  32s
+  2500/11550  33s
+  2600/11550  35s
+  2700/11550  36s
+  2800/11550  37s
+  2900/11550  39s
+  3000/11550  40s
+  3100/11550  42s
+  3200/11550  43s
+  3300/11550  45s
+  3400/11550  46s
+  3500/11550  47s
+  3600/11550  48s
+  3700/11550  50s
+  3800/11550  51s
+  3900/11550  53s
+  4000/11550  54s
+  4100/11550  55s
+  4200/11550  56s
+  4300/11550  58s
+  4400/11550  59s
+  4500/11550  60s
+  4600/11550  62s
+  4700/11550  63s
+  4800/11550  65s
+  4900/11550  66s
+  5000/11550  68s
+  5100/11550  69s
+  5200/11550  70s
+  5300/11550  72s
+  5400/11550  73s
+  5500/11550  74s
+  5600/11550  76s
+  5700/11550  77s
+  5800/11550  78s
+  5900/11550  79s
+  6000/11550  80s
+  6100/11550  82s
+  6200/11550  83s
+  6300/11550  85s
+  6400/11550  86s
+  6500/11550  88s
+  6600/11550  89s
+  6700/11550  90s
+  6800/11550  92s
+  6900/11550  93s
+  7000/11550  94s
+  7100/11550  96s
+  7200/11550  97s
+  7300/11550  98s
+  7400/11550  100s
+  7500/11550  101s
+  7600/11550  102s
+  7700/11550  104s
+  7800/11550  105s
+  7900/11550  107s
+  8000/11550  108s
+  8100/11550  110s
+  8200/11550  111s
+  8300/11550  113s
+  8400/11550  114s
+  8500/11550  115s
+  8600/11550  117s
+  8700/11550  118s
+  8800/11550  119s
+  8900/11550  121s
+  9000/11550  122s
+  9100/11550  123s
+  9200/11550  125s
+  9300/11550  126s
+  9400/11550  127s
+  9500/11550  129s
+  9600/11550  130s
+  9700/11550  132s
+  9800/11550  133s
+  9900/11550  135s
+  10000/11550  136s
+  10100/11550  137s
+  10200/11550  138s
+  10300/11550  140s
+  10400/11550  141s
+  10500/11550  143s
+  10600/11550  144s
+  10700/11550  145s
+  10800/11550  146s
+  10900/11550  147s
+  11000/11550  149s
+  11100/11550  150s
+  11200/11550  152s
+  11300/11550  153s
+  11400/11550  154s
+  11500/11550  156s
+policy                cond                     n   fall%   ��95  kick%     v  spin90  slip90
+ckpt_v16j__j5_model_3 train_fresh_obs        150    20.0   6.4   90.7  3.85     6.2     3.6
+ckpt_v16j__j5_model_3 baseline               150    20.0   6.4   90.0  3.81     6.7     3.4
+ckpt_v16j__j5_model_3 deploy_contract        150    14.0   5.6   92.0  3.76     7.4     3.0
+ckpt_v16j__j5_model_3 volt_11.1_dc           150    14.0   5.6   89.3  3.61     7.0     3.3
+ckpt_v16j__j5_model_3 imu_delay_20ms         150    17.3   6.1   92.0  3.75     6.2     2.7
+ckpt_v16j__j5_model_3 act_delay_2            150    12.7   5.3   94.0  3.46     6.7     3.3
+ckpt_v16j__j5_model_3 mu_0.5                 150    19.3   6.3   94.7  3.96     5.6     3.6
+ckpt_v16j__j5_model_3 torsion_0.1            150     8.0   4.3   93.3  3.96    11.9     3.2
+ckpt_v16j__j5_model_3 real_like              150     2.7   2.6   96.7  3.78     7.9     3.1
+ckpt_v16j__j5_model_3 real_like_low_mu       150    11.3   5.1   96.7  3.75     7.9     3.6
+ckpt_v16j__j5_model_3 real_like_strength_0.5 150     3.3   2.9   98.7  3.79     9.1     3.2
+ckpt_v16j__j5_model_3 train_fresh_obs        150    20.0   6.4   88.7  3.81     5.9     4.0
+ckpt_v16j__j5_model_3 baseline               150    17.3   6.1   89.3  3.66     5.3     2.8
+ckpt_v16j__j5_model_3 deploy_contract        150    14.7   5.7   90.0  3.60     5.9     2.8
+ckpt_v16j__j5_model_3 volt_11.1_dc           150    12.0   5.2   88.0  3.60     6.2     3.2
+ckpt_v16j__j5_model_3 imu_delay_20ms         150    18.7   6.2   90.0  3.61     6.0     3.0
+ckpt_v16j__j5_model_3 act_delay_2            150    15.3   5.8   89.3  3.36     6.3     2.9
+ckpt_v16j__j5_model_3 mu_0.5                 150    15.3   5.8   92.0  3.90     4.7     3.3
+ckpt_v16j__j5_model_3 torsion_0.1            150     8.7   4.5   92.7  3.85    10.9     3.6
+ckpt_v16j__j5_model_3 real_like              150     4.7   3.4   95.3  3.74     8.9     3.6
+ckpt_v16j__j5_model_3 real_like_low_mu       150     7.3   4.2   95.3  3.74     8.5     3.5
+ckpt_v16j__j5_model_3 real_like_strength_0.5 150     1.3   1.8   95.3  3.79     8.7     3.2
+ckpt_v16j__j5_model_3 train_fresh_obs        150    23.3   6.8   86.7  3.71     5.7     3.3
+ckpt_v16j__j5_model_3 baseline               150    18.0   6.1   85.3  3.72     5.4     2.9
+ckpt_v16j__j5_model_3 deploy_contract        150    22.0   6.6   84.7  3.71     5.5     2.8
+ckpt_v16j__j5_model_3 volt_11.1_dc           150    14.0   5.6   86.0  3.48     5.4     3.3
+ckpt_v16j__j5_model_3 imu_delay_20ms         150    18.7   6.2   85.3  3.61     6.1     3.2
+ckpt_v16j__j5_model_3 act_delay_2            150    14.7   5.7   82.7  3.34     6.3     2.9
+ckpt_v16j__j5_model_3 mu_0.5                 150    12.0   5.2   88.7  3.88     5.4     3.5
+ckpt_v16j__j5_model_3 torsion_0.1            150     5.3   3.6   90.7  3.92    10.3     3.2
+ckpt_v16j__j5_model_3 real_like              150     2.7   2.6   92.0  3.68     7.8     3.1
+ckpt_v16j__j5_model_3 real_like_low_mu       150     8.7   4.5   92.0  3.67     7.3     3.4
+ckpt_v16j__j5_model_3 real_like_strength_0.5 150     2.0   2.2   94.7  3.71     8.2     3.1
+ckpt_v16j__j6_model_3 train_fresh_obs        150    26.0   7.0   93.3  3.64     6.3     4.0
+ckpt_v16j__j6_model_3 baseline               150    25.3   7.0   94.7  3.50     5.7     3.4
+ckpt_v16j__j6_model_3 deploy_contract        150    18.7   6.2   92.7  3.55     6.0     3.3
+ckpt_v16j__j6_model_3 volt_11.1_dc           150    20.0   6.4   95.3  3.43     6.1     3.4
+ckpt_v16j__j6_model_3 imu_delay_20ms         150    26.0   7.0   94.0  3.39     5.6     3.5
+ckpt_v16j__j6_model_3 act_delay_2            150    14.0   5.6   92.0  3.32     5.5     3.0
+ckpt_v16j__j6_model_3 mu_0.5                 150    29.3   7.3   96.0  3.70     6.0     3.4
+ckpt_v16j__j6_model_3 torsion_0.1            150    12.0   5.2   95.3  3.61    10.5     3.3
+ckpt_v16j__j6_model_3 real_like              150     5.3   3.6   96.0  3.66     8.4     3.3
+ckpt_v16j__j6_model_3 real_like_low_mu       150    15.3   5.8   97.3  3.63     8.7     3.9
+ckpt_v16j__j6_model_3 real_like_strength_0.5 150    10.0   4.8   97.3  3.57     8.2     3.0
+ckpt_v16j__j6_model_3 train_fresh_obs        150    19.3   6.3   86.0  3.48     6.7     4.0
+ckpt_v16j__j6_model_3 baseline               150    18.7   6.2   84.7  3.31     6.1     3.4
+ckpt_v16j__j6_model_3 deploy_contract        150    23.3   6.8   84.7  3.36     6.4     3.5
+ckpt_v16j__j6_model_3 volt_11.1_dc           150    18.0   6.1   84.0  3.23     5.7     3.5
+ckpt_v16j__j6_model_3 imu_delay_20ms         150    23.3   6.8   84.0  3.11     5.3     3.5
+ckpt_v16j__j6_model_3 act_delay_2            150    16.0   5.9   82.7  3.08     5.1     3.3
+ckpt_v16j__j6_model_3 mu_0.5                 150    20.7   6.5   85.3  3.51     6.1     3.7
+ckpt_v16j__j6_model_3 torsion_0.1            150    13.3   5.4   85.3  3.40    10.8     3.8
+ckpt_v16j__j6_model_3 real_like              150    10.0   4.8   86.7  3.44     8.8     3.4
+ckpt_v16j__j6_model_3 real_like_low_mu       150    15.3   5.8   86.7  3.41     8.6     4.0
+ckpt_v16j__j6_model_3 real_like_strength_0.5 150    10.7   4.9   87.3  3.41     7.7     3.4
+ckpt_v16j__j6_model_3 train_fresh_obs        150    23.3   6.8   90.0  3.52     5.9     3.6
+ckpt_v16j__j6_model_3 baseline               150    26.0   7.0   90.7  3.57     6.0     3.5
+ckpt_v16j__j6_model_3 deploy_contract        150    26.0   7.0   91.3  3.61     6.4     3.1
+ckpt_v16j__j6_model_3 volt_11.1_dc           150    27.3   7.1   90.7  3.38     6.4     3.4
+ckpt_v16j__j6_model_3 imu_delay_20ms         150    32.7   7.5   90.0  3.51     6.8     3.8
+ckpt_v16j__j6_model_3 act_delay_2            150    22.7   6.7   88.7  3.30     7.1     3.1
+ckpt_v16j__j6_model_3 mu_0.5                 150    25.3   7.0   89.3  3.59     5.6     3.4
+ckpt_v16j__j6_model_3 torsion_0.1            150    16.7   6.0   91.3  3.58    12.5     3.8
+ckpt_v16j__j6_model_3 real_like              150    16.0   5.9   92.7  3.67     8.6     3.2
+ckpt_v16j__j6_model_3 real_like_low_mu       150    32.7   7.5   93.3  3.67     8.8     3.9
+ckpt_v16j__j6_model_3 real_like_strength_0.5 150    18.0   6.1   93.3  3.60     8.9     3.2
+policy.onnx           train_fresh_obs        150     4.0   3.1  100.0  4.54     7.9     3.9
+policy.onnx           baseline               150    14.0   5.6  100.0  4.65     9.2     4.7
+policy.onnx           deploy_contract        150     5.3   3.6  100.0  4.69     8.6     4.5
+policy.onnx           volt_11.1_dc           150    34.7   7.6  100.0  4.19     8.1     4.1
+policy.onnx           imu_delay_20ms         150    42.7   7.9  100.0  4.64     7.9     4.6
+policy.onnx           act_delay_2            150    26.7   7.1  100.0  4.47    13.4     4.0
+policy.onnx           mu_0.5                 150    40.7   7.9  100.0  4.68     7.1     3.4
+policy.onnx           torsion_0.1            150     8.7   4.5  100.0  4.62    14.1     4.0
+policy.onnx           real_like              150    76.0   6.8  100.0  4.32     9.0     3.5
+policy.onnx           real_like_low_mu       150    88.0   5.2  100.0  4.31     6.0     3.1
+policy.onnx           real_like_strength_0.5 150     0.0   0.0  100.0  3.23     7.1     2.9
+[stress] done 157s -> results_v16j56_mid_gate\stress
+# MuJoCo gate ranking
+
+trials per cell: 150. Lower is better. Simulation only.
+
+- baseline: worst 88.0 %, mean 31.0 %, real_like 76.0 %, low_mu 88.0 %, kick ≥ 100 %, v 4.54 m/s 
+- ckpt_v16j__j5_model_31200.onnx: worst 20.0 %, mean 12.3 %, real_like 4.7 %, low_mu 7.3 %, kick ≥ 88 %, v 3.81 m/s ⚠ kick<95%,ball_speed<85%
+- ckpt_v16j__j5_model_31100.onnx: worst 20.0 %, mean 13.0 %, real_like 2.7 %, low_mu 11.3 %, kick ≥ 89 %, v 3.85 m/s ⚠ kick<95%,ball_speed<85%
+- ckpt_v16j__j5_model_31300.onnx: worst 23.3 %, mean 12.8 %, real_like 2.7 %, low_mu 8.7 %, kick ≥ 83 %, v 3.71 m/s ⚠ kick<95%,ball_speed<85%
+- ckpt_v16j__j6_model_31200.onnx: worst 23.3 %, mean 17.2 %, real_like 10.0 %, low_mu 15.3 %, kick ≥ 83 %, v 3.48 m/s ⚠ kick<95%,ball_speed<85%
+- ckpt_v16j__j6_model_31100.onnx: worst 29.3 %, mean 18.4 %, real_like 5.3 %, low_mu 15.3 %, kick ≥ 92 %, v 3.64 m/s ⚠ kick<95%,ball_speed<85%
+- ckpt_v16j__j6_model_31300.onnx: worst 32.7 %, mean 24.2 %, real_like 16.0 %, low_mu 32.7 %, kick ≥ 89 %, v 3.52 m/s ⚠ kick<95%,ball_speed<85%

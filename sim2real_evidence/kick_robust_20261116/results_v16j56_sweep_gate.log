@@ -1,0 +1,143 @@
+C:\Users\jes\Desktop\isaac_ws\sim2real_evidence\.mujoco_env\Scripts\python.exe C:\Users\jes\Desktop\MX3_Match_Sim\sim2real_evidence\kick_robust_20261116\mujoco_kick_stress.py --suite gate --trials 300 --workers 11 --out results_v16j56_sweep_gate\stress --policy C:\Users\jes\Desktop\MX3_Match_Sim\XM_Kick_Policy\policy\policy.onnx --policy results_v16j56_sweep_gate\onnx\ckpt_v16j__j5_model_31599.onnx --policy results_v16j56_sweep_gate\onnx\ckpt_v16j__j6_model_31599.onnx
+[stress] 3 policy x 11 cond x 300 = 9900 trials, 11 workers
+  100/9900  2s
+  200/9900  4s
+  300/9900  5s
+  400/9900  6s
+  500/9900  8s
+  600/9900  9s
+  700/9900  10s
+  800/9900  12s
+  900/9900  13s
+  1000/9900  14s
+  1100/9900  15s
+  1200/9900  17s
+  1300/9900  18s
+  1400/9900  19s
+  1500/9900  21s
+  1600/9900  22s
+  1700/9900  23s
+  1800/9900  24s
+  1900/9900  25s
+  2000/9900  26s
+  2100/9900  28s
+  2200/9900  29s
+  2300/9900  30s
+  2400/9900  31s
+  2500/9900  33s
+  2600/9900  34s
+  2700/9900  35s
+  2800/9900  37s
+  2900/9900  38s
+  3000/9900  39s
+  3100/9900  41s
+  3200/9900  42s
+  3300/9900  44s
+  3400/9900  44s
+  3500/9900  45s
+  3600/9900  46s
+  3700/9900  47s
+  3800/9900  48s
+  3900/9900  48s
+  4000/9900  49s
+  4100/9900  50s
+  4200/9900  51s
+  4300/9900  52s
+  4400/9900  53s
+  4500/9900  54s
+  4600/9900  55s
+  4700/9900  55s
+  4800/9900  56s
+  4900/9900  57s
+  5000/9900  58s
+  5100/9900  59s
+  5200/9900  59s
+  5300/9900  60s
+  5400/9900  61s
+  5500/9900  62s
+  5600/9900  63s
+  5700/9900  64s
+  5800/9900  65s
+  5900/9900  66s
+  6000/9900  67s
+  6100/9900  68s
+  6200/9900  69s
+  6300/9900  70s
+  6400/9900  71s
+  6500/9900  72s
+  6600/9900  73s
+  6700/9900  75s
+  6800/9900  76s
+  6900/9900  77s
+  7000/9900  78s
+  7100/9900  80s
+  7200/9900  81s
+  7300/9900  82s
+  7400/9900  83s
+  7500/9900  85s
+  7600/9900  86s
+  7700/9900  88s
+  7800/9900  89s
+  7900/9900  90s
+  8000/9900  92s
+  8100/9900  93s
+  8200/9900  94s
+  8300/9900  95s
+  8400/9900  97s
+  8500/9900  98s
+  8600/9900  99s
+  8700/9900  100s
+  8800/9900  101s
+  8900/9900  103s
+  9000/9900  104s
+  9100/9900  105s
+  9200/9900  107s
+  9300/9900  108s
+  9400/9900  110s
+  9500/9900  111s
+  9600/9900  112s
+  9700/9900  114s
+  9800/9900  115s
+  9900/9900  117s
+policy                cond                     n   fall%   ��95  kick%     v  spin90  slip90
+ckpt_v16j__j5_model_3 train_fresh_obs        300    97.0   1.9    9.3  0.54     8.7     2.9
+ckpt_v16j__j5_model_3 baseline               300    96.3   2.1   10.3  0.54     7.5     3.4
+ckpt_v16j__j5_model_3 deploy_contract        300    93.7   2.8   11.7  0.67     8.7     3.5
+ckpt_v16j__j5_model_3 volt_11.1_dc           300    97.0   1.9    8.3  0.57     7.6     3.3
+ckpt_v16j__j5_model_3 imu_delay_20ms         300    95.0   2.5    8.7  0.59     6.8     2.9
+ckpt_v16j__j5_model_3 act_delay_2            300    96.3   2.1    8.7  0.57     8.3     3.3
+ckpt_v16j__j5_model_3 mu_0.5                 300    91.0   3.2   11.0  0.68     5.0     2.7
+ckpt_v16j__j5_model_3 torsion_0.1            300    94.7   2.5    9.7  0.60    15.7     3.5
+ckpt_v16j__j5_model_3 real_like              300    90.3   3.3    9.7  0.68     8.9     2.9
+ckpt_v16j__j5_model_3 real_like_low_mu       300    84.7   4.1    8.0  0.62     8.7     3.4
+ckpt_v16j__j5_model_3 real_like_strength_0.5 300    92.0   3.1   13.3  0.73     9.1     3.3
+ckpt_v16j__j6_model_3 train_fresh_obs        300    19.7   4.5   30.7  1.54     9.3     2.8
+ckpt_v16j__j6_model_3 baseline               300    23.7   4.8   35.7  1.53     7.9     3.1
+ckpt_v16j__j6_model_3 deploy_contract        300    23.3   4.8   45.7  1.74     7.8     3.3
+ckpt_v16j__j6_model_3 volt_11.1_dc           300    22.0   4.7   31.0  1.42     7.3     3.0
+ckpt_v16j__j6_model_3 imu_delay_20ms         300    27.0   5.0   33.3  1.41     9.3     3.0
+ckpt_v16j__j6_model_3 act_delay_2            300    18.3   4.4   24.7  1.53     8.5     2.9
+ckpt_v16j__j6_model_3 mu_0.5                 300    33.0   5.3   48.3  1.82     6.1     2.9
+ckpt_v16j__j6_model_3 torsion_0.1            300    17.3   4.3   39.0  1.60    14.7     2.7
+ckpt_v16j__j6_model_3 real_like              300    34.0   5.4   50.3  1.99     8.7     2.8
+ckpt_v16j__j6_model_3 real_like_low_mu       300    39.7   5.5   56.0  1.90     8.4     3.1
+ckpt_v16j__j6_model_3 real_like_strength_0.5 300    30.0   5.2   56.0  1.85     8.7     2.9
+policy.onnx           train_fresh_obs        300     2.3   1.7  100.0  4.55     7.7     3.6
+policy.onnx           baseline               300    13.0   3.8  100.0  4.70     8.7     4.6
+policy.onnx           deploy_contract        300    10.0   3.4  100.0  4.69     8.2     4.3
+policy.onnx           volt_11.1_dc           300    33.7   5.3  100.0  4.21     7.6     4.1
+policy.onnx           imu_delay_20ms         300    44.0   5.6  100.0  4.66     7.7     4.5
+policy.onnx           act_delay_2            300    28.0   5.1  100.0  4.49    13.1     3.9
+policy.onnx           mu_0.5                 300    38.7   5.5  100.0  4.69     6.5     3.5
+policy.onnx           torsion_0.1            300     9.3   3.3  100.0  4.62    13.5     4.0
+policy.onnx           real_like              300    78.3   4.7  100.0  4.35     8.3     3.4
+policy.onnx           real_like_low_mu       300    89.0   3.5  100.0  4.36     6.0     3.1
+policy.onnx           real_like_strength_0.5 300     0.0   0.0  100.0  3.25     7.3     3.1
+[stress] done 117s -> results_v16j56_sweep_gate\stress
+# MuJoCo gate ranking
+
+trials per cell: 300. Lower is better. Simulation only.
+
+- baseline: worst 89.0 %, mean 31.5 %, real_like 78.3 %, low_mu 89.0 %, kick ≥ 100 %, v 4.55 m/s 
+- ckpt_v16j__j6_model_31599.onnx: worst 39.7 %, mean 26.2 %, real_like 34.0 %, low_mu 39.7 %, kick ≥ 25 %, v 1.54 m/s ⚠ kick<95%,ball_speed<85%
+- ckpt_v16j__j5_model_31599.onnx: worst 97.0 %, mean 93.5 %, real_like 90.3 %, low_mu 84.7 %, kick ≥ 8 %, v 0.54 m/s ⚠ kick<95%,ball_speed<85%
