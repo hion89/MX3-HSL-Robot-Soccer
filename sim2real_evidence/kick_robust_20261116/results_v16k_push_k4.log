@@ -1,0 +1,48 @@
+C:\Users\jes\Desktop\isaac_ws\sim2real_evidence\.mujoco_env\Scripts\python.exe C:\Users\jes\Desktop\MX3_Match_Sim\sim2real_evidence\kick_robust_20261116\mujoco_kick_stress.py --suite push --trials 150 --workers 11 --out results_v16k_push_k4\stress --policy C:\Users\jes\Desktop\MX3_Match_Sim\XM_Kick_Policy\policy\policy.onnx --policy results_v16k_push_k4\onnx\ckpt_v16k__k4_model_31300.onnx --policy results_v16k_push_k4\onnx\ckpt_v16k__k4_model_31599.onnx
+[stress] 3 policy x 5 cond x 150 = 2250 trials, 11 workers
+  100/2250  3s
+  200/2250  4s
+  300/2250  6s
+  400/2250  7s
+  500/2250  9s
+  600/2250  10s
+  700/2250  11s
+  800/2250  13s
+  900/2250  14s
+  1000/2250  16s
+  1100/2250  17s
+  1200/2250  19s
+  1300/2250  21s
+  1400/2250  22s
+  1500/2250  23s
+  1600/2250  24s
+  1700/2250  25s
+  1800/2250  26s
+  1900/2250  26s
+  2000/2250  27s
+  2100/2250  28s
+  2200/2250  29s
+policy                cond                     n   fall%   ��95  kick%     v  spin90  slip90
+ckpt_v16k__k4_model_3 push_4N                150    23.3   6.8   63.3  2.32     9.9     3.4
+ckpt_v16k__k4_model_3 push_6N                150     6.0   3.8   62.7  2.26    10.1     3.6
+ckpt_v16k__k4_model_3 push_8N                150    15.3   5.8   62.0  2.22     9.3     3.3
+ckpt_v16k__k4_model_3 push_10N               150    47.3   8.0   62.0  2.16     9.2     3.6
+ckpt_v16k__k4_model_3 push_12N               150    79.3   6.5   64.7  2.06     8.5     3.8
+ckpt_v16k__k4_model_3 push_4N                150   100.0   0.0    3.3  0.24     0.0     0.0
+ckpt_v16k__k4_model_3 push_6N                150   100.0   0.0    3.3  0.24     0.0     0.0
+ckpt_v16k__k4_model_3 push_8N                150   100.0   0.0    3.3  0.24     0.0     0.0
+ckpt_v16k__k4_model_3 push_10N               150   100.0   0.0    3.3  0.24     0.0     0.0
+ckpt_v16k__k4_model_3 push_12N               150   100.0   0.0    3.3  0.24     0.0     0.0
+policy.onnx           push_4N                150     4.0   3.1  100.0  4.34     8.9     4.0
+policy.onnx           push_6N                150     5.3   3.6  100.0  4.34    10.3     5.0
+policy.onnx           push_8N                150    33.3   7.5  100.0  4.33    10.7     4.3
+policy.onnx           push_10N               150    58.0   7.9  100.0  4.33    10.9     4.4
+policy.onnx           push_12N               150    90.0   4.8  100.0  4.30    10.7     3.9
+[stress] done 29s -> results_v16k_push_k4\stress
+# MuJoCo gate ranking
+
+trials per cell: 150. Lower is better. Simulation only.
+
+- baseline: worst 90.0 %, mean 38.1 %, real_like -1.0 %, low_mu -1.0 %, kick ≥ 100 %, v 4.34 m/s 
+- ckpt_v16k__k4_model_31300.onnx: worst 79.3 %, mean 34.3 %, real_like -1.0 %, low_mu -1.0 %, kick ≥ 62 %, v 2.32 m/s ⚠ kick<95%,ball_speed<85%
+- ckpt_v16k__k4_model_31599.onnx: worst 100.0 %, mean 100.0 %, real_like -1.0 %, low_mu -1.0 %, kick ≥ 3 %, v 0.24 m/s ⚠ kick<95%,ball_speed<85%
