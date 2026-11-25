@@ -1,0 +1,42 @@
+{
+  "schema": "p0-offline-profile-v1",
+  "not_a_launch_configuration": true,
+  "profiles": {
+    "imu_candidate": {
+      "id": "imu_candidate",
+      "prerequisite": "Onsite approval, physical motor isolation and MCU firmware review; not yet satisfied.",
+      "streams": {
+        "/imu/data": {"type": "sensor_msgs/msg/Imu", "min_messages": 2},
+        "/imu/data_50hz": {"type": "sensor_msgs/msg/Imu", "min_messages": 2}
+      },
+      "frame_required_topics": ["/imu/data", "/imu/data_50hz"]
+    },
+    "camera_metadata_candidate": {
+      "id": "camera_metadata_candidate",
+      "prerequisite": "Separate external camera driver review and onsite approval; raw image archives required separately.",
+      "streams": {
+        "/camera/camera/color/camera_info": {"type": "sensor_msgs/msg/CameraInfo", "min_messages": 1}
+      },
+      "frame_required_topics": ["/camera/camera/color/camera_info"]
+    },
+    "historical_kick": {
+      "id": "historical_kick",
+      "streams": {
+        "/joint_goals": {"type": "sensor_msgs/msg/JointState", "min_messages": 1},
+        "/imu/data_50hz": {"type": "sensor_msgs/msg/Imu", "min_messages": 2},
+        "/kick_trigger": {"type": "std_msgs/msg/Bool", "min_messages": 1},
+        "/kick_done": {"type": "std_msgs/msg/Bool", "min_messages": 0}
+      },
+      "frame_required_topics": ["/imu/data_50hz"]
+    },
+    "historical_walk": {
+      "id": "historical_walk",
+      "streams": {
+        "/joint_states": {"type": "sensor_msgs/msg/JointState", "min_messages": 2},
+        "/imu/data": {"type": "sensor_msgs/msg/Imu", "min_messages": 2}
+      },
+      "frame_required_topics": ["/imu/data"]
+    },
+    "historical_shadow": {"id": "historical_shadow", "streams": {}, "frame_required_topics": []}
+  }
+}
