@@ -72,6 +72,7 @@
 import math
 import os
 import csv
+import hashlib
 import time
 from collections import deque
 from datetime import datetime
@@ -167,6 +168,24 @@ POLICY_JOINTS_SET = set(POLICY_JOINTS)
 HISTORY_LEN = 5
 FRAME_DIM = 53
 OBS_DIM = FRAME_DIM * HISTORY_LEN   # 265
+
+# 런타임 kick_model 별칭 → hsl_bringup/models 의 파일명 (2026-11-25)
+KICK_MODEL_ALIASES = {
+    "power": "kick_power_22300.onnx",        # V1-5B 22300 원래 정책
+    "stable": "kick_stable_27500.onnx",      # V1-6H 27500 넘어짐 최소
+    "accurate": "kick_accurate_30899.onnx",  # V1-6I2 30899 방향 정확
+}
+
+
+def _sha256_short(path: str) -> str:
+    try:
+        h = hashlib.sha256()
+        with open(path, "rb") as f:
+            for chunk in iter(lambda: f.read(1 << 20), b""):
+                h.update(chunk)
+        return h.hexdigest()[:12]
+    except OSError:
+        return "?"
 
 # per-frame 내부 슬라이스 경계
 SL_ANG_VEL   = (0, 3)
@@ -430,6 +449,10 @@ class ActorOnnxWalkKickV1Node(Node):
                 pass
 
         self.declare_parameter("actor_path", default_actor)
+        # 런타임 킥 모델 전환 (2026-11-25). power / stable / accurate 또는 같은 폴더의 .onnx 파일명.
+        #   ros2 param set /actor_onnx_walkkick_v1_node kick_model accurate
+        #   킥 구동 중에는 거부한다. 새 모델은 입력 265 · 출력 12 를 확인한 뒤에만 바꾼다.
+        self.declare_parameter("kick_model", "")
         self.declare_parameter("policy_rate_hz", 50.0)
 
         # ── velocity_commands (공까지 걸어가는 전진 명령) ──
@@ -757,9 +780,11 @@ class ActorOnnxWalkKickV1Node(Node):
         self.session = ort.InferenceSession(self.actor_path, providers=providers)
         self.input_name = self.session.get_inputs()[0].name
         self.output_name = self.session.get_outputs()[0].name
+        self._onnx_providers = providers
+        self._models_dir = os.path.dirname(self.actor_path)
 
         actual_provider = self.session.get_providers()[0]
-        self.get_logger().info(f"ONNX loaded: {self.actor_path}")
+        self.get_logger().info(f"ONNX loaded: {self.actor_path} (sha256 {_sha256_short(self.actor_path)})")
         self.get_logger().info(f"ONNX provider: {actual_provider}")
         self.get_logger().info(f"  input:  {self.input_name} {self.session.get_inputs()[0].shape}")
         self.get_logger().info(f"  output: {self.output_name} {self.session.get_outputs()[0].shape}")
@@ -1061,6 +1086,12 @@ class ActorOnnxWalkKickV1Node(Node):
         (대부분 __init__ 에서 한 번 읽는 구조라 그렇다).
         """
         for p in params:
+            if p.name in ("kick_model", "actor_path"):
+                ok, reason = self._switch_model(str(p.value), p.name)
+                if not ok:
+                    self.get_logger().warn(f"[WALKKICK-V1] 모델 전환 거부: {reason}")
+                    return SetParametersResult(successful=False, reason=reason)
+                continue
             if p.name == "motion_enabled":
                 self.motion_enabled = bool(p.value)
                 if not self.motion_enabled and self.kick_active:
@@ -1084,6 +1115,43 @@ class ActorOnnxWalkKickV1Node(Node):
                     f"[WALKKICK-V1] 킥 구동 중 {p.name} 변경 — 이번 킥에는 "
                     "반영되지 않는다(트리거 시 freeze). 다음 킥부터 적용된다.")
         return SetParametersResult(successful=True)
+
+    def _switch_model(self, value: str, name: str):
+        """kick_model / actor_path 런타임 변경. (성공 여부, 이유) 를 돌려준다.
+
+        rclpy.spin 단일 스레드라 이 콜백과 제어 타이머는 겹치지 않는다. 킥 시작 때
+        history · last_action 을 리셋하므로 킥과 킥 사이에 바꾸면 이전 모델 상태가 섞이지 않는다.
+        """
+        value = value.strip()
+        if not value:
+            return True, ""
+        if self.kick_active:
+            return False, "킥 구동 중에는 모델을 바꾸지 않는다. 킥이 끝난 뒤 다시 설정하라."
+        if name == "kick_model" and value in KICK_MODEL_ALIASES:
+            path = os.path.join(self._models_dir, KICK_MODEL_ALIASES[value])
+        elif os.path.isabs(value) or value.startswith("~"):
+            path = _expand_path(value)
+        else:
+            path = os.path.join(self._models_dir, value if value.endswith(".onnx") else value + ".onnx")
+        if not os.path.isfile(path):
+            return False, f"파일 없음: {path} (별칭: {', '.join(KICK_MODEL_ALIASES)})"
+        try:
+            sess = ort.InferenceSession(path, providers=self._onnx_providers)
+            in_dim = sess.get_inputs()[0].shape[-1]
+            y = sess.run(None, {sess.get_inputs()[0].name: np.zeros((1, OBS_DIM), dtype=np.float32)})[0]
+        except Exception as e:
+            return False, f"로딩/시험 추론 실패: {path}: {e}"
+        if in_dim != OBS_DIM or np.asarray(y).reshape(-1).shape != (12,) or not np.isfinite(y).all():
+            return False, f"형식 불일치: 입력 {in_dim} (기대 {OBS_DIM}), 출력 {np.asarray(y).shape}"
+        old = self.actor_path
+        self.session = sess
+        self.input_name = sess.get_inputs()[0].name
+        self.output_name = sess.get_outputs()[0].name
+        self.actor_path = path
+        self.get_logger().info(
+            f"[WALKKICK-V1] 킥 모델 전환: {os.path.basename(old)} -> {os.path.basename(path)} "
+            f"(sha256 {_sha256_short(path)})")
+        return True, ""
 
     # ──────────────────────────────────────
     # target_dir_b 계산
