@@ -115,8 +115,10 @@ class BodyMotorController(Node):
         self.declare_parameter("len_present_position", 4)
         self.declare_parameter("len_profile_velocity", 4)
 
-        self.declare_parameter("bulk_read_start_addr", 128)
-        self.declare_parameter("bulk_read_length", 8)
+        # [2026-11-26] 124/12: PWM(124)·전류(126)·속도(128)·위치(132) 를 한 SyncRead 로 (모터당 +4 바이트).
+        #   PWM·전류는 /motor_fast (50 Hz) 로 나간다. 예전 동작은 128/8.
+        self.declare_parameter("bulk_read_start_addr", 124)
+        self.declare_parameter("bulk_read_length", 12)
         self.declare_parameter("rpm_per_tick_profile", 0.229)
         # Profile Velocity 상한 (모터 Velocity Limit 과 동일하게). 이 값을 넘는 쓰기는
         # 거부되지 않고 이 값으로 clamp 된다. 보행 속도(robot_final_rpm 45.0)와 일관.
@@ -246,6 +248,10 @@ class BodyMotorController(Node):
         self.create_subscription(JointState, "/u2d2/set_joint_goal_pwm",
                                  self.cb_set_joint_goal_pwm, 10)
         self.js_pub = self.create_publisher(JointState, "/joint_states", 10)
+        # [2026-11-26] 메인 SyncRead 와 같은 시각의 PWM·전류 (킥 실물 보정용).
+        #   position = PWM 비율 (Present PWM / 885, −1~1), velocity = 0, effort = 전류 [A] (모델별 단위).
+        #   /joint_states 는 그대로 두어 정책 러너 입력은 바뀌지 않는다.
+        self.motor_fast_pub = self.create_publisher(JointState, "/motor_fast", 10)
 
         # Main read timer
         read_rate_hz = float(self.get_parameter("read_rate_hz").value)
@@ -509,6 +515,17 @@ class BodyMotorController(Node):
 
         # 4) publish
         self.js_pub.publish(js)
+        if readings and readings[0].has_effort:
+            mf = JointState()
+            mf.header.stamp = js.header.stamp
+            for r in readings:
+                dxl_id = self.hardware.jid.get(r.name)
+                mf.name.append(r.name)
+                mf.position.append(r.pwm / 885.0)
+                mf.velocity.append(0.0)
+                mf.effort.append(r.current_raw * self.hardware.current_ma_per_lsb(dxl_id) / 1000.0
+                                 if dxl_id is not None else 0.0)
+            self.motor_fast_pub.publish(mf)
         t4 = time.perf_counter_ns()
 
         # 5) stats
@@ -663,7 +680,8 @@ class BodyMotorController(Node):
 
             cur_raw  = self._diag_group_read.getData(dxl_id, 126, 2)
             cur_s    = struct.unpack('<h', struct.pack('<H', cur_raw & 0xFFFF))[0]
-            current_ma = cur_s * self._CURRENT_UNIT_MA
+            # [2026-11-26] 모델별 전류 단위 (XM540 2.69 / MX-64 3.36 mA). 예전에는 모두 3.36 이라 XM540 이 25 % 크게 나왔다.
+            current_ma = cur_s * self.hardware.current_ma_per_lsb(dxl_id)
 
             volt_raw = self._diag_group_read.getData(dxl_id, 144, 2)
             voltage_v = (volt_raw & 0xFFFF) * 0.1

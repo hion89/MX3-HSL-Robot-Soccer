@@ -24,6 +24,7 @@ Dynamixel SDK (U2D2 / Protocol 2.0) low-level wrapper.
   - 상위 동작 시퀀스 (standup, kick 등)
 """
 import math
+import struct
 import time
 import yaml
 from dataclasses import dataclass, field
@@ -87,6 +88,9 @@ class ControlTable:
     present_position: int = 132
     profile_velocity: int = 112
     hardware_error:   int = 70
+    # [2026-11-26] 킥 실물 보정용: 메인 SyncRead 를 124 부터 읽으면 PWM·전류도 같은 패킷에 실린다.
+    present_pwm:      int = 124
+    present_current:  int = 126
 
     # EEPROM 영역의 Position Limit (MX-64AR / XM540 동일).
     # Min/Max 가 raw tick 기준 (0~4095) 으로 저장됨.
@@ -101,7 +105,7 @@ class ControlTable:
     len_position_limit:   int = 4
 
     bulk_read_start_addr: int = 128   # vel(128) ~ pos(132) 까지 8바이트 한 번에
-    bulk_read_length:     int = 8
+    bulk_read_length:     int = 8     # 124/12 로 주면 PWM(124)·전류(126) 까지 (모터당 +4 바이트)
 
 
 @dataclass
@@ -130,6 +134,9 @@ class JointReading:
     name: str
     rad: float
     radps: float
+    pwm: int = 0            # Present PWM raw (885 = 100 %). 메인 SyncRead 가 124 부터일 때만 채운다.
+    current_raw: int = 0    # Present Current raw (부호 있음). 단위는 모델별 (XM540 2.69 mA, MX-64 3.36 mA).
+    has_effort: bool = False
 
 
 # ────────────────────────────────────────────────────────────────────────
@@ -244,6 +251,7 @@ class U2D2Hardware:
         # Goal PWM 쓰기를 clamp 하려면 각 모터의 PWM Limit 을 알아야 한다.
         # (기동 시 1회. N회 단발 read 지만 이후 SyncWrite 거부를 원천 차단)
         self.read_pwm_limits()
+        self.read_model_numbers()
 
         self._log_info(f"U2D2 open OK: {self.cfg.device_name}, baud={self.cfg.baudrate}")
         self._log_info(f"Used IDs: {self.used_ids}")
@@ -544,6 +552,27 @@ class U2D2Hardware:
 
         return {"written": added, "failed": failed}
 
+    # Model Number (addr 0, 2B). 전류 단위 (mA/LSB) 와 토크 곡선이 모델마다 다르다.
+    MODEL_NAMES = {1120: "XM540-W270", 1130: "XM540-W150", 311: "MX-64(2.0)", 321: "MX-106(2.0)"}
+    CURRENT_MA_PER_LSB = {1120: 2.69, 1130: 2.69, 311: 3.36, 321: 3.36}
+
+    def read_model_numbers(self) -> dict:
+        """기동 시 1회 모든 모터의 Model Number 를 읽어 캐시하고 로그에 남긴다. 실패한 모터는 0."""
+        models = {}
+        for dxl_id in self.used_ids:
+            v, comm, err = self.packet.read2ByteTxRx(self.port, dxl_id, 0)
+            models[dxl_id] = int(v) if comm == 0 and err == 0 else 0
+        self.model_number = models
+        groups = {}
+        for dxl_id, mn in models.items():
+            groups.setdefault(self.MODEL_NAMES.get(mn, f"model_{mn}"), []).append(dxl_id)
+        self._log_info("Model numbers: " + "; ".join(f"{k}: ids {v}" for k, v in sorted(groups.items())))
+        return models
+
+    def current_ma_per_lsb(self, dxl_id: int) -> float:
+        """모델별 전류 단위. 모르면 XM540 (2.69) 로 본다 (다리·팔은 XM540)."""
+        return self.CURRENT_MA_PER_LSB.get(getattr(self, "model_number", {}).get(int(dxl_id), 0), 2.69)
+
     def read_pwm_limits(self) -> dict:
         """모든 모터의 PWM Limit(36, EEPROM) 을 읽어 캐시한다.
 
@@ -722,6 +751,11 @@ class U2D2Hardware:
 
             vel_i32 = _int32_from_u32(vel_u32)
             pos = int(pos_u32)
+            has_eff = ct.bulk_read_start_addr <= ct.present_pwm
+            pwm = cur = 0
+            if has_eff:
+                pwm = struct.unpack('<h', struct.pack('<H', self.group_read.getData(dxl_id, ct.present_pwm, 2) & 0xFFFF))[0]
+                cur = struct.unpack('<h', struct.pack('<H', self.group_read.getData(dxl_id, ct.present_current, 2) & 0xFFFF))[0]
 
             name = self.rev_jid.get(dxl_id, f"dxl_{dxl_id}")
             # 부호 뒤집기(direction_display)는 위치·속도에 '똑같이' 적용해야 한다.
@@ -736,7 +770,8 @@ class U2D2Hardware:
             rpm = vel_i32 * self.rpm_per_tick * sgn
             radps = rpm * (2.0 * math.pi / 60.0)
 
-            out.append(JointReading(name=name, rad=rad, radps=radps))
+            out.append(JointReading(name=name, rad=rad, radps=radps, pwm=pwm * sgn, current_raw=cur * sgn,
+                                    has_effort=has_eff))
 
         return True, out
 
