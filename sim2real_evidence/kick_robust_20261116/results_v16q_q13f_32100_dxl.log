@@ -1,0 +1,4 @@
+ckpt_v16q__q13f_model_32100.onnx dxl_real_mu0.45          s1.0: fall 8% (t 3.04 s, side 0.04) | kick-leg hip roll 53 deg (goal 55) | support hip roll err 24 deg, tau 6.9 Nm, sat>=95% 7% | roll max 19 | R-kick 0% | vball 2.94
+ckpt_v16q__q13f_model_32100.onnx dxl_real_mu0.6           s1.0: fall 100% (t 2.61 s, side 0.04) | kick-leg hip roll 52 deg (goal 55) | support hip roll err 24 deg, tau 6.9 Nm, sat>=95% 8% | roll max 170 | R-kick 0% | vball 3.13
+ckpt_v16q__q13f_model_32100.onnx dxl_real_mu1             s1.0: fall 100% (t 2.28 s, side 0.22) | kick-leg hip roll 50 deg (goal 56) | support hip roll err 24 deg, tau 6.9 Nm, sat>=95% 11% | roll max 172 | R-kick 0% | vball 2.96
+ckpt_v16q__q13f_model_32100.onnx dxl_real_mu1.3           s1.0: fall 100% (t 2.27 s, side 0.21) | kick-leg hip roll 49 deg (goal 54) | support hip roll err 24 deg, tau 6.9 Nm, sat>=95% 11% | roll max 170 | R-kick 0% | vball 3.16
