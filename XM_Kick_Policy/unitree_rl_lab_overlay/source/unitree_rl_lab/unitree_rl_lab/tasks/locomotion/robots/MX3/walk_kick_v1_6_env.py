@@ -814,3 +814,12 @@ class RobotV16Q20EnvCfg(RobotV16N1EnvCfg):
     def __post_init__(self):
         super().__post_init__()
         _apply_feet_friction(self, 2.0)
+
+
+# Q13F (2026-11-26 시험용, 사용자 요청): N1 + 발 마찰을 정지·운동 모두 1.3 으로 고정 (MuJoCo GUI mu 1.3 과 같은 값).
+class RobotV16Q13FEnvCfg(RobotV16N1EnvCfg):
+    def __post_init__(self):
+        super().__post_init__()
+        p = self.events.feet_material.params
+        p["static_friction_range"] = (1.3, 1.3)
+        p["dynamic_friction_range"] = (1.3, 1.3)
