@@ -267,8 +267,10 @@ class Sim:
             m.geom_solref[g] = [c.solref_tc, 1.0]
         m.actuator_forcerange[:] = self.default_forcerange
         a = self.dxl_a
-        if c.dxl and not self._dxl_on:
-            self._dxl_bk = (m.actuator_gainprm[a].copy(), m.actuator_biasprm[a].copy())
+        if c.dxl:
+            # 매번 다시 쓴다 (kick_real_compare.apply_model 이 게인을 PD 값으로 되돌릴 수 있다)
+            if not self._dxl_on or m.actuator_gainprm[a[0], 0] != 1.0:
+                self._dxl_bk = (m.actuator_gainprm[a].copy(), m.actuator_biasprm[a].copy())
             m.actuator_gainprm[a, 0] = 1.0
             m.actuator_biasprm[a, :] = 0.0
             self._dxl_on = True
@@ -303,7 +305,8 @@ class Sim:
             qd = d.qvel[self.dxl_v]
             pwm = np.clip(DXL_KP_PWM * (d.ctrl[a] - d.qpos[self.dxl_q]) - DXL_KD_PWM * qd, -1.0, 1.0)
             self.dxl_pwm[a] = pwm
-            d.ctrl[a] = STALL_12V * (c.dxl_volt / 12.0) * pwm - DXL_K_EMF * qd
+            tmax = STALL_12V * (c.dxl_volt / 12.0)          # 전류 제한 (스톨 전류 수준) — 역기전력 제동도 이 안
+            d.ctrl[a] = np.clip(tmax * pwm - DXL_K_EMF * qd, -tmax, tmax)
         elif c.volt > 0:
             # Isaac Lab DCMotor rule (quadrant aware): driving torque falls with speed,
             # braking torque (opposite to velocity) is only capped by EFFORT_CAP.

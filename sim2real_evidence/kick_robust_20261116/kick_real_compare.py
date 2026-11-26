@@ -197,6 +197,8 @@ def main():
     ap.add_argument("--model-sweep", action="store_true", help="질량·강성·토크 한계를 실물 쪽으로 바꾼 조건들")
     ap.add_argument("--model-sweep2", action="store_true", help="질량 위치·감쇠·지연·Profile Velocity 조건들")
     ap.add_argument("--model-sweep3", action="store_true", help="바닥 접촉 부드러움 (잔디) 조건들")
+    ap.add_argument("--dxl-real", action="store_true",
+                    help="2026-11-26 실물 시험 조건: Dynamixel 모터 모델·6.5 kg·11.3 V·공 0.30 m·필터 0.03")
     args = ap.parse_args()
     import onnxruntime as ort
     sim = ks.Sim(ks.DEFAULT_SCENE)
@@ -228,6 +230,11 @@ def main():
             ("L_D_kv1.5_actdelay1", dataclasses.replace(v103, act_delay=1), 2.0, 1.5, dict(D, kv=1.5)),
             ("M_D_profile30rpm", dataclasses.replace(v103, profile_rpm=30.0), 2.0, 1.5, D),
         ]
+    ball_x = 0.35
+    if args.dxl_real:
+        dr = dataclasses.replace(real, name="dxl_real", volt=0.0, dxl=True, dxl_volt=11.3, filter_tau=0.03)
+        conds = [("dxl_real", dr, 2.0, 1.5, dict(base_add_kg=0.8))]
+        ball_x = 0.30
     if args.model_sweep3:
         D = dict(base_add_kg=0.8, kp=30.0)
         conds = [(f"T_D_solref{tc:g}", dataclasses.replace(v103, solref_tc=tc), 2.0, 1.5, D) for tc in (0.02, 0.04, 0.06, 0.08, 0.12)]
@@ -242,7 +249,7 @@ def main():
                 c2 = dataclasses.replace(c, strength=s)
                 res = []
                 for i in range(args.trials):
-                    rows, fell_t = run(sim, sess, c2, 1000 + i, kick_s, after_s, args.jitter)
+                    rows, fell_t = run(sim, sess, c2, 1000 + i, kick_s, after_s, args.jitter, ball_x=ball_x)
                     res.append(summarize(rows, fell_t))
                     if i == 0:
                         with open(os.path.join(args.out, f"{os.path.basename(pol)}_{name}_s{s}_trial0.json"), "w") as f:

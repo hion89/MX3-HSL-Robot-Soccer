@@ -781,3 +781,36 @@ class RobotV16DPlayRealLikeMass65EnvCfg(RobotV16DPlayRealLikeEnvCfg):
     def __post_init__(self):
         super().__post_init__()
         _apply_real_mass(self, (0.8, 0.8))
+
+
+# ============================================================================
+# V1-6Q (2026-11-26) — 발-바닥 마찰 상한 확대. N1 (L3 + 실측 질량 6.5 kg) 에 발 마찰 범위만 넓힌다.
+#   지금까지 발 마찰: 정지 0.30~1.30, 운동 0.25~1.05 (바닥 1.0 곱하기 → 실효값 = 발 값).
+#   Q15 / Q17 / Q20: 정지 상한 1.5 / 1.7 / 2.0, 운동 상한은 같은 비율 (×0.81). 하한은 그대로.
+#   실물 세기 1.0 시험 (11-26 17:11): 킥은 마쳤지만 3.6 s 에 넘어짐. L3 model_31800 에서 이어 학습.
+# ============================================================================
+def _apply_feet_friction(cfg, static_max: float):
+    p = cfg.events.feet_material.params
+    p["static_friction_range"] = (FEET_STATIC_FR[0], static_max)
+    p["dynamic_friction_range"] = (FEET_DYNAMIC_FR[0], round(static_max * FEET_DYNAMIC_FR[1] / FEET_STATIC_FR[1], 3))
+
+
+@configclass
+class RobotV16Q15EnvCfg(RobotV16N1EnvCfg):
+    def __post_init__(self):
+        super().__post_init__()
+        _apply_feet_friction(self, 1.5)
+
+
+@configclass
+class RobotV16Q17EnvCfg(RobotV16N1EnvCfg):
+    def __post_init__(self):
+        super().__post_init__()
+        _apply_feet_friction(self, 1.7)
+
+
+@configclass
+class RobotV16Q20EnvCfg(RobotV16N1EnvCfg):
+    def __post_init__(self):
+        super().__post_init__()
+        _apply_feet_friction(self, 2.0)

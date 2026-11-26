@@ -721,3 +721,20 @@ PC 는 100 iteration 마다 일반 게이트 300, push 150, 모터 게이트 30 
 운영 메모:
 - `ros2 topic pub --once` 는 바로 종료해 킥 러너가 트리거를 놓친 적이 있다 (보행 러너만 받고 3 s 워치독). `kick_trigger_once.py 3` 은 구독자 3 개 (보행·킥·bag) 를 기다린 뒤 보내고 2 s 유지한다.
 - 시험 뒤 킥 선택은 kick_push_31800 이다.
+
+### 세기 비교와 V1-6Q (2026-11-26 17:10~)
+
+실물 (kick_push_31800, 공 0.30 m):
+- 세기 0.3: 2.28 s 에 넘어짐. 킥 초반 몸 roll +20~33° 다.
+  - 이때 행동 노드가 킥 러너 공 위치를 0.35 m 로 바꿔 놓은 상태였다. 다음 시험부터는 차기 직전에 `ros2 param set ball_pos_b_x 0.30` 으로 맞췄다.
+- 세기 1.0: 킥을 끝까지 마쳤다 (2.0 s kick_done). 기본 자세 유지 중 3.59 s 에 넘어졌다. 사용자는 1.0 이 가장 낫다고 판단했고, launch 의 `kick_strength` 를 1.0 으로 바꿨다.
+
+MuJoCo Dynamixel 모델 (`mujoco_kick_stress.py` Cond.dxl, `--dxl`; `kick_real_compare.py --dxl-real`; `kick_view.py --dxl`):
+- 18 관절 (목 제외) 을 PWM 식으로 돌린다. 토크는 ±7.3·V/12 (전류 제한) 로 자른다.
+- 버그 수정: kick_real_compare 의 apply_model 이 게인을 PD 로 되돌린 뒤 dxl 이 다시 적용되지 않았다. 지금은 매 조건 다시 쓴다.
+- 실물 조건 게이트 (dxl_real, 6.5 kg·11.3 V·세기 1.0·12 회, `results_dxl_real_ref_20261126`): push 0 %, 30899 67 %, 27500 8 % 넘어짐. 실물은 셋 다 넘어지므로 아직 낙관적이다. 몸 roll 은 실물의 절반 정도다.
+
+V1-6Q (사용자 요청): N1 (L3 + 실측 질량 6.5 kg) 에 발 정지 마찰 상한 1.5 / 1.7 / 2.0 을 더했다 (운동 마찰 상한은 ×0.81, 하한은 그대로).
+- L3 model_31800 에서 500 iteration 씩 학습한다. 서버 `~/kick16_runs/sweep_q.sh` (M1PH 학습이 끝난 뒤 시작), 요약은 `sweep_q_summary.txt` 다.
+- PC 는 100 iteration 마다 일반 게이트 300, push 150, dxl_real 12 를 돌린다 (`results_v16q_<q>_<n>_*`).
+- 가장 나은 후보와 체크포인트로 장기 학습을 이어 간다.

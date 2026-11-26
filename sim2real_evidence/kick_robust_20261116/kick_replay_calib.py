@@ -99,6 +99,8 @@ class Replay:
         q = d.qpos[self.body_q]; qd = d.qvel[self.body_v]
         pwm = np.clip(mot.kp_pwm * (setpoint - q) - mot.kd_pwm * qd, -1.0, 1.0)
         tau_m = mot.stall * mot.s * (mot.volt / 12.0) * pwm - mot.k_emf * mot.emf_s * qd
+        tmax = mot.stall * mot.s * (mot.volt / 12.0)
+        tau_m = np.clip(tau_m, -tmax, tmax)                 # 전류 제한
         tau = tau_m - mot.fric * np.tanh(qd / 0.05)
         return pwm, tau, tau_m / 1.159
 
