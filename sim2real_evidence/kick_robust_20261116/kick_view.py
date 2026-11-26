@@ -3,7 +3,7 @@
 MuJoCo 기본 뷰어(launch_passive)는 이 PC 그래픽 드라이버에서 검게 나와서,
 오프스크린 렌더(mujoco.Renderer) 프레임을 OpenCV 창에 띄운다.
 
-  python kick_view.py --policy kick_stable_27500.onnx --strength 0.5 [--foot box8] [--slow 1.5]
+  python kick_view.py --policy kick_stable_27500.onnx --strength 0.5 [--foot box8] [--slow 1.5] [--push 8]
 키: q/ESC 종료, space 일시정지, 1/2/3 카메라 (정면/옆/뒤)
 """
 from __future__ import annotations
@@ -35,6 +35,7 @@ def main():
     ap.add_argument("--slow", type=float, default=1.5, help="1 = 실시간, 2 = 절반 속도")
     ap.add_argument("--sim-model", action="store_true", help="원래 MuJoCo 모델 (질량 5.7 kg, kp 50)")
     ap.add_argument("--size", default="960x720")
+    ap.add_argument("--push", type=float, default=0.0, help="킥 디딤발 쪽 외력 N (0 = 없음, 0.5 s, 벌림 40° 에서 시작)")
     args = ap.parse_args()
     import onnxruntime as ort
     sess = ort.InferenceSession(args.policy, providers=["CPUExecutionProvider"])
@@ -42,7 +43,8 @@ def main():
     kc._DEF.clear()
     kc.apply_model(sim, **({} if args.sim_model else dict(base_add_kg=0.8, kp=30.0)))
     c = dataclasses.replace(ks.Cond(), name="real_like", volt=10.3, imu_delay_ms=10.0, hold_s=0.6, cmd_vx=0.20,
-                            filter_tau=0.02, mu=0.6, mu_torsion=0.1, solref_tc=args.solref, strength=args.strength)
+                            filter_tau=0.02, mu=0.6, mu_torsion=0.1, solref_tc=args.solref, strength=args.strength,
+                            push_N=args.push)
     W, H = (int(x) for x in args.size.split("x"))
     sim.m.vis.global_.offwidth = max(sim.m.vis.global_.offwidth, W)
     sim.m.vis.global_.offheight = max(sim.m.vis.global_.offheight, H)
@@ -95,7 +97,8 @@ def main():
     seed = 1000
     try:
         while True:
-            info["text"] = f"{args.policy.split('/')[-1]}  strength {args.strength}  seed {seed}"
+            info["text"] = (f"{args.policy.replace(chr(92), '/').split('/')[-1]}  strength {args.strength}  "
+                            f"push {args.push:g} N  seed {seed}")
             rows, fell_t = kc.run(sim, sess, c, seed, 2.0, 1.5, 0.03)
             s = kc.summarize(rows, fell_t)
             print(f"seed {seed}: fall={s['fell']} roll_max={s['roll_max']:.0f} kick_leg={s['kick_leg']} "
