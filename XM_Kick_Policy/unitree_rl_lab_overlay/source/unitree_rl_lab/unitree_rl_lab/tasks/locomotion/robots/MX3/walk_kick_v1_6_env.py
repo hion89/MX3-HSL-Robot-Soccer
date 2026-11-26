@@ -823,3 +823,15 @@ class RobotV16Q13FEnvCfg(RobotV16N1EnvCfg):
         p = self.events.feet_material.params
         p["static_friction_range"] = (1.3, 1.3)
         p["dynamic_friction_range"] = (1.3, 1.3)
+
+
+# QC (2026-11-26, 사용자 요청): 마찰 커리큘럼. N1 + 발 마찰 (정지·운동) 을 환경 변수 MX3_FEET_MU 값으로 고정.
+# 단계마다 0.45 → 0.6 → 0.8 → … 로 올리며 이전 단계의 가장 나은 체크포인트에서 이어 학습한다.
+class RobotV16QCEnvCfg(RobotV16N1EnvCfg):
+    def __post_init__(self):
+        super().__post_init__()
+        import os
+        mu = float(os.environ.get("MX3_FEET_MU", "0.6"))
+        p = self.events.feet_material.params
+        p["static_friction_range"] = (mu, mu)
+        p["dynamic_friction_range"] = (mu, mu)
