@@ -760,3 +760,97 @@ def base_roll_excess(env, threshold_rad: float = 0.1745, asset_cfg: SceneEntityC
 def metric_base_roll_deg(env, asset_cfg: SceneEntityCfg = SceneEntityCfg("robot")) -> torch.Tensor:
     g = env.scene[asset_cfg.name].data.projected_gravity_b
     return torch.rad2deg(torch.atan2(g[:, 1], -g[:, 2]).abs())
+
+
+# ============================================================================
+# V1-6M (2026-11-26) — 실물 디딤발 토크 부족을 학습에 넣는다 (M1 동적 토크 상한 + M3 상한 근처 벌점)
+# ----------------------------------------------------------------------------
+# 실물 1회차 (kick_push_31800, 12.0 V, 세기 0.5): 1.88 s 에 디딤발 골반 pitch·발목 pitch·골반 roll PWM 100 %,
+# 전압 10.3 V, 1.9 s 넘어짐. MuJoCo 보정 (kick_calib_real.py): 다리 토크 상한 3 N·m·스톨 ×0.7·10.3 V·+0.8 kg 에서
+# L3·30899·27500 모두 1.8~2.2 s 에 넘어진다 = 실물 디딤발이 실제로 내는 토크는 학습 가정 (평평한 5 N·m) 의 약 60 %.
+# 구동기는 ImplicitActuator 그대로 둔다 (Explicit DC 로 바꾸면 22300 이 킥 0 %, KICK_V1_6_KO.md V1-6D).
+# 대신 매 env 스텝 다리 관절의 PhysX effort limit 을 속도·전압에 따라 바꾼다:
+#   τmax(ω) = clamp( stall·s·(V/12)·(1 − |ω| / (ω0·V/12)), floor, cap )
+#   에피소드마다 V ∈ volt_range, s ∈ stall_scale_range, cap ∈ cap_range 를 뽑는다.
+#   ramp_steps 동안 평평한 5 N·m 에서 이 곡선으로 옮긴다 (lim = 5 + b·(τmax − 5)).
+# 액추에이터 객체의 effort_limit 도 같이 바꿔 applied_torque (벌점·기록) 가 같은 상한을 본다.
+# ============================================================================
+def _m1_init(env, asset_cfg):
+    if hasattr(env, "_m1_lim"):
+        return
+    n, dev = env.num_envs, env.device
+    robot = env.scene[asset_cfg.name]
+    jids = list(asset_cfg.joint_ids)
+    env._m1_jids = torch.tensor(jids, device=dev, dtype=torch.long)
+    env._m1_V = torch.full((n,), 12.0, device=dev)
+    env._m1_s = torch.ones(n, device=dev)
+    env._m1_cap = torch.full((n,), 5.0, device=dev)
+    env._m1_lim = torch.full((n, len(jids)), 5.0, device=dev)
+    env._m1_b = 0.0
+    env._m1_stat = {"sat_sum": 0.0, "n": 0.0}
+    # 액추에이터별 (전역 관절 id → 액추에이터 내부 열) 대응
+    env._m1_act = []
+    for act in robot.actuators.values():
+        idx = act.joint_indices
+        idx = list(range(robot.num_joints)) if isinstance(idx, slice) else [int(i) for i in idx]
+        cols, sel = [], []
+        for k, j in enumerate(jids):
+            if j in idx:
+                cols.append(idx.index(j)); sel.append(k)
+        if cols:
+            env._m1_act.append((act, torch.tensor(cols, device=dev), torch.tensor(sel, device=dev)))
+
+
+def dc_effort_limit_reset(env, env_ids, volt_range: tuple[float, float], stall_scale_range: tuple[float, float],
+                          cap_range: tuple[float, float], asset_cfg: SceneEntityCfg = SceneEntityCfg("robot")):
+    _require_resolved(asset_cfg, "joint_ids", "dc_effort_limit_reset")
+    _m1_init(env, asset_cfg)
+    k = len(env_ids)
+    u = lambda r: torch.empty(k, device=env.device).uniform_(r[0], r[1])
+    env._m1_V[env_ids] = u(volt_range)
+    env._m1_s[env_ids] = u(stall_scale_range)
+    env._m1_cap[env_ids] = u(cap_range)
+
+
+def dc_effort_limit(env, env_ids, stall_12v: float = 7.3, noload_12v: float = 5.55, floor: float = 0.5,
+                    flat: float = 5.0, ramp_steps: int = 7200, asset_cfg: SceneEntityCfg = SceneEntityCfg("robot")):
+    """interval 이벤트 (매 env 스텝). env_ids 와 무관하게 전체 env 에 적용한다."""
+    _require_resolved(asset_cfg, "joint_ids", "dc_effort_limit")
+    _m1_init(env, asset_cfg)
+    robot = env.scene[asset_cfg.name]
+    b = min(1.0, float(env.common_step_counter) / max(1, ramp_steps))
+    env._m1_b = b
+    kv = (env._m1_V / 12.0).unsqueeze(1)
+    w = robot.data.joint_vel[:, env._m1_jids].abs()
+    tau = stall_12v * env._m1_s.unsqueeze(1) * kv * (1.0 - w / (noload_12v * kv))
+    tau = torch.minimum(tau.clamp(min=floor), env._m1_cap.unsqueeze(1))
+    lim = flat + b * (tau - flat)
+    env._m1_lim[:] = lim
+    robot.write_joint_effort_limit_to_sim(lim, joint_ids=env._m1_jids)
+    for act, cols, sel in env._m1_act:
+        el = act.effort_limit
+        el[:, cols] = lim[:, sel]
+    sat = (robot.data.applied_torque[:, env._m1_jids].abs() >= 0.95 * lim).float().mean()
+    env._m1_stat["sat_sum"] += float(sat); env._m1_stat["n"] += 1.0
+
+
+def torque_near_limit(env, ratio: float = 0.8, asset_cfg: SceneEntityCfg = SceneEntityCfg("robot")) -> torch.Tensor:
+    """M3: |τ| 가 지금 토크 상한의 ratio 배를 넘는 만큼의 제곱합 [N²m²]. dc_effort_limit 이 없으면 0."""
+    if not hasattr(env, "_m1_lim"):
+        return torch.zeros(env.num_envs, device=env.device)
+    robot = env.scene[asset_cfg.name]
+    tau = robot.data.applied_torque[:, env._m1_jids].abs()
+    return torch.square(torch.clamp(tau - ratio * env._m1_lim, min=0.0)).sum(dim=1)
+
+
+def dc_limit_stats(env, env_ids) -> dict:
+    """커리큘럼 기록용. TensorBoard: Curriculum/<이름>/blend (평평한 5 N·m → 곡선 비율), sat95 (다리 관절이 상한 95 % 이상인 비율),
+    lim_mean (다리 관절 평균 토크 상한 N·m)."""
+    if not hasattr(env, "_m1_lim"):
+        return {"blend": 0.0}
+    st = env._m1_stat
+    out = {"blend": float(env._m1_b), "lim_mean": float(env._m1_lim.mean())}
+    if st["n"] > 0:
+        out["sat95"] = st["sat_sum"] / st["n"]
+        st["sat_sum"] = 0.0; st["n"] = 0.0
+    return out

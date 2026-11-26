@@ -691,3 +691,60 @@ class RobotV16L3EnvCfg(RobotV16I2EnvCfg):
     def __post_init__(self):
         super().__post_init__()
         _apply_l(self, 8.0, 0.5, -10.0)
+
+
+# ============================================================================
+# V1-6M (2026-11-26) — 실물 디딤발 토크 부족 반영. L3 model_31800 (kick_push_31800, 실물 설치) 에서 이어 학습.
+#   실물 1회차: 1.88 s 디딤발 골반 pitch·발목 pitch·골반 roll PWM 100 % → 1.9 s 넘어짐.
+#   MuJoCo 보정: 다리 토크 상한 3 N·m·스톨 ×0.7·10.3 V 에서 L3·30899·27500 모두 1.8~2.2 s 에 넘어짐 (실물과 같다).
+#   M1   : 다리 관절 effort limit 을 매 스텝 속도·전압 곡선으로 (cap 3~5 N·m, 스톨 ×0.7~1.0, 10.3~12 V). 300 iteration 램프.
+#   M1P  : M1 + 상한 80 % 넘는 토크 제곱 벌점 (−2, 램프).
+#   M1PH : M1P + 더 약한 모터 (cap 2.8~4 N·m, 스톨 ×0.6~0.9).
+#   L3 의 외력 (0~8 N) 과 몸 roll 벌점 (−10) 은 그대로 둔다.
+# ============================================================================
+M_RAMP_STEPS = 7200   # 약 300 iteration
+
+
+def _apply_m1(cfg, cap_range=(3.0, 5.0), stall_range=(0.7, 1.0), volt_range=(10.3, 12.0)):
+    legs = lambda: SceneEntityCfg("robot", joint_names=v14.MX_LEG_JOINTS, preserve_order=True)
+    cfg.events.dc_effort_limit_reset = EventTerm(
+        func=kr.dc_effort_limit_reset, mode="reset",
+        params={"volt_range": volt_range, "stall_scale_range": stall_range, "cap_range": cap_range,
+                "asset_cfg": legs()})
+    cfg.events.dc_effort_limit = EventTerm(
+        func=kr.dc_effort_limit, mode="interval", interval_range_s=(0.02, 0.02),
+        params={"ramp_steps": M_RAMP_STEPS, "asset_cfg": legs()})
+    cfg.curriculum.dc_limit = CurrTerm(func=kr.dc_limit_stats)
+
+
+def _apply_m3(cfg, weight=-2.0):
+    cfg.rewards.torque_near_limit = RewTerm(func=kr.torque_near_limit, weight=0.0,
+                                            params={"ratio": 0.8, "asset_cfg": SceneEntityCfg(
+                                                "robot", joint_names=v14.MX_LEG_JOINTS, preserve_order=True)})
+    cfg.curriculum.torque_near_limit_w = CurrTerm(func=kr.ramp_reward_weight,
+                                                  params={"term_name": "torque_near_limit", "target": weight,
+                                                          "ramp_steps": M_RAMP_STEPS})
+    _k_reattach_gate(cfg)
+
+
+@configclass
+class RobotV16M1EnvCfg(RobotV16L3EnvCfg):
+    def __post_init__(self):
+        super().__post_init__()
+        _apply_m1(self)
+
+
+@configclass
+class RobotV16M1PEnvCfg(RobotV16L3EnvCfg):
+    def __post_init__(self):
+        super().__post_init__()
+        _apply_m1(self)
+        _apply_m3(self)
+
+
+@configclass
+class RobotV16M1PHEnvCfg(RobotV16L3EnvCfg):
+    def __post_init__(self):
+        super().__post_init__()
+        _apply_m1(self, cap_range=(2.8, 4.0), stall_range=(0.6, 0.9))
+        _apply_m3(self)

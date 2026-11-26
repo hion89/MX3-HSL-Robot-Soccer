@@ -64,7 +64,7 @@ def roll_of(R):
     return math.degrees(math.atan2(R[2, 1], R[2, 2]))
 
 
-def run(sim, sess, c: ks.Cond, seed: int, kick_s: float, after_s: float, jitter: float):
+def run(sim, sess, c: ks.Cond, seed: int, kick_s: float, after_s: float, jitter: float, ball_x: float = 0.35):
     rng = np.random.default_rng(seed)
     sim.apply_cond(c)
     sim.place(rng, c)
@@ -75,7 +75,7 @@ def run(sim, sess, c: ks.Cond, seed: int, kick_s: float, after_s: float, jitter:
     yaw0 = ks.yaw_of(R0)
     p0 = sim.d.xpos[sim.base].copy()
     # 실물처럼 공은 거의 정면 0.35 m. 놓는 오차만 jitter 로 준다.
-    bel_b = np.array([0.35, 0.0])
+    bel_b = np.array([ball_x, 0.0])
     true_b = bel_b + rng.uniform(-jitter, jitter, 2)
     cy, sy = math.cos(yaw0), math.sin(yaw0)
     bw = p0[:2] + np.array([cy * true_b[0] - sy * true_b[1], sy * true_b[0] + cy * true_b[1]])
