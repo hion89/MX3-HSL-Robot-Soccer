@@ -1,0 +1,2 @@
+ckpt_v16l__l3_model_32000.onnx   real_like_cut2.0         s1.0: fall 0% | kick-leg hip roll 38 deg (goal 40) | support hip roll err 24 deg, tau 5.0 Nm, sat>=95% 28% | roll max 17 | R-kick 100% | vball 3.85
+ckpt_v16l__l3_model_32000.onnx   real_like_10.3V_cut2.0   s1.0: fall 0% | kick-leg hip roll 38 deg (goal 40) | support hip roll err 24 deg, tau 5.0 Nm, sat>=95% 28% | roll max 16 | R-kick 100% | vball 3.81

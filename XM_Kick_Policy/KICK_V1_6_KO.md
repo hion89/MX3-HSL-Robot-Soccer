@@ -604,3 +604,17 @@ K5 단기 31599 (`k5/2026-11-25_23-42-26_sweep_from30899/model_final.pt`) 에서
 - L3: 외력 0~8 N, 에피소드 절반, 몸 roll 벌점 −10.
 
 서버 스크립트는 `~/kick16_runs/sweep_l.sh`, 요약은 `sweep_l_summary.txt` 다. PC 는 100 iteration 마다 (31700~32000, final) 일반 게이트 300회, push 150회, 실물 조건 재현 10회를 돌린다 (`results_v16l_<l>_<n>_*`). 일반 게이트 real_like 넘어짐이 가장 낮으면서 push 조건이 K5 31599 수준인 지점에서 멈춘다.
+
+### V1-6L 결과 (2026-11-26 오후)
+
+- L1 (8 N·roll −20): 200 iteration 쯤부터 킥을 포기하고 무너졌다 (kick_resolved 0.55 → 0). 12 N 의 K5 는 버텼으므로 이 조합은 학습이 불안정하다.
+- L2 (6 N·roll −20): 일반 게이트 real_like 넘어짐이 6~30 % 로 흔들리고, push 조건 평균은 33~39 % 다. K5 31599 보다 낫지 않다.
+- L3 (8 N·roll −10): 31800 에서 일반 게이트 real_like 2.7 %, low_mu 7.7 %, 최악 24.7 %, 킥 95 %, 공 3.68 m/s 다. push 조건은 3 / 9 / 22 / 43 / 60 % 다. 같은 런의 31900 은 real_like 41 % 로, 100 iteration 사이에도 크게 흔들린다.
+
+확인 시험 (seed 7, 일반 게이트 600회, push 300회, `results_v16l_confirm_{gate,push}_s7`):
+- L3 31800: real_like 3.0 %, low_mu 8.5 %, 11 조건 평균 13.9 %, 최악 26.0 % (imu_delay_20ms). 킥 97~100 %, 공 3.5~3.8 m/s. push 4 / 10 / 26 / 46 / 61 %.
+- L3 final: real_like 8.8 %, 평균 19.8 %, 최악 31.8 %. push 10 / 12 / 22 / 34 / 41 %.
+- K5 31599: real_like 8.5 %, low_mu 22.0 %, 평균 12.2 %, 최악 22.0 %. push 10 / 11 / 15 / 27 / 40 %.
+- I2 30899: real_like 0.3 %, low_mu 3.0 %, 평균 10.3 %, 최악 22.2 %. push 3 / 14 / 54 / 81 / 93 %.
+
+결론: L3 31800 은 두 seed 모두에서 real_like 3 % 안팎을 지켰다. 일반 게이트는 30899 에 조금 못 미치지만, 디딤발 쪽 외력에는 8 N 에서 54 → 26 %, 10 N 에서 81 → 46 % 로 강하다. 차는 다리 벌림도 61° → 44° 로 줄었다. 실물 시험 후보로 정한다. 파일은 `isaac_ws/sim2real_evidence/kick_robust_20261116/candidate_v16l3_31800/` (model_31800.pt, policy_v16l3_31800.onnx, sha256.txt) 이고, 서버 원본은 `logs/rsl_rl/unitree_mx3_walkkick_v1_6l3/2026-11-26_13-18-36_sweep_from_k5/model_31800.pt` 다. 실물 설치는 사용자 결정에 맡긴다. 로봇에는 27500 이 그대로다.
