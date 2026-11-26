@@ -1,0 +1,58 @@
+[11-26 23:37:35] V1-6QC 마찰 커리큘럼 시작: 0.45, 0.6, 0.8, 1, 1.2, 1.3, 1.5, 1.7, 2
+[11-26 23:37:35] == 단계 마찰 0.45 short (500 it), 시작 init_l3_31800/model_31800.pt
+[11-26 23:38:55]   학습 시작: 2026-11-26_23-37-42_qc_mu0p45_short | env.yaml 마찰:       static_friction_range: !!python/tuple       - 0.45       - 0.45 
+[11-26 23:46:06]   mu0p45_short 31900: kick 93% v 3.39 real_like 22.7% push 38.7% dxl@0.45 fall 8% vball 2.61 dxl@0.45 8% -> fail (score 42.6)
+[11-26 23:51:18]   mu0p45_short 32000: kick 92% v 3.50 real_like 8.0% push 14.7% dxl@0.45 fall 0% vball 3.91 dxl@0.45 0% -> PASS (score 12.4)
+[11-26 23:56:30]   mu0p45_short 32100: kick 94% v 3.51 real_like 13.7% push 21.7% dxl@0.45 fall 17% vball 2.33 dxl@0.45 17% -> fail (score 36.9)
+[11-27 00:01:38]   mu0p45_short 32200: kick 86% v 2.55 real_like 23.3% push 18.9% dxl@0.45 fall 92% vball 2.58 dxl@0.45 92% -> fail (score 120.7)
+[11-27 00:04:40]   마찰 0.45 short: 가장 나은 통과 32000 (score 12.4)
+[11-27 00:04:40] == 단계 마찰 0.6 short (500 it), 시작 2026-11-26_23-37-42_qc_mu0p45_short/model_32000.pt
+[11-27 00:06:00]   학습 시작: 2026-11-27_00-04-46_qc_mu0p6_short | env.yaml 마찰:       static_friction_range: !!python/tuple       - 0.6       - 0.6 
+[11-27 00:13:12]   mu0p6_short 32100: kick 89% v 3.35 real_like 17.7% push 24.3% dxl@0.6 fall 50% vball 3.03 dxl@0.45 75% -> fail (score 74.9)
+[11-27 00:18:25]   mu0p6_short 32200: kick 91% v 3.24 real_like 5.0% push 17.1% dxl@0.6 fall 0% vball 2.43 dxl@0.45 0% -> fail (score 10.1)
+[11-27 00:23:37]   mu0p6_short 32300: kick 96% v 3.62 real_like 16.7% push 21.9% dxl@0.6 fall 0% vball 2.85 dxl@0.45 0% -> fail (score 23.2)
+[11-27 00:28:48]   mu0p6_short 32400: kick 97% v 3.73 real_like 20.7% push 25.1% dxl@0.6 fall 0% vball 3.22 dxl@0.45 0% -> fail (score 28.2)
+[11-27 00:31:50]   마찰 0.6 short: 통과 없음
+[11-27 00:31:50] == 단계 마찰 0.6 long (2000 it), 시작 2026-11-26_23-37-42_qc_mu0p45_short/model_32000.pt
+[11-27 00:33:10]   학습 시작: 2026-11-27_00-31-57_qc_mu0p6_long | env.yaml 마찰:       static_friction_range: !!python/tuple       - 0.6       - 0.6 
+[11-27 00:45:27]   mu0p6_long 32200: kick 91% v 3.24 real_like 5.0% push 17.1% dxl@0.6 fall 0% vball 2.43 dxl@0.45 0% -> fail (score 10.1)
+[11-27 00:55:41]   mu0p6_long 32400: kick 97% v 3.73 real_like 20.7% push 25.1% dxl@0.6 fall 0% vball 3.22 dxl@0.45 0% -> fail (score 28.2)
+[11-27 01:05:51]   mu0p6_long 32600: kick 97% v 3.70 real_like 48.0% push 37.7% dxl@0.6 fall 0% vball 2.38 dxl@0.45 100% -> fail (score 59.3)
+[11-27 01:17:02]   mu0p6_long 32800: kick 97% v 3.91 real_like 47.0% push 46.5% dxl@0.6 fall 0% vball 3.45 dxl@0.45 0% -> fail (score 61.0)
+[11-27 01:27:12]   mu0p6_long 33000: kick 96% v 3.93 real_like 46.3% push 53.3% dxl@0.6 fall 58% vball 2.86 dxl@0.45 75% -> fail (score 120.7)
+[11-27 01:37:27]   mu0p6_long 33200: kick 95% v 3.92 real_like 22.0% push 21.6% dxl@0.6 fall 0% vball 3.20 dxl@0.45 0% -> fail (score 28.5)
+[11-27 01:48:39]   mu0p6_long 33400: kick 95% v 3.92 real_like 29.0% push 30.7% dxl@0.6 fall 0% vball 2.74 dxl@0.45 0% -> fail (score 38.2)
+[11-27 01:58:50]   mu0p6_long 33600: kick 97% v 3.93 real_like 48.3% push 39.3% dxl@0.6 fall 0% vball 2.85 dxl@0.45 0% -> fail (score 60.1)
+[11-27 02:09:00]   mu0p6_long 33800: kick 97% v 3.91 real_like 42.3% push 36.7% dxl@0.6 fall 0% vball 3.76 dxl@0.45 25% -> fail (score 53.3)
+[11-27 02:17:04]   마찰 0.6 long: 통과 없음
+[11-27 02:17:04] 마찰 0.6 실패 → 중간값 0.525 시도
+[11-27 02:17:04] == 단계 마찰 0.525 short (500 it), 시작 2026-11-26_23-37-42_qc_mu0p45_short/model_32000.pt
+[11-27 02:18:25]   학습 시작: 2026-11-27_02-17-11_qc_mu0p525_short | env.yaml 마찰:       static_friction_range: !!python/tuple       - 0.525       - 0.525 
+[11-27 02:25:36]   mu0p525_short 32100: kick 93% v 3.74 real_like 44.7% push 29.5% dxl@0.525 fall 0% vball 2.73 dxl@0.45 17% -> fail (score 53.5)
+[11-27 02:30:48]   mu0p525_short 32200: kick 93% v 3.44 real_like 10.3% push 13.1% dxl@0.525 fall 0% vball 2.73 dxl@0.45 0% -> PASS (score 14.3)
+[11-27 02:35:58]   mu0p525_short 32300: kick 91% v 3.85 real_like 33.0% push 24.7% dxl@0.525 fall 0% vball 3.11 dxl@0.45 0% -> fail (score 40.4)
+[11-27 02:41:11]   mu0p525_short 32400: kick 90% v 3.48 real_like 3.0% push 16.4% dxl@0.525 fall 0% vball 2.50 dxl@0.45 0% -> fail (score 7.9)
+[11-27 02:44:12]   마찰 0.525 short: 가장 나은 통과 32200 (score 14.3)
+[11-27 02:44:12] == 단계 마찰 0.6 short (500 it), 시작 2026-11-27_02-17-11_qc_mu0p525_short/model_32200.pt
+[11-27 02:45:33]   학습 시작: 2026-11-27_02-44-19_qc_mu0p6_short | env.yaml 마찰:       static_friction_range: !!python/tuple       - 0.6       - 0.6 
+[11-27 02:52:42]   mu0p6_short 32300: kick 96% v 3.62 real_like 16.7% push 21.9% dxl@0.6 fall 0% vball 2.85 dxl@0.45 0% -> fail (score 23.2)
+[11-27 02:57:49]   mu0p6_short 32400: kick 97% v 3.73 real_like 20.7% push 25.1% dxl@0.6 fall 0% vball 3.22 dxl@0.45 0% -> fail (score 28.2)
+[11-27 03:03:00]   mu0p6_short 32500: kick 93% v 3.73 real_like 38.0% push 31.5% dxl@0.6 fall 0% vball 2.47 dxl@0.45 8% -> fail (score 47.4)
+[11-27 03:08:09]   mu0p6_short 32600: kick 98% v 3.79 real_like 53.0% push 51.5% dxl@0.6 fall 0% vball 2.74 dxl@0.45 0% -> fail (score 68.4)
+[11-27 03:11:11]   마찰 0.6 short: 통과 없음
+[11-27 03:11:11] == 단계 마찰 0.6 long (2000 it), 시작 2026-11-27_02-17-11_qc_mu0p525_short/model_32200.pt
+[11-27 03:12:31]   학습 시작: 2026-11-27_03-11-18_qc_mu0p6_long | env.yaml 마찰:       static_friction_range: !!python/tuple       - 0.6       - 0.6 
+[11-27 03:24:41]   mu0p6_long 32400: kick 97% v 3.73 real_like 20.7% push 25.1% dxl@0.6 fall 0% vball 3.22 dxl@0.45 0% -> fail (score 28.2)
+[11-27 03:34:47]   mu0p6_long 32600: kick 97% v 3.70 real_like 48.0% push 37.7% dxl@0.6 fall 0% vball 2.38 dxl@0.45 100% -> fail (score 59.3)
+[11-27 03:44:53]   mu0p6_long 32800: kick 97% v 3.91 real_like 47.0% push 46.5% dxl@0.6 fall 0% vball 3.45 dxl@0.45 0% -> fail (score 61.0)
+[11-27 03:55:59]   mu0p6_long 33000: kick 96% v 3.93 real_like 46.3% push 53.3% dxl@0.6 fall 58% vball 2.86 dxl@0.45 75% -> fail (score 120.7)
+[11-27 04:06:08]   mu0p6_long 33200: kick 95% v 3.92 real_like 22.0% push 21.6% dxl@0.6 fall 0% vball 3.20 dxl@0.45 0% -> fail (score 28.5)
+[11-27 04:16:16]   mu0p6_long 33400: kick 95% v 3.92 real_like 29.0% push 30.7% dxl@0.6 fall 0% vball 2.74 dxl@0.45 0% -> fail (score 38.2)
+[11-27 04:27:23]   mu0p6_long 33600: kick 97% v 3.93 real_like 48.3% push 39.3% dxl@0.6 fall 0% vball 2.85 dxl@0.45 0% -> fail (score 60.1)
+[11-27 04:37:30]   mu0p6_long 33800: kick 97% v 3.91 real_like 42.3% push 36.7% dxl@0.6 fall 0% vball 3.76 dxl@0.45 25% -> fail (score 53.3)
+[11-27 04:47:43]   mu0p6_long 34000: kick 93% v 3.88 real_like 24.3% push 34.7% dxl@0.6 fall 33% vball 3.50 dxl@0.45 0% -> fail (score 68.1)
+[11-27 04:55:47]   마찰 0.6 long: 통과 없음
+[11-27 04:55:47] 마찰 0.6 에서 막힘. 중단.
+[11-27 04:55:47] 최종: {"passed": [{"mu": 0.45, "run": "2026-11-26_23-37-42_qc_mu0p45_short", "ckpt": "model_32000.pt"}, {"mu": 0.525, "run": "2026-11-27_02-17-11_qc_mu0p525_short", "ckpt": "model_32200.pt"}], "start": ["2026-11-27_02-17-11_qc_mu0p525_short", "model_32200.pt", 32200], "ok_mu": 0.525}
+[11-27 04:55:47] QC_ALLDONE
+[11-27 04:56:57] == 재게이트: 마찰 0.6 두 번째 시도 (ONNX 캐시 버그로 32300~33800 이 첫 시도 값으로 평가됨)

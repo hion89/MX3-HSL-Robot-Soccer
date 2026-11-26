@@ -65,10 +65,14 @@ def has(st, word):
 def gate(mu, run_dir, n, tag):
     """체크포인트 하나를 게이트한다. 결과 dict."""
     os.makedirs(CK_DIR, exist_ok=True)
+    tag = f"{tag}_{run_dir[11:19]}"  # run 시각: 같은 마찰을 다시 해도 예전 결과·ONNX 를 쓰지 않는다
     local = os.path.join(CK_DIR, f"{tag}_model_{n}.pt")
     subprocess.run(["scp", "-q", "-i", KEY, "-o", "IdentitiesOnly=yes", "-o", "BatchMode=yes",
                     f"{HOST}:{EXP}/{run_dir}/model_{n}.pt", local], timeout=300)
     o = os.path.join(HERE, f"results_v16qc_{tag}_{n}")
+    import shutil
+    for suf in ("_gate", "_push", "_dxl"):
+        shutil.rmtree(o + suf, ignore_errors=True)
     def run(args, logf):
         with open(logf, "w") as f:
             subprocess.run([PY] + args, cwd=HERE, stdout=f, stderr=subprocess.STDOUT)
@@ -167,10 +171,19 @@ def try_mu(mu, start):
 
 
 def main():
+    import argparse
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--resume", action="store_true", help="qc_state.json 에서 이어 간다")
+    ap.add_argument("--stages", default="", help="남은 마찰 목록 (쉼표)")
+    ap.add_argument("--retried", default="", help="이미 중간값을 거쳐 다시 시도한 마찰 (쉼표)")
+    a = ap.parse_args()
     state = dict(passed=[], start=["init_l3_31800", "model_31800.pt", 31800], ok_mu=None)
-    log("V1-6QC 마찰 커리큘럼 시작: " + ", ".join(f"{m:g}" for m in STAGES))
-    queue = list(STAGES)
-    retried = set()
+    if a.resume:
+        state = json.load(open(STATE))
+    queue = [float(x) for x in a.stages.split(",")] if a.stages else list(STAGES)
+    retried = set(float(x) for x in a.retried.split(",")) if a.retried else set()
+    log("V1-6QC 마찰 커리큘럼 " + ("재개" if a.resume else "시작") + ": " + ", ".join(f"{m:g}" for m in queue)
+        + f" | 시작점 {state['start']}")
     while queue:
         mu = queue.pop(0)
         best = try_mu(mu, tuple(state["start"]))
