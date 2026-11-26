@@ -25,7 +25,7 @@ def generate_launch_description():
                 'robot': 'robo04', 'use_teleop': 'false', 'use_kick': 'true',
                 'walk_actor_path': walking, 'kick_actor_path': kicking,
                 'onnx_provider': 'cpu', 'policy_variant': 'v0_2',
-                'gait_mode': 'stop', 'stop_delay_s': '0.0', 'kick_strength': '0.5',
+                'gait_mode': 'stop', 'stop_delay_s': '0.0', 'kick_strength': '0.3',
                 'gravity_source': 'derive', 'fall_manager_imu_topic': '/imu/data_50hz',
             }.items()),
         Node(package='hsl_behavior', executable='behavior', name='hsl_behavior', output='screen',
