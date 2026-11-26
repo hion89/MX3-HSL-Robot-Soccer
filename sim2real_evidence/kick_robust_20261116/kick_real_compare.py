@@ -163,6 +163,13 @@ def run(sim, sess, c: ks.Cond, seed: int, kick_s: float, after_s: float, jitter:
     return rows, fell_t
 
 
+def _fall_side(rows, fell_t):
+    if fell_t is None:
+        return -1.0
+    r = next(r for r in rows if r["t"] >= fell_t)
+    return float(min(1.0, abs(r["roll"]) / max(1e-6, r["tilt"])))
+
+
 def summarize(rows, fell_t):
     q = np.array([r["q"] for r in rows])
     goal = np.array([r["goal"] for r in rows])
@@ -182,6 +189,8 @@ def summarize(rows, fell_t):
         support_hip_roll_sat95_frac=float((np.abs(sat[act, sr]) >= 0.95).mean()),
         roll_max=float(np.abs([r["roll"] for r in rows[:len(q)]]).max()),
         fell=fell_t is not None, fell_t=fell_t if fell_t is not None else -1.0,
+        # 넘어질 때 몸 roll 이 전체 기울기에서 차지하는 비율 (1 = 옆, 0 = 앞뒤)
+        fall_side=_fall_side(rows, fell_t),
         vball_max=float(max(r["vball"] for r in rows)),
         pushed=float(any(r.get("push", 0.0) > 0 for r in rows)),
     )
@@ -199,6 +208,7 @@ def main():
     ap.add_argument("--model-sweep3", action="store_true", help="바닥 접촉 부드러움 (잔디) 조건들")
     ap.add_argument("--dxl-real", action="store_true",
                     help="2026-11-26 실물 시험 조건: Dynamixel 모터 모델·6.5 kg·11.3 V·공 0.30 m·필터 0.03")
+    ap.add_argument("--mu", type=float, action="append", help="--dxl-real 의 발-바닥 미끄럼 마찰 (여러 번 가능, 비틀림은 mu/6)")
     args = ap.parse_args()
     import onnxruntime as ort
     sim = ks.Sim(ks.DEFAULT_SCENE)
@@ -234,6 +244,9 @@ def main():
     if args.dxl_real:
         dr = dataclasses.replace(real, name="dxl_real", volt=0.0, dxl=True, dxl_volt=11.3, filter_tau=0.03)
         conds = [("dxl_real", dr, 2.0, 1.5, dict(base_add_kg=0.8))]
+        if args.mu:
+            conds = [(f"dxl_real_mu{m:g}", dataclasses.replace(dr, mu=m, mu_torsion=m / 6.0), 2.0, 1.5, dict(base_add_kg=0.8))
+                     for m in args.mu]
         ball_x = 0.30
     if args.model_sweep3:
         D = dict(base_add_kg=0.8, kp=30.0)
@@ -255,10 +268,14 @@ def main():
                         with open(os.path.join(args.out, f"{os.path.basename(pol)}_{name}_s{s}_trial0.json"), "w") as f:
                             json.dump(rows, f)
                 agg = {k: float(np.mean([r[k] for r in res])) for k in res[0] if k != "kick_leg"}
+                ft = [r["fell_t"] for r in res if r["fell"]]
+                sd = [r["fall_side"] for r in res if r["fell"]]
+                agg.update(fell_t_mean=float(np.mean(ft)) if ft else -1.0, fall_side_mean=float(np.mean(sd)) if sd else -1.0)
                 agg.update(policy=os.path.basename(pol), cond=name, strength=s,
                            kick_leg_R=float(np.mean([r["kick_leg"] == "R" for r in res])))
                 summary.append(agg)
-                print(f"{os.path.basename(pol):32s} {name:24s} s{s}: fall {100*agg['fell']:.0f}% | "
+                print(f"{os.path.basename(pol):32s} {name:24s} s{s}: fall {100*agg['fell']:.0f}% "
+                      f"(t {agg['fell_t_mean']:.2f} s, side {agg['fall_side_mean']:.2f}) | "
                       f"kick-leg hip roll {agg['kick_hip_roll_max']:.0f} deg (goal {agg['kick_hip_roll_goal_max']:.0f}) | "
                       f"support hip roll err {agg['support_hip_roll_err_max']:.0f} deg, tau {agg['support_hip_roll_tau_max']:.1f} Nm, "
                       f"sat>=95% {100*agg['support_hip_roll_sat95_frac']:.0f}% | roll max {agg['roll_max']:.0f} | "
