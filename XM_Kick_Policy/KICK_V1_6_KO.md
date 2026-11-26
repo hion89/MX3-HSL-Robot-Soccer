@@ -634,3 +634,12 @@ L3 31800 을 실물에 설치한 뒤, 모터가 못 따라가서 실패하면 �
 - M5 실물 로그 기반 액추에이터 모델: 킥·서기·옆 이동 중 명령/위치/속도/전류 로그로 감쇠·마찰·토크-속도 곡선을 맞춘다 (가능하면 actuator network). 가장 정확하지만 실물 데이터 수집이 필요하다.
 
 권장 순서: 로그 진단 → M1 + M2 (실제 한계를 학습에 넣기) → 부족하면 M3 추가 → 그래도 안 되면 M4. M5 는 M1·M2 로 맞지 않을 때 쓴다.
+
+### 로봇 설치: kick_push_31800 (2026-11-26)
+
+사용자 요청으로 L3 31800 을 `kick_push_31800.onnx` 로 robo04 에 설치하고 킥 선택을 바꿨다 (`XM_Kick_Policy/policy/robot_named_20261126/install_named_kicks.sh`).
+- 바꾸기 전 선택은 kick_stable_27500 이다. 백업은 `/home/robo04/incoming/kick_named_backup_EUfbo1` 에 있다.
+- 기존 세 정책 (22300, 27500, 30899) 은 그대로 남겼다. 해시는 모두 검증했다.
+- 빌드된 share 의 `kicking` 은 `kick_push_31800.onnx` 다.
+- 저장소 `MX3_Match_Sim/src/hsl_src/hsl_bringup` 의 launch 와 models 도 로봇과 맞췄다. launch 에는 이전에 로봇에서만 바뀌어 있던 `kick_strength: 0.5` 도 함께 반영했다.
+- 로봇 구동이나 initialpose 발행은 하지 않았다. 되돌리기는 `bash install_named_kicks.sh kick_stable_27500` 이다.

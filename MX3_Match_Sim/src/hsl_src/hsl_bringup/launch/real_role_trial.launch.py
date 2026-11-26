@@ -13,7 +13,7 @@ def generate_launch_description():
     hsl = get_package_share_directory('hsl_bringup')
     bringup = get_package_share_directory('humanoid_bringup')
     walking = os.path.join(hsl, 'models', 'walk_v0_6_13500.onnx')
-    kicking = os.path.join(hsl, 'models', 'walkkick_v1_5b_22300.onnx')
+    kicking = os.path.join(hsl, 'models', 'kick_push_31800.onnx')
     for path in (walking, kicking):
         if not os.path.isfile(path):
             raise RuntimeError('Model missing: ' + path)
@@ -25,7 +25,7 @@ def generate_launch_description():
                 'robot': 'robo04', 'use_teleop': 'false', 'use_kick': 'true',
                 'walk_actor_path': walking, 'kick_actor_path': kicking,
                 'onnx_provider': 'cpu', 'policy_variant': 'v0_2',
-                'gait_mode': 'stop', 'stop_delay_s': '0.0',
+                'gait_mode': 'stop', 'stop_delay_s': '0.0', 'kick_strength': '0.5',
                 'gravity_source': 'derive', 'fall_manager_imu_topic': '/imu/data_50hz',
             }.items()),
         Node(package='hsl_behavior', executable='behavior', name='hsl_behavior', output='screen',
