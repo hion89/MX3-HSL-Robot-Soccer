@@ -1,0 +1,35 @@
+C:\Users\jes\Desktop\isaac_ws\sim2real_evidence\.mujoco_env\Scripts\python.exe C:\Users\jes\Desktop\MX3_Match_Sim\sim2real_evidence\kick_robust_20261116\mujoco_kick_stress.py --suite push --trials 150 --workers 11 --out results_v16q_q15L_33000_push\stress --policy C:\Users\jes\Desktop\MX3_Match_Sim\XM_Kick_Policy\policy\policy.onnx --policy results_v16q_q15L_33000_push\onnx\ckpt_v16q__q15L_model_33000.onnx
+[stress] 2 policy x 5 cond x 150 = 1500 trials, 11 workers
+  100/1500  3s
+  200/1500  5s
+  300/1500  7s
+  400/1500  8s
+  500/1500  10s
+  600/1500  11s
+  700/1500  13s
+  800/1500  14s
+  900/1500  15s
+  1000/1500  16s
+  1100/1500  17s
+  1200/1500  18s
+  1300/1500  19s
+  1400/1500  20s
+  1500/1500  21s
+policy                cond                     n   fall%   ¡¾95  kick%     v  spin90  slip90
+ckpt_v16q__q15L_model push_4N                150   100.0   0.0    1.3  0.14     3.5     1.8
+ckpt_v16q__q15L_model push_6N                150   100.0   0.0    1.3  0.14     3.5     1.8
+ckpt_v16q__q15L_model push_8N                150   100.0   0.0    1.3  0.14     3.5     1.8
+ckpt_v16q__q15L_model push_10N               150   100.0   0.0    1.3  0.14     3.5     1.8
+ckpt_v16q__q15L_model push_12N               150   100.0   0.0    1.3  0.14     3.5     1.8
+policy.onnx           push_4N                150     4.0   3.1  100.0  4.34     8.9     4.0
+policy.onnx           push_6N                150     5.3   3.6  100.0  4.34    10.3     5.0
+policy.onnx           push_8N                150    33.3   7.5  100.0  4.33    10.7     4.3
+policy.onnx           push_10N               150    58.0   7.9  100.0  4.33    10.9     4.4
+policy.onnx           push_12N               150    90.0   4.8  100.0  4.30    10.7     3.9
+[stress] done 21s -> results_v16q_q15L_33000_push\stress
+# MuJoCo gate ranking
+
+trials per cell: 150. Lower is better. Simulation only.
+
+- baseline: worst 90.0 %, mean 38.1 %, real_like -1.0 %, low_mu -1.0 %, kick â‰¥ 100 %, v 4.34 m/s 
+- ckpt_v16q__q15L_model_33000.onnx: worst 100.0 %, mean 100.0 %, real_like -1.0 %, low_mu -1.0 %, kick â‰¥ 1 %, v 0.14 m/s âš  kick<95%,ball_speed<85%
