@@ -152,6 +152,8 @@ def run(sim, sess, c: ks.Cond, seed: int, kick_s: float, after_s: float, jitter:
         lim_hi = sim.m.actuator_forcerange[sim.leg_a, 1]
         lim_lo = sim.m.actuator_forcerange[sim.leg_a, 0]
         sat = np.where(frc >= 0, frc / np.maximum(lim_hi, 1e-6), frc / np.minimum(lim_lo, -1e-6))
+        if c.dxl:
+            sat = np.abs(sim.dxl_pwm[sim.leg_a])
         rows.append(dict(t=t, roll=roll_of(R), tilt=math.degrees(tilt), fn=sim.foot_contact().tolist(),
                          q=np.degrees(qn - sim.default12).tolist(), goal=np.degrees(applied - sim.default12).tolist(),
                          tau=frc.tolist(), sat=sat.tolist(), vball=float(np.linalg.norm(sim.d.qvel[sim.bv:sim.bv + 2])),

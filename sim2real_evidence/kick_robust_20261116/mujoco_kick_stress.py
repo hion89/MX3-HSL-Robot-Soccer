@@ -65,6 +65,9 @@ FALL_HEIGHT = 0.28     # m, base height
 KICK_SPEED = 0.8       # m/s, kick latch threshold (KICK_SPEED_THRESHOLD)
 STALL_12V, NOLOAD_12V = 7.3, 5.55   # XM540-W150 @12V (README / kick_stability_mdp)
 EFFORT_CAP = 5.0
+DXL_KP_PWM = 800.0 / 128.0 * 4096.0 / (2.0 * math.pi) / 885.0   # P 800 → PWM 비율 / rad (12.4° 에서 100 %)
+DXL_KD_PWM = 0.02                                               # D 500 실효값 (재생 보정)
+DXL_K_EMF = 7.3 / 5.55                                          # 역기전력 N·m·s/rad
 
 
 @dataclasses.dataclass
@@ -98,6 +101,11 @@ class Cond:
     push_N: float = 0.0
     push_s: float = 0.5
     push_trig_deg: float = 40.0       # 걷는 중 골반 roll ~30° 보다 커야 킥에만 걸린다
+    # Dynamixel 모터 모델 (2026-11-26 실물 재생 보정, kick_replay_calib.py). True 면 몸 18 관절 (XM540-W150) 을
+    #   pwm = clip(kp_pwm·(setpoint − q) − kd_pwm·q̇, ±1),  τ = 7.3·(V/12)·pwm − 1.315·q̇ 로 돌린다 (5 N·m 상한·kp 50 대신).
+    #   V = dxl_volt. 실물 목표 재생에서 관절각 오차 평균 약 2.5°, 7 회 중 6 회 실물처럼 1.9~2.4 s 에 넘어졌다.
+    dxl: bool = False
+    dxl_volt: float = 11.3
 
 
 def suite(name: str) -> list[Cond]:
@@ -239,6 +247,12 @@ class Sim:
         self.default_fr = m.geom_friction.copy()
         self.default_solref = m.geom_solref.copy()
         self.default_forcerange = m.actuator_forcerange.copy()
+        # Dynamixel 모델 대상: 목 (MX-64) 을 뺀 18 관절
+        self.dxl_a = np.array([self.aid[n] for n in self.all_joints if not n.startswith("neck")])
+        self.dxl_q = np.array([self.qadr[n] for n in self.all_joints if not n.startswith("neck")])
+        self.dxl_v = np.array([self.vadr[n] for n in self.all_joints if not n.startswith("neck")])
+        self._dxl_on = False
+        self.dxl_pwm = np.zeros(m.nu)
         # position actuators are not ctrllimited; clamp to joint range like sim_bridge
         self.lo = np.array([m.jnt_range[m.actuator_trnid[a, 0]][0] for a in range(m.nu)])
         self.hi = np.array([m.jnt_range[m.actuator_trnid[a, 0]][1] for a in range(m.nu)])
@@ -252,6 +266,17 @@ class Sim:
             m.geom_friction[g] = [c.mu, c.mu_torsion, 0.0001]
             m.geom_solref[g] = [c.solref_tc, 1.0]
         m.actuator_forcerange[:] = self.default_forcerange
+        a = self.dxl_a
+        if c.dxl and not self._dxl_on:
+            self._dxl_bk = (m.actuator_gainprm[a].copy(), m.actuator_biasprm[a].copy())
+            m.actuator_gainprm[a, 0] = 1.0
+            m.actuator_biasprm[a, :] = 0.0
+            self._dxl_on = True
+        elif not c.dxl and self._dxl_on:
+            m.actuator_gainprm[a], m.actuator_biasprm[a] = self._dxl_bk
+            self._dxl_on = False
+        if c.dxl:
+            m.actuator_forcerange[a] = [-50.0, 50.0]
 
     def place(self, rng, c: Cond):
         mj, m, d = self.mj, self.m, self.d
@@ -273,7 +298,13 @@ class Sim:
         step = np.where(prof_rad_s > 0, prof_rad_s * self.dt, np.inf)
         self.setpoint += np.clip(self.target - self.setpoint, -step, step)
         d.ctrl[:] = np.clip(self.setpoint, self.lo, self.hi)
-        if c.volt > 0:
+        if c.dxl:
+            a = self.dxl_a
+            qd = d.qvel[self.dxl_v]
+            pwm = np.clip(DXL_KP_PWM * (d.ctrl[a] - d.qpos[self.dxl_q]) - DXL_KD_PWM * qd, -1.0, 1.0)
+            self.dxl_pwm[a] = pwm
+            d.ctrl[a] = STALL_12V * (c.dxl_volt / 12.0) * pwm - DXL_K_EMF * qd
+        elif c.volt > 0:
             # Isaac Lab DCMotor rule (quadrant aware): driving torque falls with speed,
             # braking torque (opposite to velocity) is only capped by EFFORT_CAP.
             k = c.volt / 12.0
@@ -567,12 +598,15 @@ def main():
     ap.add_argument("--out", default=os.path.join(HERE, "results"))
     ap.add_argument("--trace", default="", help="cond name: save per-step trace of first seed")
     ap.add_argument("--strength", type=float, default=None, help="override kick_strength (0..1) for all conditions")
+    ap.add_argument("--dxl", action="store_true", help="모든 조건에 Dynamixel 모터 모델 (실물 재생 보정) 을 쓴다")
     args = ap.parse_args()
     pols = [os.path.abspath(p) for p in (args.policy or [DEFAULT_POLICY])]
     conds = suite(args.suite)
     if args.only:
         keep = set(args.only.split(","))
         conds = [c for c in conds if c.name in keep]
+    if args.dxl:
+        conds = [dataclasses.replace(c, name=f"{c.name}+dxl", dxl=True, dxl_volt=c.volt if c.volt > 0 else 11.3) for c in conds]
     if args.strength is not None:
         conds = [dataclasses.replace(c, name=f"{c.name}@s{args.strength:g}", strength=args.strength) for c in conds]
     os.makedirs(args.out, exist_ok=True)
