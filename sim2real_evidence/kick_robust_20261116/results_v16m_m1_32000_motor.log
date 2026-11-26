@@ -1,0 +1,4 @@
+ckpt_v16m__m1_model_32000. kg+0.8 cap3 kp50 V10.3 stall×0.7: fall   0% t -1.00 | kick roll   38 | sup sat 0.31 | v 0.00
+ckpt_v16m__m1_model_32000. kg+0.8 cap4 kp50 V11.1 stall×0.8: fall   0% t -1.00 | kick roll   44 | sup sat 0.31 | v 3.09
+ckpt_v16m__m1_model_32000. kg+1.6 cap4 kp50 V12.0 stall×1.0: fall   3% t 3.10 | kick roll   43 | sup sat 0.36 | v 2.46
+- ckpt_v16m__m1_model_32000.onnx: motor fall mean 1.1 % (0 / 0 / 3), kick roll 42, v 1.85
