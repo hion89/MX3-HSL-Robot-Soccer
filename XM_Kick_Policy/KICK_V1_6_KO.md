@@ -682,3 +682,17 @@ V1-6M (L3 31800 에서 500 iteration 씩, 서버 `~/kick16_runs/sweep_m.sh`, 요
 - 학습 넘어짐은 잠깐 5~8 % 로 늘었다가 2 % 로 돌아왔다.
 
 PC 는 100 iteration 마다 일반 게이트 300, push 150, 모터 게이트 30 × 3 을 돌린다 (`results_v16m_<m>_<n>_*`).
+
+### 실물 보정 준비: 모터 고속 로그 (2026-11-26 16:06, robo04)
+
+- 모델 번호를 읽었다. id 1~18 (다리·팔) 은 XM540-W150, id 19·20 (목) 은 MX-64(2.0) 이다.
+- 예전 진단 전류는 모든 모터에 MX-64 단위 (3.36 mA/LSB) 를 썼다. XM540 단위는 2.69 mA 라 다리 전류가 25 % 크게 나왔다.
+  - 실물 1회차 1.88 s 의 디딤발 골반 pitch 6.0 A·발목 pitch 6.2 A 는 실제로 약 4.8·5.0 A 다. 스톨 전류 6.3 A 의 약 77~79 % 다.
+  - 이때 PWM 은 100 % 였다. 정지 토크가 모자랐다기보다 속도-토크 한계 (역기전력) 에 걸렸을 가능성이 있다.
+  - MuJoCo 보정의 "평평한 상한 3 N·m" 은 이 효과를 뭉뚱그린 근사일 수 있다.
+- 브리지 수정 (`MX3_Match_Sim/src/mx3_src/humanoid_serial_bridge`): 메인 50 Hz SyncRead 를 124 부터 12 바이트로 넓혔다.
+  - PWM·전류·속도·위치를 같은 시각에 읽고, `/motor_fast` (JointState: position = PWM/885, effort = 전류 A) 로 낸다. `/joint_states` 는 그대로다.
+  - 진단 전류 단위도 모델별로 고쳤다.
+  - 사이클은 4.5 ms (20 ms 중), overrun 0, SyncRead 실패 0 % 다.
+- 로봇 원본 백업은 `~/incoming/motor_fast_backup_RPNwNz` 다. real_base 는 `runtime_logs/real_base_20261126_160553.log` 로 다시 띄웠다 (SIGINT 로 끌 수 있게 실행).
+- 재시작 뒤 토크는 꺼져 있다 (로봇은 앉아 있음). 정지 하중·킥 시험은 start.sh 로 토크를 켠 뒤 한다.
