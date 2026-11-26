@@ -643,3 +643,15 @@ L3 31800 을 실물에 설치한 뒤, 모터가 못 따라가서 실패하면 �
 - 빌드된 share 의 `kicking` 은 `kick_push_31800.onnx` 다.
 - 저장소 `MX3_Match_Sim/src/hsl_src/hsl_bringup` 의 launch 와 models 도 로봇과 맞췄다. launch 에는 이전에 로봇에서만 바뀌어 있던 `kick_strength: 0.5` 도 함께 반영했다.
 - 로봇 구동이나 initialpose 발행은 하지 않았다. 되돌리기는 `bash install_named_kicks.sh kick_stable_27500` 이다.
+
+### kick_push_31800 실물 1회차 (2026-11-26 15:36, robo04)
+
+조건: 사용자가 start.sh 를 켜고 배치했다. 킥 러너 `kick_push_31800.onnx`, 세기 0.5 (launch), 공 파라미터 0.30 m 정면이다. `/kick_trigger` 1회를 보냈고, bag 은 `~/kick_trials_20261126/push31800_t1_153558` (PC 사본 `sim2real_evidence/kick_trials_20261126/`, db3 는 커밋하지 않음) 이다. 분석은 같은 폴더의 `kick_bag_summary.py`, `kick_bag_motors.py` 로 했다.
+
+결과: 넘어졌다. 1.91 s 에 PROTECT 로 들어갔고, 4.16 s STANDING_UP → 8.5 s NORMAL 로 스스로 일어났다.
+- 차는 다리 (오른쪽) 골반 roll 벌림은 명령 +44°, 실제 +40° 다. 이전 정책의 55~58° 보다 줄었고, MuJoCo 예측 44° 와 같다.
+- 몸 기울기 (서 있을 때 기준): 0.5~1.5 s 에 roll +22~27° 다. 1.5~2.0 s 에 roll −29°, pitch +50° 다. 이번에는 옆보다 앞뒤 (pitch) 성분이 크다.
+- 1.88 s 에 디딤발 (왼쪽) 골반 pitch·발목 pitch·골반 roll 의 PWM 이 모두 ±885 (100 %) 다. 전류는 골반 pitch 6.0 A, 발목 pitch 6.2 A, 골반 roll 3.7 A 이고, 전압은 10.3 V 까지 떨어졌다 (서 있을 때 12.0 V).
+- 0.88 s 에도 오른쪽 골반 yaw 가 PWM 100 % 다.
+
+해석: 디딤발 쪽 외력 학습으로 차는 다리 벌림은 줄었다. 하지만 디딤발 모터 토크 포화로 넘어지는 메커니즘은 그대로다. 포화가 roll 만이 아니라 pitch (골반·발목) 로 옮겨 갔다. 토크 한계를 학습에 넣는 M1 (+ M3) 이 맞는 방향이다.
