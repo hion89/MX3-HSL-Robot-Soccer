@@ -588,29 +588,31 @@ def _k_reattach_gate(cfg):
     cfg.rewards.kick_gate = kg
 
 
-def _apply_k_push(cfg):
+def _apply_k_push(cfg, force_range=K_PUSH_N, probability=K_PUSH_P, ramp_steps=None):
+    ramp_steps = J_RAMP_STEPS if ramp_steps is None else ramp_steps
     base = lambda: SceneEntityCfg("robot", body_names=v14.MX_BASE_LINK)
     cfg.events.kick_support_push_reset = EventTerm(
         func=kr.kick_support_push_reset, mode="reset",
-        params={"force_range": K_PUSH_N, "probability": K_PUSH_P, "asset_cfg": base()})
+        params={"force_range": force_range, "probability": probability, "asset_cfg": base()})
     cfg.events.kick_support_push = EventTerm(
         func=kr.kick_support_push, mode="interval", interval_range_s=(0.02, 0.02),
-        params={"duration_s": K_PUSH_S, "trig_deg": 40.0, "ramp_steps": J_RAMP_STEPS, "asset_cfg": base(),
+        params={"duration_s": K_PUSH_S, "trig_deg": 40.0, "ramp_steps": ramp_steps, "asset_cfg": base(),
                 "roll_cfg": SceneEntityCfg("robot", joint_names=["r_pelvis_roll_joint", "l_pelvis_roll_joint"],
                                            preserve_order=True),
                 "sensor_cfg": SceneEntityCfg("contact_forces", body_names=list(_FEET), preserve_order=True)})
-    cfg.curriculum.kick_push_max_N = CurrTerm(func=kr.kick_push_scale, params={"max_N": K_PUSH_N[1]})
+    cfg.curriculum.kick_push_max_N = CurrTerm(func=kr.kick_push_scale, params={"max_N": force_range[1]})
     cfg.rewards.metric_kick_push_N = RewTerm(func=kr.metric_kick_push_N, weight=0.0)
     _k_reattach_gate(cfg)
 
 
-def _apply_k_roll(cfg):
+def _apply_k_roll(cfg, target=K_ROLL_W, ramp_steps=None):
+    ramp_steps = J_RAMP_STEPS if ramp_steps is None else ramp_steps
     cfg.rewards.base_roll_excess = RewTerm(func=kr.base_roll_excess, weight=0.0,
                                            params={"threshold_rad": K_ROLL_DEG * 3.14159265 / 180.0})
     cfg.rewards.metric_base_roll = RewTerm(func=kr.metric_base_roll_deg, weight=0.0)
     cfg.curriculum.base_roll_excess_w = CurrTerm(func=kr.ramp_reward_weight,
-                                                 params={"term_name": "base_roll_excess", "target": K_ROLL_W,
-                                                         "ramp_steps": J_RAMP_STEPS})
+                                                 params={"term_name": "base_roll_excess", "target": target,
+                                                         "ramp_steps": ramp_steps})
     _k_reattach_gate(cfg)
 
 
@@ -657,3 +659,35 @@ class RobotV16K6EnvCfg(RobotV16I2EnvCfg):
         _apply_k_push(self)
         _apply_k_roll(self)
         _apply_v1_6j_ramp(self, 50.0, -10.0)
+
+
+# ============================================================================
+# V1-6L (2026-11-26) — K5 단기 31599 에서 외력을 낮춰 짧게 이어 학습 (조기 종료용, 100 iteration 마다 MuJoCo 게이트).
+#   K5 장기 학습 (12 N 그대로 +3000) 은 Isaac 에서만 좋아지고 MuJoCo 넘어짐이 9 % → 21~62 % 로 늘었다.
+#   이미 외력·벌점에 적응한 모델에서 시작하므로 램프 없이 처음부터 목표값이다.
+#   L1: 0~8 N·p0.5·roll −20 / L2: 0~6 N·p0.5·roll −20 / L3: 0~8 N·p0.5·roll −10
+# ============================================================================
+def _apply_l(cfg, max_n, prob, roll_w):
+    _apply_k_push(cfg, (0.0, max_n), prob, ramp_steps=1)
+    _apply_k_roll(cfg, roll_w, ramp_steps=1)
+
+
+@configclass
+class RobotV16L1EnvCfg(RobotV16I2EnvCfg):
+    def __post_init__(self):
+        super().__post_init__()
+        _apply_l(self, 8.0, 0.5, -20.0)
+
+
+@configclass
+class RobotV16L2EnvCfg(RobotV16I2EnvCfg):
+    def __post_init__(self):
+        super().__post_init__()
+        _apply_l(self, 6.0, 0.5, -20.0)
+
+
+@configclass
+class RobotV16L3EnvCfg(RobotV16I2EnvCfg):
+    def __post_init__(self):
+        super().__post_init__()
+        _apply_l(self, 8.0, 0.5, -10.0)

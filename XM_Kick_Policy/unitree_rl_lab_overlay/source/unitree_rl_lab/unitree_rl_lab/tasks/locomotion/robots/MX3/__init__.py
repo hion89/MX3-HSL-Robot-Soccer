@@ -163,7 +163,8 @@ for _i in ("I", "I2"):
 # V1-6J (2026-11-25): I2 + 골반 roll 벌림 상한 벌점 (J1 35°·−20, J2 35°·−60, J3 45°·−60, J4 25°·−40). I2 model_final 에서 이어 학습.
 # J5·J6 (2026-11-25): 같은 벌점을 0 에서 약 500 iteration 동안 올린다 (목표 −5, −10).
 # V1-6K (2026-11-25): 각도 여유 (K1·K2), 디딤발 쪽 외력 (K3), 몸 roll 벌점 (K4), 조합 (K5·K6).
-for _j in ("J1", "J2", "J3", "J4", "J5", "J6", "K1", "K2", "K3", "K4", "K5", "K6"):
+# V1-6L (2026-11-26): K5 31599 에서 외력 8·6 N, roll −20·−10 으로 짧게 (조기 종료).
+for _j in ("J1", "J2", "J3", "J4", "J5", "J6", "K1", "K2", "K3", "K4", "K5", "K6", "L1", "L2", "L3"):
     gym.register(
         id=f"Unitree-MX3-WalkKick-V1-6{_j}",
         entry_point="isaaclab.envs:ManagerBasedRLEnv",
