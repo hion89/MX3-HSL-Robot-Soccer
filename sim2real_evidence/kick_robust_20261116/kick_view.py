@@ -35,6 +35,7 @@ def main():
     ap.add_argument("--slow", type=float, default=1.5, help="1 = 실시간, 2 = 절반 속도")
     ap.add_argument("--sim-model", action="store_true", help="원래 MuJoCo 모델 (질량 5.7 kg, kp 50)")
     ap.add_argument("--size", default="960x720")
+    ap.add_argument("--pos", default="", help="창 위치 x,y (나란히 띄울 때)")
     ap.add_argument("--push", type=float, default=0.0, help="킥 디딤발 쪽 외력 N (0 = 없음, 0.5 s, 벌림 40° 에서 시작)")
     args = ap.parse_args()
     import onnxruntime as ort
@@ -53,9 +54,12 @@ def main():
     cam.type = mujoco.mjtCamera.mjCAMERA_FREE
     cam.distance, cam.elevation = 1.2, -12.0
     view = {"az": 0.0, "paused": False}   # 상대 방위: 0 = 로봇 정면에서 봄
-    win = "MX3 kick (MuJoCo) - q: quit, space: pause, 1/2/3: front/side/back"
+    name = args.policy.replace(chr(92), "/").split("/")[-1].removesuffix(".onnx")
+    win = f"{name} push {args.push:g}N - q: quit, space: pause, 1/2/3: front/side/back"
     cv2.namedWindow(win, cv2.WINDOW_NORMAL)
     cv2.resizeWindow(win, W, H)
+    if args.pos:
+        cv2.moveWindow(win, *(int(v) for v in args.pos.split(",")))
     n_sub = int(round(ks.POLICY_DT / sim.dt))
     cnt = [0]
     last = [time.perf_counter()]
