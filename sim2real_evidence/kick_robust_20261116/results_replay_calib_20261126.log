@@ -1,0 +1,35 @@
+C:\Users\jes\Desktop\MX3_Match_Sim\sim2real_evidence\kick_robust_20261116\kick_replay_calib.py:116: RuntimeWarning: Mean of empty slice
+  g0 = np.nanmean(G[(gt > t_start - 0.3) & (gt < t_start)], 0)
+C:\Users\jes\Desktop\MX3_Match_Sim\sim2real_evidence\kick_robust_20261116\kick_replay_calib.py:116: RuntimeWarning: Mean of empty slice
+  g0 = np.nanmean(G[(gt > t_start - 0.3) & (gt < t_start)], 0)
+C:\Users\jes\Desktop\MX3_Match_Sim\sim2real_evidence\kick_robust_20261116\kick_replay_calib.py:116: RuntimeWarning: Mean of empty slice
+  g0 = np.nanmean(G[(gt > t_start - 0.3) & (gt < t_start)], 0)
+C:\Users\jes\Desktop\MX3_Match_Sim\sim2real_evidence\kick_robust_20261116\kick_replay_calib.py:116: RuntimeWarning: Mean of empty slice
+  g0 = np.nanmean(G[(gt > t_start - 0.3) & (gt < t_start)], 0)
+C:\Users\jes\Desktop\MX3_Match_Sim\sim2real_evidence\kick_robust_20261116\kick_replay_calib.py:116: RuntimeWarning: Mean of empty slice
+  g0 = np.nanmean(G[(gt > t_start - 0.3) & (gt < t_start)], 0)
+C:\Users\jes\Desktop\MX3_Match_Sim\sim2real_evidence\kick_robust_20261116\kick_replay_calib.py:116: RuntimeWarning: Mean of empty slice
+  g0 = np.nanmean(G[(gt > t_start - 0.3) & (gt < t_start)], 0)
+C:\Users\jes\Desktop\MX3_Match_Sim\sim2real_evidence\kick_robust_20261116\kick_replay_calib.py:116: RuntimeWarning: Mean of empty slice
+  g0 = np.nanmean(G[(gt > t_start - 0.3) & (gt < t_start)], 0)
+C:\Users\jes\Desktop\MX3_Match_Sim\sim2real_evidence\kick_robust_20261116\kick_replay_calib.py:116: RuntimeWarning: Mean of empty slice
+  g0 = np.nanmean(G[(gt > t_start - 0.3) & (gt < t_start)], 0)
+C:\Users\jes\Desktop\MX3_Match_Sim\sim2real_evidence\kick_robust_20261116\kick_replay_calib.py:116: RuntimeWarning: Mean of empty slice
+  g0 = np.nanmean(G[(gt > t_start - 0.3) & (gt < t_start)], 0)
+C:\Users\jes\Desktop\MX3_Match_Sim\sim2real_evidence\kick_robust_20261116\kick_replay_calib.py:116: RuntimeWarning: Mean of empty slice
+  g0 = np.nanmean(G[(gt > t_start - 0.3) & (gt < t_start)], 0)
+P=800 s=1 emf_s=1 kd_pwm=0.02 add_kg=0.8 mu=0.5 delay_s=0.01 | cost 3.22 roll 5.0 pitch 4.0 joint 2.4 pwm 0.19 | roll max sim 13 real 25 | fell 2.4/2.1/2.4/2.1/2.0/-1.0/2.2
+P=800 s=1 emf_s=1 kd_pwm=0.02 add_kg=0.8 mu=0.8 delay_s=0.01 | cost 3.32 roll 4.7 pitch 4.5 joint 2.5 pwm 0.20 | roll max sim 13 real 25 | fell -1.0/1.9/1.9/2.0/2.1/2.4/2.3
+P=800 s=1 emf_s=1 kd_pwm=0.1 add_kg=0.8 mu=0.5 delay_s=0.01 | cost 3.34 roll 5.7 pitch 4.4 joint 2.6 pwm 0.16 | roll max sim 11 real 25 | fell 2.4/2.1/-1.0/2.1/2.1/-1.0/2.2
+P=800 s=1 emf_s=1 kd_pwm=0.1 add_kg=0.8 mu=0.8 delay_s=0.01 | cost 3.38 roll 5.5 pitch 4.6 joint 2.6 pwm 0.17 | roll max sim 11 real 25 | fell -1.0/-1.0/-1.0/2.1/2.1/-1.0/-1.0
+P=800 s=1 emf_s=1 kd_pwm=0.02 add_kg=0.8 mu=0.5 delay_s=0.03 | cost 3.70 roll 4.8 pitch 4.1 joint 3.4 pwm 0.25 | roll max sim 13 real 25 | fell -1.0/-1.0/2.4/2.1/2.0/-1.0/2.3
+P=800 s=1 emf_s=1 kd_pwm=0.02 add_kg=0.8 mu=0.8 delay_s=0.03 | cost 3.76 roll 4.7 pitch 4.3 joint 3.5 pwm 0.25 | roll max sim 13 real 25 | fell -1.0/1.9/1.9/2.1/2.1/-1.0/-1.0
+P=800 s=1 emf_s=1.5 kd_pwm=0.02 add_kg=0.8 mu=0.5 delay_s=0.01 | cost 3.80 roll 6.2 pitch 4.4 joint 2.9 pwm 0.22 | roll max sim 9 real 25 | fell 2.4/2.2/-1.0/2.1/2.1/2.4/-1.0
+P=800 s=1 emf_s=1 kd_pwm=0.1 add_kg=0.8 mu=0.5 delay_s=0.03 | cost 3.82 roll 5.6 pitch 4.3 joint 3.6 pwm 0.22 | roll max sim 11 real 25 | fell 2.4/2.1/-1.0/2.2/2.1/-1.0/2.2
+P=800 s=1 emf_s=1 kd_pwm=0.1 add_kg=0.8 mu=0.8 delay_s=0.03 | cost 3.86 roll 5.4 pitch 4.6 joint 3.7 pwm 0.23 | roll max sim 11 real 25 | fell -1.0/2.2/-1.0/2.1/2.1/-1.0/-1.0
+P=800 s=1 emf_s=1.5 kd_pwm=0.02 add_kg=0.8 mu=0.8 delay_s=0.01 | cost 3.90 roll 6.0 pitch 4.9 joint 3.0 pwm 0.23 | roll max sim 9 real 25 | fell 2.4/2.1/-1.0/2.1/2.1/2.2/-1.0
+P=800 s=1 emf_s=1.5 kd_pwm=0.1 add_kg=0.8 mu=0.5 delay_s=0.01 | cost 3.98 roll 6.7 pitch 4.8 joint 3.3 pwm 0.20 | roll max sim 8 real 25 | fell -1.0/2.1/-1.0/2.3/2.1/-1.0/2.2
+P=560 s=1 emf_s=1 kd_pwm=0.02 add_kg=0.8 mu=0.5 delay_s=0.01 | cost 4.04 roll 6.9 pitch 5.9 joint 3.3 pwm 0.16 | roll max sim 8 real 25 | fell 2.2/2.1/2.1/2.0/-1.0/-1.0/2.1
+P=800 s=1 emf_s=1.5 kd_pwm=0.1 add_kg=0.8 mu=0.8 delay_s=0.01 | cost 4.07 roll 6.5 pitch 5.2 joint 3.4 pwm 0.21 | roll max sim 8 real 25 | fell 2.2/2.4/-1.0/2.3/2.1/-1.0/-1.0
+P=560 s=1 emf_s=1 kd_pwm=0.02 add_kg=0.8 mu=0.8 delay_s=0.01 | cost 4.13 roll 6.7 pitch 6.4 joint 3.4 pwm 0.17 | roll max sim 8 real 25 | fell 2.2/-1.0/-1.0/2.0/-1.0/-1.0/2.2
+P=800 s=0.8 emf_s=1 kd_pwm=0.02 add_kg=0.8 mu=0.5 delay_s=0.01 | cost 4.26 roll 7.1 pitch 5.1 joint 3.2 pwm 0.24 | roll max sim 7 real 25 | fell 2.1/2.2/2.2/2.0/2.4/2.4/-1.0
