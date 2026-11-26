@@ -748,3 +748,36 @@ class RobotV16M1PHEnvCfg(RobotV16L3EnvCfg):
         super().__post_init__()
         _apply_m1(self, cap_range=(2.8, 4.0), stall_range=(0.6, 0.9))
         _apply_m3(self)
+
+
+# ============================================================================
+# 실측 질량 (2026-11-26) — 로봇 실측 6.5 kg, 모델 5.7 kg. 지금까지 학습은 몸통 −0.3~+0.5 kg (5.4~6.2 kg) 이었다.
+#   몸통 추가 질량을 +0.5~+1.1 kg (6.2~6.8 kg, 중심 6.5 kg) 으로 바꾼다. MuJoCo 실물 조건도 몸통 +0.8 kg 이다.
+#   V1-6N1 = L3 (kick_push_31800, 외력 0~8 N·몸 roll −10) + 실측 질량. L3 model_31800 에서 이어 학습.
+#   평가: V1-6D-Play-RealLike-Mass65 (몸통 +0.8 kg 고정).
+# ============================================================================
+REAL_MASS_ADD = (0.5, 1.1)
+
+
+def _apply_real_mass(cfg, add_range=REAL_MASS_ADD):
+    if getattr(cfg.events, "add_base_mass", None) is None:
+        cfg.events.add_base_mass = EventTerm(
+            func=mdp.randomize_rigid_body_mass, mode="startup",
+            params={"asset_cfg": SceneEntityCfg("robot", body_names=v14.MX_BASE_LINK),
+                    "mass_distribution_params": add_range, "operation": "add"})
+    else:
+        cfg.events.add_base_mass.params["mass_distribution_params"] = add_range
+
+
+@configclass
+class RobotV16N1EnvCfg(RobotV16L3EnvCfg):
+    def __post_init__(self):
+        super().__post_init__()
+        _apply_real_mass(self)
+
+
+@configclass
+class RobotV16DPlayRealLikeMass65EnvCfg(RobotV16DPlayRealLikeEnvCfg):
+    def __post_init__(self):
+        super().__post_init__()
+        _apply_real_mass(self, (0.8, 0.8))

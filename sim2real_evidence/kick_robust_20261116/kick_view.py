@@ -35,6 +35,7 @@ def main():
     ap.add_argument("--slow", type=float, default=1.5, help="1 = 실시간, 2 = 절반 속도")
     ap.add_argument("--sim-model", action="store_true", help="원래 MuJoCo 모델 (질량 5.7 kg, kp 50)")
     ap.add_argument("--size", default="960x720")
+    ap.add_argument("--mu-scale", type=float, default=1.0, help="발-바닥 마찰 배율 (기준 미끄럼 0.6, 비틀림 0.1)")
     ap.add_argument("--pos", default="", help="창 위치 x,y (나란히 띄울 때)")
     ap.add_argument("--push", type=float, default=0.0, help="킥 디딤발 쪽 외력 N (0 = 없음, 0.5 s, 벌림 40° 에서 시작)")
     args = ap.parse_args()
@@ -44,7 +45,8 @@ def main():
     kc._DEF.clear()
     kc.apply_model(sim, **({} if args.sim_model else dict(base_add_kg=0.8, kp=30.0)))
     c = dataclasses.replace(ks.Cond(), name="real_like", volt=10.3, imu_delay_ms=10.0, hold_s=0.6, cmd_vx=0.20,
-                            filter_tau=0.02, mu=0.6, mu_torsion=0.1, solref_tc=args.solref, strength=args.strength,
+                            filter_tau=0.02, mu=0.6 * args.mu_scale, mu_torsion=0.1 * args.mu_scale,
+                            solref_tc=args.solref, strength=args.strength,
                             push_N=args.push)
     W, H = (int(x) for x in args.size.split("x"))
     sim.m.vis.global_.offwidth = max(sim.m.vis.global_.offwidth, W)
@@ -55,7 +57,7 @@ def main():
     cam.distance, cam.elevation = 1.2, -12.0
     view = {"az": 0.0, "paused": False}   # 상대 방위: 0 = 로봇 정면에서 봄
     name = args.policy.replace(chr(92), "/").split("/")[-1].removesuffix(".onnx")
-    win = f"{name} push {args.push:g}N - q: quit, space: pause, 1/2/3: front/side/back"
+    win = f"{name} push {args.push:g}N mu x{args.mu_scale:g} - q: quit, space: pause, 1/2/3: front/side/back"
     cv2.namedWindow(win, cv2.WINDOW_NORMAL)
     cv2.resizeWindow(win, W, H)
     if args.pos:
@@ -102,7 +104,7 @@ def main():
     try:
         while True:
             info["text"] = (f"{args.policy.replace(chr(92), '/').split('/')[-1]}  strength {args.strength}  "
-                            f"push {args.push:g} N  seed {seed}")
+                            f"push {args.push:g} N  mu x{args.mu_scale:g}  seed {seed}")
             rows, fell_t = kc.run(sim, sess, c, seed, 2.0, 1.5, 0.03)
             s = kc.summarize(rows, fell_t)
             print(f"seed {seed}: fall={s['fell']} roll_max={s['roll_max']:.0f} kick_leg={s['kick_leg']} "

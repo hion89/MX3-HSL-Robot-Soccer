@@ -94,7 +94,8 @@ gym.register(
         "rsl_rl_cfg_entry_point": _V16_AGENT,
     },
 )
-for _sfx, _play in (("", "RobotV16DPlayEnvCfg"), ("-RealLike", "RobotV16DPlayRealLikeEnvCfg")):
+for _sfx, _play in (("", "RobotV16DPlayEnvCfg"), ("-RealLike", "RobotV16DPlayRealLikeEnvCfg"),
+                    ("-RealLike-Mass65", "RobotV16DPlayRealLikeMass65EnvCfg")):
     gym.register(
         id=f"Unitree-MX3-WalkKick-V1-6D-Play{_sfx}",
         entry_point="isaaclab.envs:ManagerBasedRLEnv",
@@ -164,9 +165,10 @@ for _i in ("I", "I2"):
 # J5·J6 (2026-11-25): 같은 벌점을 0 에서 약 500 iteration 동안 올린다 (목표 −5, −10).
 # V1-6K (2026-11-25): 각도 여유 (K1·K2), 디딤발 쪽 외력 (K3), 몸 roll 벌점 (K4), 조합 (K5·K6).
 # V1-6L (2026-11-26): K5 31599 에서 외력 8·6 N, roll −20·−10 으로 짧게 (조기 종료).
+# V1-6N1 (2026-11-26): L3 + 실측 질량 6.5 kg (몸통 +0.5~+1.1 kg). 평가 V1-6D-Play-RealLike-Mass65.
 # V1-6M (2026-11-26): L3 31800 + 속도·전압 따라 줄어드는 다리 토크 상한 (M1), + 상한 근처 벌점 (M1P), 더 약한 모터 (M1PH).
 for _j in ("J1", "J2", "J3", "J4", "J5", "J6", "K1", "K2", "K3", "K4", "K5", "K6", "L1", "L2", "L3",
-           "M1", "M1P", "M1PH"):
+           "M1", "M1P", "M1PH", "N1"):
     gym.register(
         id=f"Unitree-MX3-WalkKick-V1-6{_j}",
         entry_point="isaaclab.envs:ManagerBasedRLEnv",
