@@ -150,7 +150,7 @@ def stage(mu, start, iters, every, kind):
         bad_streak = bad_streak + 1 if r["kick"] < 50 else 0
         if kind == "long" and bad_streak >= 3 and not any(x["pass"] for x in results):
             log("  연속 3 번 킥 < 50 %: 장기 학습 중단")
-            ssh("pkill -f 'python scripts/rsl_rl/[t]rain.py --task Unitree-MX3-WalkKick-V1-6QC '")
+            ssh("pkill -9 -f 'python scripts/rsl_rl/[t]rain.py --task Unitree-MX3-WalkKick-V1-6QC '")
             break
     while not has(status(rn), "done") and ssh("pgrep -f 'scripts/rsl_rl/[t]rain.py --task Unitree-MX3-WalkKick-V1-6QC'")[0] == 0:
         time.sleep(60)
