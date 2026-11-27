@@ -39,6 +39,8 @@ def main():
     ap.add_argument("--mu-scale", type=float, default=1.0, help="발-바닥 마찰 배율 (기준 미끄럼 0.6, 비틀림 0.1)")
     ap.add_argument("--pos", default="", help="창 위치 x,y (나란히 띄울 때)")
     ap.add_argument("--push", type=float, default=0.0, help="킥 디딤발 쪽 외력 N (0 = 없음, 0.5 s, 벌림 40° 에서 시작)")
+    ap.add_argument("--rand-push", type=float, default=0.0,
+                    help="킥 중 무작위 외력 N (방향·시점·지속 무작위, kick_real_compare 와 같은 규칙). 빨간 화살표로 표시")
     args = ap.parse_args()
     import onnxruntime as ort
     sess = ort.InferenceSession(args.policy, providers=["CPUExecutionProvider"])
@@ -58,7 +60,7 @@ def main():
     cam.distance, cam.elevation = 1.2, -12.0
     view = {"az": 0.0, "paused": False}   # 상대 방위: 0 = 로봇 정면에서 봄
     name = args.policy.replace(chr(92), "/").split("/")[-1].removesuffix(".onnx")
-    win = f"{name} push {args.push:g}N mu x{args.mu_scale:g}{' DXL' if args.dxl else ''} - q: quit, space: pause, 1/2/3: front/side/back"
+    win = f"{name} push {args.push:g}N rp {args.rand_push:g}N mu x{args.mu_scale:g}{' DXL' if args.dxl else ''} - q: quit, space: pause, 1/2/3: front/side/back"
     cv2.namedWindow(win, cv2.WINDOW_NORMAL)
     cv2.resizeWindow(win, W, H)
     if args.pos:
@@ -74,8 +76,21 @@ def main():
         cam.azimuth = yaw + 180.0 + view["az"]
         cam.lookat[:] = sim.d.xpos[sim.base] + np.array([0, 0, -0.1])
         ren.update_scene(sim.d, cam)
+        F = sim.d.xfrc_applied[sim.base, :3]
+        fn = float(np.linalg.norm(F))
+        if fn > 1e-6 and ren.scene.ngeom < ren.scene.maxgeom:
+            p0 = sim.d.xpos[sim.base].copy()
+            p1 = p0 + F / fn * (0.08 + 0.02 * fn)
+            p0, p1 = p0 - (p1 - p0), p0           # 화살표가 몸통을 향해 민다
+            g = ren.scene.geoms[ren.scene.ngeom]
+            mujoco.mjv_initGeom(g, mujoco.mjtGeom.mjGEOM_ARROW, np.zeros(3), np.zeros(3), np.zeros(9),
+                                np.array([1.0, 0.1, 0.1, 1.0], np.float32))
+            mujoco.mjv_connector(g, mujoco.mjtGeom.mjGEOM_ARROW, 0.012, p0, p1)
+            ren.scene.ngeom += 1
         img = cv2.cvtColor(ren.render(), cv2.COLOR_RGB2BGR)
         cv2.putText(img, info["text"], (10, 25), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (20, 20, 20), 2)
+        if fn > 1e-6:
+            cv2.putText(img, f"PUSH {fn:.0f} N", (10, 55), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (0, 0, 230), 2)
         cv2.imshow(win, img)
         while True:
             k = cv2.waitKey(1) & 0xFF
@@ -105,10 +120,12 @@ def main():
     try:
         while True:
             info["text"] = (f"{args.policy.replace(chr(92), '/').split('/')[-1]}  strength {args.strength}  "
-                            f"push {args.push:g} N  mu x{args.mu_scale:g}{'  DXL' if args.dxl else ''}  seed {seed}")
-            rows, fell_t = kc.run(sim, sess, c, seed, 2.0, 1.5, 0.03)
+                            f"push {args.push:g} N  rp {args.rand_push:g} N  mu x{args.mu_scale:g}{'  DXL' if args.dxl else ''}  seed {seed}")
+            rows, fell_t = kc.run(sim, sess, c, seed, 2.0, 1.5, 0.03, rand_N=args.rand_push)
             s = kc.summarize(rows, fell_t)
-            print(f"seed {seed}: fall={s['fell']} roll_max={s['roll_max']:.0f} kick_leg={s['kick_leg']} "
+            rp = rows[0].get("rand_push", {})
+            print(f"seed {seed}: push {rp.get('N', 0):g}N ang {rp.get('ang_deg', 0):.0f} t {rp.get('start', 0):.2f}s "
+                  f"dur {rp.get('dur', 0):.2f}s fall={s['fell']} roll_max={s['roll_max']:.0f} kick_leg={s['kick_leg']} "
                   f"kick_hip_roll={s['kick_hip_roll_max']:.0f} vball={s['vball_max']:.2f}", flush=True)
             info["text"] += f"  | fall={s['fell']} roll max {s['roll_max']:.0f} deg"
             t_end = time.perf_counter() + 1.5

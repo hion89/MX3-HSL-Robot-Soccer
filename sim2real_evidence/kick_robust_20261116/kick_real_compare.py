@@ -64,7 +64,34 @@ def roll_of(R):
     return math.degrees(math.atan2(R[2, 1], R[2, 2]))
 
 
-def run(sim, sess, c: ks.Cond, seed: int, kick_s: float, after_s: float, jitter: float, ball_x: float = 0.35):
+class RandPush:
+    """킥 구동 중 무작위 외력 (몸통, 수평). 시도마다 방향 0~360°, 시작 시점, 지속 시간이 무작위다.
+    시작: hold 끝 + 0.2 s ~ 킥 구동 끝 - 0.2 s, 지속 0.15~0.40 s, 크기 rand_N 고정. 에피소드당 한 번."""
+
+    def __init__(self, sim, N, seed, t0, t1):
+        r = np.random.default_rng(seed + 7_777_777)
+        self.sim, self.N = sim, N
+        self.start = float(r.uniform(t0, t1))
+        self.dur = float(r.uniform(0.15, 0.40))
+        self.ang = float(r.uniform(0.0, 2 * math.pi))   # 몸 기준 (0 = 앞, 90° = 왼쪽)
+        self.F = None
+
+    def update(self, t):
+        if self.N <= 0:
+            return
+        if self.start <= t < self.start + self.dur:
+            if self.F is None:
+                R = self.sim.R_base()
+                x = R[:, 0].copy(); x[2] = 0.0; x /= max(np.linalg.norm(x), 1e-6)
+                y = np.array([-x[1], x[0], 0.0])
+                self.F = self.N * (math.cos(self.ang) * x + math.sin(self.ang) * y)
+            self.sim.d.xfrc_applied[self.sim.base, :3] = self.F
+        elif self.F is not None:
+            self.sim.d.xfrc_applied[self.sim.base, :3] = 0.0
+
+
+def run(sim, sess, c: ks.Cond, seed: int, kick_s: float, after_s: float, jitter: float, ball_x: float = 0.35,
+        rand_N: float = 0.0):
     rng = np.random.default_rng(seed)
     sim.apply_cond(c)
     sim.place(rng, c)
@@ -99,6 +126,8 @@ def run(sim, sess, c: ks.Cond, seed: int, kick_s: float, after_s: float, jitter:
 
     sense()
     push = ks.KickPush(sim, c)
+    rpush = RandPush(sim, rand_N, seed, c.hold_s + 0.2, kick_s - 0.2)
+    sim.d.xfrc_applied[sim.base, :3] = 0.0
     rows = []
     fell_t = None
     steps = int(round((kick_s + after_s) / ks.POLICY_DT))
@@ -142,6 +171,7 @@ def run(sim, sess, c: ks.Cond, seed: int, kick_s: float, after_s: float, jitter:
         for i, n in enumerate(ks.POLICY_JOINTS):
             sim.target[sim.aid[n]] = applied[i]
         push.update(t)
+        rpush.update(t)
         R = sim.R_base()
         tilt = math.acos(max(-1.0, min(1.0, R[2, 2])))
         h = sim.d.xpos[sim.base][2]
@@ -160,6 +190,9 @@ def run(sim, sess, c: ks.Cond, seed: int, kick_s: float, after_s: float, jitter:
                          push=float(np.linalg.norm(sim.d.xfrc_applied[sim.base, :3]))))
         if fell_t is not None and t - fell_t > 0.4:
             break
+    sim.d.xfrc_applied[sim.base, :3] = 0.0
+    if rows:
+        rows[0]["rand_push"] = dict(N=rand_N, start=rpush.start, dur=rpush.dur, ang_deg=math.degrees(rpush.ang))
     return rows, fell_t
 
 
@@ -209,6 +242,8 @@ def main():
     ap.add_argument("--dxl-real", action="store_true",
                     help="2026-11-26 실물 시험 조건: Dynamixel 모터 모델·6.5 kg·11.3 V·공 0.30 m·필터 0.03")
     ap.add_argument("--mu", type=float, action="append", help="--dxl-real 의 발-바닥 미끄럼 마찰 (여러 번 가능, 비틀림은 mu/6)")
+    ap.add_argument("--rand-push", type=float, action="append",
+                    help="킥 중 무작위 외력 크기 N (여러 번 가능; 방향·시점·지속 무작위, 0 = 없음)")
     args = ap.parse_args()
     import onnxruntime as ort
     sim = ks.Sim(ks.DEFAULT_SCENE)
@@ -257,12 +292,13 @@ def main():
     for pol in args.policy:
         sess = ort.InferenceSession(pol, providers=["CPUExecutionProvider"])
         for s in (args.strength or [1.0]):
-            for name, c, kick_s, after_s, mod in conds:
+            for (name0, c, kick_s, after_s, mod), rN in [(cd, rN) for cd in conds for rN in (args.rand_push or [0.0])]:
+                name = name0 + (f"_rp{rN:g}N" if rN > 0 else "")
                 apply_model(sim, **mod)
                 c2 = dataclasses.replace(c, strength=s)
                 res = []
                 for i in range(args.trials):
-                    rows, fell_t = run(sim, sess, c2, 1000 + i, kick_s, after_s, args.jitter, ball_x=ball_x)
+                    rows, fell_t = run(sim, sess, c2, 1000 + i, kick_s, after_s, args.jitter, ball_x=ball_x, rand_N=rN)
                     res.append(summarize(rows, fell_t))
                     if i == 0:
                         with open(os.path.join(args.out, f"{os.path.basename(pol)}_{name}_s{s}_trial0.json"), "w") as f:
